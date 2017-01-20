@@ -7,9 +7,12 @@
 
 
 <md-sidenav id="sidenavbar" #start (open)="closeStartButton.focus()">
-  <button md-icon-button>
-    <md-icon>email</md-icon>
-  </button>
+  <a [routerLink]="'/projects/2'">
+    <button md-icon-button>
+      <md-icon>email</md-icon>
+    </button>
+  </a>
+
   <button md-icon-button>
     <md-icon>email</md-icon>
   </button>
