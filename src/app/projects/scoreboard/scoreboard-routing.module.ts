@@ -1,11 +1,12 @@
-import {Routes, RouterModule} from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { ScoreboardComponent } from './scoreboard.component';
-import {NgModule} from "@angular/core";
+import { NgModule } from "@angular/core";
 
 const scoreboardRoutes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: ScoreboardComponent
   }
 ]
@@ -13,8 +14,8 @@ const scoreboardRoutes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(scoreboardRoutes)
-  ]
-  , exports: [
+  ],
+  exports: [
     RouterModule
   ]
 })

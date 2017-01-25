@@ -6,7 +6,7 @@ import { NgModule } from "@angular/core";
 const feedRoutes: Routes = [
     //{ path: '', redirectTo: '/feed', pathMatch: 'full' },
     {
-      path: 'feed',
+      path: '',
       component: FeedComponent
     }
 ]

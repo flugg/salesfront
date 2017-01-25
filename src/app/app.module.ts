@@ -13,13 +13,12 @@ import { AppRoutingModule } from './app-routing.module'
 import { UserService } from './user.service'
 import { ApiService } from './api.service'
 import { SettingsComponent } from './projects/settings/settings.component'
-import { FeedModule } from './projects/feed/feed.module'
 import { AuthService } from './auth/auth.service'
 import { AuthGuard } from './auth/auth-guard.service';
 import { LoginComponent } from './auth/login/login.component';
 import { ProjectsModule } from "./projects/projects.module";
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
-import {ErrorsRouting} from "./errors/errors-routing.module";
+import { ErrorsRouting } from "./errors/errors-routing.module";
 import { UserComponent } from './user/user.component';
 
 @NgModule({
@@ -40,7 +39,6 @@ import { UserComponent } from './user/user.component';
 
     AppRoutingModule,
     ProjectsModule,
-    FeedModule,
     ErrorsRouting
   ],
   providers: [

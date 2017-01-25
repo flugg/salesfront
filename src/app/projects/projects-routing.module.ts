@@ -7,14 +7,13 @@ const prefixPath: string = 'app/projects/';
 
 const projectsRoutes: Routes = [
   {
-    path: '',
+    path: 'projects',
     component: ProjectslistComponent,
     pathMatch: 'full'
   },
   {
     path: 'projects/:id',
     component: ProjectsComponent,
-    pathMatch: 'full',
     children: [
       {
         path: 'feed',
