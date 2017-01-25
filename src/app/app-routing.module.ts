@@ -5,11 +5,10 @@ import { LoginComponent } from "./auth/login/login.component";
 import { NgModule } from "@angular/core";
 
 export const appRoutes: Routes = [
-
   {
     path: '',
-    loadChildren: 'app/projects/projects.module#ProjectsModule',
-    canLoad: [AuthGuard]
+    redirectTo: '/projects', // TODO this and all other child routes must be modular
+    pathMatch: 'full'
   },
   {
     path: 'login',

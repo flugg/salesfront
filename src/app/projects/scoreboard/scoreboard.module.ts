@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 
-import { ScoreboardComponent } from './scoreboard.component';
 import { SharedModule } from '../../shared/shared.module';
-import {ScoreboardRoutingModule} from "./scoreboard-routing.module";
+import { ScoreboardComponent } from './scoreboard.component';
+import { ScoreboardRoutingModule } from "./scoreboard-routing.module";
+import { ScoreboardlistsComponent } from './scoreboardlists/scoreboardlists.component';
 
 @NgModule({
   declarations: [
-    ScoreboardComponent
+    ScoreboardComponent,
+    ScoreboardlistsComponent
   ],
   imports: [
     SharedModule,

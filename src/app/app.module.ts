@@ -12,7 +12,6 @@ import { NavItemComponent } from './header/nav-item/nav-item.component'
 import { AppRoutingModule } from './app-routing.module'
 import { UserService } from './user.service'
 import { ApiService } from './api.service'
-import { SettingsComponent } from './projects/settings/settings.component'
 import { AuthService } from './auth/auth.service'
 import { AuthGuard } from './auth/auth-guard.service';
 import { LoginComponent } from './auth/login/login.component';
@@ -26,7 +25,6 @@ import { UserComponent } from './user/user.component';
     AppComponent,
     HeaderComponent,
     NavItemComponent,
-    SettingsComponent,
     LoginComponent,
     PageNotFoundComponent,
     UserComponent
