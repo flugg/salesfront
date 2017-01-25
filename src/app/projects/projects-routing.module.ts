@@ -1,19 +1,28 @@
 import { Routes, RouterModule } from "@angular/router";
 import { ProjectsComponent } from "./projects.component";
 import { NgModule } from "@angular/core";
+import {ProjectslistComponent} from "./projectslist/projectslist.component";
 
-export const projectsRoutes: Routes = [
+const prefixPath: string = 'app/projects/';
+
+const projectsRoutes: Routes = [
+  {
+    path: '',
+    component: ProjectslistComponent,
+    pathMatch: 'full'
+  },
   {
     path: 'projects/:id',
     component: ProjectsComponent,
+    pathMatch: 'full',
     children: [
       {
-        path: 'scoreboard',
-        loadChildren: 'app/projects/scoreboard/scoreboard.module#ScoreboardModule'
+        path: 'feed',
+        loadChildren: prefixPath + 'feed/feed.module#FeedModule'
       },
       {
-        path: 'feed',
-        loadChildren: 'app/projects/feed/feed.module#FeedModule'
+        path: 'scoreboard',
+        loadChildren: prefixPath + 'scoreboard/scoreboard.module#ScoreboardModule'
       }
     ]
   }

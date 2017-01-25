@@ -7,15 +7,17 @@ import { SharedModule } from "../shared/shared.module";
 import { ProjectsComponent } from "./projects.component";
 import { ProjectsRoutingModule } from "./projects-routing.module";
 import { ScoreboardModule } from "./scoreboard/scoreboard.module";
+import { ProjectslistComponent } from './projectslist/projectslist.component';
 
 @NgModule({
   declarations: [
-    ProjectsComponent
+    ProjectsComponent,
+    ProjectslistComponent
   ],
   imports: [
     SharedModule,
-    ScoreboardModule,
-    ProjectsRoutingModule
+    ProjectsRoutingModule,
+    ScoreboardModule
   ]
 })
 
