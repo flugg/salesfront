@@ -13,6 +13,6 @@ export class AuthService {
    * Check if the user is logged in.
    */
   isAuthenticated(): Observable<boolean> {
-    return Observable.of(false);
+    return Observable.of(true);
   }
 }

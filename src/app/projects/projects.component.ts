@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sf-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })

@@ -12,14 +12,15 @@ import { NavItemComponent } from './header/nav-item/nav-item.component'
 import { AppRoutingModule } from './app-routing.module'
 import { UserService } from './user.service'
 import { ApiService } from './api.service'
-import { SettingsComponent } from './settings/settings.component'
-import { ProfileModule } from './profile/profile.module'
-import { FeedModule } from './feed/feed.module'
+import { SettingsComponent } from './projects/settings/settings.component'
+import { FeedModule } from './projects/feed/feed.module'
 import { AuthService } from './auth/auth.service'
 import { AuthGuard } from './auth/auth-guard.service';
 import { LoginComponent } from './auth/login/login.component';
 import { ProjectsModule } from "./projects/projects.module";
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
+import {ErrorsRouting} from "./errors/errors-routing.module";
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -28,17 +29,19 @@ import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.co
     NavItemComponent,
     SettingsComponent,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MaterialModule.forRoot(),
+
     AppRoutingModule,
-    ProfileModule,
+    ProjectsModule,
     FeedModule,
-    ProjectsModule
+    ErrorsRouting
   ],
   providers: [
     ApiService,

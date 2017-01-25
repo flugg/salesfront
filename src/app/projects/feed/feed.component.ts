@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sf-scoreboard',
-  templateUrl: './scoreboard.component.html',
-  styleUrls: ['./scoreboard.component.css']
+  selector: 'sf-feed',
+  templateUrl: 'feed.component.html',
+  styleUrls: ['feed.component.css']
 })
-export class ScoreboardComponent implements OnInit {
+export class FeedComponent implements OnInit {
 
   /**
    * Construct the component.

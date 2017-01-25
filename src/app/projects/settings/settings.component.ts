@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sf-feed',
-  templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.css']
+  selector: 'app-settings',
+  templateUrl: 'settings.component.html',
+  styleUrls: ['settings.component.css']
 })
-export class FeedComponent implements OnInit {
+export class SettingsComponent implements OnInit {
 
   /**
    * Construct the component.
