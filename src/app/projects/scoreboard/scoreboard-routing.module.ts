@@ -4,8 +4,10 @@ import { ScoreboardComponent } from './scoreboard.component';
 import {NgModule} from "@angular/core";
 
 const scoreboardRoutes: Routes = [
-  //{ path: '', redirectTo: 'scoreboard', pathMatch: 'full' },
-
+  {
+    path: '',
+    component: ScoreboardComponent
+  }
 ]
 
 @NgModule({
