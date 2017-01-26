@@ -20,6 +20,11 @@ const projectsRoutes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       {
+        path: '',
+        redirectTo: 'scoreboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'scoreboard',
         loadChildren: prefixPath + 'scoreboard/scoreboard.module#ScoreboardModule'
       },
