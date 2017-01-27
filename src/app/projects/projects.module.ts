@@ -4,6 +4,7 @@ import { SharedModule } from "../shared/shared.module";
 import { ProjectsComponent } from "./projects.component";
 import { ProjectsRoutingModule } from "./projects-routing.module";
 import { ProjectslistComponent } from './projectslist/projectslist.component';
+import { ScoreboardModule } from "./scoreboard/scoreboard.module";
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { ProjectslistComponent } from './projectslist/projectslist.component';
   ],
   imports: [
     SharedModule,
+    ScoreboardModule,
     ProjectsRoutingModule
   ]
 })
