@@ -10,29 +10,31 @@ export class ApiService {
    */
   constructor(private http: Http) { }
 
-  postData(dataLoad: any, sub_uri:string) {
-    const body = JSON.stringify(dataLoad);
-    const headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-    return this.http.put(this.defaultPath + sub_uri, body, { headers: headers });
-  }
-
-  getData(container: any, sub_uri:string) {
-    return this.http.get(this.defaultPath + sub_uri)
-      .map((response: Response) => response.json())
-      .subscribe(
-        (data: any) => {
-          container = data;
-          //does it work without emitting event?
-          }
-        );
-  }
-
   get(subUri:string) {
     return this.http.get(this.defaultPath + subUri)
       .toPromise()
       .then(response => response.json().data)
+      .catch(this.handleError)
+  }
+
+  put(subUri: string, data: any){
+    return this.http.put(this.defaultPath + subUri, data)
+      .toPromise()
+      .then(() => data)
+      .catch(this.handleError)
+  }
+
+  create(subUri: string, data: any){
+    return this.http.post(this.defaultPath + subUri, data)
+      .toPromise()
+      .then(res => res.json().data)
+      .catch(this.handleError)
+  }
+
+  delete(subUri: string){
+    return this.http.delete(this.defaultPath + subUri)
+      .toPromise()
+      .then(() => null)
       .catch(this.handleError)
   }
 
