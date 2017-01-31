@@ -21,11 +21,6 @@ export class UserService extends DataProviderService {
 
 }
 
-export class user {
-  private name: string;
-  private image_path: string;
-  private title: string;
-}
 
 function resource(constructor: Function){}
 
