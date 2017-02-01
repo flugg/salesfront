@@ -12,9 +12,12 @@ export class ApiService {
 
   get(subUri:string) {
     return this.http.get(this.defaultPath + subUri)
-      .toPromise()
-      .then(response => response.json().data)
+      .map(response => response.json().data)
       .catch(this.handleError)
+  }
+
+  find(subIUri:string){
+    return this.get(subIUri);
   }
 
   put(subUri: string, data: any){

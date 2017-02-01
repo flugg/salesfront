@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from "./user.service";
 import { User } from "./user";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'sf-users',
@@ -8,7 +9,7 @@ import { User } from "./user";
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  private users: User[];
+  private users: Observable<User[]>;
 
   constructor(private usrService: UserService) { }
 
@@ -17,7 +18,8 @@ export class UsersComponent implements OnInit {
   }
 
   private getUsers(){
-    this.usrService.getUsers().then(users => this.users = users);
+    this.users = this.usrService.getUsers();
+    //this.usrService.getUsers().subscribe(users => this.users = users);
   }
 
 }
