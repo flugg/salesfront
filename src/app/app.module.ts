@@ -21,6 +21,8 @@ import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.co
 import { ErrorsRouting } from "./errors/errors-routing.module";
 import { UserComponent } from './user/user.component';
 import { UserService } from "./projects/users/user.service";
+import { WebsocketService } from "./websocket.service";
+import { DataProviderService } from "./data-provider.service";
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { UserService } from "./projects/users/user.service";
   ],
   providers: [
     ApiService,
+    WebsocketService,
+    DataProviderService,
     AuthGuard,
     AuthService,
     UserService

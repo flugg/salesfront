@@ -10,13 +10,13 @@ export class ApiService {
    */
   constructor(private http: Http) { }
 
-  get(subUri:string) {
+  get(subUri:string[]) {
     return this.http.get(this.defaultPath + subUri)
       .map(response => response.json().data)
       .catch(this.handleError)
   }
 
-  find(subIUri:string){
+  find(subIUri:string[]){
     return this.get(subIUri);
   }
 

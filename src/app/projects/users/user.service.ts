@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import 'rxjs'
 
-import { ApiService } from "../../api.service";
+import { DataProviderService } from "../../data-provider.service";
 
 @Injectable()
 export class UserService {
 
   private path: string = 'users';
 
-  constructor(private api: ApiService) { }
+  constructor(
+    private provider: DataProviderService
+  ) { }
 
   getUsers(){
-    return this.api.get(this.path);
+    return this.provider.get([this.path]);
   }
 }

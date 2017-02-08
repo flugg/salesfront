@@ -1,17 +1,18 @@
-import {Injectable, EventEmitter, Inject} from '@angular/core';
-import {ApiService} from "./api.service";
+import {Injectable } from '@angular/core';
+import { ApiService } from "./api.service";
+import { WebsocketService } from "./websocket.service";
 
 @Injectable()
-export abstract class DataProviderService {
-  // set preferred emitting type in child classes
-  protected aviableData: EventEmitter<any>;
+export class DataProviderService {
 
   constructor(protected api: ApiService,
-              protected subpath: string) { }
+              private socket: WebsocketService) { }
 
-  abstract all(): any;
-  abstract get(id: string): any;
-  abstract create(data: any): any;
+  get(subUri: string[]): any{
+    let userSub = this.socket.getEvents('test', 'TestSent');
+    this.api.get(subUri).subscribe( data => userSub.next(data));
+    return userSub;
+  }
 
 
 }
