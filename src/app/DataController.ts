@@ -14,8 +14,9 @@ export class DataController{
 
   private start(channel: string, path: string[]){
     this.subject = this.service.get(path);
-    this.service.sub(channel, this.eventNamer('add')).subscribe(event => this.onAdd(event));
-    this.service.sub(channel, this.eventNamer('remove')).subscribe(event => this.onRemove(event));
+    this.service.listen(channel, this.eventNamer('add')).subscribe(event => this.onAdd(event));
+    this.service.listen(channel, this.eventNamer('remove')).subscribe(event => this.onRemove(event));
+    this.service.listen(channel, this.eventNamer('edit')).subscribe(event => this.onEdit(event));
   }
 
   private onAdd(entry?){

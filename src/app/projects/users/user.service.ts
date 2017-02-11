@@ -11,19 +11,20 @@ export class UserService {
   private users: BehaviorSubject<User[]>;
   private path: string = 'users';
 
-  private dataProvider: DataController;
 
   constructor(private provider: DataProviderService) { }
 
   getUsers(){
-    this.dataProvider = new DataController(this.provider, 'user.id', [this.path]);
-    return this.dataProvider.subject.asObservable();
+    //this.dataProvider = new DataController(this.provider, 'user.id', [this.path]);
+    //return this.dataProvider.subject.asObservable();
+    this.provider.subscribe('user.id', 'user', [this.path]);
+    return this.provider.subject.asObservable();
   }
 
   getOptional(){
     this.users = this.provider.get([this.path]);
-    this.provider.sub('project.id', 'addUser').subscribe(event => this.onAdd(event));
-    this.provider.sub('project.id', 'removeUser').subscribe(event => this.onRemove(event));
+    this.provider.listen('project.id', 'addUser').subscribe(event => this.onAdd(event));
+    this.provider.listen('project.id', 'removeUser').subscribe(event => this.onRemove(event));
     //this.provider.subscribe('project.id', 'addUser', this.onAdd);
     return this.users.asObservable();
   }
