@@ -9,7 +9,7 @@ import { Observable } from "rxjs";
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  private users: Observable<User[]>;
+  private users;
 
   constructor(private usrService: UserService) { }
 
@@ -18,8 +18,7 @@ export class UsersComponent implements OnInit {
   }
 
   private getUsers(){
-    this.users = this.usrService.getUsers();
-    //this.usrService.getUsers().subscribe(users => this.users = users);
+    this.usrService.getUsers().subscribe( users => this.users = users);
   }
 
 }

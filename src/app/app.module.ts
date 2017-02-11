@@ -23,6 +23,7 @@ import { UserComponent } from './user/user.component';
 import { UserService } from "./projects/users/user.service";
 import { WebsocketService } from "./websocket.service";
 import { DataProviderService } from "./data-provider.service";
+import { ConversationsComponent } from './conversations/conversations.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DataProviderService } from "./data-provider.service";
     NavItemComponent,
     LoginComponent,
     PageNotFoundComponent,
-    UserComponent
+    UserComponent,
+    ConversationsComponent
   ],
   imports: [
     BrowserModule,

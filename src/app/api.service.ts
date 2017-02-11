@@ -16,10 +16,6 @@ export class ApiService {
       .catch(this.handleError)
   }
 
-  find(subIUri:string[]){
-    return this.get(subIUri);
-  }
-
   put(subUri: string, data: any){
     return this.http.put(this.defaultPath + subUri, data)
       .toPromise()

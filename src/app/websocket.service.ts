@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Echo from 'laravel-echo';
-import { Observable, Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class WebsocketService {
@@ -15,14 +15,12 @@ export class WebsocketService {
       cluster: 'eu',
       encrypted: true
     });
-
-    this.getEvents('test', 'TestSent');
   }
 
   getEvents(ch:string, event:string){
-    let sub = new Subject();
-    this.echo.channel(ch).listen(event, data => {console.log(data as string);sub.next(data)});
+    let sub = new BehaviorSubject(null);
+    this.echo.channel(ch).listen(event, data => sub.next(data));
     return sub;
   }
-
 }
+
