@@ -11,27 +11,33 @@ import { WebsocketService } from "./websocket.service";
 export class DataProviderService {
   public subject: BehaviorSubject<any[]>;
 
-  private eventSuffix: string;
+  private eventPrefix: string;
+  private channel: string;
 
   constructor(protected api: ApiService,
               private socket: WebsocketService) { }
 
   subscribe(channel: string, event: string, path: string[]){
-    this.eventSuffix = event;
+    this.channel = channel;
+    this.eventPrefix = event;
     this.subject = this.get(path);
-    this.listen(channel, this.eventNamer('add')).subscribe(event => this.onAdd(event));
-    this.listen(channel, this.eventNamer('remove')).subscribe(event => this.onRemove(event));
-    this.listen(channel, this.eventNamer('edit')).subscribe(event => this.onEdit(event));
+    this.crud();
   }
 
-  get(subUri: string[]): BehaviorSubject<any>{
-    let sub = new BehaviorSubject(null);
-    this.api.get(subUri).subscribe(data => sub.next(data));
-    return sub;
+  crud(){
+    this.listen(this.channel, this.eventNamer('Added')).subscribe(event => this.onAdd(event));
+    this.listen(this.channel, this.eventNamer('Removed')).subscribe(event => this.onRemove(event));
+    this.listen(this.channel, this.eventNamer('Edited')).subscribe(event => this.onEdit(event));
   }
 
   listen(ch: string, event: string): BehaviorSubject<any>{
     let sub = this.socket.getEvents(ch, event);
+    return sub;
+  }
+
+  private get(subUri: string[]): BehaviorSubject<any>{
+    let sub = new BehaviorSubject(null);
+    this.api.get(subUri).subscribe(data => sub.next(data));
     return sub;
   }
 
@@ -53,8 +59,14 @@ export class DataProviderService {
     }
   }
 
-  private eventNamer(prefix: string): string {
-    return prefix + this.eventSuffix;
+  private eventNamer(suffix: string): string {
+    return this.eventPrefix + suffix;
   }
 
+}
+
+export class domainMap{
+  add: string;
+  remove: string;
+  edit: string
 }

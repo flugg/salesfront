@@ -7,8 +7,7 @@ import { User } from "../projects/users/user";
   styleUrls: ['./conversations.component.css']
 })
 export class ConversationsComponent implements OnInit {
-
-  private conversation: Conversation;
+  private conversation: Conversation[];
 
   constructor() { }
 
@@ -19,15 +18,26 @@ export class ConversationsComponent implements OnInit {
 
 export class Conversation{
   id: string;
-  memberIds: User[];
-  MessageIds: Message[];
+  group = false;
+  createdAt: string;
+  updatedAt: string;
+  Messages: Message[];
+  participations: User[];
 }
 
 export class Message{
-  author: string;
-  content: string;
+  id: string;
+  body: string;
+  userId: string;
   createdAt: string;
-  lastEdited: string;
+  updatedAt: string;
+  conversationId: string;
+}
+
+export class Participation{
+  id: string;
+  userId: string;
+  conversationId: string;
 }
 
 
