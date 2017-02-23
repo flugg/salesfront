@@ -10,6 +10,10 @@ export const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'user/:id',
+    loadChildren: 'app/user/user.module#UserModule'
+  },
+  {
     path: 'login',
     component: LoginComponent
   }

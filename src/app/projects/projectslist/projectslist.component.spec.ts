@@ -22,7 +22,7 @@ describe('ProjectslistComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should sendNew', () => {
     expect(component).toBeTruthy();
   });
 });

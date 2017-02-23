@@ -1,0 +1,11 @@
+<md-list>
+  <md-list-item *ngFor="let conversation of conversations">
+    <h4 *ngFor="let participation of conversation.participations"></h4>
+    <p>{{ conversation.updatedAt }}</p>
+  </md-list-item>
+</md-list>
+
+GET /conversatıons
+
+
+

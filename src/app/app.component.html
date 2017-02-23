@@ -1,5 +1,4 @@
-<md-sidenav-layout #container>
-  <app-header [canNavigate]="isAuthenticated" (userList)="myF($event)"></app-header>
+<app-header [canNavigate]="isAuthenticated" (userList)="myF($event)">
   <router-outlet></router-outlet>
   <br>
   <br>
@@ -37,4 +36,4 @@
   <br>
   <br>
   <br>
-</md-sidenav-layout>
+</app-header>

@@ -3,10 +3,7 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
 import { MaterialModule } from "@angular/material"
-import * as Echo from 'laravel-echo'
 import 'hammerjs'
-
-console.log(Echo)
 
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './header/header.component'
@@ -19,11 +16,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { ProjectsModule } from "./projects/projects.module";
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ErrorsRouting } from "./errors/errors-routing.module";
-import { UserComponent } from './user/user.component';
 import { UserService } from "./projects/users/user.service";
 import { WebsocketService } from "./websocket.service";
 import { DataProviderService } from "./data-provider.service";
-import { ConversationsComponent } from './conversations/conversations.component';
+import { ConversationsService } from "./user/conversations/conversations.service";
+import { ConversationService } from "./user/conversations/conversation/conversation.service";
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -31,17 +29,15 @@ import { ConversationsComponent } from './conversations/conversations.component'
     HeaderComponent,
     NavItemComponent,
     LoginComponent,
-    PageNotFoundComponent,
-    UserComponent,
-    ConversationsComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MaterialModule.forRoot(),
-
     AppRoutingModule,
+    SharedModule,
     ProjectsModule,
     ErrorsRouting
   ],
@@ -51,7 +47,9 @@ import { ConversationsComponent } from './conversations/conversations.component'
     DataProviderService,
     AuthGuard,
     AuthService,
-    UserService
+    UserService,
+    ConversationsService,
+    ConversationService
   ],
   bootstrap: [
     AppComponent

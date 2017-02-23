@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { BehaviorSubject } from "rxjs";
 import any = jasmine.any;
 
@@ -9,64 +8,52 @@ import { WebsocketService } from "./websocket.service";
 
 @Injectable()
 export class DataProviderService {
-  public subject: BehaviorSubject<any[]>;
-
-  private eventPrefix: string;
-  private channel: string;
 
   constructor(protected api: ApiService,
               private socket: WebsocketService) { }
 
-  subscribe(channel: string, event: string, path: string[]){
-    this.channel = channel;
-    this.eventPrefix = event;
-    this.subject = this.get(path);
-    this.crud();
-  }
-
-  crud(){
-    this.listen(this.channel, this.eventNamer('Added')).subscribe(event => this.onAdd(event));
-    this.listen(this.channel, this.eventNamer('Removed')).subscribe(event => this.onRemove(event));
-    this.listen(this.channel, this.eventNamer('Edited')).subscribe(event => this.onEdit(event));
-  }
-
-  listen(ch: string, event: string): BehaviorSubject<any>{
-    let sub = this.socket.getEvents(ch, event);
-    return sub;
-  }
-
-  private get(subUri: string[]): BehaviorSubject<any>{
-    let sub = new BehaviorSubject(null);
+  get(subUri: string){
+    let sub = new SubjectBag(null);
     this.api.get(subUri).subscribe(data => sub.next(data));
     return sub;
   }
 
-  private onAdd(entry?){
+  openChannel(subUri: string, channel: string){
+    let resourceSocket = new SubjectBag(null);
+    this.api.get(subUri).subscribe(data => resourceSocket.next(data));
+
+    resourceSocket.channel = this.socket.getChannel(channel);
+    return resourceSocket;
+  }
+
+  post(payload: any, subUri: string){
+    return this.api.create(payload, subUri);
+  }
+
+  edit(payload: any, subUri: string){
+    return this.api.put(payload, subUri);
+  }
+}
+
+export class SubjectBag extends BehaviorSubject<any[]>{
+
+  public channel: any;
+
+  public onAdd(entry?){
     if(entry === null) return;
-    this.subject.getValue().push(entry);
+    this.getValue().push(entry);
   }
 
   private onRemove(entry?){
     if(entry === null) return;
-    this.subject.getValue().splice(this.subject.getValue().indexOf(entry), 1);
+    this.getValue().splice(this.getValue().indexOf(entry), 1);
   }
 
   private onEdit(entry?){
     if(entry === null) return;
-    for (let e of this.subject.getValue()){
+    for (let e of this.getValue()){
       if(entry.id === e.id)
         e = entry;
     }
   }
-
-  private eventNamer(suffix: string): string {
-    return this.eventPrefix + suffix;
-  }
-
-}
-
-export class domainMap{
-  add: string;
-  remove: string;
-  edit: string
 }

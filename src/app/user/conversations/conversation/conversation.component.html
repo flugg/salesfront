@@ -1,0 +1,55 @@
+<md-card>
+  <md-card-title>
+    Group Members:
+    <span *ngFor="let user of conversation.participations | async">{{ user }}</span>
+  </md-card-title>
+</md-card>
+
+<ul>
+  <li>
+    <button md-icon-button class="md-primary"></button>
+    <md-card>
+      <md-card-content>bad(ass) proxy for message</md-card-content>
+      <md-card-footer>12:31 21/02</md-card-footer>
+    </md-card>
+  </li>
+  <li>
+    <button md-icon-button class="md-primary"></button>
+    <md-card>
+      <md-card-content>bad(ass) proxy for message</md-card-content>
+      <md-card-footer>12:31 21/02</md-card-footer>
+    </md-card>
+  </li>
+  <li>
+    <button md-icon-button class="md-primary"></button>
+    <md-card>
+      <md-card-content>bad(ass) proxy for message</md-card-content>
+      <md-card-footer>12:31 21/02</md-card-footer>
+    </md-card>
+  </li>
+</ul>
+
+
+<md-card>
+  <md-textarea #messageText></md-textarea>
+  <button md-button class="md-primary" (click)="sendMessage(messageText._value)">Send</button>
+</md-card>
+
+
+<!--
+<md-list>
+  <md-list-item>
+    <button md-icon-button class="md-primary"></button>
+    <md-card>
+      <md-card-content>bad(ass) proxy for message</md-card-content>
+      <md-card-footer>12:31 21/02</md-card-footer>
+    </md-card>
+  </md-list-item>
+  <md-list-item *ngFor="let message of conversation.messages | async">
+    <p>{{ message.userId }}</p>
+    <p>{{ message.updatedAt }}</p>
+    <p>{{ message.body }}</p>
+  </md-list-item>
+  <md-divider></md-divider>
+</md-list>
+-->

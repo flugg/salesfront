@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import 'rxjs'
 
-import { DataProviderService } from "../../data-provider.service";
-import { BehaviorSubject } from "rxjs";
-import { User } from "./user";
+import { DataProviderService, SubjectBag } from "../../data-provider.service";
 
 @Injectable()
 export class UserService {
-  private users: BehaviorSubject<User[]>;
+  private users: SubjectBag;
 
-  constructor(private provider: DataProviderService) { }
+  constructor(private provider: DataProviderService) {
+    this.users = this.provider.get('users');
+  }
 
   getUsers(){
-    this.provider.subscribe('user.id', 'User', ['users']);
-    return this.provider.subject.asObservable();
+    return this.users;
   }
 }
 

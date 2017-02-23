@@ -10,20 +10,20 @@ export class ApiService {
    */
   constructor(private http: Http) { }
 
-  get(subUri:string[]) {
+  get(subUri:string) {
     return this.http.get(this.defaultPath + subUri)
       .map(response => response.json().data)
       .catch(this.handleError)
   }
 
-  put(subUri: string, data: any){
+  put(data: any, subUri: string){
     return this.http.put(this.defaultPath + subUri, data)
       .toPromise()
       .then(() => data)
       .catch(this.handleError)
   }
 
-  create(subUri: string, data: any){
+  create(data: any, subUri: string){
     return this.http.post(this.defaultPath + subUri, data)
       .toPromise()
       .then(res => res.json().data)

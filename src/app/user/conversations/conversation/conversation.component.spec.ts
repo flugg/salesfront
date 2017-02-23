@@ -3,26 +3,26 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ConversationsComponent } from './conversations.component';
+import { ConversationComponent } from './conversation.component';
 
-describe('ConversationsComponent', () => {
-  let component: ConversationsComponent;
-  let fixture: ComponentFixture<ConversationsComponent>;
+describe('ConversationComponent', () => {
+  let component: ConversationComponent;
+  let fixture: ComponentFixture<ConversationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConversationsComponent ]
+      declarations: [ ConversationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConversationsComponent);
+    fixture = TestBed.createComponent(ConversationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should sendNew', () => {
     expect(component).toBeTruthy();
   });
 });
