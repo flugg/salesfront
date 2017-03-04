@@ -16,12 +16,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { ProjectsModule } from "./projects/projects.module";
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ErrorsRouting } from "./errors/errors-routing.module";
-import { UserService } from "./projects/users/user.service";
 import { WebsocketService } from "./websocket.service";
 import { DataProviderService } from "./data-provider.service";
 import { ConversationsService } from "./user/conversations/conversations.service";
-import { ConversationService } from "./user/conversations/conversation/conversation.service";
+import { MessageService } from "./user/conversations/conversation/message.service";
 import { SharedModule } from "./shared/shared.module";
+import { UserService } from "./user/user.service";
 
 @NgModule({
   declarations: [
@@ -42,14 +42,15 @@ import { SharedModule } from "./shared/shared.module";
     ErrorsRouting
   ],
   providers: [
+    AuthService,
     ApiService,
     WebsocketService,
     DataProviderService,
     AuthGuard,
-    AuthService,
-    UserService,
     ConversationsService,
-    ConversationService
+    MessageService,
+    UserService
+
   ],
   bootstrap: [
     AppComponent

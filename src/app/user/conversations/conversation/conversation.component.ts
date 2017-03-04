@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ConversationService } from "./conversation.service";
+import { MessageService } from "./message.service";
 import { ActivatedRoute } from "@angular/router";
+import { ConversationsService } from "../conversations.service";
+import { Conversation, Message } from "../../../shared/templates";
 
 @Component({
   selector: 'sf-conversation',
@@ -8,29 +10,34 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ['./conversation.component.css']
 })
 export class ConversationComponent implements OnInit {
-  private conversation;
-  private uri = 'conversations/1';
+  private conversation: Conversation;
+  private messages: Message[];
 
-  constructor(private service: ConversationService,
+  constructor(private conversationService: ConversationsService,
+              private messageService: MessageService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    let socket = this.service.getConversation(this.uri);
-    socket.subscribe(data => this.conversation = data);
-    this.conversation = socket; // TODO: hack until api is up, remove async pipe with this
+    let conversationSubject = this.conversationService.find(this.route.snapshot.url[0].path);
+    conversationSubject.subscribe(d => this.conversation = d as Conversation);
 
-    this.service.onNewMessage().subscribe(e => console.log('new message added by ' + e.userId + ' saying:\n' + e.body));
-    this.service.onDeleteMessage();
-    this.service.onEditMessage();
+    let messageSubject = this.messageService.all(this.route.snapshot.url[0].path);
+    messageSubject.subscribe(d => this.messages = d as Message[]);
 
-    this.service.onNewParticipation().subscribe(e => this.conversation.getValue().messages.push(e));
-    this.service.onDeleteParticipation();
+    this.messageService
+      .onPost(messageSubject, this.onNewMessage)
+      .onEdit(messageSubject)
+      .onDelete(messageSubject);
+
+
   }
 
   sendMessage(message: string){
-    if(message.length < 1)
-      return;
-    let response = this.service.sendNew(message, this.uri);
+    let response = this.conversationService.sendNew(message, this.route.snapshot.url[0].path);
+  }
+
+  onNewMessage(message){
+
   }
 
 
@@ -40,5 +47,4 @@ export class ConversationComponent implements OnInit {
     console.log(url);
     return url;
   }
-
 }

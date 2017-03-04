@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConversationsService } from "./conversations.service";
+import { Conversation } from "../../shared/templates";
 
 @Component({
   selector: 'sf-conversations',
@@ -7,13 +8,20 @@ import { ConversationsService } from "./conversations.service";
   styleUrls: ['conversations.component.css']
 })
 export class ConversationsComponent implements OnInit {
-  private conversations;
+  private conversations: Conversation[];
 
   constructor(private service: ConversationsService) { }
 
   ngOnInit() {
-    this.service.getConversations().subscribe(data => this.conversations = data);
+    let conversationsSubject = this.service.all();
+    conversationsSubject.subscribe(data => this.conversations = data as Conversation[]);
+
+    this.service
+      .onPost(conversationsSubject)
+      .onParticipantAdded(conversationsSubject)
+      .onParticipantRemoved(conversationsSubject);
   }
+
 
 }
 

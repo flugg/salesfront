@@ -3,7 +3,7 @@ export class Conversation{
   group = false;
   createdAt: string;
   updatedAt: string;
-  messages: Message[];
+  lastMessage: Message;
   participations: Participation[];
 }
 

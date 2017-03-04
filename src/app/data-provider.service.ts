@@ -12,16 +12,13 @@ export class DataProviderService {
   constructor(protected api: ApiService,
               private socket: WebsocketService) { }
 
-  get(subUri: string){
-    let sub = new SubjectBag(null);
-    this.api.get(subUri).subscribe(data => sub.next(data));
-    return sub;
+  get(subUri: string, param?: string){
+    param? param = '?' + param : param = '';
+    return this.api.get(subUri + param) as BehaviorSubject<any>;
   }
 
-  openChannel(subUri: string, channel: string){
-    let resourceSocket = new SubjectBag(null);
-    this.api.get(subUri).subscribe(data => resourceSocket.next(data));
-
+  openChannel(subUri: string, channel: string): SubjectBag{
+    let resourceSocket = this.get(subUri) as SubjectBag; //.subscribe(data => resourceSocket.next(data));
     resourceSocket.channel = this.socket.getChannel(channel);
     return resourceSocket;
   }
@@ -35,21 +32,20 @@ export class DataProviderService {
   }
 }
 
-export class SubjectBag extends BehaviorSubject<any[]>{
+export class SubjectBag extends BehaviorSubject<any>{
+  public channel;
 
-  public channel: any;
-
-  public onAdd(entry?){
+  public add(entry?){
     if(entry === null) return;
     this.getValue().push(entry);
   }
 
-  private onRemove(entry?){
+  public remove(entry?){
     if(entry === null) return;
     this.getValue().splice(this.getValue().indexOf(entry), 1);
   }
 
-  private onEdit(entry?){
+  public edit(entry?){
     if(entry === null) return;
     for (let e of this.getValue()){
       if(entry.id === e.id)
@@ -57,3 +53,4 @@ export class SubjectBag extends BehaviorSubject<any[]>{
     }
   }
 }
+
