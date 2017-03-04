@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { HttpModule } from '@angular/http'
+import { HttpModule, RequestOptions, Http } from '@angular/http'
 import { MaterialModule } from "@angular/material"
 import 'hammerjs'
 
@@ -22,6 +22,11 @@ import { ConversationsService } from "./user/conversations/conversations.service
 import { MessageService } from "./user/conversations/conversation/message.service";
 import { SharedModule } from "./shared/shared.module";
 import { UserService } from "./user/user.service";
+import { provideAuth, AuthConfig, AuthHttp } from "angular2-jwt";
+
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp( new AuthConfig({}), http, options);
+}
 
 @NgModule({
   declarations: [
@@ -42,6 +47,11 @@ import { UserService } from "./user/user.service";
     ErrorsRouting
   ],
   providers: [
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [ Http, RequestOptions ]
+    },
     AuthService,
     ApiService,
     WebsocketService,

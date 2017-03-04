@@ -10,7 +10,7 @@ export const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'user/:id',
+    path: 'users/:id',
     loadChildren: 'app/user/user.module#UserModule'
   },
   {

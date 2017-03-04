@@ -24,7 +24,7 @@ export class ApiService {
 
   get(subUri:string) {
     console.log(localStorage.getItem('id_token'))
-    return this.http.get(this.apiPath + subUri, this.options)
+    return this.http.get(this.apiPath + subUri)
       .map(response => response.json().data)
       .catch(this.handleError)
   }
