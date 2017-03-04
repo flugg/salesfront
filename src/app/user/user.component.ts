@@ -14,7 +14,7 @@ export class UserComponent implements OnInit {
   }
 
   getNew(){
-    this.service.all();
+    this.service.find('42').subscribe(d => console.log(d.toString));
   }
 
 }
