@@ -12,8 +12,7 @@ export class ApiService {
   /**
    * Construct the service.
    */
-  constructor(private http: Http,
-              private auth: AuthService) {
+  constructor(private http: AuthHttp, private auth: AuthService) {
     this.options = new RequestOptions(
       {
         headers: new Headers
@@ -24,6 +23,7 @@ export class ApiService {
   }
 
   get(subUri:string) {
+    console.log(localStorage.getItem('id_token'))
     return this.http.get(this.apiPath + subUri, this.options)
       .map(response => response.json().data)
       .catch(this.handleError)
@@ -55,12 +55,3 @@ export class ApiService {
     return Promise.reject(error.message || error);
   }
 }
-
-/*
- create(data: any, subUri: string){
- let options = this.getOptions();
- return this.http.post(this.apiPath + subUri, data, options)
- .toPromise()
- .then(res => res.json())
- .catch(this.handleError)
- }*/

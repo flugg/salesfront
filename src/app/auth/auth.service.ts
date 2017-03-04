@@ -12,16 +12,16 @@ export class AuthService {
    * Construct the service.
    */
   constructor(private http: Http) {
-    this.grantToken();
+    if(!localStorage.getItem('id_token'))
+      this.grantToken({
+        email: 'test@test.com',
+        password: 'test'
+      });
   }
 
-  grantToken(){
-    let query = {
-      email: 'test@test.com',
-      password: 'test'
-    };
-    this.token = this.requestToken(query)
-      .map(r =>   r.token)
+  grantToken(userCredentials?){
+    this.token = this.requestToken(userCredentials)
+      .map(r => r.token)
       .subscribe(t => localStorage.setItem('id_token', t));
   }
 

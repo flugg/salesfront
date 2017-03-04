@@ -14,7 +14,5 @@ export class AppComponent {
   /**
    * Construct the component.
    */
-  constructor(private auth: AuthService) {
-    auth.grantToken();
-  }
+  constructor(private auth: AuthService) {}
 }
