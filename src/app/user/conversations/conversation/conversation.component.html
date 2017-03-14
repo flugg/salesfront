@@ -1,14 +1,19 @@
 <md-card>
   <md-card-title>
     Group Members:
-    <span *ngFor="let user of conversation?.participations">{{ user }}</span>
+    <button md-raised-button *ngFor="let p of conversation?.participations">{{ p.user.name }}</button>
   </md-card-title>
 </md-card>
 
 <ul>
-  <li *ngFor="let message of messages">
+  <li *ngFor="let message of messages" [sfMessage]="true">
     <button md-icon-button class="md-primary"></button>
     <md-card>
+      <md-card-header>
+        <md-card-title>
+          Kek
+        </md-card-title>
+      </md-card-header>
       <md-card-content>{{ message.body }}</md-card-content>
       <md-card-footer>{{ message.updatedAt }}</md-card-footer>
     </md-card>

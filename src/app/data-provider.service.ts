@@ -17,9 +17,7 @@ export class DataProviderService {
   }
 
   openChannel(subUri: string, channel: string): SubjectBag{
-    let resourceSocket = new SubjectBag(this.get(subUri), this.socket.getChannel(channel));
-    console.log(resourceSocket);
-    return resourceSocket;
+    return new SubjectBag(this.get(subUri), this.socket.getChannel(channel));
   }
 
   post(payload: any, subUri: string){

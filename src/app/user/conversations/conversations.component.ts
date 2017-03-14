@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConversationsService } from "./conversations.service";
 import { Conversation } from "../../shared/templates";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'sf-conversations',
@@ -10,7 +11,7 @@ import { Conversation } from "../../shared/templates";
 export class ConversationsComponent implements OnInit {
   private conversations: Conversation[];
 
-  constructor(private service: ConversationsService) { }
+  constructor(private service: ConversationsService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     let conversationsSubject = this.service.all();
@@ -24,9 +25,13 @@ export class ConversationsComponent implements OnInit {
   }
 
   participationName(conversation, id){
-    for(let p of this.conversations[this.conversations.indexOf(conversation)].participations){
+    for(let p of conversation.participations){
       if(p.user.id == id) return p.user.name;
     }
+  }
+
+  navigate(id){
+    this.router.navigate([id], { relativeTo: this.route });
   }
 }
 

@@ -3,7 +3,6 @@ import { DataProviderService } from "../../../data-provider.service";
 
 @Injectable()
 export class MessageService {
-  path = 'messages'
 
   constructor(private provider: DataProviderService) { }
 

@@ -27,7 +27,7 @@ export class ConversationsService {
 
   onPost(subject, callback?){
     subject.channel.listen('Messaging.ConversationStarted', conversation => {
-    console.log(conversation);
+    console.log("happening");
       if(callback) callback(conversation);
       subject.getValue().push(conversation);
     });

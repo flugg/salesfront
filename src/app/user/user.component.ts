@@ -12,9 +12,4 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  getNew(){
-    this.service.find('42').subscribe(d => console.log(d.toString));
-  }
-
 }

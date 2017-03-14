@@ -1,6 +1,6 @@
 <md-list>
-  <md-list-item *ngFor="let conversation of conversations">
-    <span *ngFor="let participation of conversation.participations" [ngStyle]="{'margin': '2%'}">{{ participation.user.name }}</span>
+  <md-list-item *ngFor="let conversation of conversations" (click)="navigate(conversation.id)">
+    <button md-raised-button *ngFor="let participation of conversation.participations" [ngStyle]="{'margin': '2%'}">{{ participation.user.name }}</button>
     <div layout="row">
       <p>{{ participationName(conversation, conversation.lastMessage?.userId) }}:</p>
       <p>{{ conversation.lastMessage }}</p>

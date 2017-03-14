@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Headers, RequestOptions, Http } from '@angular/http';
-import { AuthService } from "./auth/auth.service";
+import { Headers, RequestOptions } from '@angular/http';
 import { AuthHttp } from "angular2-jwt";
 
 @Injectable()
 export class ApiService {
-
-  private prototypePath: string = 'http://fi3nbv9q5aclaq95k-mock.stoplight-proxy.io/';
   private apiPath = 'http://api.vendumo.com/';
   private options;
   /**
    * Construct the service.
    */
-  constructor(private http: AuthHttp, private auth: AuthService) {
+  constructor(private http: AuthHttp) {
+
+    // TODO Test before depricating
     this.options = new RequestOptions(
       {
         headers: new Headers
@@ -23,28 +22,27 @@ export class ApiService {
   }
 
   get(subUri:string) {
-    console.log(localStorage.getItem('id_token'))
     return this.http.get(this.apiPath + subUri)
       .map(response => response.json().data)
       .catch(this.handleError)
   }
 
   put(data: any, subUri: string){
-    return this.http.put(this.apiPath + subUri, data, this.options)
+    return this.http.put(this.apiPath + subUri, data)
       .toPromise()
       .then(() => data)
       .catch(this.handleError)
   }
 
   create(data: any, subUri: string){
-    return this.http.post(this.apiPath + subUri, data, this.options)
+    return this.http.post(this.apiPath + subUri, data)
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError)
   }
 
   delete(subUri: string){
-    return this.http.delete(this.apiPath + subUri, this.options)
+    return this.http.delete(this.apiPath + subUri)
       .toPromise()
       .then(() => null)
       .catch(this.handleError)

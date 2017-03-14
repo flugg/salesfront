@@ -18,10 +18,11 @@ export class ConversationComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    let conversationSubject = this.conversationService.find(this.route.snapshot.url[0].path);
+    let path = this.route.snapshot.url[0].path;
+    let conversationSubject = this.conversationService.find(path);
     conversationSubject.subscribe(d => this.conversation = d as Conversation);
 
-    let messageSubject = this.messageService.all(this.route.snapshot.url[0].path);
+    let messageSubject = this.messageService.all(path);
     messageSubject.subscribe(d => this.messages = d as Message[]);
 
     this.messageService
@@ -44,7 +45,6 @@ export class ConversationComponent implements OnInit {
   getFullPath(){
     let url = [];
     this.route.pathFromRoot.map(entry => entry.snapshot.url.map(data => data.path).forEach(e => url.push(e)));
-    console.log(url);
     return url;
   }
 }
