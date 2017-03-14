@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpModule, RequestOptions, Http } from '@angular/http'
 import { MaterialModule } from "@angular/material"
-import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import 'hammerjs'
 
 import { AppComponent } from './app.component'
@@ -23,6 +23,7 @@ import { ConversationsService } from "./user/conversations/conversations.service
 import { MessageService } from "./user/conversations/conversation/message.service";
 import { SharedModule } from "./shared/shared.module";
 import { UserService } from "./user/user.service";
+import { ProjectService } from "./projects/project.service";
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp( new AuthConfig({}), http, options);
@@ -59,7 +60,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AuthGuard,
     ConversationsService,
     MessageService,
-    UserService
+    UserService,
+    ProjectService
 
   ],
   bootstrap: [

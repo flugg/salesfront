@@ -1,3 +1,27 @@
-<p>
-  login works!
-</p>
+<div mdContainer>
+  <h3>Login</h3>
+  <form>
+    <md-list>
+      <md-list-item>
+        <md-input-container>
+          <input mdInput placeholder="Email" type="email" required #email>
+        </md-input-container>
+          {{ email.value.length }}
+      </md-list-item>
+      <div [hidden]="email.checkValidity() && email.value.length > 0">
+        Name is required
+      </div>
+
+
+      <md-list-item>
+        <md-input-container>
+          <input mdInput placeholder="Password" type="password" required #psw>
+        </md-input-container>
+      </md-list-item>
+
+      <md-list-item>
+        <button type="submit" md-raised-button (click)="onSubmit(email.value, psw.value)">Login</button>
+      </md-list-item>
+    </md-list>
+  </form>
+</div>

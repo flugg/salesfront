@@ -1,3 +1,6 @@
-<p>
-  projectslist works!
-</p>
+<md-list>
+  <md-list-item *ngFor="let project of projects" onclick="chooseProject()">
+    <img md-list-avatar src="{{ project.image }}">
+    <h2>{{ project.name }}</h2>
+  </md-list-item>
+</md-list>

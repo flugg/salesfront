@@ -1,7 +1,10 @@
 <md-list>
   <md-list-item *ngFor="let conversation of conversations">
-    <h4 *ngFor="let participation of conversation.participations"></h4>
-    <p>{{ conversation.lastMessage}}</p>
+    <span *ngFor="let participation of conversation.participations" [ngStyle]="{'margin': '2%'}">{{ participation.user.name }}</span>
+    <div layout="row">
+      <p>{{ participationName(conversation, conversation.lastMessage?.userId) }}:</p>
+      <p>{{ conversation.lastMessage }}</p>
+    </div>
     <footer>{{ conversation.updatedAt }}</footer>
   </md-list-item>
 </md-list>

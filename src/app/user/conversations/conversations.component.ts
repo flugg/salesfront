@@ -18,11 +18,16 @@ export class ConversationsComponent implements OnInit {
 
     this.service
       .onPost(conversationsSubject)
+      .lastMessage(conversationsSubject)
       .onParticipantAdded(conversationsSubject)
       .onParticipantRemoved(conversationsSubject);
   }
 
-
+  participationName(conversation, id){
+    for(let p of this.conversations[this.conversations.indexOf(conversation)].participations){
+      if(p.user.id == id) return p.user.name;
+    }
+  }
 }
 
 

@@ -17,6 +17,8 @@
 
 
 <md-card ngClass="input-field">
-  <md-textarea #messageText></md-textarea>
-  <button md-button class="md-primary" (click)="sendMessage(messageText._value)">Send</button>
+  <md-input-container>
+    <input mdInput placeholder="Favorite food" value="Sushi" #messageText>
+  </md-input-container>
+  <button md-button class="md-primary" (click)="sendMessage(messageText.value)">Send</button>
 </md-card>

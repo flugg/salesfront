@@ -17,21 +17,21 @@ export class UserService {
   }
 
   onPost(subject, callback?){
-    subject.listen('ProjectAdded', user => {
+    subject.listen('UserAdded', user => {
       subject.add(user);
       callback(user);
     })
   }
 
   onEdit(subject, callback?){
-    subject.listen('ProjectEdited', user => {
+    subject.listen('UserEdited', user => {
       subject.edit(user);
       callback(user);
     })
   }
 
   onRemove(subject, callback?){
-    subject.listen('ProjectRemoved', user => {
+    subject.listen('UserRemoved', user => {
       subject.remove(user);
       callback(user);
     })

@@ -1,3 +1,4 @@
+import { User } from "./user";
 export class Conversation{
   id: string;
   group = false;
@@ -18,7 +19,7 @@ export class Message{
 
 export class Participation{
   id: string;
-  userId: string;
+  user: User;
   conversationId: string;
 }
 
@@ -28,10 +29,14 @@ export class UserConversationSession{
   updatedAt: string;
 }
 
-
 export class Session{
   token: string;
   userId: string;
   projectId: string;
   role: string;
+}
+
+
+export class project{
+  constructor(public name, public image){}
 }

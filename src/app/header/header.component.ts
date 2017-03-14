@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from "../auth/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -6,7 +7,6 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  @Input() canNavigate: boolean;
 
   private items: string[][];
   private currentUser: string;
@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   /**
    * Construct the component.
    */
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   /**
    * Initialize the component.

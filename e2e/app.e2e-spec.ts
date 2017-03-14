@@ -1,14 +1,14 @@
-import { DanieltestPage } from './app.po';
+import { SfPage } from './app.po';
 
-describe('danieltest App', function() {
-  let page: DanieltestPage;
+describe('sf App', () => {
+  let page: SfPage;
 
   beforeEach(() => {
-    page = new DanieltestPage();
+    page = new SfPage();
   });
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('sf works!');
   });
 });

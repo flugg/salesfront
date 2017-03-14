@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { DataProviderService, SubjectBag } from "../../data-provider.service";
-import { isUndefined } from "util";
 
 @Injectable()
 export class ConversationsService {
@@ -8,7 +7,7 @@ export class ConversationsService {
   constructor(private provider: DataProviderService) {}
 
   all(){
-    return this.provider.openChannel('conversations', 'user.id');
+    return this.provider.openChannel('conversations', 'users.1');
   }
 
   find(id: string): SubjectBag {
@@ -27,11 +26,20 @@ export class ConversationsService {
   }
 
   onPost(subject, callback?){
-    subject.channel.listen('MessageSent', message => {
-      callback(message);
-      subject.getValue().lastMessage = message;
+    subject.channel.listen('Messaging.ConversationStarted', conversation => {
+    console.log(conversation);
+      if(callback) callback(conversation);
+      subject.getValue().push(conversation);
     });
     return this;
+  }
+
+  lastMessage(subject, callback?){
+    subject.channel.listen('MessageAdded', message => {
+      callback(message.conversationId);
+      subject.findById(message.conversationId).lastMessage = message;
+    });
+      return this;
   }
 
   onParticipantAdded(subject, callback?){
@@ -43,9 +51,10 @@ export class ConversationsService {
   }
 
   onParticipantRemoved(subject, callback?){
-    subject.channel.listen('ParticipantAdded', p => {
+    subject.channel.listen('ParticipantRemoved', p => {
       callback(p);
-      subject.getValue().splice(subject.getValue().indexOf(p), 1);
+      let c = subject.findById(p.conversationId);
+      c.splice(c.participations.indexOf(p), 1);
     });
     return this;
   }

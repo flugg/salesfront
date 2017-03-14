@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
-import any = jasmine.any;
 
 import { ApiService } from "./api.service";
 import { WebsocketService } from "./websocket.service";
@@ -14,12 +13,12 @@ export class DataProviderService {
 
   get(subUri: string, param?: string){
     param? param = '?' + param : param = '';
-    return this.api.get(subUri + param) as BehaviorSubject<any>;
+    return this.api.get(subUri + param);
   }
 
   openChannel(subUri: string, channel: string): SubjectBag{
-    let resourceSocket = this.get(subUri) as SubjectBag; //.subscribe(data => resourceSocket.next(data));
-    resourceSocket.channel = this.socket.getChannel(channel);
+    let resourceSocket = new SubjectBag(this.get(subUri), this.socket.getChannel(channel));
+    console.log(resourceSocket);
     return resourceSocket;
   }
 
@@ -34,6 +33,12 @@ export class DataProviderService {
 
 export class SubjectBag extends BehaviorSubject<any>{
   public channel;
+
+  constructor(observable, channel){
+    super(null);
+    observable.subscribe(d => this.next(d));
+    this.channel = channel;
+  }
 
   public add(entry?){
     if(entry === null) return;
@@ -50,6 +55,12 @@ export class SubjectBag extends BehaviorSubject<any>{
     for (let e of this.getValue()){
       if(entry.id === e.id)
         e = entry;
+    }
+  }
+
+  public findById(id){
+    for(let o of this.getValue()){
+      if(o.id === id) return o;
     }
   }
 }

@@ -44,7 +44,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     authState.subscribe(
       authCondition => {if(!authCondition) this.router.navigate(['/login'])}
     );
-
     return authState;
   }
 }
