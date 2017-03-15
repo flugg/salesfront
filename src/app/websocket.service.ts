@@ -7,6 +7,7 @@ export class WebsocketService {
   private echo;
 
   constructor() {
+    console.log(Echo);
     this.echo = new Echo({
       broadcaster: 'pusher',
       key: '22dde1271dab2d4b1da0',

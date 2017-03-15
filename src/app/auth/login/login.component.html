@@ -1,10 +1,10 @@
 <div mdContainer>
   <h3>Login</h3>
-  <form>
+  <form novalidate>
     <md-list>
       <md-list-item>
         <md-input-container>
-          <input mdInput placeholder="Email" type="email" required #email>
+          <input mdInput placeholder="Email" type="email" required #email value="test@test.com">
         </md-input-container>
           {{ email.value.length }}
       </md-list-item>
@@ -15,7 +15,7 @@
 
       <md-list-item>
         <md-input-container>
-          <input mdInput placeholder="Password" type="password" required #psw>
+          <input mdInput placeholder="Password" type="password" required #psw value="test">
         </md-input-container>
       </md-list-item>
 

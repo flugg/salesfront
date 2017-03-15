@@ -15,7 +15,7 @@ export class ConversationsComponent implements OnInit {
 
   ngOnInit() {
     let conversationsSubject = this.service.all();
-    conversationsSubject.subscribe(data => this.conversations = data as Conversation[]);
+    conversationsSubject.subscribe(data => this.conversations = data );
 
     this.service
       .onPost(conversationsSubject)

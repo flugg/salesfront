@@ -24,7 +24,7 @@ import { MessageService } from "./user/conversations/conversation/message.servic
 import { SharedModule } from "./shared/shared.module";
 import { UserService } from "./user/user.service";
 import { ProjectService } from "./projects/project.service";
-import { LayoutModule } from "ng2-flex-layout";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp( new AuthConfig({}), http, options);
@@ -43,11 +43,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FormsModule,
     HttpModule,
     MaterialModule,
-    LayoutModule,
     AppRoutingModule,
     SharedModule,
     ProjectsModule,
-    ErrorsRouting
+    ErrorsRouting,
+    FlexLayoutModule
   ],
   providers: [
     {

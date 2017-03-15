@@ -7,7 +7,6 @@ import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthService {
-  public token;
 
   /**
    * Construct the service.
@@ -15,32 +14,34 @@ export class AuthService {
   constructor(private http: Http, private router: Router) {}
 
   login(email, psw){
-    this.token = localStorage.getItem('id_token');
-    if(!this.token)
+    let token = localStorage.getItem('id_token');
+    if(!token) {
       this.grantToken({
         email: email,
         password: psw
       });
+      console.log(token);
+    }
+
     this.isAuthenticated().subscribe( res => {
-      if(res){
-        console.log('auth redir');
-        let projectUrl = '/projects';
-        let currentProject = localStorage.getItem('current_project');
-        if(currentProject) projectUrl += '/' + currentProject;
-        this.router.navigateByUrl(projectUrl);
-      }
+      console.log(res);
+      if(tokenNotExpired() || res)
+        this.navigateToLanding();
     });
   }
 
   grantToken(userCredentials?){
-    this.token = this.requestToken(userCredentials)
-        .map(r => r.token)
-        .subscribe(t => localStorage.setItem('id_token', t));
+    this.requestToken(userCredentials)
+        //.map(r => r.token)
+        .subscribe(t => {
+          localStorage.setItem('id_token', t.token);
+          localStorage.setItem('current_user', t.data.id);
+        });
   }
 
   private requestToken(query: any){
     return this.http.post('http://api.vendumo.com/tokens', query)
-      .map(res => res.json())
+      .map(res => res.json());
   }
 
   /**
@@ -48,5 +49,12 @@ export class AuthService {
    */
   isAuthenticated(): Observable<boolean> {
     return Observable.of(tokenNotExpired());
+  }
+
+  navigateToLanding(){
+    let projectUrl = '/projects';
+    let currentProject = localStorage.getItem('current_project');
+    if(currentProject) projectUrl += '/' + currentProject;
+    this.router.navigateByUrl(projectUrl);
   }
 }
