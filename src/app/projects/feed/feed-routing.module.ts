@@ -1,23 +1,24 @@
-import {Routes, RouterModule} from '@angular/router'
+import { Routes, RouterModule } from '@angular/router';
 
-import { FeedComponent } from './feed.component'
-import { NgModule } from "@angular/core";
+import { FeedComponent } from './feed.component';
+import { NgModule } from '@angular/core';
 
 const feedRoutes: Routes = [
-    //{ path: '', redirectTo: '/feed', pathMatch: 'full' },
-    {
-      path: '',
-      component: FeedComponent
-    }
-]
+  //{ path: '', redirectTo: '/feed', pathMatch: 'full' },
+  {
+    path: '',
+    component: FeedComponent,
+  },
+];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(feedRoutes)
+    RouterModule.forChild(feedRoutes),
   ],
   exports: [
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
 
-export class FeedRoutingModule {}
+export class FeedRoutingModule {
+}

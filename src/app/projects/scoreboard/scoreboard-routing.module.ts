@@ -1,8 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { ScoreboardComponent } from './scoreboard.component';
-import { NgModule } from "@angular/core";
-import { ScoreboardlistsComponent } from "./scoreboardlists/scoreboardlists.component";
+import { NgModule } from '@angular/core';
+import { ScoreboardlistsComponent } from './scoreboardlists/scoreboardlists.component';
 
 const scoreboardRoutes: Routes = [
   {
@@ -11,19 +11,20 @@ const scoreboardRoutes: Routes = [
     children: [
       {
         path: '',
-        component: ScoreboardlistsComponent
-      }
-    ]
-  }
-]
+        component: ScoreboardlistsComponent,
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(scoreboardRoutes)
+    RouterModule.forChild(scoreboardRoutes),
   ],
   exports: [
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
 
-export class ScoreboardRoutingModule {}
+export class ScoreboardRoutingModule {
+}

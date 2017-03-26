@@ -3,17 +3,19 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'sf-scoreboard',
   templateUrl: 'scoreboard.component.html',
-  styleUrls: ['scoreboard.component.css']
+  styleUrls: ['scoreboard.component.css'],
 })
 export class ScoreboardComponent implements OnInit {
 
   /**
    * Construct the component.
    */
-  constructor() { }
+  constructor() {
+  }
 
   /**
    * Initialize the component.
    */
-  ngOnInit() { }
+  ngOnInit() {
+  }
 }

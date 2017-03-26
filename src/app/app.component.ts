@@ -1,15 +1,15 @@
-import { Component } from '@angular/core'
-
-import { AuthService } from './auth/auth.service'
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'sf-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   /**
-   * Construct the component.
+   * Constructs the component.
    */
-  constructor() {}
+  constructor() {
+    //
+  }
 }

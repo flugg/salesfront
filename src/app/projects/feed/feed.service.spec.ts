@@ -6,7 +6,7 @@ import { FeedService } from './feed.service';
 describe('FeedService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FeedService]
+      providers: [FeedService],
     });
   });
 

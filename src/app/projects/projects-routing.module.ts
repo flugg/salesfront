@@ -1,8 +1,8 @@
-import { Routes, RouterModule } from "@angular/router";
-import { ProjectsComponent } from "./projects.component";
-import { NgModule } from "@angular/core";
-import {ProjectslistComponent} from "./projectslist/projectslist.component";
-import { AuthGuard } from "../auth/auth-guard.service";
+import { Routes, RouterModule } from '@angular/router';
+import { ProjectsComponent } from './projects.component';
+import { NgModule } from '@angular/core';
+import { ProjectslistComponent } from './projectslist/projectslist.component';
+import { AuthGuard } from '../core/auth/auth-guard.service';
 
 const prefixPath: string = 'app/projects/';
 
@@ -22,44 +22,45 @@ const projectsRoutes: Routes = [
       {
         path: 'scoreboard',
         redirectTo: './scoreboard',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'feed',
-        loadChildren: prefixPath + 'feed/feed.module#FeedModule'
+        loadChildren: prefixPath + 'feed/feed.module#FeedModule',
       },
       {
         path: 'users',
-        loadChildren: prefixPath + 'users/users.module#UsersModule'
+        loadChildren: prefixPath + 'users/users.module#UsersModule',
       }
       ,
       {
         path: 'teams',
-        loadChildren: prefixPath + 'teams/teams.module#TeamsModule'
+        loadChildren: prefixPath + 'teams/teams.module#TeamsModule',
       },
       {
         path: 'budget',
-        loadChildren: prefixPath + 'budget/budget.module#BudgetModule'
+        loadChildren: prefixPath + 'budget/budget.module#BudgetModule',
       },
       {
         path: 'sales',
-        loadChildren: prefixPath + 'sales/sales.module#SalesModule'
+        loadChildren: prefixPath + 'sales/sales.module#SalesModule',
       },
       {
         path: 'settings',
-        loadChildren: prefixPath + 'settings/settings.module#SettingsModule'
-      }
-    ]
-  }
+        loadChildren: prefixPath + 'settings/settings.module#SettingsModule',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(projectsRoutes)
+    RouterModule.forChild(projectsRoutes),
   ],
   exports: [
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
 
-export class ProjectsRoutingModule {}
+export class ProjectsRoutingModule {
+}

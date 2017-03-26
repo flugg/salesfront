@@ -1,2 +1,107 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+
+body {
+    margin: 0;
+}
+
+html, body, md-sidenav-container {
+    height: 100%;
+}
+
+md-sidenav {
+    width: 200px;
+}
+
+md-list-item {
+    position: relative;
+}
+
+.mat-sidenav-container {
+    background: #f2f2f2;
+}
+
+[md-ripple] {
+    cursor: pointer;
+}
+
+.comma-separated:not(:last-child)::after {
+    content: ', ';
+}
+
+.toolbar-heading {
+    padding: 0 16px;
+}
+
+.card-list .mat-list-item {
+    background: white;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.conversation {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: calc(100% - 122px);
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.conversation > div {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding: 16px 0;
+}
+
+.conversation .mat-list-item-content:not(:last-child) {
+    align-items: flex-start;
+    height: 100% !important;
+    margin-bottom: 16px;
+}
+
+.conversation .mat-card {
+    padding: 12px;
+    margin: 0 16px;
+}
+
+.bottom-input {
+    position: fixed !important;
+    bottom: 0;
+    width: calc(100% - 32px);
+    padding: 8px 16px 0 !important;
+}
+
+.bottom-input .mat-input-container {
+    flex: 1 1 auto;
+}
+
+.bottom-input .mat-input-underline {
+    opacity: 0;
+}
+
+.bottom-input .mat-input-placeholder {
+    transform: none !important;
+}
+
+.bottom-input .mat-input-placeholder.mat-focused {
+    color: rgba(0, 0, 0, .38);
+}
+
+.bottom-input .mat-input-placeholder:not(.mat-empty) {
+    display: none !important;
+}
+
+.fill-space {
+    flex: 1 1 auto;
+}
+
+.own-message {
+    order: -1;
+    background: #2175FF;
+    color: white;
+}
+
+.accent-icon-button {
+    color: #2175FF !important;
+}

@@ -1,30 +1,38 @@
-import { Routes, RouterModule } from '@angular/router'
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from "./auth/login/login.component";
+import { LoginComponent } from './core/auth/login/login.component';
+import { AuthGuard } from './core/auth/auth-guard.service';
 
-export const appRoutes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     redirectTo: '/projects',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
-    path: 'users/:id',
-    loadChildren: 'app/user/user.module#UserModule'
+    path: 'messages',
+    loadChildren: 'app/messaging/messaging.module#MessagingModule',
   },
+  //{
+  //  path: 'users/:id',
+  //  loadChildren: 'app/user/user.module#UserModule',
+  //},
   {
     path: 'login',
-    component: LoginComponent
-  }
+    component: LoginComponent,
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(routes),
   ],
   exports: [
-    RouterModule
+    RouterModule,
+  ],
+  providers: [
+    AuthGuard
   ]
 })
 

@@ -1,23 +1,24 @@
-import {Routes, RouterModule} from '@angular/router'
+import { Routes, RouterModule } from '@angular/router';
 
-import { NgModule } from "@angular/core";
-import { TeamsComponent } from "./teams.component";
+import { NgModule } from '@angular/core';
+import { TeamsComponent } from './teams.component';
 
 const teamsRoutes: Routes = [
-    //{ path: '', redirectTo: '/feed', pathMatch: 'full' },
-    {
-      path: '',
-      component: TeamsComponent
-    }
-]
+  //{ path: '', redirectTo: '/feed', pathMatch: 'full' },
+  {
+    path: '',
+    component: TeamsComponent,
+  },
+];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(teamsRoutes)
+    RouterModule.forChild(teamsRoutes),
   ],
   exports: [
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
 
-export class TeamsRoutingModule {}
+export class TeamsRoutingModule {
+}

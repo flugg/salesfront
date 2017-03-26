@@ -6,8 +6,9 @@ import { SalesComponent } from './sales.component';
 @NgModule({
   imports: [
     CommonModule,
-    SalesRoutingModule
+    SalesRoutingModule,
   ],
-  declarations: [SalesComponent]
+  declarations: [SalesComponent],
 })
-export class SalesModule { }
+export class SalesModule {
+}

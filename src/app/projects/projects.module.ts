@@ -1,11 +1,10 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
-import { SharedModule } from "../shared/shared.module";
-import { ProjectsComponent } from "./projects.component";
-import { ProjectsRoutingModule } from "./projects-routing.module";
+import { SharedModule } from '../shared/shared.module';
+import { ProjectsComponent } from './projects.component';
+import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectslistComponent } from './projectslist/projectslist.component';
-import { ScoreboardModule } from "./scoreboard/scoreboard.module";
-
+import { ScoreboardModule } from './scoreboard/scoreboard.module';
 
 @NgModule({
   declarations: [
@@ -15,8 +14,9 @@ import { ScoreboardModule } from "./scoreboard/scoreboard.module";
   imports: [
     SharedModule,
     ScoreboardModule,
-    ProjectsRoutingModule
-  ]
+    ProjectsRoutingModule,
+  ],
 })
 
-export class ProjectsModule {}
+export class ProjectsModule {
+}

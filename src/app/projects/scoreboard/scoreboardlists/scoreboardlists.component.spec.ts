@@ -11,9 +11,9 @@ describe('ScoreboardlistsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScoreboardlistsComponent ]
+      declarations: [ScoreboardlistsComponent],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

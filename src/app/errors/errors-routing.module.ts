@@ -1,24 +1,23 @@
-/**
- * Created by danielsteen on 24/01/2017.
- */
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
-import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const errorRoutes: Routes = [
   {
     path: '**',
     redirectTo: '/404',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '404',
-    component: PageNotFoundComponent
-  }
-]
+    component: PageNotFoundComponent,
+  },
+];
 
 @NgModule({
-  imports: [ RouterModule.forChild(errorRoutes)],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forChild(errorRoutes)],
+  exports: [RouterModule],
 })
-export class ErrorsRouting {}
+export class ErrorsRoutingModule {
+}

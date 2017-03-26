@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BudgetRoutingModule } from './budget-routing.module';
-import { BudgetComponent } from "./budget.component";
+import { BudgetComponent } from './budget.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    BudgetRoutingModule
+    BudgetRoutingModule,
   ],
   declarations: [
-    BudgetComponent
-  ]
+    BudgetComponent,
+  ],
 })
-export class BudgetModule { }
+export class BudgetModule {
+}
