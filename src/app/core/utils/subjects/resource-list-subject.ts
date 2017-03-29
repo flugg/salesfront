@@ -24,18 +24,35 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   }
 
   /**
-   * Adds new item to the list of resources.
+   * Prepends a new item to the list of resources.
    */
-  public add(item: any) {
+  public prepend(item: any) {
+    this.value.unshift(item);
+    this.next(this.value);
+  }
+
+  /**
+   * Prepends many new items to the list of resources.
+   */
+  public prependMany(items: Array[]) {
+    this.value.unshift(...items);
+    this.next(this.value);
+  }
+
+  /**
+   * Appends a new item to the list of resources.
+   */
+  public append(item: any) {
     this.value.push(item);
     this.next(this.value);
   }
 
   /**
-   * Adds many new items to the list of resources.
+   * Appends many new items to the list of resources.
    */
-  public addMany(items: Array) {
-    this.next(this.value.concat(items));
+  public appendMany(items: Array[]) {
+    this.value.push(...items);
+    this.next(this.value);
   }
 
   /**

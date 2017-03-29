@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot, Router, CanActivateChild,
-  CanLoad, Route
-,} from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
 
@@ -11,42 +8,41 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   /**
-   * Construct the guard.
+   * Constructs the guard.
    */
-  constructor(private auth: AuthService, private router: Router) {
-  }
+  constructor(private auth: AuthService, private router: Router) {}
 
   /**
    * Indicates if a route can be activated.
-   * Redirect to /login on auth failure
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authenticate();
+    return this.isAuthenticated();
   }
 
   /**
-   * Indicates if a routes children can be activated.
-   * Redirect to /login on auth failure
+   * Indicates if a child route can be activated.
    * */
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authenticate();
-  }
-
-  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authenticate();
+    return this.isAuthenticated();
   }
 
   /**
-   * Checks if user is authenticated
-   * Redirect to /login on auth failure
+   * Indicates if a route can be loaded.
    * */
-  private authenticate(): Observable<boolean> {
-    const authState = this.auth.isAuthenticated();
-    authState.subscribe(
-      authCondition => {
-        if (!authCondition) this.router.navigate(['/login']);
-      },
-    );
-    return authState;
+  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
+    return this.isAuthenticated();
+  }
+
+  /**
+   * Checks if the current user is authenticated.
+   * */
+  private isAuthenticated(): Observable<boolean> {
+    const authenticated = this.auth.isAuthenticated();
+
+    if (! authenticated) {
+      this.router.navigate(['/login']);
+    }
+
+    return Observable.of(authenticated);
   }
 }

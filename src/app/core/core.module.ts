@@ -3,16 +3,20 @@ import { Http, RequestOptions } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
 
+import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './auth/login/login.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavItemComponent } from './sidebar/nav-item/nav-item.component';
-import { AuthService } from './auth/auth.service';
 import { SocketApiService } from './socket-api.service';
 import { RestApiService } from './rest-api.service';
-import { SharedModule } from '../shared/shared.module';
+import { AuthService } from './auth/auth.service';
+import { TokenService } from './auth/token.service';
+import { UserResolver } from './auth/user-resolver.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig(), http, options);
+  return new AuthHttp(new AuthConfig({
+    tokenName: 'token',
+  }), http, options);
 }
 
 @NgModule({
@@ -35,9 +39,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions],
     },
-    AuthService,
     RestApiService,
     SocketApiService,
+    AuthService,
+    TokenService,
+    UserResolver,
   ],
 })
-export class CoreModule {}
+export class CoreModule {
+}

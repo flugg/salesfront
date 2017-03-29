@@ -1,69 +1,73 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { Http } from '@angular/http';
-import { tokenNotExpired } from 'angular2-jwt';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { User } from '../models/user.model';
+import { TokenService } from './token.service';
+import { RestApiService } from '../rest-api.service';
 
 @Injectable()
 export class AuthService {
 
   /**
+   * The authenticated user.
+   */
+  private currentUser: BehaviorSubject<User>;
+
+  /**
    * Construct the service.
    */
-  constructor(private http: Http, private router: Router) {}
-
-  login(email, psw) {
-    let token = localStorage.getItem('id_token');
-    if (!token) {
-      this.grantToken({
-        email: email,
-        password: psw,
-      });
-      console.log(token);
-    }
-
-    this.isAuthenticated().subscribe(res => {
-      console.log(res);
-      if (tokenNotExpired() || res)
-        this.navigateToLanding();
-    });
-  }
-
-  grantToken(userCredentials?) {
-    this.requestToken(userCredentials)
-    //.map(r => r.token)
-      .subscribe(t => {
-        localStorage.setItem('id_token', t.token);
-        localStorage.setItem('current_user', t.data.id);
-      });
-  }
-
-  private requestToken(query: any) {
-    return this.http.post('http://api.vendumo.com/tokens', query)
-      .map(res => res.json());
+  constructor(private tokenService: TokenService, private api: RestApiService) {
   }
 
   /**
-   * Check if the user is logged in.
+   * Attempts to authenticate the user by the given credentials.
    */
-  isAuthenticated(): Observable<boolean> {
-    return Observable.of(tokenNotExpired());
+  attempt(email: string, password: string): Observable<boolean> {
+    const observable = this.tokenService.grant(email, password);
+
+    observable.subscribe(token => {
+      this.tokenService.set(token);
+    });
+
+    return observable.map(token => true);
+  }
+
+  /**
+   * Checks if the user is authenticated.
+   */
+  isAuthenticated(): boolean {
+    return this.tokenService.isValid();
+  }
+
+  /**
+   * Checks if the user is authenticated.
+   */
+  user() {
+    if (!this.currentUser) {
+      this.currentUser = this.fetchCurrentUser();
+    }
+
+    return this.currentUser;
+  }
+
+  /**
+   * Fetches the current user.
+   */
+  private fetchCurrentUser(): BehaviorSubject<any> {
+    const subject = new BehaviorSubject({});
+
+    this.api.get('users/me').map(response => response.data).subscribe(user => {
+      subject.next(user);
+    });
+
+    return subject;
   }
 
   navigateToLanding() {
-    let projectUrl = '/projects';
-    let currentProject = localStorage.getItem('current_project');
-    if (currentProject) projectUrl += '/' + currentProject;
-    this.router.navigateByUrl(projectUrl);
-  }
-
-  getUser() {
-    return {
-      id: 'b3256N',
-      email: 'flugged@gmail.com',
-      name: 'Alex',
-      registeredAt: '2017-03-20 14:48:42',
-      updatedAt: '2017-03-20 14:48:42',
-    };
+    // let projectUrl = '/projects';
+    // let currentProject = localStorage.getItem('current_project');
+    // if (currentProject) projectUrl += '/' + currentProject;
+    // this.router.navigateByUrl(projectUrl);
   }
 }

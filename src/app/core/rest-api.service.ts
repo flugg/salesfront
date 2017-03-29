@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import 'rxjs/add/operator/toPromise';
+import { TokenService } from './auth/token.service';
 
 @Injectable()
 export class RestApiService {
@@ -13,7 +15,7 @@ export class RestApiService {
   /**
    * Constructs the service.
    */
-  constructor(private http: AuthHttp) {
+  constructor(private http: AuthHttp, private tokenService: TokenService) {
   }
 
   /**
@@ -94,7 +96,7 @@ export class RestApiService {
   private buildOptions(): RequestOptions {
     return new RequestOptions({
       headers: new Headers({
-        'Authorization': 'Bearer ' + localStorage.getItem('id_token'),
+        'Authorization': 'Bearer ' + this.tokenService.get(),
       }),
     });
   }

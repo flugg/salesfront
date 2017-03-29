@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(email, psw) {
-    this.auth.login(email, psw);
+    this.auth.attempt(email, psw);
   }
 
 }

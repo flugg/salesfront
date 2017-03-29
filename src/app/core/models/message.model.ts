@@ -7,7 +7,7 @@ export interface Message {
   createdAt: string;
   updatedAt: string;
   conversationId: string;
-  userId: string;
+  userId: string,
   conversation?: Conversation;
   user?: User;
 }

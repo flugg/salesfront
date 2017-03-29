@@ -2,17 +2,20 @@ import { Injectable } from '@angular/core';
 import * as Pusher from 'pusher-js';
 import * as Echo from 'laravel-echo';
 
+import { TokenService } from './auth/token.service';
+import { AuthService } from './auth/auth.service';
+
 @Injectable()
 export class SocketApiService {
 
   private echo;
 
-  constructor() {
+  constructor(private tokenService: TokenService, private auth: AuthService) {
     window['Pusher'] = Pusher;
     this.echo = new Echo({
       auth: {
         headers: {
-          'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLnZlbmR1bW8uY29tL3Rva2VucyIsImlhdCI6MTQ4OTQ5NTg5NSwiZXhwIjoxNDkwNzA1NDk1LCJuYmYiOjE0ODk0OTU4OTUsImp0aSI6IjEyclNzckhSWXZRbERCMmUiLCJzdWIiOjF9.ltgNX74bvWtmVNgSvFqxgtn6UmWA1_ciAi-3NPCbyJo',
+          'Authorization': `Bearer ${this.tokenService.get()}`,
         },
       },
       authEndpoint: 'http://api.vendumo.com/broadcasting/auth',
@@ -33,8 +36,12 @@ export class SocketApiService {
     return this.getChannel(channel).listen(event, callback);
   }
 
-  listenForUser(id: string, event: string, callback: Function) {
-    return this.listen(`users.${id}`, event, callback);
+  listenForUser(event: string, callback: Function) {
+    this.auth.user().subscribe(user => {
+      if (user.id) {
+        this.listen(`users.${user.id}`, event, callback);
+      }
+    });
   }
 }
 

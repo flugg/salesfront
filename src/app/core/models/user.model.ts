@@ -2,10 +2,9 @@ import { Message } from './message.model';
 import { Participation } from './participation.model';
 
 export interface User {
-  id: number;
+  id: string,
   name: string;
   email: string;
-  password: string;
   createdAt: string;
   updatedAt: string;
   messages?: Message[];
