@@ -49,9 +49,16 @@ md-list-item {
 
 .conversation > div {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     overflow-y: scroll;
-    padding: 16px 0;
+}
+
+.conversation .mat-list-item:first-child {
+    padding-bottom: 16px;
+}
+
+.conversation .mat-list-item:last-child {
+    padding-top: 16px;
 }
 
 .conversation .mat-list-item-content:not(:last-child) {
@@ -102,6 +109,23 @@ md-list-item {
     color: white;
 }
 
-.accent-icon-button {
-    color: #2175FF !important;
+.component-wrapper {
+    position: fixed;
+    top: 0;
+    background: #f2f2f2;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+.stripped-card {
+    padding: 0 !important;
+}
+
+.stripped-card .mat-list {
+    padding-top: 0 !important;
+}
+
+.mat-toolbar {
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 }

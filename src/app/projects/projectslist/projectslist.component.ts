@@ -21,7 +21,6 @@ export class ProjectslistComponent implements OnInit {
   }
 
   chooseProject(id) {
-    console.log(id);
     localStorage.setItem('current_project', id);
     this.router.navigateByUrl('/projects/' + id);
   }

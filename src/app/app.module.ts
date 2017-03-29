@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 // import { UsersModule } from './users/users.module';
 import { ErrorsModule } from './errors/errors.module';
 import { AppComponent } from './app.component';
+import { UserService } from './user/user.service';
 
 @NgModule({
   imports: [
@@ -26,5 +27,6 @@ import { AppComponent } from './app.component';
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
+  providers: [UserService],
 })
 export class AppModule {}
