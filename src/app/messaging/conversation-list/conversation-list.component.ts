@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ConversationService } from '../shared/conversation.service';
 import { Conversation } from '../../core/models/conversation.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'sf-conversations',
@@ -23,7 +24,8 @@ export class ConversationListComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor(private conversationService: ConversationService) {}
+  constructor(private conversationService: ConversationService,
+              private route: ActivatedRoute) {}
 
   /**
    * Initializes the component.

@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 import { Conversation } from '../../core/models/conversation.model';
 import { ConversationService } from '../shared/conversation.service';
@@ -56,9 +57,12 @@ export class ConversationComponent implements OnInit {
       this.conversation = conversation;
     });
 
-    this.messageCursor = new BehaviorSubject(10);
+    this.messageCursor = new BehaviorSubject(30);
     this.messageService.getWithUpdates(this.route.snapshot.params['id'], this.messageCursor).subscribe(messages => {
       this.messages = messages;
+    });
+
+    this.messageService.onMessagePosted(() => {
       this.scrollToBottom();
     });
   }
@@ -76,7 +80,7 @@ export class ConversationComponent implements OnInit {
    * Load more messages.
    */
   loadMore() {
-    this.messageCursor.next(10);
+    this.messageCursor.next(30);
   }
 
   /**
@@ -92,13 +96,14 @@ export class ConversationComponent implements OnInit {
   scrollToBottom() {
     setTimeout(() => {
       this.conversationWindow.nativeElement.scrollTop = this.conversationWindow.nativeElement.scrollHeight;
-    }, 100);
+    }, 50);
   }
 
   /**
    * Indicates if the message is posted by the logged in user.
    */
   isPostedByUser(message: Message) {
-    return message.userId === this.auth.getUser().id;
+    // console.log(this.auth.user().map(user => user.id === message.userId));
+    return this.auth.user().map(user => user.id === message.userId);
   }
 }

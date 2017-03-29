@@ -12,7 +12,9 @@ export class MessageService {
   /**
    * Construct the service.
    */
-  constructor(private api: RestApiService, private sockets: SocketApiService) {}
+  constructor(private api: RestApiService,
+              private sockets: SocketApiService) {
+  }
 
   /**
    * Fetch a list of the conversation's messages.
@@ -23,7 +25,7 @@ export class MessageService {
     cursor.subscribe(limit => {
       this.api.paginate(`conversations/${conversationId}/messages`, subject.nextCursor(), limit).subscribe(response => {
         subject.setCursor(response.cursor);
-        subject.addMany(response.data);
+        subject.appendMany(response.data);
 
         if (!subject.nextCursor()) {
           cursor.complete();
@@ -41,7 +43,7 @@ export class MessageService {
     const subject = this.get(conversationId, cursor);
 
     this.onMessagePosted(message => {
-      subject.add(message);
+      subject.prepend(message);
     });
 
     return subject;
@@ -60,7 +62,8 @@ export class MessageService {
    * Registers a listener for new message posted in conversation.
    */
   onMessagePosted(callback: Function): MessageService {
-    this.sockets.listenForUser('1', 'message_sent', message => callback(message));
+    this.sockets.listenForUser('message_sent', message => callback(message));
+
     return this;
   }
 }

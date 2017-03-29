@@ -15,7 +15,8 @@ export class ConversationService {
   /**
    * Construct the service.
    */
-  constructor(private api: RestApiService, private sockets: SocketApiService) {}
+  constructor(private api: RestApiService,
+              private sockets: SocketApiService) {}
 
   /**
    * Fetch a list of the user's conversations.
@@ -26,7 +27,7 @@ export class ConversationService {
     cursor.subscribe(limit => {
       this.api.paginate('conversations', subject.nextCursor(), limit).subscribe(response => {
         subject.setCursor(response.cursor);
-        subject.addMany(response.data);
+        subject.appendMany(response.data);
 
         if (!subject.nextCursor()) {
           cursor.complete();
@@ -44,7 +45,7 @@ export class ConversationService {
     const subject = this.get(cursor);
 
     this.onStarted(conversation => {
-      subject.add(conversation);
+      subject.append(conversation);
     }).onLastMessageUpdated(message => {
       subject.set('lastMessage', message, message.conversationId);
     }).onParticipantAdded(participation => {
@@ -115,7 +116,7 @@ export class ConversationService {
    * Registers a listener for new conversations.
    */
   onStarted(callback: Function): ConversationService {
-    this.sockets.listenForUser('1', 'conversation_started', conversation => callback(conversation));
+    this.sockets.listenForUser('conversation_started', conversation => callback(conversation));
     return this;
   }
 
@@ -123,7 +124,7 @@ export class ConversationService {
    * Registers a listener for new message added to conversation.
    */
   onLastMessageUpdated(callback: Function): ConversationService {
-    this.sockets.listenForUser('1', 'message_sent', message => callback(message));
+    this.sockets.listenForUser('message_sent', message => callback(message));
     return this;
   }
 
@@ -131,7 +132,7 @@ export class ConversationService {
    * Registers a listener for new participants.
    */
   onParticipantAdded(callback: Function): ConversationService {
-    this.sockets.listenForUser('1', 'participant_added', message => callback(message));
+    this.sockets.listenForUser('participant_added', message => callback(message));
     return this;
   }
 
@@ -139,7 +140,7 @@ export class ConversationService {
    * Registers a listener for leaving participants.
    */
   onParticipantRemoved(callback: Function): ConversationService {
-    this.sockets.listenForUser('1', 'participant_removed', message => callback(message));
+    this.sockets.listenForUser('participant_removed', message => callback(message));
     return this;
   }
 }

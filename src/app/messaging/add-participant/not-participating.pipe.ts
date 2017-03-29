@@ -3,10 +3,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Participation } from '../../core/models/participation.model';
 
 @Pipe({
-  name: 'participating',
+  name: 'notParticipating',
   pure: false,
 })
-export class ParticipatingPipe implements PipeTransform {
+export class NotParticipatingPipe implements PipeTransform {
 
   /**
    * Transforms the data to only include participants currently participating.

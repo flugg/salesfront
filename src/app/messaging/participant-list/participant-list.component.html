@@ -1,21 +1,27 @@
-<md-toolbar color = "primary">
-  <button md-icon-button [routerLink] = "'../'">
-    <md-icon>arrow_back</md-icon>
-  </button>
-  <span class = "toolbar-heading">Participants</span>
-  <span class = "fill-space"></span>
-  <button md-icon-button *ngIf = "conversation.group" [routerLink] = "'add'">
-    <md-icon>add</md-icon>
-  </button>
-</md-toolbar>
-
-<md-list class = 'card-list'>
-  <md-list-item *ngFor = "let participation of conversation?.participations | participating">
-    <img md-list-avatar src="http://lorempixel.com/40/40">
-    <h4 md-line>{{ participation.user.name }}</h4>
-    <span class = "fill-space"></span>
-    <button md-icon-button *ngIf = "conversation.group" (click) = 'removeParticipant(participation)'>
-      <md-icon>remove_circle_outline</md-icon>
+<div class = "component-wrapper">
+  <md-toolbar color = "primary">
+    <button md-icon-button [routerLink] = "'../'">
+      <md-icon>arrow_back</md-icon>
     </button>
-  </md-list-item>
-</md-list>
+    <span class = "toolbar-heading">Participants</span>
+    <span class = "fill-space"></span>
+    <button md-icon-button [routerLink] = "'add'">
+      <md-icon>add</md-icon>
+    </button>
+  </md-toolbar>
+
+  <md-card class = "stripped-card">
+    <md-list class = 'card-list'>
+      <md-list-item *ngFor = "let participation of conversation?.participations | participating">
+        <img md-list-avatar src="http://lorempixel.com/40/40">
+        <h4 md-line>{{ participation.user.name }}</h4>
+        <span class = "fill-space"></span>
+        <button md-icon-button (click) = 'removeParticipant(participation)'>
+          <md-icon>remove_circle_outline</md-icon>
+        </button>
+      </md-list-item>
+    </md-list>
+  </md-card>
+</div>
+
+<router-outlet></router-outlet>

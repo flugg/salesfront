@@ -19,19 +19,20 @@ export class ParticipantListComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor(private conversationService: ConversationService, private route: ActivatedRoute) {}
+  constructor(private conversationService: ConversationService,
+              private route: ActivatedRoute) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.conversationService.findWithUpdates(this.route.snapshot.params['id']).subscribe(conversation => {
+    this.conversationService.findWithUpdates(this.route.snapshot.parent.params['id']).subscribe(conversation => {
       this.conversation = conversation;
     });
   }
 
   /**
-   * Removes a given participation from the conversation.
+   * Removes a participation from the conversation.
    */
   removeParticipant(participation: Participation) {
     this.conversationService.removeParticipant(participation);

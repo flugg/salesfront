@@ -1,27 +1,42 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
+import { MessagingComponent } from './messaging.component';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { ParticipantListComponent } from './participant-list/participant-list.component';
 import { AddParticipantComponent } from './add-participant/add-participant.component';
+import { UserResolver } from '../core/auth/user-resolver.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: ConversationListComponent,
-  },
-  {
-    path: ':id',
-    component: ConversationComponent,
-  },
-  {
-    path: ':id/participants',
-    component: ParticipantListComponent,
-  },
-  {
-    path: ':id/participants/add',
-    component: AddParticipantComponent,
+    component: MessagingComponent,
+    resolve: UserResolver,
+    children: [
+      {
+        path: '',
+        component: ConversationListComponent,
+        children: [
+          {
+            path: ':id',
+            component: ConversationComponent,
+            children: [
+              {
+                path: 'participants',
+                component: ParticipantListComponent,
+                children: [
+                  {
+                    path: 'add',
+                    component: AddParticipantComponent,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 ];
 
@@ -34,4 +49,5 @@ const routes: Routes = [
   ],
   providers: [],
 })
-export class MessagingRoutingModule {}
+export class MessagingRoutingModule {
+}
