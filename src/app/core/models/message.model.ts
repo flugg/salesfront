@@ -4,10 +4,9 @@ import { User } from './user.model';
 export interface Message {
   id: string;
   body: string;
-  createdAt: string;
-  updatedAt: string;
+  sentAt: string;
   conversationId: string;
-  userId: string,
   conversation?: Conversation;
+  userId: string,
   user?: User;
 }

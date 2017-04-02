@@ -38,9 +38,7 @@ export class SocketApiService {
 
   listenForUser(event: string, callback: Function) {
     this.auth.user().subscribe(user => {
-      if (user.id) {
-        this.listen(`users.${user.id}`, event, callback);
-      }
+      this.listen(`users.${user.id}`, event, callback);
     });
   }
 }

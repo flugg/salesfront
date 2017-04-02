@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/take';
 
 import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
@@ -14,9 +15,9 @@ export class UserResolver implements Resolve<User> {
   constructor(private auth: AuthService) {}
 
   /**
-   * Resolves data.
+   * Resolves the logged in user.
    */
-  resolve(): Observable<User> {
-    return this.auth.user();
+  resolve(): Observable<any> {
+    return this.auth.user().asObservable().take(1);
   }
 }

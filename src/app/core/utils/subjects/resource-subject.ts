@@ -1,4 +1,6 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/skip';
 
 export class ResourceSubject<Object> extends BehaviorSubject<any> {
 
@@ -21,11 +23,18 @@ export class ResourceSubject<Object> extends BehaviorSubject<any> {
   /**
    * Sets a related item based on id.
    */
-  public setRelated(key: string, value: any, relatedId: number) {
+  public setRelated(key: string, relatedId: number, value: any) {
     this.value[key] = this.value[key].map(relation => {
       return relation.id === relatedId ? value : relation;
     });
 
     this.next(this.value);
+  }
+
+  /**
+   * Converts the subject to an observable.
+   */
+  asObservable(): Observable<any> {
+    return super.asObservable().skip(1);
   }
 }

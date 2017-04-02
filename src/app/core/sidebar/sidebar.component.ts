@@ -13,8 +13,7 @@ export class SidebarComponent implements OnInit {
   /**
    * Construct the component.
    */
-  constructor(private auth: AuthService) {
-  }
+  constructor(private auth: AuthService) {}
 
   /**
    * Initialize the component.

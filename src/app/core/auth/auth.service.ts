@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { User } from '../models/user.model';
 import { TokenService } from './token.service';
 import { RestApiService } from '../rest-api.service';
+import { ResourceSubject } from '../utils/subjects/resource-subject';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -12,13 +12,13 @@ export class AuthService {
   /**
    * The authenticated user.
    */
-  private currentUser: BehaviorSubject<User>;
+  private currentUser: ResourceSubject<User>;
 
   /**
    * Construct the service.
    */
-  constructor(private tokenService: TokenService, private api: RestApiService) {
-  }
+  constructor(private tokenService: TokenService,
+              private api: RestApiService) {}
 
   /**
    * Attempts to authenticate the user by the given credentials.
@@ -41,33 +41,17 @@ export class AuthService {
   }
 
   /**
-   * Checks if the user is authenticated.
+   * Fetch the logged in user.
    */
-  user() {
-    if (!this.currentUser) {
-      this.currentUser = this.fetchCurrentUser();
+  user(): ResourceSubject<User> {
+    if (! this.currentUser) {
+      this.currentUser = new ResourceSubject(null);
+
+      this.api.get('users/me').map(response => response.data).subscribe(data => {
+        this.currentUser.next(data);
+      });
     }
 
     return this.currentUser;
-  }
-
-  /**
-   * Fetches the current user.
-   */
-  private fetchCurrentUser(): BehaviorSubject<any> {
-    const subject = new BehaviorSubject({});
-
-    this.api.get('users/me').map(response => response.data).subscribe(user => {
-      subject.next(user);
-    });
-
-    return subject;
-  }
-
-  navigateToLanding() {
-    // let projectUrl = '/projects';
-    // let currentProject = localStorage.getItem('current_project');
-    // if (currentProject) projectUrl += '/' + currentProject;
-    // this.router.navigateByUrl(projectUrl);
   }
 }

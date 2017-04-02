@@ -4,8 +4,7 @@ import { Participation } from './participation.model';
 export interface Conversation {
   id: string;
   group: boolean;
-  createdAt: string;
-  updatedAt: string;
+  startedAt: string;
   lastMessageId?: string;
   lastMessage?: Message;
   participations: Participation[];

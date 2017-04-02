@@ -1,4 +1,6 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/skip';
 
 import { CursorMeta } from '../cursor-meta';
 
@@ -10,21 +12,28 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   private cursor: CursorMeta;
 
   /**
-   * Set the current cursor meta object.
+   * Sets the cursor meta data.
    */
   public setCursor(cursor: CursorMeta) {
     this.cursor = cursor;
   }
 
   /**
-   * Get the next cursor.
+   * Retrieves the next cursor.
    */
   public nextCursor() {
-    return this.cursor && this.cursor.next ? this.cursor.next : null;
+    return this.cursor ? this.cursor.next : null;
   }
 
   /**
-   * Prepends a new item to the list of resources.
+   * Checks if an item with the given id exists in the list.
+   */
+  public has(id: string) {
+    return this.value.find(item => item.id === id);
+  }
+
+  /**
+   * Prepends a new item to the list.
    */
   public prepend(item: any) {
     this.value.unshift(item);
@@ -32,15 +41,15 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   }
 
   /**
-   * Prepends many new items to the list of resources.
+   * Prepends many new items to the list.
    */
-  public prependMany(items: Array[]) {
+  public prependMany(items: any[]) {
     this.value.unshift(...items);
     this.next(this.value);
   }
 
   /**
-   * Appends a new item to the list of resources.
+   * Appends a new item to the list.
    */
   public append(item: any) {
     this.value.push(item);
@@ -48,9 +57,9 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   }
 
   /**
-   * Appends many new items to the list of resources.
+   * Appends many new items to the list.
    */
-  public appendMany(items: Array[]) {
+  public appendMany(items: any[]) {
     this.value.push(...items);
     this.next(this.value);
   }
@@ -58,7 +67,7 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   /**
    * Adds new related item to the list of resources.
    */
-  public addRelated(key: string, nestedItem: any, id: number) {
+  public addRelated(id: string, key: string, nestedItem: any) {
     this.value.find(item => item.id === id)[key].push(nestedItem);
     this.next(this.value);
   }
@@ -66,7 +75,7 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   /**
    * Adds many new related items to the list of resources.
    */
-  public addManyRelated(key: string, nestedItems: any, id: number) {
+  public addManyRelated(id: string, key: string, nestedItems: any[]) {
     this.value.find(item => item.id === id)[key] = this.value.concat(nestedItems);
     this.next(this.value);
   }
@@ -74,11 +83,12 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   /**
    * Sets an item based on id.
    */
-  public set(key: string, value: any, id: number) {
+  public set(id: string, key: string, value: any) {
     const field = this.value.find(item => item.id === id);
 
-    if (field && field.hasOwnProperty(key)) {
+    if (field) {
       field[key] = value;
+      field[key + 'Id'] = value.id;
       this.next(this.value);
     }
   }
@@ -86,12 +96,19 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   /**
    * Sets a related item based on id.
    */
-  public setRelated(key: string, value: any, id: number, relatedId: number) {
+  public setRelated(id: string, key: string, relatedId: string, value: any) {
     const relations = this.value.find(item => item.id === id)[key].map(relation => {
       return relation.id === relatedId ? value : relation;
     });
 
     this.value.find(item => item.id === id)[key] = relations;
     this.next(this.value);
+  }
+
+  /**
+   * Converts the subject to an observable.
+   */
+  asObservable(): Observable<any> {
+    return super.asObservable().skip(1);
   }
 }

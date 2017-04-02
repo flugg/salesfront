@@ -9,6 +9,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavItemComponent } from './sidebar/nav-item/nav-item.component';
 import { SocketApiService } from './socket-api.service';
 import { RestApiService } from './rest-api.service';
+import { Paginator } from './paginator.service';
 import { AuthService } from './auth/auth.service';
 import { TokenService } from './auth/token.service';
 import { UserResolver } from './auth/user-resolver.service';
@@ -41,6 +42,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     },
     RestApiService,
     SocketApiService,
+    Paginator,
     AuthService,
     TokenService,
     UserResolver,
