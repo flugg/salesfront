@@ -129,3 +129,69 @@ md-list-item {
 .mat-toolbar {
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 }
+
+.mat-progress-circle {
+    margin: 24px auto;
+}
+
+.is-locked {
+    opacity: 0.5;
+}
+
+.weak-text {
+    color: #999;
+}
+
+.accent-icon-button:not([disabled]) {
+    color: #2175FF !important;
+}
+
+.message span {
+    font-weight: 100 !important;
+}
+
+.message h4 span {
+    font-weight: 400 !important;
+}
+
+.new-message {
+    background: white !important;
+}
+
+.new-message span {
+    font-weight: 600 !important;
+}
+
+.new-message h4 span {
+    font-weight: 800 !important;
+}
+
+.new-message {
+    white: red !important;
+}
+
+.big-list-item {
+    padding: 12px 0;
+}
+
+.mat-chip {
+    margin-right: 8px;
+    outline: none !important;
+    cursor: pointer;
+}
+
+.card-list .mat-list-text {
+    width: auto !important;
+}
+
+.timestamp {
+    font-size: 14px;
+}
+
+.new-message .timestamp {
+    font-weight: 600 !important;
+}
+
+.mat-tooltip {
+    font-size: 11px !important;
+}
