@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from '../../core/rest-api.service';
 import { SocketApiService } from '../../core/socket-api.service';
-import { Conversation } from '../../core/models/conversation.model';
-import { User } from '../../core/models/user.model';
-import { ResourceListSubject } from '../../core/utils/subjects/resource-list-subject';
-import { Participation } from '../../core/models/participation.model';
+import { Paginator } from '../../core/paginator.service';
 import { ResourceSubject } from '../../core/utils/subjects/resource-subject';
+import { Conversation } from '../../core/models/conversation.model';
+import { Participation } from '../../core/models/participation.model';
+import { User } from '../../core/models/user.model';
 
 @Injectable()
 export class ConversationService {
@@ -16,97 +17,106 @@ export class ConversationService {
    * Construct the service.
    */
   constructor(private api: RestApiService,
-              private sockets: SocketApiService) {}
+              private sockets: SocketApiService,
+              private paginator: Paginator) {
+  }
 
   /**
    * Fetch a list of the user's conversations.
    */
-  get(cursor: BehaviorSubject<number>): ResourceListSubject<Conversation[]> {
-    const subject = new ResourceListSubject([]);
+  get(cursor: BehaviorSubject<number>): Observable<Conversation[]> {
+    const conversations = this.paginator.paginate('conversations', cursor);
 
-    cursor.subscribe(limit => {
-      this.api.paginate('conversations', subject.nextCursor(), limit).subscribe(response => {
-        subject.setCursor(response.cursor);
-        subject.appendMany(response.data);
-
-        if (!subject.nextCursor()) {
-          cursor.complete();
-        }
-      });
-    });
-
-    return subject;
+    return conversations.asObservable();
   }
 
   /**
    * Fetch an updating stream of the user's conversations.
    */
-  getWithUpdates(cursor: BehaviorSubject<number>): ResourceListSubject<Conversation[]> {
-    const subject = this.get(cursor);
+  getWithUpdates(cursor: BehaviorSubject<number>): Observable<Conversation[]> {
+    const conversations = this.paginator.paginate('conversations', cursor);
 
     this.onStarted(conversation => {
-      subject.append(conversation);
+      conversations.prepend(conversation);
     }).onLastMessageUpdated(message => {
-      subject.set('lastMessage', message, message.conversationId);
-    }).onParticipantAdded(participation => {
-      subject.addRelated('participations', participation, participation.conversationId);
+      conversations.set(message.conversationId, 'lastMessage', message);
+    }).onLastMessageRead(participation => {
+      conversations.setRelated(participation.conversationId, 'participations', participation.id, participation);
     }).onParticipantRemoved(participation => {
-      subject.setRelated('participations', participation, participation.conversationId, participation.id);
+      conversations.setRelated(participation.conversationId, 'participations', participation.id, participation);
+    }).onParticipantAdded(participation => {
+      if (conversations.has(participation.conversationId)) {
+        conversations.addRelated(participation.conversationId, 'participations', participation);
+      } else {
+        this.find(participation.conversationId).subscribe(conversation => conversations.prepend(conversation));
+      }
     });
 
-    return subject;
+    return conversations.asObservable();
   }
 
   /**
    * Fetch a conversation by id.
    */
-  find(id: string): ResourceSubject<Conversation> {
-    const subject = new ResourceSubject({});
-
-    this.api.get(`conversations/${id}`).map(response => response.data).subscribe(conversation => {
-      subject.next(conversation);
-    });
-
-    return subject;
+  find(id: string): Observable<Conversation> {
+    return this.api.get(`conversations/${id}`).map(response => response.data);
   }
 
   /**
    * Fetch an updating stream of a single conversation by id.
    */
-  findWithUpdates(id: string): ResourceSubject<Conversation> {
-    const subject = this.find(id);
+  findWithUpdates(id: string): Observable<Conversation> {
+    const conversation = new ResourceSubject(null);
 
-    this.onLastMessageUpdated(message => {
-      subject.set('lastMessage', message);
-    }).onParticipantAdded(participation => {
-      subject.addRelated('participations', participation);
-    }).onParticipantRemoved(participation => {
-      subject.setRelated('participations', participation, participation.id);
+    this.find(id).subscribe(data => {
+      conversation.next(data);
     });
 
-    return subject;
+    this.onLastMessageUpdated(message => {
+      conversation.set('lastMessage', message);
+    }).onParticipantAdded(participation => {
+      conversation.addRelated('participations', participation);
+    }).onParticipantRemoved(participation => {
+      conversation.setRelated('participations', participation.id, participation);
+    });
+
+    return conversation.asObservable();
   }
 
   /**
-   * Start a new conversation.
+   * Starts a new conversation.
    */
   start(participants: User[]): Promise<Conversation> {
     return this.api.post('conversations', {
       participants: participants.map(participant => participant.id),
-    });
+    }).then(response => response.data);
   }
 
   /**
-   * Start a new conversation.
+   * Marks last message in a conversation as read.
    */
-  addParticipant(conversation: Conversation, participant: User): Promise<Conversation> {
-    return this.api.post(`conversations/${conversation.id}/participations`, {
+  markAsRead(participation: Participation): Promise<Conversation> {
+    return this.api.put(`participations/${participation.id}`);
+  }
+
+  /**
+   * Indicates if the given conversation is locked for given user.
+   */
+  isLocked(conversation: Conversation, user: User): boolean {
+    return conversation.participations.find(item => item.userId === user.id).leftAt != null;
+  }
+
+  /**
+   * Adds a participant to a conversation.
+   */
+  addParticipant(conversationId: string, participant: User): Promise<Conversation> {
+    return this.api.post(`conversations/${conversationId}/participations`, {
       participant: participant.id,
     });
   }
 
   /**
-   * Start a new conversation.
+   * Removes a participant from a conversation.
    */
   removeParticipant(participation: Participation): Promise<Conversation> {
     return this.api.delete(`participations/${participation.id}`);
@@ -125,6 +135,14 @@ export class ConversationService {
    */
   onLastMessageUpdated(callback: Function): ConversationService {
     this.sockets.listenForUser('message_sent', message => callback(message));
+    return this;
+  }
+
+  /**
+   * Registers a listener for when last message in a conversation has been read.
+   */
+  onLastMessageRead(callback: Function): ConversationService {
+    this.sockets.listenForUser('last_message_read', message => callback(message));
     return this;
   }
 

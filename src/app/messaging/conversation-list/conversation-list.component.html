@@ -4,24 +4,41 @@
             <md-icon>menu</md-icon>
         </button>
         <span class="toolbar-heading">Messages</span>
+        <span class = "fill-space"></span>
+        <button md-icon-button [routerLink] = "'new'">
+            <md-icon>add</md-icon>
+        </button>
     </md-toolbar>
 
-    <md-card class = "stripped-card">
-        <md-list class = 'card-list'>
-            <md-list-item md-ripple *ngFor = "let conversation of conversations" [routerLink] = "[conversation.id]">
-                <img md-list-avatar src="http://lorempixel.com/40/40">
-                <h4 md-line>
-                    <strong *ngFor = "let participation of conversation.participations | participating">
-                        <span class = "comma-separated">{{ participation.user.name }}</span>
-                    </strong>
-                </h4>
-                <span md-line>{{ conversation.lastMessage?.body }}</span>
-            </md-list-item>
-            <md-list-item *ngIf = "! hasLoadedAll()">
+    <div [fxShow]="isLoading">
+        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+    </div>
+
+    <div [fxHide]="isLoading">
+        <md-card class = "stripped-card">
+            <md-list class = 'card-list'>
+                <md-list-item md-ripple
+                              class='message'
+                              *ngFor="let conversation of conversations | async"
+                              [routerLink]="[conversation.id]"
+                              [ngClass]="{'new-message': hasUnread(conversation)}">
+                    <img md-list-avatar src="http://lorempixel.com/40/40">
+                    <h4 md-line>
+                        <span *ngFor = "let participation of conversation.participations | participating:currentUser"
+                              class = "comma-separated">{{ participation.user.name }}</span>
+                    </h4>
+                    <span md-line>{{ conversation.lastMessage?.body }}</span>
+                    <span class = "fill-space"></span>
+                    <span class="timestamp">{{ (conversation.lastMessage ? conversation.lastMessage.sentAt : conversation.startedAt) | amTimeAgo }}</span>
+                </md-list-item>
+            </md-list>
+        </md-card>
+        <md-list>
+            <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
                 <button md-raised-button (click) = "loadMore()">Load More</button>
             </md-list-item>
         </md-list>
-    </md-card>
+    </div>
 </div>
 
 <router-outlet></router-outlet>

@@ -1,32 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/zip';
 
 import { ConversationService } from '../shared/conversation.service';
+import { UserService } from '../../user/user.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { User } from '../../core/models/user.model';
-import { UserService } from '../../user/user.service';
-import { BehaviorSubject } from 'rxjs';
-import { ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 
 @Component({
   selector: 'sf-add-participant',
   templateUrl: './add-participant.component.html',
 })
-export class AddParticipantComponent implements OnInit {
+export class AddParticipantComponent implements OnInit, OnDestroy {
+
+  /**
+   * Wether or not the component is currently loading.
+   */
+  isLoading = true;
 
   /**
    * The selected conversation.
    */
-  private conversation: Conversation;
+  conversation: Observable<Conversation>;
 
   /**
    * List of loaded users.
    */
-  private users: User[];
+  users: Observable<User[]>;
 
   /**
    * The current cursor of the paginated users.
    */
-  private userCursor: BehaviorSubject<number>;
+  private cursor = new BehaviorSubject(30);
+
+  /**
+   * List of all observable subscriptions.
+   */
+  private subscriptions: Subscription[] = [];
 
   /**
    * Constructs the component.
@@ -39,18 +52,20 @@ export class AddParticipantComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
-    console.log(this.route.parent.parent.parent.parent);
-    this.route.root.data.subscribe(data => {
-      console.log('data');
-      console.log(data);
-    });
-    this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.params['id']).subscribe(conversation => {
-      this.conversation = conversation;
-    });
+    this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.params['id']);
+    this.users = this.userService.getWithUpdates(this.cursor);
 
-    this.userCursor = new BehaviorSubject(2);
-    this.userService.getWithUpdates(this.userCursor).subscribe(users => {
-      this.users = users;
+    this.subscriptions.push(Observable.zip(this.conversation, this.users).subscribe(() => {
+      this.isLoading = false;
+    }));
+  }
+
+  /**
+   * Destroys the component.
+   */
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
     });
   }
 
@@ -58,20 +73,20 @@ export class AddParticipantComponent implements OnInit {
    * Load more users.
    */
   loadMore() {
-    this.userCursor.next(30);
+    this.cursor.next(30);
   }
 
   /**
    * Check if all users has been loaded.
    */
   hasLoadedAll() {
-    return this.userCursor.isStopped;
+    return this.cursor.isStopped;
   }
 
   /**
    * Adds a participant to the conversation.
    */
   addParticipant(user: User) {
-    this.conversationService.addParticipant(this.conversation, user);
+    this.conversationService.addParticipant(this.route.snapshot.parent.parent.params['id'], user);
   }
 }

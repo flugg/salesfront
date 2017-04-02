@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
-import { Conversation } from '../../core/models/conversation.model';
 import { RestApiService } from '../../core/rest-api.service';
 import { SocketApiService } from '../../core/socket-api.service';
-import { ResourceListSubject } from '../../core/utils/subjects/resource-list-subject';
+import { Paginator } from '../../core/paginator.service';
+import { Conversation } from '../../core/models/conversation.model';
+import { Message } from '../../core/models/message.model';
 
 @Injectable()
 export class MessageService {
@@ -13,57 +15,50 @@ export class MessageService {
    * Construct the service.
    */
   constructor(private api: RestApiService,
-              private sockets: SocketApiService) {
+              private sockets: SocketApiService,
+              private paginator: Paginator) {
   }
 
   /**
    * Fetch a list of the conversation's messages.
    */
-  get(conversationId: string, cursor: BehaviorSubject<number>): ResourceListSubject<Conversation[]> {
-    const subject = new ResourceListSubject([]);
-
-    cursor.subscribe(limit => {
-      this.api.paginate(`conversations/${conversationId}/messages`, subject.nextCursor(), limit).subscribe(response => {
-        subject.setCursor(response.cursor);
-        subject.appendMany(response.data);
-
-        if (!subject.nextCursor()) {
-          cursor.complete();
-        }
-      });
+  get(conversationId: string, cursor: BehaviorSubject<number>): Observable<Message[]> {
+    const messages = this.paginator.paginate(`conversations/${conversationId}/messages`, cursor, {
+      include: 'user',
     });
 
-    return subject;
+    return messages.asObservable();
   }
 
   /**
    * Fetch an updating stream of the conversation's messages.
    */
-  getWithUpdates(conversationId: string, cursor: BehaviorSubject<number>): ResourceListSubject<Conversation[]> {
-    const subject = this.get(conversationId, cursor);
-
-    this.onMessagePosted(message => {
-      subject.prepend(message);
+  getWithUpdates(conversationId: string, cursor: BehaviorSubject<number>): Observable<Message[]> {
+    const messages = this.paginator.paginate(`conversations/${conversationId}/messages`, cursor, {
+      include: 'user',
     });
 
-    return subject;
+    this.onMessagePosted(message => {
+      messages.prepend(message);
+    });
+
+    return messages.asObservable();
   }
 
   /**
    * Start a new conversation.
    */
-  send(conversation: Conversation, body: string): Promise<Conversation> {
-    return this.api.post(`conversations/${conversation.id}/messages`, {
+  send(conversationId: string, body: string): Promise<Conversation> {
+    return this.api.post(`conversations/${conversationId}/messages`, {
       message: body,
     });
   }
 
   /**
-   * Registers a listener for new message posted in conversation.
+   * Registers a listener for new messages posted in the conversation.
    */
   onMessagePosted(callback: Function): MessageService {
     this.sockets.listenForUser('message_sent', message => callback(message));
-
     return this;
   }
 }

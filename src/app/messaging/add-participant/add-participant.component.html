@@ -6,21 +6,27 @@
         <span class = "toolbar-heading">Add Participant</span>
     </md-toolbar>
 
-    <md-card class = "stripped-card">
-        <md-list class = 'card-list'>
-            <md-list-item *ngFor = "let user of users">
-                <img md-list-avatar src="http://lorempixel.com/40/40">
-                <h4 md-line>{{ user.name }}</h4>
-                <span class = "fill-space"></span>
-                <button md-icon-button (click) = 'addParticipant(user)'>
-                    <md-icon>add</md-icon>
-                </button>
+    <div [fxShow]="isLoading">
+        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+    </div>
+
+    <div [fxHide]="isLoading">
+        <md-card class = "stripped-card">
+            <md-list class = 'card-list'>
+                <md-list-item *ngFor = "let user of (users | async) | notParticipating:(conversation | async)">
+                    <img md-list-avatar src="http://lorempixel.com/40/40">
+                    <h4 md-line>{{ user.name }}</h4>
+                    <span class = "fill-space"></span>
+                    <button md-icon-button (click) = 'addParticipant(user)'>
+                        <md-icon>add</md-icon>
+                    </button>
+                </md-list-item>
+            </md-list>
+        </md-card>
+        <md-list>
+            <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
+                <button md-raised-button (click) = "loadMore()">Load More</button>
             </md-list-item>
         </md-list>
-    </md-card>
-    <md-list>
-        <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
-            <button md-raised-button (click) = "loadMore()">Load More</button>
-        </md-list-item>
-    </md-list>
+    </div>
 </div>

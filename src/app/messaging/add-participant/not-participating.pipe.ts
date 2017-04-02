@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Participation } from '../../core/models/participation.model';
+import { User } from '../../core/models/user.model';
+import { Conversation } from '../../core/models/conversation.model';
 
 @Pipe({
   name: 'notParticipating',
@@ -9,13 +10,15 @@ import { Participation } from '../../core/models/participation.model';
 export class NotParticipatingPipe implements PipeTransform {
 
   /**
-   * Transforms the data to only include participants currently participating.
+   * Transforms the data to only include users not currently participating.
    */
-  transform(participations?: Participation[]): any {
-    if (participations == null) {
-      return null;
-    }
+  transform(users: User[], conversation: Conversation): any {
+    if (users && conversation) {
+      const participants = conversation.participations.filter(participation => {
+        return !participation.leftAt;
+      }).map(participation => participation.userId);
 
-    return participations.filter(participation => !participation.leftAt);
+      return users.filter(user => !participants.includes(user.id));
+    }
   }
 }

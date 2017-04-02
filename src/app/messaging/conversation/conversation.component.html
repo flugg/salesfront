@@ -4,33 +4,48 @@
             <md-icon>arrow_back</md-icon>
         </button>
         <span class = "toolbar-heading">
-            <span *ngFor = "let participation of conversation?.participations | participating" class = "comma-separated">{{ participation.user.name }}</span>
+            <span *ngFor = "let participation of (conversation | async)?.participations | participating:currentUser" class = "comma-separated">{{ participation.user.name }}</span>
         </span>
         <span class = "fill-space"></span>
-        <button *ngIf = "conversation.group" md-icon-button [routerLink] = "'participants'">
+        <button *ngIf = "(conversation | async)?.group && ! (isLocked | async)" md-icon-button [routerLink] = "'participants'">
             <md-icon>group</md-icon>
         </button>
     </md-toolbar>
-    <md-list class = "conversation">
-        <div #conversationWindow>
-            <md-list-item *ngFor = "let message of messages" fxFlexAlign = "{{ (isPostedByUser(message) | async) ? 'flex-end' : 'flex-start' }}">
-                <img md-list-avatar src = "http://lorempixel.com/40/40">
-                <md-card [ngClass] = "{'own-message': isPostedByUser(message) | async}">
-                    <md-card-content>{{ message.body }}</md-card-content>
-                </md-card>
+
+    <div fxLayoutAlign="center" [fxShow]="isLoading">
+        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+    </div>
+
+    <md-list class = "conversation" [ngClass]="{ 'is-locked': (isLocked | async) }">
+        <div #window [fxHide]="isLoading">
+            <md-list-item *ngIf="isLocked | async" fxFlexAlign="center">
+                <span class="weak-text">You are no longer in this conversation.</span>
+            </md-list-item>
+            <md-list-item *ngFor="let message of (messages | async)"
+                          [fxFlexAlign]="isPostedByUser(message) ? 'flex-end' : 'flex-start'">
+                <div fxLayout="row"
+                     [mdTooltip]="message.user.name + ', ' + (message.sentAt | amTimeAgo)"
+                     [mdTooltipPosition]="isPostedByUser(message) ? 'left' : 'right'">
+                    <img md-list-avatar
+                         src = "http://lorempixel.com/40/40">
+                    <md-card [ngClass] = "{'own-message': isPostedByUser(message)}">
+                        <md-card-content>{{ message.body }}</md-card-content>
+                    </md-card>
+                </div>
             </md-list-item>
             <md-list-item *ngIf = "! hasLoadedAll()" fxFlexAlign = "center">
                 <button md-raised-button (click) = "loadMore()">Load More</button>
             </md-list-item>
         </div>
     </md-list>
+
     <md-card class = 'bottom-input'>
-        <form (submit) = "sendMessage(message); $event.preventDefault()">
+        <form (submit) = "sendMessage(); $event.preventDefault()">
             <div fxLayout = 'row'>
                 <md-input-container>
-                    <input mdInput [(ngModel)] = "message" name = "message" dividerColor="none" placeholder = "Type message...">
+                    <input mdInput [disabled]="isLocked | async" [(ngModel)] = "message" name = "message" dividerColor="none" placeholder = "Type message...">
                 </md-input-container>
-                <button md-icon-button type = "submit" class = "accent-icon-button">
+                <button md-icon-button [disabled]="isLocked | async" type = "submit" class = "accent-icon-button">
                     <md-icon>send</md-icon>
                 </button>
             </div>

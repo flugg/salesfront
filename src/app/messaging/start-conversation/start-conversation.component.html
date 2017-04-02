@@ -1,0 +1,46 @@
+<div class = "component-wrapper">
+  <md-toolbar color = "primary">
+    <button md-icon-button [routerLink] = "'../'">
+      <md-icon>close</md-icon>
+    </button>
+    <span class = "toolbar-heading">New Conversation</span>
+  </md-toolbar>
+
+  <div [fxShow]="isLoading">
+    <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+  </div>
+
+  <div [fxHide]="isLoading">
+    <md-card class = "stripped-card">
+      <md-list class = 'card-list'>
+        <md-list-item *ngIf="participants.length > 0" class = 'big-list-item'>
+          <md-chip-list selectable="false">
+            <md-chip *ngFor="let participant of participants" (click)="removeParticipant(participant)">{{ participant.name }}</md-chip>
+          </md-chip-list>
+        </md-list-item>
+        <md-list-item md-ripple *ngFor = "let user of (users | async) | exclude:participants | exclude:currentUser" (click)="addParticipant(user)">
+          <img md-list-avatar src="http://lorempixel.com/40/40">
+          <h4 md-line>{{ user.name }}</h4>
+        </md-list-item>
+      </md-list>
+    </md-card>
+    <md-list>
+      <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
+        <button md-raised-button (click) = "loadMore()">Load More</button>
+      </md-list-item>
+    </md-list>
+
+    <md-card class = 'bottom-input'>
+      <form (submit) = "start(message); $event.preventDefault()">
+        <div fxLayout = 'row'>
+          <md-input-container>
+            <input mdInput [(ngModel)] = "message" name = "message" dividerColor="none" placeholder = "Type message...">
+          </md-input-container>
+          <button md-icon-button [disabled]="participants.length === 0 || ! message" type = "submit" class = "accent-icon-button">
+            <md-icon>send</md-icon>
+          </button>
+        </div>
+      </form>
+    </md-card>
+  </div>
+</div>
