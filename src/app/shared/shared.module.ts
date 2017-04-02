@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MomentModule } from 'angular2-moment';
+
+import { ExcludePipe } from './exclude.pipe';
 
 @NgModule({
   exports: [
@@ -10,6 +13,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     FlexLayoutModule,
     MaterialModule,
+    MomentModule,
+    ExcludePipe
   ],
+  declarations: [
+    ExcludePipe
+  ]
 })
 export class SharedModule {}
