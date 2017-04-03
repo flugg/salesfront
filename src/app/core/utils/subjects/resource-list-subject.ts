@@ -33,6 +33,27 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   }
 
   /**
+   * Moves an item to the front of the list.
+   */
+  public moveToFront(id: string) {
+    const resource = this.value.find(item => item.id === id);
+    const items = this.value.filter(item => item.id !== id);
+    items.unshift(resource);
+
+    this.next(items);
+  }
+
+  /**
+   * Moves an item to the back of the list.
+   */
+  public moveToBack(id: string) {
+    const resource = this.value.find(item => item.id === id);
+    const items = this.value.filter(item => item.id !== id).push(resource);
+
+    this.next(items);
+  }
+
+  /**
    * Prepends a new item to the list.
    */
   public prepend(item: any) {

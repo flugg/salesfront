@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MdSnackBar } from '@angular/material';
 import * as Pusher from 'pusher-js';
 import * as Echo from 'laravel-echo';
 
@@ -10,7 +11,13 @@ export class SocketApiService {
 
   private echo;
 
-  constructor(private tokenService: TokenService, private auth: AuthService) {
+  constructor(private tokenService: TokenService,
+              private auth: AuthService,
+              private snackBar: MdSnackBar) {
+    this.connect();
+  }
+
+  connect() {
     window['Pusher'] = Pusher;
     this.echo = new Echo({
       auth: {
@@ -25,6 +32,25 @@ export class SocketApiService {
       cluster: 'eu',
       encrypted: true,
       namespace: '',
+    });
+
+    this.echo.connector.pusher.connection.bind('disconnected', () => this.handleDisconnection());
+    this.echo.connector.pusher.connection.bind('unavailable', () => this.handleDisconnection());
+    this.echo.connector.pusher.connection.bind('error', error => this.handleDisconnection(error));
+    this.echo.connector.pusher.connection.bind('failed', error => this.handleDisconnection(error));
+  }
+
+  handleDisconnection(error?: Error) {
+    console.log('asf');
+    const snackBar = this.snackBar.open('Disconnected', 'Reconnect');
+    snackBar.onAction().subscribe(() => {
+      snackBar.dismiss();
+      this.echo.connector.connect();
+      this.snackBar.open('Reconnecting....');
+      this.echo.connector.pusher.connection.bind('connected', () => {
+        this.snackBar.open('Connected', null, { duration: 3000 });
+        this.echo.connector.pusher.connection.unbind('connected');
+      });
     });
   }
 

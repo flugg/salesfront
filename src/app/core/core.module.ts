@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { Http, RequestOptions } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
@@ -13,6 +13,7 @@ import { Paginator } from './paginator.service';
 import { AuthService } from './auth/auth.service';
 import { TokenService } from './auth/token.service';
 import { UserResolver } from './auth/user-resolver.service';
+import { ErrorHandlerService } from './error-handler.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -40,6 +41,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions],
     },
+    {
+      provide: ErrorHandler,
+      useClass: ErrorHandlerService
+    },
     RestApiService,
     SocketApiService,
     Paginator,
@@ -48,5 +53,4 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     UserResolver,
   ],
 })
-export class CoreModule {
-}
+export class CoreModule {}
