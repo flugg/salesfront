@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ConversationService } from '../shared/conversation.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { Participation } from '../../core/models/participation.model';
+import { User } from '../../core/models/user.model';
 
 @Component({
   selector: 'sf-participant-list',
@@ -17,6 +18,11 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
    * Wether or not the component is currently loading.
    */
   isLoading = true;
+
+  /**
+   * The currently logged in user.
+   */
+  currentUser: User;
 
   /**
    * The selected conversation.
@@ -32,12 +38,14 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private conversationService: ConversationService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private router: Router) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
+    this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
     this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.parent.params['id']);
 
     this.conversation.subscribe(() => this.isLoading = false);
@@ -57,5 +65,9 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
    */
   removeParticipant(participation: Participation) {
     this.conversationService.removeParticipant(participation);
+
+    if (participation.userId === this.currentUser.id) {
+      this.router.navigate(['messages', this.route.snapshot.parent.params['id']]);
+    }
   }
 }

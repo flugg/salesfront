@@ -39,6 +39,7 @@ export class ConversationService {
     this.onStarted(conversation => {
       conversations.prepend(conversation);
     }).onLastMessageUpdated(message => {
+      conversations.moveToFront(message.conversationId);
       conversations.set(message.conversationId, 'lastMessage', message);
     }).onLastMessageRead(participation => {
       conversations.setRelated(participation.conversationId, 'participations', participation.id, participation);

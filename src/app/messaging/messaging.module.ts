@@ -10,6 +10,7 @@ import { AddParticipantComponent } from './add-participant/add-participant.compo
 import { StartConversationComponent } from './start-conversation/start-conversation.component';
 import { ParticipatingPipe } from './shared/participating.pipe';
 import { NotParticipatingPipe } from './add-participant/not-participating.pipe';
+import { IgnoreEmptyPipe } from './conversation-list/ignore-empty.pipe';
 import { ConversationService } from './shared/conversation.service';
 import { MessageService } from './shared/message.service';
 
@@ -26,6 +27,7 @@ import { MessageService } from './shared/message.service';
     ParticipatingPipe,
     AddParticipantComponent,
     NotParticipatingPipe,
+    IgnoreEmptyPipe,
     StartConversationComponent,
   ],
   providers: [

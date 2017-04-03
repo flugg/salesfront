@@ -17,11 +17,12 @@
     <div [fxHide]="isLoading">
         <md-card class = "stripped-card">
             <md-list class = 'card-list'>
-                <md-list-item md-ripple
-                              class='message'
-                              *ngFor="let conversation of conversations | async"
+                <md-list-item mat-ripple
+                              mdRippleSpeedFactor="6"
+                              *ngFor="let conversation of conversations | async | ignoreEmpty"
                               [routerLink]="[conversation.id]"
-                              [ngClass]="{'new-message': hasUnread(conversation)}">
+                              [ngClass]="{'new-message': hasUnread(conversation)}"
+                              class="message">
                     <img md-list-avatar src="http://lorempixel.com/40/40">
                     <h4 md-line>
                         <span *ngFor = "let participation of conversation.participations | participating:currentUser"
