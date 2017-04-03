@@ -8,7 +8,6 @@ import { SocketApiService } from '../core/socket-api.service';
 import { Paginator } from '../core/paginator.service';
 import { ResourceSubject } from '../core/utils/subjects/resource-subject';
 
-
 @Injectable()
 export class UserService {
 
