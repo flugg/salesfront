@@ -5,12 +5,34 @@
     <title>Vendumo</title>
     <base href="/">
 
+    <style>
+      body {
+        background: #f2f2f2;
+      }
+      .logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: loading 3s ease-out infinite;
+      }
+      @keyframes loading {
+        0% { opacity: 1 }
+        50% { opacity: 0.37 }
+        100% { opacity: 1 }
+      }
+    </style>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
-    <sf-root>Loading...</sf-root>
+    <sf-root>
+      <div class="logo-container">
+        <img src="/assets/vendumo-logo-weak.svg" width="200" class="logo">
+      </div>
+    </sf-root>
   </body>
 </html>

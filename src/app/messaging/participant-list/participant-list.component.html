@@ -1,14 +1,9 @@
 <div class = "component-wrapper">
-  <md-toolbar color = "primary">
-    <button md-icon-button [routerLink] = "'../'">
-      <md-icon>arrow_back</md-icon>
-    </button>
-    <span class = "toolbar-heading">Participants</span>
-    <span class = "fill-space"></span>
+  <sf-toolbar mode="back" title="Participants">
     <button md-icon-button [routerLink] = "'add'">
       <md-icon>add</md-icon>
     </button>
-  </md-toolbar>
+  </sf-toolbar>
 
   <div [fxShow]="isLoading">
     <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>

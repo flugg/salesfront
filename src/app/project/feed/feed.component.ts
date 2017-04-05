@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { PostService } from './post.service';
 import { SidebarService } from '../../core/sidebar.service';
 import { Post } from '../../core/models/post.model';
+import { CommentService } from './comment.service';
 
 @Component({
   selector: 'sf-feed',
@@ -37,7 +38,9 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private postService: PostService,
-              public sidebar: SidebarService) {}
+              private commentService: CommentService,
+              public sidebar: SidebarService) {
+  }
 
   /**
    * Initializes the component.
@@ -77,8 +80,13 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Submits the form to publish a post.
    */
   publishPost(body: string) {
-    this.postService.publish(body).then(post => {
+    this.postService.publish(body);
+  }
 
-    });
+  /**
+   * Submits the form to post a comment.
+   */
+  postComment(post: Post, body: string) {
+    this.commentService.post(post.id, body);
   }
 }

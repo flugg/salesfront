@@ -1,10 +1,5 @@
 <div class = "component-wrapper">
-    <md-toolbar color = "primary">
-        <button md-icon-button (click)="sidebar.open()">
-            <md-icon>menu</md-icon>
-        </button>
-        <span class="toolbar-heading">Feed</span>
-    </md-toolbar>
+    <sf-toolbar mode="menu" title="Feed"></sf-toolbar>
 
     <div [fxShow]="isLoading">
         <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
@@ -12,29 +7,40 @@
 
     <div [fxHide]="isLoading">
         <md-card class="feed-input input-padding">
-            <form (submit) = "publishPost(post.value); $event.preventDefault()">
+            <form (submit) = "publishPost(postInput.value); $event.preventDefault()">
                 <md-input-container>
-                    <input #post mdInput name = "post" placeholder = "Type message...">
+                    <input #postInput mdInput name = "post" placeholder = "Write a post...">
                 </md-input-container>
             </form>
         </md-card>
         <div *ngFor="let post of posts | async" class="feed-cards">
-            <md-card>
+            <md-card class="feed-card">
                 <md-list class="stripped-list">
                     <md-list-item>
                         <img md-list-avatar src="http://lorempixel.com/40/40">
-                        <h4 md-line><strong>{{ post.user.name }}</strong></h4>
-                        <span md-line>{{ post.publishedAt | amTimeAgo }}</span>
+                        <h4 md-line class="mdc-typography--body2">{{ post.user.name }}</h4>
+                        <span md-line class="mdc-typography--body1 text-weak">{{ post.publishedAt | amTimeAgo }}</span>
                     </md-list-item>
                 </md-list>
-                <p>{{ post.body }}</p>
+                <p class="mdc-typography--body1">{{ post.body }}</p>
             </md-card>
-            <md-card class="feed-input comments-card" fxLayout="row" fxLayoutAlign="stretch center">
-                <form (submit) = "submit(); $event.preventDefault()">
+            <md-card class="feed-input comments-card" fxLayout="column" fxLayoutGap="16px">
+                <div *ngFor="let comment of post.comments" fxLayoutAlign="flex-start center">
+                    <img md-list-avatar
+                         [mdTooltip]="comment.postedAt | amTimeAgo"
+                         mdTooltipPosition="right"
+                         src="http://lorempixel.com/40/40"
+                         class="avatar">
+                    <div>
+                        <div class="mdc-typography--body2 text-padding">{{ comment.user.name }}</div>
+                        <div class="mdc-typography--body1 text-padding">{{ comment.body }}</div>
+                    </div>
+                </div>
+                <form (submit) = "postComment(post, commentInput.value); $event.preventDefault()" fxLayoutAlign="stretch center">
                     <div fxLayout="row" fxLayoutAlign="center center">
                         <img md-list-avatar src="http://lorempixel.com/40/40" class="avatar">
                         <md-input-container class="comments-input">
-                            <input mdInput name="comment" placeholder="Post comment...">
+                            <input mdInput #commentInput name="comment" placeholder="Post comment...">
                         </md-input-container>
                     </div>
                 </form>

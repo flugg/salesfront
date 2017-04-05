@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="-99 -50 400 238.1" style="enable-background:new -99 -50 400 238.1;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#243238;}
+	.st1{font-family:'Roboto-Medium';}
+	.st2{font-size:80.426px;}
+	.st3{fill:#EC1561;}
+	.st4{fill:#1770FF;}
+</style>
+<g transform="matrix( 2.2340545654296875, 0, 0, 2.2340545654296875, -27.75,239.45) ">
+	<g>
+		<defs>
+			<rect id="SVGID_1_" x="-119.8" y="-97.7" width="354.8" height="103.2"/>
+		</defs>
+		<clipPath id="SVGID_2_">
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		</clipPath>
+		<text transform="matrix(0.4476 0 0 0.4476 -19.6695 -33.7713)" class="st0 st1 st2">Vendumo</text>
+	</g>
+</g>
+<g transform="matrix( 2.038421630859375, 0, 0, 2.038421630859375, -358.7,-83.4) ">
+	<g>
+		<g id="Layer0_1_FILL">
+			<path class="st3" d="M223.9,26.2h-21.5l21.5,21.5V26.2 M227.1,26.2v21.5h21.5L227.1,26.2z"/>
+			<path class="st4" d="M202.4,72.4h21.5V50.9L202.4,72.4 M227.1,50.9v21.5l21.5-21.5H227.1z"/>
+		</g>
+	</g>
+</g>
+</svg>

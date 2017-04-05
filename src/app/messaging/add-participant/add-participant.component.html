@@ -1,10 +1,5 @@
 <div class = "component-wrapper">
-    <md-toolbar color = "primary">
-        <button md-icon-button [routerLink] = "'../'">
-            <md-icon>close</md-icon>
-        </button>
-        <span class = "toolbar-heading">Add Participant</span>
-    </md-toolbar>
+    <sf-toolbar mode="close" title="Add Participant"></sf-toolbar>
 
     <div [fxShow]="isLoading">
         <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>

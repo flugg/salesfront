@@ -1,11 +1,9 @@
 <div class = "component-wrapper">
-    <md-toolbar color = "primary">
-        <span class="toolbar-heading">Choose Project</span>
-        <span class = "fill-space"></span>
+    <sf-toolbar mode="none" title="Choose Project">
         <button md-icon-button [routerLink] = "'new'">
             <md-icon>add</md-icon>
         </button>
-    </md-toolbar>
+    </sf-toolbar>
 
     <div [fxShow]="isLoading">
         <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
@@ -17,9 +15,9 @@
                 <md-list-item mat-ripple
                               mdRippleSpeedFactor="6"
                               [routerLink]="['1']">
-                    <img md-list-avatar src="http://lorempixel.com/40/40">
-                    <h4 md-line>Test Project</h4>
-                    <span md-line>5 users, 2 teams</span>
+                    <div md-list-avatar src = "http://lorempixel.com/40/40" class="project-avatar" fxLayoutAlign="center center">TP</div>
+                    <h4 md-line class="mdc-typography--body2">Test Project</h4>
+                    <span md-line class="mdc-typography--body1 text-weak">5 users, 2 teams</span>
                 </md-list-item>
             </md-list>
         </md-card>

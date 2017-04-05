@@ -1,4 +1,9 @@
 <div class = "component-wrapper">
+    <!--<sf-toolbar mode="back" title="Add Participant">
+        <button *ngIf = "(conversation | async)?.group && ! (isLocked | async)" md-icon-button [routerLink] = "'participants'">
+            <md-icon>group</md-icon>
+        </button>
+    </sf-toolbar>-->
     <md-toolbar color = "primary">
         <button md-icon-button [routerLink] = "'../'">
             <md-icon>arrow_back</md-icon>
@@ -29,7 +34,7 @@
                     <img md-list-avatar
                          src = "http://lorempixel.com/40/40">
                     <md-card [ngClass] = "{'own-message': isPostedByUser(message)}">
-                        <md-card-content>{{ message.body }}</md-card-content>
+                        <md-card-content class="mdc-typography--body1">{{ message.body }}</md-card-content>
                     </md-card>
                 </div>
             </md-list-item>

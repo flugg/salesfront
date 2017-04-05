@@ -10,6 +10,7 @@ import { Paginator } from './paginator.service';
 import { AuthService } from './auth/auth.service';
 import { TokenService } from './auth/token.service';
 import { UserResolver } from './auth/user-resolver.service';
+import { UserService } from './auth/user.service';
 // import { ErrorHandlerService } from './error-handler.service';
 import { SidebarService } from './sidebar.service';
 
@@ -40,6 +41,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AuthService,
     TokenService,
     UserResolver,
+    UserService,
     SidebarService,
   ],
 })

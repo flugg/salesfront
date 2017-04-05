@@ -39,6 +39,8 @@ export class PostService {
 
     this.onPublished(post => {
       posts.prepend(post);
+    }).onCommentPosted(comment => {
+      posts.addRelated(comment.postId, 'comments', comment);
     });
 
     return posts.asObservable();
@@ -65,7 +67,7 @@ export class PostService {
   }
 
   /**
-   * Published a new post.
+   * Publishes a new post.
    */
   publish(body: string) {
     return this.api.post('posts', { body }).then(response => response.data);
@@ -76,6 +78,14 @@ export class PostService {
    */
   onPublished(callback: Function): PostService {
     this.sockets.listenForProject('1', 'post_published', post => callback(post));
+    return this;
+  }
+
+  /**
+   * Registers a listener for new comments.
+   */
+  onCommentPosted(callback: Function): PostService {
+    this.sockets.listenForProject('1', 'comment_posted', comment => callback(comment));
     return this;
   }
 }

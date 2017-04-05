@@ -1,5 +1,7 @@
 @import '~@angular/material/core/theming/all-theme';
+@import '~material-components-web/dist/material-components-web.css';
 // Plus imports for other components in your app.
+
 
 // Include the base styles for Angular Material core. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -26,15 +28,15 @@ body {
     margin: 0;
 }
 
-html, body, md-sidenav-container {
+html, body, .mat-sidenav-container {
     height: 100%;
 }
 
-md-sidenav {
+.mat-sidenav {
     width: 200px;
 }
 
-md-list-item {
+.mat-list-item {
     position: relative;
 }
 
@@ -137,6 +139,7 @@ md-list-item {
     height: 100%;
     width: 100%;
     z-index: 1;
+    overflow-y: scroll;
 }
 
 .stripped-card {
@@ -168,7 +171,7 @@ md-list-item {
 }
 
 .message span {
-    font-weight: 100 !important;
+    font-weight: 400 !important;
 }
 
 .message h4 span {
@@ -240,6 +243,10 @@ md-list-item {
     padding: 16px 24px !important;
 }
 
+.feed-card p {
+    margin-top: 24px;
+}
+
 .feed-input {
     margin-bottom: 12px;
 
@@ -276,8 +283,7 @@ md-list-item {
 .comments-card {
     background: #fafafa;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
-    height: 56px;
-    padding: 0 16px !important;
+    padding: 12px 24px !important;
 
     .mat-input-wrapper {
         margin: 0 !important;
@@ -285,8 +291,13 @@ md-list-item {
     }
 }
 
+.text-padding {
+    padding: 0 16px;
+}
+
 .comments-input {
     padding: 0 16px;
+    font-size: 14px !important;
 }
 
 .login-container {
@@ -337,4 +348,49 @@ md-list-item {
     .mat-list-item {
         color: white !important;
     }
+}
+
+.login-logo {
+    margin-bottom: 24px;
+}
+
+.mdc-typography--body2 {
+    font-weight: 500 !important;
+}
+
+.mdc-typography--caption {
+    font-size: 12px !important;
+}
+
+.text-weak {
+    color: rgba(black, 0.54);
+}
+
+.active-link {
+    .mat-icon {
+        opacity: 1;
+    }
+    .mat-list-text > * {
+        color: white !important;
+        font-weight: 800 !important;
+    }
+}
+
+.mat-sidenav {
+    hr {
+        border: 0;
+        border-bottom: 1px solid rgba(white, 0.12);
+        margin: 0;
+    }
+    .mat-list {
+        padding-top: 0;
+    }
+    .text-weak {
+        color: rgba(white, 0.7);
+    }
+}
+.project-avatar {
+    background: map-get($mat-pink, 500);
+    font-weight: 800;
+    color: white;
 }

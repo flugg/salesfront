@@ -1,14 +1,9 @@
 <div class = "component-wrapper">
-    <md-toolbar color = "primary">
-        <button md-icon-button (click)="sidebar.open()">
-            <md-icon>menu</md-icon>
-        </button>
-        <span class="toolbar-heading">Messages</span>
-        <span class = "fill-space"></span>
+    <sf-toolbar mode="menu" title="Messages">
         <button md-icon-button [routerLink] = "'new'">
             <md-icon>add</md-icon>
         </button>
-    </md-toolbar>
+    </sf-toolbar>
 
     <div [fxShow]="isLoading">
         <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
@@ -24,13 +19,13 @@
                               [ngClass]="{'new-message': hasUnread(conversation)}"
                               class="message">
                     <img md-list-avatar src="http://lorempixel.com/40/40">
-                    <h4 md-line>
+                    <h4 md-line class="mdc-typography--body2">
                         <span *ngFor = "let participation of conversation.participations | participating:currentUser"
                               class = "comma-separated">{{ participation.user.name }}</span>
                     </h4>
-                    <span md-line>{{ conversation.lastMessage?.body }}</span>
+                    <span md-line class="mdc-typography--body1" [ngClass]="{'text-weak': ! hasUnread(conversation)}">{{ conversation.lastMessage?.body }}</span>
                     <span class = "fill-space"></span>
-                    <span class="timestamp">{{ (conversation.lastMessage ? conversation.lastMessage.sentAt : conversation.startedAt) | amTimeAgo }}</span>
+                    <span class="timestamp" [ngClass]="{'text-weak': ! hasUnread(conversation)}">{{ (conversation.lastMessage ? conversation.lastMessage.sentAt : conversation.startedAt) | amTimeAgo }}</span>
                 </md-list-item>
             </md-list>
         </md-card>
