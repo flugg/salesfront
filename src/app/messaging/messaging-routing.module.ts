@@ -7,37 +7,27 @@ import { StartConversationComponent } from './start-conversation/start-conversat
 import { ConversationComponent } from './conversation/conversation.component';
 import { ParticipantListComponent } from './participant-list/participant-list.component';
 import { AddParticipantComponent } from './add-participant/add-participant.component';
-import { UserResolver } from '../core/auth/user-resolver.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: MessagingComponent,
+    component: ConversationListComponent,
     children: [
       {
-        path: '',
-        component: ConversationListComponent,
-        resolve: {
-          currentUser: UserResolver,
-        },
+        path: 'new',
+        component: StartConversationComponent,
+      },
+      {
+        path: ':id',
+        component: ConversationComponent,
         children: [
           {
-            path: 'new',
-            component: StartConversationComponent,
-          },
-          {
-            path: ':id',
-            component: ConversationComponent,
+            path: 'participants',
+            component: ParticipantListComponent,
             children: [
               {
-                path: 'participants',
-                component: ParticipantListComponent,
-                children: [
-                  {
-                    path: 'add',
-                    component: AddParticipantComponent,
-                  },
-                ],
+                path: 'add',
+                component: AddParticipantComponent,
               },
             ],
           },
@@ -56,5 +46,4 @@ const routes: Routes = [
   ],
   providers: [],
 })
-export class MessagingRoutingModule {
-}
+export class MessagingRoutingModule {}

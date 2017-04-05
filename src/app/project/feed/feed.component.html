@@ -1,0 +1,51 @@
+<div class = "component-wrapper">
+    <md-toolbar color = "primary">
+        <button md-icon-button (click)="sidebar.open()">
+            <md-icon>menu</md-icon>
+        </button>
+        <span class="toolbar-heading">Feed</span>
+    </md-toolbar>
+
+    <div [fxShow]="isLoading">
+        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+    </div>
+
+    <div [fxHide]="isLoading">
+        <md-card class="feed-input input-padding">
+            <form (submit) = "publishPost(post.value); $event.preventDefault()">
+                <md-input-container>
+                    <input #post mdInput name = "post" placeholder = "Type message...">
+                </md-input-container>
+            </form>
+        </md-card>
+        <div *ngFor="let post of posts | async" class="feed-cards">
+            <md-card>
+                <md-list class="stripped-list">
+                    <md-list-item>
+                        <img md-list-avatar src="http://lorempixel.com/40/40">
+                        <h4 md-line><strong>{{ post.user.name }}</strong></h4>
+                        <span md-line>{{ post.publishedAt | amTimeAgo }}</span>
+                    </md-list-item>
+                </md-list>
+                <p>{{ post.body }}</p>
+            </md-card>
+            <md-card class="feed-input comments-card" fxLayout="row" fxLayoutAlign="stretch center">
+                <form (submit) = "submit(); $event.preventDefault()">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <img md-list-avatar src="http://lorempixel.com/40/40" class="avatar">
+                        <md-input-container class="comments-input">
+                            <input mdInput name="comment" placeholder="Post comment...">
+                        </md-input-container>
+                    </div>
+                </form>
+            </md-card>
+        </div>
+        <md-list>
+            <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
+                <button md-raised-button (click) = "loadMore()">Load More</button>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

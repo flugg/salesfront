@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from './core/auth/login/login.component';
 import { AuthGuard } from './core/auth/auth-guard.service';
+import { UserResolver } from './core/auth/user-resolver.service';
+import { ProjectListComponent } from './project-list/project-list.component';
 
 export const routes: Routes = [
   {
@@ -11,16 +12,34 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'messages',
-    loadChildren: 'app/messaging/messaging.module#MessagingModule',
+    path: '',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    resolve: {
+      currentUser: UserResolver,
+    },
+    children: [
+      {
+        path: 'projects',
+        component: ProjectListComponent,
+      },
+      {
+        path: 'messages',
+        loadChildren: 'app/messaging/messaging.module#MessagingModule',
+      },
+      {
+        path: 'notifications',
+        loadChildren: 'app/notifications/notifications.module#NotificationsModule',
+      },
+      {
+        path: 'projects/1',
+        loadChildren: 'app/project/project.module#ProjectModule',
+      },
+    ]
   },
-  //{
-  //  path: 'users/:id',
-  //  loadChildren: 'app/user/user.module#UserModule',
-  //},
   {
-    path: 'login',
-    component: LoginComponent,
+    path: '',
+    loadChildren: 'app/auth/auth.module#AuthModule',
   },
 ];
 
@@ -32,7 +51,7 @@ export const routes: Routes = [
     RouterModule,
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
   ]
 })
 

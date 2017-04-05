@@ -7,8 +7,8 @@ import 'rxjs/add/operator/filter';
 
 import { ConversationService } from '../shared/conversation.service';
 import { MessageService } from '../shared/message.service';
-import { UserService } from '../../user/user.service';
 import { User } from '../../core/models/user.model';
+import { UserService } from '../../core/auth/user.service';
 
 @Component({
   selector: 'sf-start-conversation',
@@ -65,7 +65,7 @@ export class StartConversationComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.currentUser = this.route.snapshot.parent.data['currentUser'];
+    this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
     this.users = this.userService.getWithUpdates(this.cursor);
 
     this.subscriptions.push(this.users.subscribe(() => this.isLoading = false));

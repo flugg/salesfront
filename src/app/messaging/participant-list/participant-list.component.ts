@@ -45,8 +45,8 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
-    this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.parent.params['id']);
+    this.currentUser = this.route.snapshot.parent.parent.parent.data['currentUser'];
+    this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.params['id']);
 
     this.conversation.subscribe(() => this.isLoading = false);
   }
@@ -67,7 +67,7 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
     this.conversationService.removeParticipant(participation);
 
     if (participation.userId === this.currentUser.id) {
-      this.router.navigate(['messages', this.route.snapshot.parent.params['id']]);
+      this.router.navigate(['messages', this.route.snapshot.parent.parent.params['id']]);
     }
   }
 }

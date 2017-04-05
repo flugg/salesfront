@@ -74,7 +74,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit(): void {
-    this.currentUser = this.route.snapshot.parent.data['currentUser'];
+    this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
     this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.params['id']);
     this.messages = this.messageService.getWithUpdates(this.route.snapshot.params['id'], this.cursor);
 

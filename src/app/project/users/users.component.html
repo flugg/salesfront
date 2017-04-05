@@ -1,0 +1,15 @@
+<div class = "component-wrapper">
+  <md-toolbar color = "primary">
+    <button md-icon-button (click)="sidebar.open()">
+      <md-icon>menu</md-icon>
+    </button>
+    <span class="toolbar-heading">Users</span>
+  </md-toolbar>
+
+  <div [fxShow]="isLoading">
+    <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+  </div>
+
+  <!-- -->
+
+<router-outlet></router-outlet>

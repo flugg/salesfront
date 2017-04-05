@@ -15,7 +15,7 @@ export class TokenService {
    * Checks if the token exists and is not expired.
    */
   isValid(): boolean {
-    return this.get() != null && tokenNotExpired();
+    return this.get() != null && tokenNotExpired('token');
   }
 
   /**
@@ -30,6 +30,13 @@ export class TokenService {
    */
   set(token: string): void {
     localStorage.setItem('token', token);
+  }
+
+  /**
+   * Unsets the given token in storage.
+   */
+  unset(): void {
+    localStorage.removeItem('token');
   }
 
   /**

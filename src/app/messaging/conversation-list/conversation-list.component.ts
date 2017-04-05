@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ConversationService } from '../shared/conversation.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { User } from '../../core/models/user.model';
+import { SidebarService } from '../../core/sidebar.service';
 
 @Component({
   selector: 'sf-conversations',
@@ -43,16 +44,19 @@ export class ConversationListComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private conversationService: ConversationService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              public sidebar: SidebarService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.currentUser = this.route.snapshot.data['currentUser'];
+    this.currentUser = this.route.snapshot.parent.data['currentUser'];
     this.conversations = this.conversationService.getWithUpdates(this.cursor);
 
-    this.conversations.subscribe(() => this.isLoading = false);
+    this.subscriptions.push(this.conversations.subscribe(() => {
+      this.isLoading = false;
+    }));
   }
 
   /**

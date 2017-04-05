@@ -1,0 +1,34 @@
+<div class = "component-wrapper">
+    <md-toolbar color = "primary">
+        <span class="toolbar-heading">Choose Project</span>
+        <span class = "fill-space"></span>
+        <button md-icon-button [routerLink] = "'new'">
+            <md-icon>add</md-icon>
+        </button>
+    </md-toolbar>
+
+    <div [fxShow]="isLoading">
+        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+    </div>
+
+    <div [fxHide]="isLoading">
+        <md-card class = "stripped-card">
+            <md-list class = 'card-list'>
+                <md-list-item mat-ripple
+                              mdRippleSpeedFactor="6"
+                              [routerLink]="['1']">
+                    <img md-list-avatar src="http://lorempixel.com/40/40">
+                    <h4 md-line>Test Project</h4>
+                    <span md-line>5 users, 2 teams</span>
+                </md-list-item>
+            </md-list>
+        </md-card>
+        <md-list>
+            <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
+                <button md-raised-button (click) = "loadMore()">Load More</button>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

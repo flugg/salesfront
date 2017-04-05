@@ -8,7 +8,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ErrorsModule } from './errors/errors.module';
 import { AppComponent } from './app.component';
-import { UserService } from './user/user.service';
+import { ProjectListComponent } from './project-list/project-list.component';
 
 @NgModule({
   imports: [
@@ -19,8 +19,12 @@ import { UserService } from './user/user.service';
     SharedModule,
     ErrorsModule,
   ],
-  declarations: [AppComponent],
-  bootstrap: [AppComponent],
-  providers: [UserService],
+  declarations: [
+    AppComponent,
+    ProjectListComponent
+  ],
+  bootstrap: [
+    AppComponent
+  ],
 })
 export class AppModule {}

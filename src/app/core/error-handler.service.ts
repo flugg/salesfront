@@ -13,7 +13,7 @@ export class ErrorHandlerService implements ErrorHandler {
    * Handles uncaught errors.
    */
   handleError(error) {
-    const snackBar = this.injector.get(MdSnackBar).open('Something went wrong.', 'Reload');
+    const snackBar = this.injector.get(MdSnackBar).open('Something went wrong', 'Reload');
     snackBar.onAction().subscribe(() => window.location.reload());
   }
 }

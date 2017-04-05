@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/zip';
 
 import { ConversationService } from '../shared/conversation.service';
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../core/auth/user.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { User } from '../../core/models/user.model';
 
@@ -52,7 +52,7 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.params['id']);
+    this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.parent.params['id']);
     this.users = this.userService.getWithUpdates(this.cursor);
 
     this.subscriptions.push(Observable.zip(this.conversation, this.users).subscribe(() => {
@@ -87,6 +87,6 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
    * Adds a participant to the conversation.
    */
   addParticipant(user: User) {
-    this.conversationService.addParticipant(this.route.snapshot.parent.parent.params['id'], user);
+    this.conversationService.addParticipant(this.route.snapshot.parent.parent.parent.params['id'], user);
   }
 }

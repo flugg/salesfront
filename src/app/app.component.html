@@ -1,4 +1,47 @@
 <md-sidenav-container>
-    <vo-sidebar></vo-sidebar>
+    <md-sidenav #sidenav>
+        <md-toolbar>
+            <button md-icon-button (click)="navigateTo(['/messages'])">
+                <md-icon>email</md-icon>
+            </button>
+            <button md-icon-button (click)="navigateTo(['/notifications'])">
+                <md-icon>notifications</md-icon>
+            </button>
+            <span class="fill-space"></span>
+            <button md-icon-button (click)="logout()">
+                <md-icon>exit_to_app</md-icon>
+            </button>
+        </md-toolbar>
+        <md-nav-list>
+            <md-list-item md-ripple (click)="navigateTo(['/projects', '1'])">
+                <md-icon md-list-icon>question_answer</md-icon>
+                <a md-line>Feed</a>
+            </md-list-item>
+            <md-list-item md-ripple (click)="navigateTo(['/projects', '1', 'scoreboard'])">
+                <md-icon md-list-icon>subject</md-icon>
+                <a md-line>Scoreboard</a>
+            </md-list-item>
+            <md-list-item md-ripple (click)="navigateTo(['/projects', '1', 'budgets'])">
+                <md-icon md-list-icon>track_changes</md-icon>
+                <a md-line>Budgets</a>
+            </md-list-item>
+            <md-list-item md-ripple (click)="navigateTo(['/projects', '1', 'sales'])">
+                <md-icon md-list-icon>attach_money</md-icon>
+                <a md-line>Sales</a>
+            </md-list-item>
+            <md-list-item md-ripple (click)="navigateTo(['/projects', '1', 'teams'])">
+                <md-icon md-list-icon>group</md-icon>
+                <a md-line>Teams</a>
+            </md-list-item>
+            <md-list-item md-ripple (click)="navigateTo(['/projects', '1', 'users'])">
+                <md-icon md-list-icon>person</md-icon>
+                <a md-line>Users</a>
+            </md-list-item>
+            <md-list-item md-ripple (click)="navigateTo(['/projects', '1', 'settings'])">
+                <md-icon md-list-icon>settings</md-icon>
+                <a md-line>Settings</a>
+            </md-list-item>
+        </md-nav-list>
+    </md-sidenav>
     <router-outlet></router-outlet>
 </md-sidenav-container>
