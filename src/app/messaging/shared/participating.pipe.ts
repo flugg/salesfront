@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { AuthService } from '../../core/auth/auth.service';
 import { Participation } from '../../core/models/participation.model';
 import { User } from '../../core/models/user.model';
 
@@ -9,12 +8,6 @@ import { User } from '../../core/models/user.model';
   pure: false,
 })
 export class ParticipatingPipe implements PipeTransform {
-
-  /**
-   * Constructs the route resolver.
-   */
-  constructor(private auth: AuthService) {
-  }
 
   /**
    * Transforms the data to only include participants currently participating.

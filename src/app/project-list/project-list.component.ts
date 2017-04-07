@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
-  selector: 'sf-project-list',
+  selector: 'vmo-project-list',
   templateUrl: 'project-list.component.html',
 })
 export class ProjectListComponent implements OnInit {

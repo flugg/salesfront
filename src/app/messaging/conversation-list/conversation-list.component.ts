@@ -1,16 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ConversationService } from '../shared/conversation.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { User } from '../../core/models/user.model';
-import { SidebarService } from '../../core/sidebar.service';
 
 @Component({
-  selector: 'sf-conversations',
+  selector: 'vmo-conversations',
   templateUrl: 'conversation-list.component.html',
 })
 export class ConversationListComponent implements OnInit, OnDestroy {
@@ -28,7 +26,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   /**
    * List of loaded conversations.
    */
-  conversations: Observable<Conversation[]>;
+  conversations: Conversation[];
 
   /**
    * The cursor for the paginated conversations.
@@ -44,17 +42,17 @@ export class ConversationListComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private conversationService: ConversationService,
-              private route: ActivatedRoute,
-              public sidebar: SidebarService) {}
+              private route: ActivatedRoute) {
+  }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
     this.currentUser = this.route.snapshot.parent.data['currentUser'];
-    this.conversations = this.conversationService.getWithUpdates(this.cursor);
 
-    this.subscriptions.push(this.conversations.subscribe(() => {
+    this.subscriptions.push(this.conversationService.getWithUpdates(this.cursor).subscribe(conversations => {
+      this.conversations = conversations;
       this.isLoading = false;
     }));
   }
@@ -86,14 +84,12 @@ export class ConversationListComponent implements OnInit, OnDestroy {
    * Checks if there are any unread messages in the given conversation.
    */
   hasUnread(conversation: Conversation): boolean {
-    const participation = conversation.participations.find(item => {
-      return item.userId === this.currentUser.id;
-    });
+    const participation = conversation.participations.find(item => item.userId === this.currentUser.id);
 
-    if (! participation.lastReadMessage || ! conversation.lastMessage) {
-      return false;
+    if (participation.lastReadMessage && conversation.lastMessage) {
+      return participation.lastReadMessage.id !== conversation.lastMessage.id;
     }
 
-    return participation.lastReadMessage.id !== conversation.lastMessage.id;
+    return false;
   }
 }

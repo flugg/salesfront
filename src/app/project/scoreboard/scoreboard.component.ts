@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidebarService } from '../../core/sidebar.service';
 
 @Component({
-  selector: 'sf-scoreboard',
+  selector: 'vmo-scoreboard',
   templateUrl: './scoreboard.component.html'
 })
 export class ScoreboardComponent implements OnInit {

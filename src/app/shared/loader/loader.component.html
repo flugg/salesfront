@@ -1,0 +1,7 @@
+<div *ngIf="hasLoaded">
+  <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+</div>
+
+<div *ngIf="! hasLoaded">
+  <ng-content></ng-content>
+</div>

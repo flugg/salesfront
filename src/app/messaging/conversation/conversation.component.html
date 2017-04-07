@@ -1,18 +1,18 @@
 <div class = "component-wrapper">
-    <!--<sf-toolbar mode="back" title="Add Participant">
+    <!--<vmo-toolbar mode="back" title="Add Participant">
         <button *ngIf = "(conversation | async)?.group && ! (isLocked | async)" md-icon-button [routerLink] = "'participants'">
             <md-icon>group</md-icon>
         </button>
-    </sf-toolbar>-->
+    </vmo-toolbar>-->
     <md-toolbar color = "primary">
         <button md-icon-button [routerLink] = "'../'">
             <md-icon>arrow_back</md-icon>
         </button>
         <span class = "toolbar-heading">
-            <span *ngFor = "let participation of (conversation | async)?.participations | participating:currentUser" class = "comma-separated">{{ participation.user.name }}</span>
+            <span *ngFor = "let participation of conversation?.participations | participating:currentUser" class = "comma-separated">{{ participation.user.name }}</span>
         </span>
         <span class = "fill-space"></span>
-        <button *ngIf = "(conversation | async)?.group && ! (isLocked | async)" md-icon-button [routerLink] = "'participants'">
+        <button *ngIf = "conversation?.group && ! (isLocked | async)" md-icon-button [routerLink] = "'participants'">
             <md-icon>group</md-icon>
         </button>
     </md-toolbar>
@@ -26,7 +26,7 @@
             <md-list-item *ngIf="isLocked | async" fxFlexAlign="center">
                 <span class="weak-text">You are no longer in this conversation.</span>
             </md-list-item>
-            <md-list-item *ngFor="let message of (messages | async)"
+            <md-list-item *ngFor="let message of messages"
                           [fxFlexAlign]="isPostedByUser(message) ? 'flex-end' : 'flex-start'">
                 <div fxLayout="row"
                      [mdTooltip]="message.user.name + ', ' + (message.sentAt | amTimeAgo)"
@@ -50,7 +50,7 @@
                 <md-input-container>
                     <input mdInput [disabled]="isLocked | async" [(ngModel)] = "message" name = "message" dividerColor="none" placeholder = "Type message...">
                 </md-input-container>
-                <button md-icon-button [disabled]="isLocked | async" type = "submit" class = "accent-icon-button">
+                <button md-icon-button [disabled]="! message || (isLocked | async)" type = "submit" class = "accent-icon-button">
                     <md-icon>send</md-icon>
                 </button>
             </div>

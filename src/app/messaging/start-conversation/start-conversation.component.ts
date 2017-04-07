@@ -11,7 +11,7 @@ import { User } from '../../core/models/user.model';
 import { UserService } from '../../core/auth/user.service';
 
 @Component({
-  selector: 'sf-start-conversation',
+  selector: 'vmo-start-conversation',
   templateUrl: './start-conversation.component.html',
 })
 export class StartConversationComponent implements OnInit, OnDestroy {
@@ -34,7 +34,7 @@ export class StartConversationComponent implements OnInit, OnDestroy {
   /**
    * List of loaded users.
    */
-  users: Observable<User[]>;
+  users: User[];
 
   /**
    * List of selected participants.
@@ -66,9 +66,10 @@ export class StartConversationComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
-    this.users = this.userService.getWithUpdates(this.cursor);
-
-    this.subscriptions.push(this.users.subscribe(() => this.isLoading = false));
+    this.subscriptions.push(this.userService.getWithUpdates(this.cursor).subscribe(users => {
+      this.users = users;
+      this.isLoading = false
+    }));
   }
 
   /**
@@ -119,5 +120,7 @@ export class StartConversationComponent implements OnInit, OnDestroy {
         this.router.navigate(['messages', conversation.id]);
       });
     });
+
+    this.message = '';
   }
 }

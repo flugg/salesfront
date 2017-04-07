@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidebarService } from '../core/sidebar.service';
 
 @Component({
-  selector: 'sf-notifications',
+  selector: 'vmo-notifications',
   templateUrl: './notifications.component.html'
 })
 export class NotificationsComponent implements OnInit {

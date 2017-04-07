@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sf-page-not-found',
+  selector: 'vmo-page-not-found',
   templateUrl: './page-not-found.component.html',
 })
 export class PageNotFoundComponent implements OnInit {

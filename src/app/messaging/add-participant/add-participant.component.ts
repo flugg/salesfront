@@ -11,7 +11,7 @@ import { Conversation } from '../../core/models/conversation.model';
 import { User } from '../../core/models/user.model';
 
 @Component({
-  selector: 'sf-add-participant',
+  selector: 'vmo-add-participant',
   templateUrl: './add-participant.component.html',
 })
 export class AddParticipantComponent implements OnInit, OnDestroy {

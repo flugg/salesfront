@@ -1,40 +1,49 @@
-<div class = "component-wrapper">
-    <sf-toolbar mode="menu" title="Messages">
-        <button md-icon-button [routerLink] = "'new'">
-            <md-icon>add</md-icon>
-        </button>
-    </sf-toolbar>
+<div class="vmo-component">
+  <vmo-toolbar title="Messages" mode="menu">
+    <button md-icon-button routerLink="new">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
 
-    <div [fxShow]="isLoading">
-        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
-    </div>
+  <vmo-loader [hasLoaded]="isLoading">
+    <md-list class="vmo-list u-nonselectable">
+      <md-list-item md-ripple
+                    mdRippleSpeedFactor="6"
+                    *ngFor="let conversation of conversations | ignoreEmpty"
+                    [routerLink]="[conversation.id]">
 
-    <div [fxHide]="isLoading">
-        <md-card class = "stripped-card">
-            <md-list class = 'card-list'>
-                <md-list-item mat-ripple
-                              mdRippleSpeedFactor="6"
-                              *ngFor="let conversation of conversations | async | ignoreEmpty"
-                              [routerLink]="[conversation.id]"
-                              [ngClass]="{'new-message': hasUnread(conversation)}"
-                              class="message">
-                    <img md-list-avatar src="http://lorempixel.com/40/40">
-                    <h4 md-line class="mdc-typography--body2">
-                        <span *ngFor = "let participation of conversation.participations | participating:currentUser"
-                              class = "comma-separated">{{ participation.user.name }}</span>
-                    </h4>
-                    <span md-line class="mdc-typography--body1" [ngClass]="{'text-weak': ! hasUnread(conversation)}">{{ conversation.lastMessage?.body }}</span>
-                    <span class = "fill-space"></span>
-                    <span class="timestamp" [ngClass]="{'text-weak': ! hasUnread(conversation)}">{{ (conversation.lastMessage ? conversation.lastMessage.sentAt : conversation.startedAt) | amTimeAgo }}</span>
-                </md-list-item>
-            </md-list>
-        </md-card>
-        <md-list>
-            <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
-                <button md-raised-button (click) = "loadMore()">Load More</button>
-            </md-list-item>
-        </md-list>
-    </div>
+        <img md-list-avatar src="http://lorempixel.com/40/40">
+
+        <span md-line>
+          <span *ngFor="let participation of conversation.participations | participating:currentUser"
+                class="mdc-typography--subheading1 comma-separated"
+                [class.u-highlight]="hasUnread(conversation)">
+            {{ participation.user.name }}
+          </span>
+        </span>
+
+        <span md-line
+              class="mdc-typography--body1 u-weak"
+              [class.u-highlight]="hasUnread(conversation)">
+          {{ conversation.lastMessage?.body }}
+        </span>
+
+        <span class="u-fill"></span>
+
+        <span class="mdc-typography--caption u-weak u-nowrap"
+              [class.u-highlight]="hasUnread(conversation)">
+          {{ (conversation.lastMessage ? conversation.lastMessage.sentAt : conversation.startedAt) | amTimeAgo }}
+        </span>
+
+      </md-list-item>
+    </md-list>
+
+    <md-list>
+      <md-list-item *ngIf="! hasLoadedAll()" fxLayoutAlign="center">
+        <button md-raised-button (click)="loadMore()">Load More</button>
+      </md-list-item>
+    </md-list>
+  </vmo-loader>
 </div>
 
 <router-outlet></router-outlet>

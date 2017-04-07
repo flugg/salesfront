@@ -9,7 +9,7 @@ import { Post } from '../../core/models/post.model';
 import { CommentService } from './comment.service';
 
 @Component({
-  selector: 'sf-feed',
+  selector: 'vmo-feed',
   templateUrl: 'feed.component.html',
 })
 export class FeedComponent implements OnInit, OnDestroy {

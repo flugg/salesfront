@@ -98,8 +98,8 @@
       "check-type"
     ],
 
-    "directive-selector": [true, "attribute", "sf", "camelCase"],
-    "component-selector": [true, "element", "sf", "kebab-case"],
+    "directive-selector": [true, "attribute", "vmo", "camelCase"],
+    "component-selector": [true, "element", "vmo", "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

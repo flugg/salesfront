@@ -8,6 +8,7 @@ import { MomentModule } from 'angular2-moment';
 
 import { ExcludePipe } from './exclude.pipe';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   imports: [
@@ -22,11 +23,13 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MaterialModule,
     MomentModule,
     ExcludePipe,
-    ToolbarComponent
+    ToolbarComponent,
+    LoaderComponent
   ],
   declarations: [
     ExcludePipe,
-    ToolbarComponent
+    ToolbarComponent,
+    LoaderComponent
   ]
 })
 export class SharedModule {}

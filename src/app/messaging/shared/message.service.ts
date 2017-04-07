@@ -39,7 +39,9 @@ export class MessageService {
     });
 
     this.onMessagePosted(message => {
-      messages.prepend(message);
+      if (message.conversationId === conversationId) {
+        messages.prepend(message);
+      }
     });
 
     return messages.asObservable();
@@ -51,7 +53,7 @@ export class MessageService {
   send(conversationId: string, body: string): Promise<Conversation> {
     return this.api.post(`conversations/${conversationId}/messages`, {
       message: body,
-    });
+    }, { include: 'user' }).then(response => response.data);
   }
 
   /**

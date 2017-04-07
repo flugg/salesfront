@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidebarService } from '../../core/sidebar.service';
 
 @Component({
-  selector: 'sf-sales',
+  selector: 'vmo-sales',
   templateUrl: './sales.component.html'
 })
 export class SalesComponent implements OnInit {

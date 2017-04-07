@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidebarService } from '../../core/sidebar.service';
 
 @Component({
-  selector: 'sf-settings',
+  selector: 'vmo-settings',
   templateUrl: './settings.component.html'
 })
 export class SettingsComponent implements OnInit {

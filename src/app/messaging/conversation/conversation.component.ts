@@ -12,7 +12,7 @@ import { Message } from '../../core/models/message.model';
 import { User } from '../../core/models/user.model';
 
 @Component({
-  selector: 'sf-conversation',
+  selector: 'vmo-conversation',
   templateUrl: './conversation.component.html',
 })
 export class ConversationComponent implements OnInit, OnDestroy {
@@ -35,12 +35,12 @@ export class ConversationComponent implements OnInit, OnDestroy {
   /**
    * The selected conversation.
    */
-  conversation: Observable<Conversation>;
+  conversation: Conversation;
 
   /**
    * The loaded messages.
    */
-  messages: Observable<Message[]>;
+  messages;
 
   /**
    * Indicates if the conversation is locked for the given user.
@@ -75,16 +75,17 @@ export class ConversationComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
-    this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.params['id']);
-    this.messages = this.messageService.getWithUpdates(this.route.snapshot.params['id'], this.cursor);
 
-    this.subscriptions.push(Observable.zip(this.conversation, this.messages).subscribe(() => {
+    this.subscriptions.push(Observable.zip(
+      this.conversationService.findWithUpdates(this.route.snapshot.params['id']),
+      this.messageService.getWithUpdates(this.route.snapshot.params['id'], this.cursor),
+    ).subscribe(data => {
+      [this.conversation, this.messages] = data;
+
+      this.isLocked.next(this.conversationService.isLocked(this.conversation, this.currentUser));
+      this.markLastMessageAsRead(this.conversation);
+
       this.isLoading = false;
-    }));
-
-    this.subscriptions.push(this.conversation.subscribe(conversation => {
-      this.isLocked.next(this.conversationService.isLocked(conversation, this.currentUser));
-      this.markLastMessageAsRead(conversation);
     }));
 
     this.messageService.onMessagePosted(() => {
@@ -105,9 +106,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
    * Sends a message to the conversation.
    */
   sendMessage(): void {
-    this.messageService.send(this.route.snapshot.params['id'], this.message).then(() => {
-      this.message = '';
-    });
+    this.messageService.send(this.route.snapshot.params['id'], this.message).then(() => console.log(1));
+    this.message = '';
   }
 
   /**

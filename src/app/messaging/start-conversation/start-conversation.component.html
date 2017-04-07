@@ -1,45 +1,59 @@
-<div class = "component-wrapper">
-  <sf-toolbar mode="close" title="New Conversation">
-    <button md-icon-button [routerLink] = "'add'">
-      <md-icon>add</md-icon>
-    </button>
-  </sf-toolbar>
+<div class="vmo-component">
+  <vmo-toolbar title="New Conversation" mode="close"></vmo-toolbar>
 
-  <div [fxShow]="isLoading">
-    <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
-  </div>
+  <vmo-loader [hasLoaded]="isLoading">
+    <md-list class="vmo-list u-nonselectable">
+      <md-list-item *ngIf="participants.length > 0" class="u-padding-bottom">
+        <md-chip-list selectable="false">
+          <md-chip *ngFor="let participant of participants" (click)="removeParticipant(participant)">
+            {{ participant.name }}
+          </md-chip>
+        </md-chip-list>
+      </md-list-item>
 
-  <div [fxHide]="isLoading">
-    <md-card class = "stripped-card">
-      <md-list class = 'card-list'>
-        <md-list-item *ngIf="participants.length > 0" class = 'big-list-item'>
-          <md-chip-list selectable="false">
-            <md-chip *ngFor="let participant of participants" (click)="removeParticipant(participant)">{{ participant.name }}</md-chip>
-          </md-chip-list>
-        </md-list-item>
-        <md-list-item md-ripple *ngFor = "let user of (users | async) | exclude:participants | exclude:currentUser" (click)="addParticipant(user)">
-          <img md-list-avatar src="http://lorempixel.com/40/40">
-          <h4 md-line>{{ user.name }}</h4>
-        </md-list-item>
-      </md-list>
-    </md-card>
-    <md-list>
-      <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
-        <button md-raised-button (click) = "loadMore()">Load More</button>
+      <md-list-item md-ripple
+                    *ngFor="let user of users | exclude:participants | exclude:currentUser"
+                    (click)="addParticipant(user)">
+        <img md-list-avatar src="http://lorempixel.com/40/40">
+        <h4 md-line class="mdc-typography--subheading1">
+          {{ user.name }}
+        </h4>
       </md-list-item>
     </md-list>
 
-    <md-card class = 'bottom-input'>
-      <form (submit) = "start(message); $event.preventDefault()">
-        <div fxLayout = 'row'>
+    <md-list>
+      <md-list-item *ngIf="! hasLoadedAll()" fxLayoutAlign="center">
+        <button md-raised-button (click)="loadMore()">Load More</button>
+      </md-list-item>
+    </md-list>
+
+    <md-toolbar class="vmo-bottom-toolbar">
+      <md-input-container class="vmo-card-input">
+        <input mdInput [(ngModel)]="message" name="message" dividerColor="none" placeholder="Type message...">
+      </md-input-container>
+      <span class="u-fill"></span>
+      <button md-icon-button
+              [disabled]="participants.length === 0 || ! message"
+              type="submit"
+              class="accent-icon-button">
+        <md-icon>send</md-icon>
+      </button>
+    </md-toolbar>
+
+    <!--<md-card class='bottom-input'>
+      <form (submit)="start(message); $event.preventDefault()">
+        <div fxLayout='row'>
           <md-input-container>
-            <input mdInput [(ngModel)] = "message" name = "message" dividerColor="none" placeholder = "Type message...">
+            <input mdInput [(ngModel)]="message" name="message" dividerColor="none" placeholder="Type message...">
           </md-input-container>
-          <button md-icon-button [disabled]="participants.length === 0 || ! message" type = "submit" class = "accent-icon-button">
+          <button md-icon-button
+                  [disabled]="participants.length === 0 || ! message"
+                  type="submit"
+                  class="accent-icon-button">
             <md-icon>send</md-icon>
           </button>
         </div>
       </form>
-    </md-card>
-  </div>
+    </md-card>-->
+  </vmo-loader>
 </div>

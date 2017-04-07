@@ -8,7 +8,7 @@ import { User } from './core/models/user.model';
 import { SidebarService } from './core/sidebar.service';
 
 @Component({
-  selector: 'sf-root',
+  selector: 'vmo-root',
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {

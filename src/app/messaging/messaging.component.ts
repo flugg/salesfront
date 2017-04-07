@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sf-messaging',
+  selector: 'vmo-messaging',
   templateUrl: './messaging.component.html',
 })
 export class MessagingComponent implements OnInit {

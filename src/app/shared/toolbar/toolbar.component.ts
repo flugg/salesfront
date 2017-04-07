@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { SidebarService } from '../../core/sidebar.service';
 
 @Component({
-  selector: 'sf-toolbar',
+  selector: 'vmo-toolbar',
   templateUrl: './toolbar.component.html'
 })
 export class ToolbarComponent {
