@@ -7,10 +7,10 @@ import { BudgetsComponent } from './budgets.component';
 @NgModule({
   imports: [
     SharedModule,
-    BudgetsRoutingModule,
+    BudgetsRoutingModule
   ],
   declarations: [
-    BudgetsComponent,
-  ],
+    BudgetsComponent
+  ]
 })
 export class BudgetsModule {}

@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ConversationService } from '../shared/conversation.service';
@@ -10,7 +9,7 @@ import { User } from '../../core/models/user.model';
 
 @Component({
   selector: 'vmo-participant-list',
-  templateUrl: './participant-list.component.html',
+  templateUrl: 'participant-list.component.html'
 })
 export class ParticipantListComponent implements OnInit, OnDestroy {
 
@@ -27,7 +26,7 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
   /**
    * The selected conversation.
    */
-  conversation: Observable<Conversation>;
+  conversation: Conversation;
 
   /**
    * List of all observable subscriptions.
@@ -39,16 +38,19 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
    */
   constructor(private conversationService: ConversationService,
               private route: ActivatedRoute,
-              private router: Router) {}
+              private router: Router) {
+  }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
     this.currentUser = this.route.snapshot.parent.parent.parent.data['currentUser'];
-    this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.parent.params['id']);
 
-    this.conversation.subscribe(() => this.isLoading = false);
+    this.subscriptions.push(this.conversationService.findWithUpdates(this.route.snapshot.parent.params['id']).subscribe(conversation => {
+      this.conversation = conversation;
+      this.isLoading = false;
+    }));
   }
 
   /**
@@ -67,7 +69,7 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
     this.conversationService.removeParticipant(participation);
 
     if (participation.userId === this.currentUser.id) {
-      this.router.navigate(['messages', this.route.snapshot.parent.params['id']]);
+      this.router.navigate(['messages', this.conversation.id]);
     }
   }
 }

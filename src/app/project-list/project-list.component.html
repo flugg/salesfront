@@ -1,32 +1,29 @@
-<div class = "component-wrapper">
-    <vmo-toolbar mode="none" title="Choose Project">
-        <button md-icon-button [routerLink] = "'new'">
-            <md-icon>add</md-icon>
-        </button>
-    </vmo-toolbar>
+<div class="vmo-component">
+  <vmo-toolbar title="Choose Project" mode="none">
+    <button md-icon-button routerLink="new">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
 
-    <div [fxShow]="isLoading">
-        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
-    </div>
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list">
+      <md-list-item md-ripple
+                    [routerLink]="1"
+                    class="u-clickable">
 
-    <div [fxHide]="isLoading">
-        <md-card class = "stripped-card">
-            <md-list class = 'card-list'>
-                <md-list-item mat-ripple
-                              mdRippleSpeedFactor="6"
-                              [routerLink]="['1']">
-                    <div md-list-avatar src = "http://lorempixel.com/40/40" class="project-avatar" fxLayoutAlign="center center">TP</div>
-                    <h4 md-line class="mdc-typography--body2">Test Project</h4>
-                    <span md-line class="mdc-typography--body1 text-weak">5 users, 2 teams</span>
-                </md-list-item>
-            </md-list>
-        </md-card>
-        <md-list>
-            <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
-                <button md-raised-button (click) = "loadMore()">Load More</button>
-            </md-list-item>
-        </md-list>
-    </div>
+        <div md-list-avatar
+             fxLayoutAlign="center center"
+             src="http://lorempixel.com/40/40"
+             class="vmo-project-icon">
+          TP
+        </div>
+        <h4 md-line class="mdc-typography--subheading1">Test Project</h4>
+        <span md-line class="mdc-typography--body1 u-weak">5 users, 2 teams</span>
+      </md-list-item>
+    </md-list>
+
+    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+  </vmo-progress-spinner>
 </div>
 
 <router-outlet></router-outlet>

@@ -6,10 +6,10 @@ import { PageNotFoundComponent } from '../errors/page-not-found/page-not-found.c
 
 @NgModule({
   imports: [
-    ErrorsRoutingModule,
+    ErrorsRoutingModule
   ],
   declarations: [
-    PageNotFoundComponent,
-  ],
+    PageNotFoundComponent
+  ]
 })
 export class ErrorsModule {}

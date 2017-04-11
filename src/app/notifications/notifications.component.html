@@ -1,15 +1,11 @@
-<div class = "component-wrapper">
-  <md-toolbar color = "primary">
-    <button md-icon-button (click)="sidebar.open()">
-      <md-icon>menu</md-icon>
-    </button>
-    <span class="toolbar-heading">Notifications</span>
-  </md-toolbar>
+<div class="vmo-component">
+  <vmo-toolbar title="Notifications" mode="menu"></vmo-toolbar>
 
-  <div [fxShow]="isLoading">
-    <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
-  </div>
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <!-- // -->
 
-  <!-- -->
+    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+  </vmo-progress-spinner>
+</div>
 
 <router-outlet></router-outlet>

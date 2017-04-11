@@ -8,27 +8,32 @@ export class ResourceSubject<Object> extends BehaviorSubject<any> {
    * Sets an item on the resource.
    */
   public set(key: string, value: any) {
-    this.value[key] = value;
-    this.next(this.value);
+    const resource = Object.assign({}, this.value);
+    resource[key] = value;
+
+    this.next(resource);
   }
 
   /**
    * Adds new related item to the list of resources.
    */
   public addRelated(key: string, nestedItem: any) {
-    this.value[key].push(nestedItem);
-    this.next(this.value);
+    const resource = Object.assign({}, this.value);
+    resource[key].push(nestedItem);
+
+    this.next(resource);
   }
 
   /**
    * Sets a related item based on id.
    */
   public setRelated(key: string, relatedId: number, value: any) {
-    this.value[key] = this.value[key].map(relation => {
+    const resource = Object.assign({}, this.value);
+    resource[key] = resource[key].map(relation => {
       return relation.id === relatedId ? value : relation;
     });
 
-    this.next(this.value);
+    this.next(resource);
   }
 
   /**

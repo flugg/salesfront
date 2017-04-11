@@ -9,7 +9,7 @@ import { User } from '../../core/models/user.model';
 
 @Component({
   selector: 'vmo-conversations',
-  templateUrl: 'conversation-list.component.html',
+  templateUrl: 'conversation-list.component.html'
 })
 export class ConversationListComponent implements OnInit, OnDestroy {
 
@@ -31,7 +31,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   /**
    * The cursor for the paginated conversations.
    */
-  private cursor = new BehaviorSubject(15);
+  cursor = new BehaviorSubject(15);
 
   /**
    * List of all observable subscriptions.
@@ -64,20 +64,6 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
-  }
-
-  /**
-   * Load more conversations.
-   */
-  loadMore() {
-    this.cursor.next(15);
-  }
-
-  /**
-   * Check if all conversations has been loaded.
-   */
-  hasLoadedAll() {
-    return this.cursor.isStopped;
   }
 
   /**

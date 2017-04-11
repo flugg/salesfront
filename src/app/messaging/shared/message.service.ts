@@ -24,7 +24,7 @@ export class MessageService {
    */
   get(conversationId: string, cursor: BehaviorSubject<number>): Observable<Message[]> {
     const messages = this.paginator.paginate(`conversations/${conversationId}/messages`, cursor, {
-      include: 'user',
+      include: 'user'
     });
 
     return messages.asObservable();
@@ -35,7 +35,7 @@ export class MessageService {
    */
   getWithUpdates(conversationId: string, cursor: BehaviorSubject<number>): Observable<Message[]> {
     const messages = this.paginator.paginate(`conversations/${conversationId}/messages`, cursor, {
-      include: 'user',
+      include: 'user'
     });
 
     this.onMessagePosted(message => {
@@ -52,7 +52,7 @@ export class MessageService {
    */
   send(conversationId: string, body: string): Promise<Conversation> {
     return this.api.post(`conversations/${conversationId}/messages`, {
-      message: body,
+      message: body
     }, { include: 'user' }).then(response => response.data);
   }
 

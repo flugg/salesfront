@@ -89,7 +89,7 @@ export class ConversationService {
    */
   start(participants: User[]): Promise<Conversation> {
     return this.api.post('conversations', {
-      participants: participants.map(participant => participant.id),
+      participants: participants.map(participant => participant.id)
     }).then(response => response.data);
   }
 
@@ -112,7 +112,7 @@ export class ConversationService {
    */
   addParticipant(conversationId: string, participant: User): Promise<Conversation> {
     return this.api.post(`conversations/${conversationId}/participations`, {
-      participant: participant.id,
+      participant: participant.id
     });
   }
 

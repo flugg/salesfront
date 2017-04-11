@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
@@ -12,7 +11,7 @@ import { UserService } from '../../core/auth/user.service';
 
 @Component({
   selector: 'vmo-start-conversation',
-  templateUrl: './start-conversation.component.html',
+  templateUrl: 'start-conversation.component.html'
 })
 export class StartConversationComponent implements OnInit, OnDestroy {
 
@@ -20,11 +19,6 @@ export class StartConversationComponent implements OnInit, OnDestroy {
    * Wether or not the component is currently loading.
    */
   isLoading = true;
-
-  /**
-   * The current message.
-   */
-  message: string;
 
   /**
    * The currently logged in user.
@@ -44,7 +38,7 @@ export class StartConversationComponent implements OnInit, OnDestroy {
   /**
    * The current cursor of the paginated users.
    */
-  private cursor = new BehaviorSubject(30);
+  cursor = new BehaviorSubject(30);
 
   /**
    * List of all observable subscriptions.
@@ -66,9 +60,10 @@ export class StartConversationComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
+
     this.subscriptions.push(this.userService.getWithUpdates(this.cursor).subscribe(users => {
       this.users = users;
-      this.isLoading = false
+      this.isLoading = false;
     }));
   }
 
@@ -79,20 +74,6 @@ export class StartConversationComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
-  }
-
-  /**
-   * Load more users.
-   */
-  loadMore() {
-    this.cursor.next(30);
-  }
-
-  /**
-   * Check if all users has been loaded.
-   */
-  hasLoadedAll() {
-    return this.cursor.isStopped;
   }
 
   /**
@@ -114,13 +95,11 @@ export class StartConversationComponent implements OnInit, OnDestroy {
   /**
    * Starts a conversation and sends the first message.
    */
-  start(): void {
+  start(message: string): void {
     this.conversationService.start(this.participants).then(conversation => {
-      this.messageService.send(conversation.id, this.message).then(() => {
+      this.messageService.send(conversation.id, message).then(() => {
         this.router.navigate(['messages', conversation.id]);
       });
     });
-
-    this.message = '';
   }
 }

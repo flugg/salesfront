@@ -7,10 +7,10 @@ import { UsersComponent } from './users.component';
 @NgModule({
   imports: [
     SharedModule,
-    UsersRoutingModule,
+    UsersRoutingModule
   ],
   declarations: [
-    UsersComponent,
-  ],
+    UsersComponent
+  ]
 })
 export class UsersModule {}

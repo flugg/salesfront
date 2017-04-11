@@ -1,0 +1,41 @@
+<md-card>
+  <md-card-header>
+    <img md-card-avatar src="http://lorempixel.com/40/40">
+    <md-card-title class="mdc-typography--subheading1">
+      {{ post.user.name }}
+    </md-card-title>
+    <md-card-subtitle class="mdc-typography--caption">
+      {{ post.publishedAt | amTimeAgo }}
+    </md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
+    <p class="mdc-typography--body1">
+      {{ post.body }}
+    </p>
+  </md-card-content>
+</md-card>
+<md-card class="comments" *ngIf="post.comments.length">
+  <md-list>
+    <md-list-item *ngFor="let comment of post.comments">
+      <img md-list-avatar
+           fxFlexAlign="start"
+           [mdTooltip]="comment.postedAt | amTimeAgo"
+           mdTooltipPosition="right"
+           src="http://lorempixel.com/40/40">
+      <h4 md-line class="mdc-typography--subheading1">
+        {{ comment.user.name }}
+      </h4>
+      <span md-line class="mdc-typography--body1 comment-body">
+        {{ comment.body }}
+      </span>
+    </md-list-item>
+  </md-list>
+</md-card>
+<md-card class="comment-input">
+  <form (submit)="onSubmit(input.value); input.value = ''; $event.preventDefault()" fxLayoutAlign="stretch center">
+    <img md-list-avatar src="http://lorempixel.com/40/40" class="u-avatar">
+    <md-input-container class="vmo-fixed-input">
+      <input #input mdInput name="comment" placeholder="Post comment...">
+    </md-input-container>
+  </form>
+</md-card>

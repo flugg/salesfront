@@ -9,7 +9,8 @@ import { SidebarService } from './core/sidebar.service';
 
 @Component({
   selector: 'vmo-root',
-  templateUrl: './app.component.html',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
 
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
     { name: 'Sales', route: 'sales', icon: 'attach_money' },
     { name: 'Users', route: 'users', icon: 'person' },
     { name: 'Teams', route: 'teams', icon: 'group' },
-    { name: 'Settings', route: 'settings', icon: 'settings' },
+    { name: 'Settings', route: 'settings', icon: 'settings' }
   ];
 
   /**

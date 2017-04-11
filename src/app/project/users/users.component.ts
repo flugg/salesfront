@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { SidebarService } from '../../core/sidebar.service';
+import { User } from '../../core/models/user.model';
 
 @Component({
-  selector: 'vmo-budgets',
-  templateUrl: './users.component.html'
+  selector: 'vmo-users',
+  templateUrl: 'users.component.html'
 })
 export class UsersComponent implements OnInit {
 
@@ -14,12 +15,26 @@ export class UsersComponent implements OnInit {
   isLoading = true;
 
   /**
+   * List of loaded users.
+   */
+  users: User[];
+
+  /**
+   * The cursor for the paginated users.
+   */
+  cursor = new BehaviorSubject(15);
+
+  /**
    * Constructs the component.
    */
-  constructor(public sidebar: SidebarService) {}
+  constructor() {
+  }
 
   /**
    * Initializes the component.
    */
-  ngOnInit() {}
+  ngOnInit() {
+    this.users = [];
+    this.isLoading = false;
+  }
 }

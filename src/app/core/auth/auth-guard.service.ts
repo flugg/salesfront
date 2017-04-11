@@ -10,7 +10,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   /**
    * Constructs the guard.
    */
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {
+  }
 
   /**
    * Indicates if a route can be activated.
@@ -39,7 +40,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   private isAuthenticated(): Observable<boolean> {
     const authenticated = this.auth.isAuthenticated();
 
-    if (! authenticated) {
+    if (!authenticated) {
       this.router.navigate(['/login']);
     }
 

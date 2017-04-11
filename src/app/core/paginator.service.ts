@@ -10,7 +10,8 @@ export class Paginator {
   /**
    * Constructs the service.
    */
-  constructor(private api: RestApiService) {}
+  constructor(private api: RestApiService) {
+  }
 
   /**
    * Fetch paginated data.
@@ -23,7 +24,7 @@ export class Paginator {
         resources.setCursor(response.cursor);
         resources.appendMany(response.data);
 
-        if (! resources.nextCursor()) {
+        if (!resources.nextCursor()) {
           cursor.complete();
         }
       });

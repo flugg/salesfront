@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/zip';
+import * as moment from 'moment';
+import 'rxjs/add/observable/combineLatest';
 
 import { ConversationService } from '../shared/conversation.service';
 import { MessageService } from '../shared/message.service';
@@ -13,7 +14,8 @@ import { User } from '../../core/models/user.model';
 
 @Component({
   selector: 'vmo-conversation',
-  templateUrl: './conversation.component.html',
+  templateUrl: 'conversation.component.html',
+  styleUrls: ['conversation.component.scss']
 })
 export class ConversationComponent implements OnInit, OnDestroy {
 
@@ -21,11 +23,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
    * Wether or not the component is currently loading.
    */
   isLoading = true;
-
-  /**
-   * The current message.
-   */
-  message: string;
 
   /**
    * The currently logged in user.
@@ -40,7 +37,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   /**
    * The loaded messages.
    */
-  messages;
+  messages: Message[];
 
   /**
    * Indicates if the conversation is locked for the given user.
@@ -50,7 +47,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   /**
    * The cursor for the paginated messages.
    */
-  private cursor = new BehaviorSubject(30);
+  cursor = new BehaviorSubject(30);
 
   /**
    * List of all observable subscriptions.
@@ -76,9 +73,9 @@ export class ConversationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
 
-    this.subscriptions.push(Observable.zip(
+    this.subscriptions.push(Observable.combineLatest(
       this.conversationService.findWithUpdates(this.route.snapshot.params['id']),
-      this.messageService.getWithUpdates(this.route.snapshot.params['id'], this.cursor),
+      this.messageService.getWithUpdates(this.route.snapshot.params['id'], this.cursor)
     ).subscribe(data => {
       [this.conversation, this.messages] = data;
 
@@ -105,23 +102,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
   /**
    * Sends a message to the conversation.
    */
-  sendMessage(): void {
-    this.messageService.send(this.route.snapshot.params['id'], this.message).then(() => console.log(1));
-    this.message = '';
-  }
-
-  /**
-   * Load more messages.
-   */
-  loadMore(): void {
-    this.cursor.next(30);
-  }
-
-  /**
-   * Check if all messages has been loaded.
-   */
-  hasLoadedAll(): boolean {
-    return this.cursor.isStopped;
+  sendMessage(message: string): void {
+    this.messageService.send(this.conversation.id, message);
   }
 
   /**
@@ -129,6 +111,40 @@ export class ConversationComponent implements OnInit, OnDestroy {
    */
   isPostedByUser(message: Message): boolean {
     return message.userId === this.currentUser.id;
+  }
+
+  /**
+   * Indicates wether or not the given message should get a timestamp above it.
+   */
+  shouldDisplayTimestamp(message: Message): boolean {
+    const index = this.messages.indexOf(message);
+    if (index === this.messages.length - 1) {
+      return this.cursor.isStopped;
+    }
+
+    const previousMessage = this.messages[index + 1];
+    if (previousMessage) {
+      return moment.duration(moment(message.sentAt).diff(moment(previousMessage.sentAt))).asHours() > 1;
+    }
+
+    return true;
+  }
+
+  /**
+   * Indicates wether or not the name of the message owner should be visible.
+   */
+  shouldDisplayName(message: Message): boolean {
+    if (!this.conversation.group || this.isPostedByUser(message)) {
+      return false;
+    }
+
+    const index = this.messages.indexOf(message);
+    const previousMessage = this.messages[index + 1];
+    if (previousMessage) {
+      return previousMessage.userId !== message.userId || this.shouldDisplayTimestamp(message);
+    }
+
+    return true;
   }
 
   /**

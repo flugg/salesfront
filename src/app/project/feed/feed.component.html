@@ -1,57 +1,22 @@
-<div class = "component-wrapper">
-    <vmo-toolbar mode="menu" title="Feed"></vmo-toolbar>
+<div class="vmo-component">
+  <vmo-toolbar title="Feed" mode="menu"></vmo-toolbar>
 
-    <div [fxShow]="isLoading">
-        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-card class="post-input">
+      <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
+            fxLayoutAlign="stretch center">
+        <md-input-container class="vmo-fixed-input">
+          <input #input mdInput name="post" placeholder="Write a post...">
+        </md-input-container>
+      </form>
+    </md-card>
+
+    <div *ngFor="let post of posts">
+      <vmo-post [post]="post" (commentPosted)="postComment(post, $event)"></vmo-post>
     </div>
 
-    <div [fxHide]="isLoading">
-        <md-card class="feed-input input-padding">
-            <form (submit) = "publishPost(postInput.value); $event.preventDefault()">
-                <md-input-container>
-                    <input #postInput mdInput name = "post" placeholder = "Write a post...">
-                </md-input-container>
-            </form>
-        </md-card>
-        <div *ngFor="let post of posts | async" class="feed-cards">
-            <md-card class="feed-card">
-                <md-list class="stripped-list">
-                    <md-list-item>
-                        <img md-list-avatar src="http://lorempixel.com/40/40">
-                        <h4 md-line class="mdc-typography--body2">{{ post.user.name }}</h4>
-                        <span md-line class="mdc-typography--body1 text-weak">{{ post.publishedAt | amTimeAgo }}</span>
-                    </md-list-item>
-                </md-list>
-                <p class="mdc-typography--body1">{{ post.body }}</p>
-            </md-card>
-            <md-card class="feed-input comments-card" fxLayout="column" fxLayoutGap="16px">
-                <div *ngFor="let comment of post.comments" fxLayoutAlign="flex-start center">
-                    <img md-list-avatar
-                         [mdTooltip]="comment.postedAt | amTimeAgo"
-                         mdTooltipPosition="right"
-                         src="http://lorempixel.com/40/40"
-                         class="avatar">
-                    <div>
-                        <div class="mdc-typography--body2 text-padding">{{ comment.user.name }}</div>
-                        <div class="mdc-typography--body1 text-padding">{{ comment.body }}</div>
-                    </div>
-                </div>
-                <form (submit) = "postComment(post, commentInput.value); $event.preventDefault()" fxLayoutAlign="stretch center">
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                        <img md-list-avatar src="http://lorempixel.com/40/40" class="avatar">
-                        <md-input-container class="comments-input">
-                            <input mdInput #commentInput name="comment" placeholder="Post comment...">
-                        </md-input-container>
-                    </div>
-                </form>
-            </md-card>
-        </div>
-        <md-list>
-            <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
-                <button md-raised-button (click) = "loadMore()">Load More</button>
-            </md-list-item>
-        </md-list>
-    </div>
+    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+  </vmo-progress-spinner>
 </div>
 
 <router-outlet></router-outlet>

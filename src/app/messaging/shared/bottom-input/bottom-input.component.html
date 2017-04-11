@@ -1,0 +1,16 @@
+<form (submit)="onSubmit(input.value); input.value = ''; $event.preventDefault()">
+  <md-toolbar>
+    <md-input-container class="u-fill">
+      <input #input
+             mdInput
+             [disabled]="disabledInput"
+             name="message"
+             placeholder="Type message...">
+    </md-input-container>
+    <button md-icon-button
+            [disabled]="! input.value || disabledButton"
+            type="submit">
+      <md-icon>send</md-icon>
+    </button>
+  </md-toolbar>
+</form>

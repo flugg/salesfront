@@ -1,9 +1,9 @@
 <div class="vmo-component">
   <vmo-toolbar title="New Conversation" mode="close"></vmo-toolbar>
 
-  <vmo-loader [hasLoaded]="isLoading">
-    <md-list class="vmo-list u-nonselectable">
-      <md-list-item *ngIf="participants.length > 0" class="u-padding-bottom">
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list u-clickable">
+      <md-list-item *ngIf="participants.length > 0" class="u-spacing-bottom-small">
         <md-chip-list selectable="false">
           <md-chip *ngFor="let participant of participants" (click)="removeParticipant(participant)">
             {{ participant.name }}
@@ -21,39 +21,11 @@
       </md-list-item>
     </md-list>
 
-    <md-list>
-      <md-list-item *ngIf="! hasLoadedAll()" fxLayoutAlign="center">
-        <button md-raised-button (click)="loadMore()">Load More</button>
-      </md-list-item>
-    </md-list>
+    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+  </vmo-progress-spinner>
 
-    <md-toolbar class="vmo-bottom-toolbar">
-      <md-input-container class="vmo-card-input">
-        <input mdInput [(ngModel)]="message" name="message" dividerColor="none" placeholder="Type message...">
-      </md-input-container>
-      <span class="u-fill"></span>
-      <button md-icon-button
-              [disabled]="participants.length === 0 || ! message"
-              type="submit"
-              class="accent-icon-button">
-        <md-icon>send</md-icon>
-      </button>
-    </md-toolbar>
-
-    <!--<md-card class='bottom-input'>
-      <form (submit)="start(message); $event.preventDefault()">
-        <div fxLayout='row'>
-          <md-input-container>
-            <input mdInput [(ngModel)]="message" name="message" dividerColor="none" placeholder="Type message...">
-          </md-input-container>
-          <button md-icon-button
-                  [disabled]="participants.length === 0 || ! message"
-                  type="submit"
-                  class="accent-icon-button">
-            <md-icon>send</md-icon>
-          </button>
-        </div>
-      </form>
-    </md-card>-->
-  </vmo-loader>
+  <vmo-bottom-input (send)="start($event)"
+                    [disabledInput]="false"
+                    [disabledButton]="participants.length === 0">
+  </vmo-bottom-input>
 </div>

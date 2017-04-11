@@ -1,27 +1,20 @@
-<div class = "component-wrapper">
-    <vmo-toolbar mode="close" title="Add Participant"></vmo-toolbar>
+<div class="vmo-component">
+  <vmo-toolbar title="Add Participant" mode="close"></vmo-toolbar>
 
-    <div [fxShow]="isLoading">
-        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
-    </div>
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list" *ngIf="(users | filteredUsers:conversation)?.length">
+      <md-list-item *ngFor="let user of users | filteredUsers:conversation">
+        <img md-list-avatar src="http://lorempixel.com/40/40">
+        <h4 md-line>
+          {{ user.name }}
+        </h4>
+        <span class="u-fill"></span>
+        <button md-icon-button (click)="addParticipant(user)">
+          <md-icon>add</md-icon>
+        </button>
+      </md-list-item>
+    </md-list>
 
-    <div [fxHide]="isLoading">
-        <md-card class = "stripped-card">
-            <md-list class = 'card-list'>
-                <md-list-item *ngFor = "let user of (users | async) | notParticipating:(conversation | async)">
-                    <img md-list-avatar src="http://lorempixel.com/40/40">
-                    <h4 md-line>{{ user.name }}</h4>
-                    <span class = "fill-space"></span>
-                    <button md-icon-button (click) = 'addParticipant(user)'>
-                        <md-icon>add</md-icon>
-                    </button>
-                </md-list-item>
-            </md-list>
-        </md-card>
-        <md-list>
-            <md-list-item *ngIf = "! hasLoadedAll()" fxLayoutAlign = "center">
-                <button md-raised-button (click) = "loadMore()">Load More</button>
-            </md-list-item>
-        </md-list>
-    </div>
+    <vmo-load-more-button [cursor]="cursor" amount="30"></vmo-load-more-button>
+  </vmo-progress-spinner>
 </div>

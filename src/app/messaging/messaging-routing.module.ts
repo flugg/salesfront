@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MessagingComponent } from './messaging.component';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
 import { StartConversationComponent } from './start-conversation/start-conversation.component';
 import { ConversationComponent } from './conversation/conversation.component';
@@ -15,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: 'new',
-        component: StartConversationComponent,
+        component: StartConversationComponent
       },
       {
         path: ':id',
@@ -27,23 +26,23 @@ const routes: Routes = [
             children: [
               {
                 path: 'add',
-                component: AddParticipantComponent,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+                component: AddParticipantComponent
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
   exports: [
-    RouterModule,
+    RouterModule
   ],
-  providers: [],
+  providers: []
 })
 export class MessagingRoutingModule {}

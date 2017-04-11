@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SidebarService } from '../../core/sidebar.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'vmo-teams',
-  templateUrl: './teams.component.html'
+  templateUrl: 'teams.component.html'
 })
 export class TeamsComponent implements OnInit {
 
@@ -14,12 +13,26 @@ export class TeamsComponent implements OnInit {
   isLoading = true;
 
   /**
+   * List of loaded teams.
+   */
+  teams: any[];
+
+  /**
+   * The cursor for the paginated teams.
+   */
+  cursor = new BehaviorSubject(15);
+
+  /**
    * Constructs the component.
    */
-  constructor(public sidebar: SidebarService) {}
+  constructor() {
+  }
 
   /**
    * Initializes the component.
    */
-  ngOnInit() {}
+  ngOnInit() {
+    this.teams = [];
+    this.isLoading = false;
+  }
 }

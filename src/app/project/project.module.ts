@@ -6,7 +6,7 @@ import { ProjectRoutingModule } from './project-routing.module';
 @NgModule({
   imports: [
     SharedModule,
-    ProjectRoutingModule,
-  ],
+    ProjectRoutingModule
+  ]
 })
 export class ProjectModule {}

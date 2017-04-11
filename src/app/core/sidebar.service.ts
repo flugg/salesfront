@@ -11,7 +11,8 @@ export class SidebarService {
   /**
    * Constructs the service.
    */
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Opens the sidebar navigation.

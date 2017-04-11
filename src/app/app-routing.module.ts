@@ -9,49 +9,49 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: '/projects',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: '',
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     resolve: {
-      currentUser: UserResolver,
+      currentUser: UserResolver
     },
     children: [
       {
         path: 'projects',
-        component: ProjectListComponent,
+        component: ProjectListComponent
       },
       {
         path: 'messages',
-        loadChildren: 'app/messaging/messaging.module#MessagingModule',
+        loadChildren: 'app/messaging/messaging.module#MessagingModule'
       },
       {
         path: 'notifications',
-        loadChildren: 'app/notifications/notifications.module#NotificationsModule',
+        loadChildren: 'app/notifications/notifications.module#NotificationsModule'
       },
       {
         path: 'projects/1',
-        loadChildren: 'app/project/project.module#ProjectModule',
-      },
+        loadChildren: 'app/project/project.module#ProjectModule'
+      }
     ]
   },
   {
     path: '',
-    loadChildren: 'app/auth/auth.module#AuthModule',
-  },
+    loadChildren: 'app/auth/auth.module#AuthModule'
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes)
   ],
   exports: [
-    RouterModule,
+    RouterModule
   ],
   providers: [
-    AuthGuard,
+    AuthGuard
   ]
 })
 

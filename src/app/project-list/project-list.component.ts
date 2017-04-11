@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'vmo-project-list',
-  templateUrl: 'project-list.component.html',
+  templateUrl: 'project-list.component.html'
 })
 export class ProjectListComponent implements OnInit {
 
@@ -15,31 +15,18 @@ export class ProjectListComponent implements OnInit {
   /**
    * The cursor for the paginated projects.
    */
-  private cursor = new BehaviorSubject(15);
+  cursor = new BehaviorSubject(15);
 
   /**
    * Constructs the component.
    */
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
     this.isLoading = false;
-  }
-
-  /**
-   * Load more projects.
-   */
-  loadMore() {
-    this.cursor.next(15);
-  }
-
-  /**
-   * Check if all projects have been loaded.
-   */
-  hasLoadedAll() {
-    return this.cursor.isStopped;
   }
 }

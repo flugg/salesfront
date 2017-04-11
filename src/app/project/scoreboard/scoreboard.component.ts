@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SidebarService } from '../../core/sidebar.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'vmo-scoreboard',
-  templateUrl: './scoreboard.component.html'
+  templateUrl: 'scoreboard.component.html'
 })
 export class ScoreboardComponent implements OnInit {
 
@@ -14,12 +13,26 @@ export class ScoreboardComponent implements OnInit {
   isLoading = true;
 
   /**
+   * List of loaded sales.
+   */
+  sales: any[];
+
+  /**
+   * The cursor for the paginated sales.
+   */
+  cursor = new BehaviorSubject(15);
+
+  /**
    * Constructs the component.
    */
-  constructor(public sidebar: SidebarService) {}
+  constructor() {
+  }
 
   /**
    * Initializes the component.
    */
-  ngOnInit() {}
+  ngOnInit() {
+    this.sales = [];
+    this.isLoading = false;
+  }
 }

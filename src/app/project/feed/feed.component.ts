@@ -1,16 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 
 import { PostService } from './post.service';
-import { SidebarService } from '../../core/sidebar.service';
 import { Post } from '../../core/models/post.model';
 import { CommentService } from './comment.service';
 
 @Component({
   selector: 'vmo-feed',
   templateUrl: 'feed.component.html',
+  styleUrls: ['feed.component.scss']
 })
 export class FeedComponent implements OnInit, OnDestroy {
 
@@ -22,7 +21,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   /**
    * List of loaded posts.
    */
-  posts: Observable<Post[]>;
+  posts: Post[];
 
   /**
    * The cursor for the paginated posts.
@@ -38,17 +37,15 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private postService: PostService,
-              private commentService: CommentService,
-              public sidebar: SidebarService) {
+              private commentService: CommentService) {
   }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.posts = this.postService.getWithUpdates(this.cursor);
-
-    this.subscriptions.push(this.posts.subscribe(() => {
+    this.subscriptions.push(this.postService.getWithUpdates(this.cursor).subscribe(posts => {
+      this.posts = posts;
       this.isLoading = false;
     }));
   }
@@ -60,20 +57,6 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
-  }
-
-  /**
-   * Load more conversations.
-   */
-  loadMore() {
-    this.cursor.next(15);
-  }
-
-  /**
-   * Check if all conversations has been loaded.
-   */
-  hasLoadedAll() {
-    return this.cursor.isStopped;
   }
 
   /**

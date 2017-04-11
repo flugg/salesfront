@@ -4,10 +4,10 @@ import { User } from '../../core/models/user.model';
 import { Conversation } from '../../core/models/conversation.model';
 
 @Pipe({
-  name: 'notParticipating',
-  pure: false,
+  name: 'filteredUsers',
+  pure: false
 })
-export class NotParticipatingPipe implements PipeTransform {
+export class FilteredUsersPipe implements PipeTransform {
 
   /**
    * Transforms the data to only include users not currently participating.

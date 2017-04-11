@@ -4,13 +4,13 @@ import { Participation } from '../../core/models/participation.model';
 import { User } from '../../core/models/user.model';
 
 @Pipe({
-  name: 'participating',
-  pure: false,
+  name: 'filteredParticipations',
+  pure: false
 })
-export class ParticipatingPipe implements PipeTransform {
+export class FilteredParticipationsPipe implements PipeTransform {
 
   /**
-   * Transforms the data to only include participants currently participating.
+   * Filter the data to only include participants currently participating.
    */
   transform(participations: Participation[], except?: User): any {
     if (participations) {

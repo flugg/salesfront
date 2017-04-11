@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SidebarService } from '../../core/sidebar.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'vmo-budgets',
-  templateUrl: './budgets.component.html'
+  templateUrl: 'budgets.component.html'
 })
 export class BudgetsComponent implements OnInit {
 
@@ -14,12 +13,26 @@ export class BudgetsComponent implements OnInit {
   isLoading = true;
 
   /**
+   * List of loaded budgets.
+   */
+  budgets: any[];
+
+  /**
+   * The cursor for the paginated budgets.
+   */
+  cursor = new BehaviorSubject(15);
+
+  /**
    * Constructs the component.
    */
-  constructor(public sidebar: SidebarService) {}
+  constructor() {
+  }
 
   /**
    * Initializes the component.
    */
-  ngOnInit() {}
+  ngOnInit() {
+    this.budgets = [];
+    this.isLoading = false;
+  }
 }

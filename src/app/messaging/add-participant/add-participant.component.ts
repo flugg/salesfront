@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/zip';
+import 'rxjs/add/observable/combineLatest';
 
 import { ConversationService } from '../shared/conversation.service';
 import { UserService } from '../../core/auth/user.service';
@@ -12,7 +12,7 @@ import { User } from '../../core/models/user.model';
 
 @Component({
   selector: 'vmo-add-participant',
-  templateUrl: './add-participant.component.html',
+  templateUrl: 'add-participant.component.html'
 })
 export class AddParticipantComponent implements OnInit, OnDestroy {
 
@@ -24,17 +24,17 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
   /**
    * The selected conversation.
    */
-  conversation: Observable<Conversation>;
+  conversation: Conversation;
 
   /**
    * List of loaded users.
    */
-  users: Observable<User[]>;
+  users: User[];
 
   /**
    * The current cursor of the paginated users.
    */
-  private cursor = new BehaviorSubject(30);
+  cursor = new BehaviorSubject(30);
 
   /**
    * List of all observable subscriptions.
@@ -46,16 +46,18 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
    */
   constructor(private conversationService: ConversationService,
               private userService: UserService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute) {
+  }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.conversation = this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.params['id']);
-    this.users = this.userService.getWithUpdates(this.cursor);
-
-    this.subscriptions.push(Observable.zip(this.conversation, this.users).subscribe(() => {
+    this.subscriptions.push(Observable.combineLatest(
+      this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.params['id']),
+      this.userService.getWithUpdates(this.cursor)
+    ).subscribe(data => {
+      [this.conversation, this.users] = data;
       this.isLoading = false;
     }));
   }
@@ -70,23 +72,9 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Load more users.
-   */
-  loadMore() {
-    this.cursor.next(30);
-  }
-
-  /**
-   * Check if all users has been loaded.
-   */
-  hasLoadedAll() {
-    return this.cursor.isStopped;
-  }
-
-  /**
    * Adds a participant to the conversation.
    */
   addParticipant(user: User) {
-    this.conversationService.addParticipant(this.route.snapshot.parent.parent.params['id'], user);
+    this.conversationService.addParticipant(this.conversation.id, user);
   }
 }

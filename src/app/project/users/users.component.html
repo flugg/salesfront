@@ -1,15 +1,25 @@
-<div class = "component-wrapper">
-  <md-toolbar color = "primary">
-    <button md-icon-button (click)="sidebar.open()">
-      <md-icon>menu</md-icon>
+<div class="vmo-component">
+  <vmo-toolbar title="Users" mode="none">
+    <button md-icon-button routerLink="invite">
+      <md-icon>add</md-icon>
     </button>
-    <span class="toolbar-heading">Users</span>
-  </md-toolbar>
+  </vmo-toolbar>
 
-  <div [fxShow]="isLoading">
-    <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
-  </div>
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list">
+      <md-list-item md-ripple
+                    [routerLink]="1"
+                    class="u-clickable">
 
-  <!-- -->
+        <img md-list-avatar src="http://lorempixel.com/40/40">
+        <h4 md-line class="mdc-typography--subheading1">
+          {{ user.name }}
+        </h4>
+      </md-list-item>
+    </md-list>
+
+    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+  </vmo-progress-spinner>
+</div>
 
 <router-outlet></router-outlet>

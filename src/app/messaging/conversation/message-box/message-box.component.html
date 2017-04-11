@@ -1,0 +1,13 @@
+<div [fxFlexAlign]="own ? 'flex-end' : 'flex-start'"
+     class="vmo-message"
+     [class.vmo-message--own]="own">
+
+  <div [fxLayout]="own ? 'row-reverse' : 'row'">
+    <img src="http://lorempixel.com/40/40" class="u-avatar">
+    <md-card>
+      <md-card-content class="mdc-typography--body1">
+        {{ message.body }}
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

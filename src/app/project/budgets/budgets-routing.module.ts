@@ -6,12 +6,12 @@ import { BudgetsComponent } from './budgets.component';
 const routes: Routes = [
   {
     path: '',
-    component: BudgetsComponent,
-  },
+    component: BudgetsComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class BudgetsRoutingModule {}

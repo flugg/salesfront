@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SidebarService } from '../../core/sidebar.service';
-
 @Component({
   selector: 'vmo-settings',
-  templateUrl: './settings.component.html'
+  templateUrl: 'settings.component.html'
 })
 export class SettingsComponent implements OnInit {
 
@@ -16,10 +14,13 @@ export class SettingsComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor(public sidebar: SidebarService) {}
+  constructor() {
+  }
 
   /**
    * Initializes the component.
    */
-  ngOnInit() {}
+  ngOnInit() {
+    this.isLoading = false;
+  }
 }

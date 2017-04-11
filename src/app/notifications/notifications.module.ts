@@ -7,10 +7,10 @@ import { NotificationsComponent } from './notifications.component';
 @NgModule({
   imports: [
     SharedModule,
-    NotificationsRoutingModule,
+    NotificationsRoutingModule
   ],
   declarations: [
-    NotificationsComponent,
-  ],
+    NotificationsComponent
+  ]
 })
 export class NotificationsModule {}

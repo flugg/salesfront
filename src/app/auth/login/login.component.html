@@ -1,16 +1,20 @@
-<div class="login-container">
-    <md-card>
-        <div fxLayoutAlign="center center" class="login-logo">
-            <img src="/assets/vendumo-logo.svg" width="120">
-        </div>
-        <form novalidate>
-            <md-input-container dividerColor="accent">
-                <input #email mdInput required placeholder="Email" type="email" value="flugged@gmail.com">
-            </md-input-container>
-            <md-input-container dividerColor="accent">
-                <input #password mdInput required placeholder="Password" type="password" value="test">
-            </md-input-container>
-            <button md-raised-button (click)="submit(email.value, password.value)" color="accent" type = "submit">Log In</button>
-        </form>
-    </md-card>
+<div class="login-container u-container">
+  <md-card>
+    <div fxLayoutAlign="center center" class="login-logo">
+      <img src="/assets/vendumo-logo.svg" width="120">
+    </div>
+    <form novalidate>
+      <md-input-container dividerColor="accent">
+        <input #email mdInput required placeholder="Email" type="email" value="flugged@gmail.com">
+      </md-input-container>
+      <md-input-container dividerColor="accent">
+        <input #password mdInput required placeholder="Password" type="password" value="test">
+      </md-input-container>
+      <button md-raised-button
+              (click)="submit(email.value, password.value)"
+              color="accent"
+              type="submit">Log In
+      </button>
+    </form>
+  </md-card>
 </div>

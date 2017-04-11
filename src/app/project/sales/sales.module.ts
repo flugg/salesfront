@@ -7,10 +7,10 @@ import { SalesComponent } from './sales.component';
 @NgModule({
   imports: [
     SharedModule,
-    SalesRoutingModule,
+    SalesRoutingModule
   ],
   declarations: [
-    SalesComponent,
-  ],
+    SalesComponent
+  ]
 })
 export class SalesModule {}

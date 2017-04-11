@@ -6,12 +6,12 @@ import { SettingsComponent } from './settings.component';
 const routes: Routes = [
   {
     path: '',
-    component: SettingsComponent,
-  },
+    component: SettingsComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class SettingsRoutingModule {}

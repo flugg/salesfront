@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SidebarService } from '../core/sidebar.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'vmo-notifications',
-  templateUrl: './notifications.component.html'
+  templateUrl: 'notifications.component.html'
 })
 export class NotificationsComponent implements OnInit {
 
@@ -14,12 +13,26 @@ export class NotificationsComponent implements OnInit {
   isLoading = true;
 
   /**
+   * List of loaded notifications.
+   */
+  notifications: any[];
+
+  /**
+   * The cursor for the paginated notifications.
+   */
+  cursor = new BehaviorSubject(15);
+
+  /**
    * Constructs the component.
    */
-  constructor(public sidebar: SidebarService) {}
+  constructor() {
+  }
 
   /**
    * Initializes the component.
    */
-  ngOnInit() {}
+  ngOnInit() {
+    this.notifications = [];
+    this.isLoading = false;
+  }
 }

@@ -36,7 +36,7 @@ export class SocketApiService {
       secret: '4881a3a6d6bec748fa58',
       cluster: 'eu',
       encrypted: true,
-      namespace: '',
+      namespace: ''
     });
 
     this.listenForDisconnects();

@@ -24,7 +24,7 @@ export class RestApiService {
    */
   get(path: string, parameters?: any) {
     const options = this.buildOptions().merge({
-      search: this.parseParameters(parameters),
+      search: this.parseParameters(parameters)
     });
 
     return this.http.get(this.basePath + path, options)
@@ -41,7 +41,7 @@ export class RestApiService {
     urlParameters.set('limit', limit.toString());
 
     const options = this.buildOptions().merge({
-      search: urlParameters,
+      search: urlParameters
     });
 
     return this.http.get(this.basePath + path, options)
@@ -54,7 +54,7 @@ export class RestApiService {
    */
   post(path: string, body?: any, parameters?: any) {
     const options = this.buildOptions().merge({
-      search: this.parseParameters(parameters),
+      search: this.parseParameters(parameters)
     });
 
     return this.http.post(this.basePath + path, body, options)
@@ -68,7 +68,7 @@ export class RestApiService {
    */
   put(path: string, body?: any, parameters?: any) {
     const options = this.buildOptions().merge({
-      search: this.parseParameters(parameters),
+      search: this.parseParameters(parameters)
     });
 
     return this.http.put(this.basePath + path, body, options)
@@ -82,7 +82,7 @@ export class RestApiService {
    */
   delete(path: string, parameters?: any) {
     const options = this.buildOptions().merge({
-      search: this.parseParameters(parameters),
+      search: this.parseParameters(parameters)
     });
 
     return this.http.delete(this.basePath + path, options)
@@ -97,8 +97,8 @@ export class RestApiService {
   private buildOptions(): RequestOptions {
     return new RequestOptions({
       headers: new Headers({
-        'Authorization': 'Bearer ' + this.tokenService.get(),
-      }),
+        'Authorization': 'Bearer ' + this.tokenService.get()
+      })
     });
   }
 

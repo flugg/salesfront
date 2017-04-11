@@ -5,21 +5,17 @@
     </button>
   </vmo-toolbar>
 
-  <vmo-loader [hasLoaded]="isLoading">
-    <md-list class="vmo-list u-nonselectable">
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list">
       <md-list-item md-ripple
-                    mdRippleSpeedFactor="6"
-                    *ngFor="let conversation of conversations | ignoreEmpty"
-                    [routerLink]="[conversation.id]">
+                    *ngFor="let conversation of conversations | filteredConversations"
+                    [routerLink]="conversation.id"
+                    class="u-clickable">
 
         <img md-list-avatar src="http://lorempixel.com/40/40">
 
-        <span md-line>
-          <span *ngFor="let participation of conversation.participations | participating:currentUser"
-                class="mdc-typography--subheading1 comma-separated"
-                [class.u-highlight]="hasUnread(conversation)">
-            {{ participation.user.name }}
-          </span>
+        <span md-line class="mdc-typography--subheading1" [class.u-highlight]="hasUnread(conversation)">
+          {{ conversation.participations | filteredParticipations:currentUser | conversationTitle }}
         </span>
 
         <span md-line
@@ -38,12 +34,8 @@
       </md-list-item>
     </md-list>
 
-    <md-list>
-      <md-list-item *ngIf="! hasLoadedAll()" fxLayoutAlign="center">
-        <button md-raised-button (click)="loadMore()">Load More</button>
-      </md-list-item>
-    </md-list>
-  </vmo-loader>
+    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+  </vmo-progress-spinner>
 </div>
 
 <router-outlet></router-outlet>

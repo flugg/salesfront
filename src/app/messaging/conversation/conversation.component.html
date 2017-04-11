@@ -1,61 +1,48 @@
-<div class = "component-wrapper">
-    <!--<vmo-toolbar mode="back" title="Add Participant">
-        <button *ngIf = "(conversation | async)?.group && ! (isLocked | async)" md-icon-button [routerLink] = "'participants'">
-            <md-icon>group</md-icon>
-        </button>
-    </vmo-toolbar>-->
-    <md-toolbar color = "primary">
-        <button md-icon-button [routerLink] = "'../'">
-            <md-icon>arrow_back</md-icon>
-        </button>
-        <span class = "toolbar-heading">
-            <span *ngFor = "let participation of conversation?.participations | participating:currentUser" class = "comma-separated">{{ participation.user.name }}</span>
-        </span>
-        <span class = "fill-space"></span>
-        <button *ngIf = "conversation?.group && ! (isLocked | async)" md-icon-button [routerLink] = "'participants'">
-            <md-icon>group</md-icon>
-        </button>
-    </md-toolbar>
+<div class="vmo-component">
+  <vmo-toolbar [title]="conversation?.participations | filteredParticipations:currentUser | conversationTitle"
+               mode="back">
+    <button md-icon-button *ngIf="conversation?.group && ! (isLocked | async)" routerLink="participants">
+      <md-icon>group</md-icon>
+    </button>
+  </vmo-toolbar>
 
-    <div fxLayoutAlign="center" [fxShow]="isLoading">
-        <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
-    </div>
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <div fxLayout="column"
+         fxLayoutAlign="end"
+         class="vmo-conversation"
+         [class.vmo-conversation--locked]="isLocked | async">
 
-    <md-list class = "conversation" [ngClass]="{ 'is-locked': (isLocked | async) }">
-        <div #window [fxHide]="isLoading">
-            <md-list-item *ngIf="isLocked | async" fxFlexAlign="center">
-                <span class="weak-text">You are no longer in this conversation.</span>
-            </md-list-item>
-            <md-list-item *ngFor="let message of messages"
-                          [fxFlexAlign]="isPostedByUser(message) ? 'flex-end' : 'flex-start'">
-                <div fxLayout="row"
-                     [mdTooltip]="message.user.name + ', ' + (message.sentAt | amTimeAgo)"
-                     [mdTooltipPosition]="isPostedByUser(message) ? 'left' : 'right'">
-                    <img md-list-avatar
-                         src = "http://lorempixel.com/40/40">
-                    <md-card [ngClass] = "{'own-message': isPostedByUser(message)}">
-                        <md-card-content class="mdc-typography--body1">{{ message.body }}</md-card-content>
-                    </md-card>
-                </div>
-            </md-list-item>
-            <md-list-item *ngIf = "! hasLoadedAll()" fxFlexAlign = "center">
-                <button md-raised-button (click) = "loadMore()">Load More</button>
-            </md-list-item>
+      <div #window fxLayout="column-reverse" class="vmo-conversation-window">
+        <div *ngIf="isLocked | async"
+             fxFlexAlign="center"
+             class="mdc-typography--body1 u-relative u-vertical-spacing-big u-weak">
+          You are no longer in this conversation.
         </div>
-    </md-list>
 
-    <md-card class = 'bottom-input'>
-        <form (submit) = "sendMessage(); $event.preventDefault()">
-            <div fxLayout = 'row'>
-                <md-input-container>
-                    <input mdInput [disabled]="isLocked | async" [(ngModel)] = "message" name = "message" dividerColor="none" placeholder = "Type message...">
-                </md-input-container>
-                <button md-icon-button [disabled]="! message || (isLocked | async)" type = "submit" class = "accent-icon-button">
-                    <md-icon>send</md-icon>
-                </button>
-            </div>
-        </form>
-    </md-card>
+        <div *ngFor="let message of messages">
+          <div *ngIf="shouldDisplayTimestamp(message)"
+               fxLayoutAlign="center"
+               class="mdc-typography--caption u-relative u-vertical-spacing-big u-weak">
+            {{ message.sentAt | amDateFormat:'lll' }}
+          </div>
+
+          <div *ngIf="shouldDisplayName(message)"
+               class="mdc-typography--caption u-relative u-weak vmo-message-name">
+            {{ message.user.name }}
+          </div>
+
+          <vmo-message-box [message]="message" [own]="isPostedByUser(message)"></vmo-message-box>
+        </div>
+
+        <vmo-load-more-button [cursor]="cursor" amount="30"></vmo-load-more-button>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+
+  <vmo-bottom-input (send)="sendMessage($event)"
+                    [disabledInput]="isLocked | async"
+                    [disabledButton]="isLocked | async">
+  </vmo-bottom-input>
 </div>
 
 <router-outlet></router-outlet>

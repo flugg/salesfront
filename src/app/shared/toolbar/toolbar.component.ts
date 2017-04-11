@@ -4,7 +4,8 @@ import { SidebarService } from '../../core/sidebar.service';
 
 @Component({
   selector: 'vmo-toolbar',
-  templateUrl: './toolbar.component.html'
+  templateUrl: 'toolbar.component.html',
+  styleUrls: ['toolbar.component.scss']
 })
 export class ToolbarComponent {
 
@@ -21,5 +22,6 @@ export class ToolbarComponent {
   /**
    * Constructs the component.
    */
-  constructor(public sidebar: SidebarService) {}
+  constructor(public sidebar: SidebarService) {
+  }
 }

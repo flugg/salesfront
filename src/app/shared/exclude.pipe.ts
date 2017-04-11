@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'exclude',
-  pure: false,
+  pure: false
 })
 export class ExcludePipe implements PipeTransform {
 
@@ -13,7 +13,7 @@ export class ExcludePipe implements PipeTransform {
     if (items) {
       if (Array.isArray(excludedItems)) {
         return items.filter(item => {
-          return ! excludedItems.find(excludedItem => item.id === excludedItem.id);
+          return !excludedItems.find(excludedItem => item.id === excludedItem.id);
         });
       } else {
         return items.filter(item => item.id !== excludedItems.id);

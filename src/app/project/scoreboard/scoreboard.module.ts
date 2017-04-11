@@ -7,10 +7,10 @@ import { ScoreboardComponent } from './scoreboard.component';
 @NgModule({
   imports: [
     SharedModule,
-    ScoreboardRoutingModule,
+    ScoreboardRoutingModule
   ],
   declarations: [
-    ScoreboardComponent,
-  ],
+    ScoreboardComponent
+  ]
 })
 export class ScoreboardModule {}

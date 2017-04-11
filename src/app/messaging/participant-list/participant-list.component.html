@@ -1,26 +1,24 @@
-<div class = "component-wrapper">
-  <vmo-toolbar mode="back" title="Participants">
-    <button md-icon-button [routerLink] = "'add'">
+<div class="vmo-component">
+  <vmo-toolbar title="Participants" mode="back">
+    <button md-icon-button routerLink="add">
       <md-icon>add</md-icon>
     </button>
   </vmo-toolbar>
 
-  <div [fxShow]="isLoading">
-    <md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
-  </div>
-
-  <md-card class = "stripped-card" [fxHide]="isLoading">
-    <md-list class = 'card-list'>
-      <md-list-item *ngFor = "let participation of (conversation | async)?.participations | participating">
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list">
+      <md-list-item *ngFor="let participation of conversation?.participations | filteredParticipations">
         <img md-list-avatar src="http://lorempixel.com/40/40">
-        <h4 md-line>{{ participation.user.name }}</h4>
-        <span class = "fill-space"></span>
-        <button md-icon-button (click) = 'removeParticipant(participation)'>
+        <h4 md-line>
+          {{ participation.user.name }}
+        </h4>
+        <span class="u-fill"></span>
+        <button md-icon-button (click)='removeParticipant(participation)'>
           <md-icon>remove_circle_outline</md-icon>
         </button>
       </md-list-item>
     </md-list>
-  </md-card>
+  </vmo-progress-spinner>
 </div>
 
 <router-outlet></router-outlet>

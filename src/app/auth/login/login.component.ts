@@ -5,7 +5,8 @@ import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'vmo-login',
-  templateUrl: './login.component.html',
+  templateUrl: 'login.component.html',
+  styleUrls: ['login.component.scss']
 })
 export class LoginComponent {
 
@@ -13,7 +14,8 @@ export class LoginComponent {
    * Constructs the component.
    */
   constructor(private auth: AuthService,
-              private router: Router) {}
+              private router: Router) {
+  }
 
   /**
    * Attempts to log the user in.

@@ -8,8 +8,8 @@ const routes: Routes = [
   {
     path: 'login',
     canActivate: [NoAuthGuard],
-    component: LoginComponent,
-  },
+    component: LoginComponent
+  }
 ];
 
 @NgModule({
@@ -17,6 +17,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     NoAuthGuard
-  ],
+  ]
 })
 export class AuthRoutingModule {}

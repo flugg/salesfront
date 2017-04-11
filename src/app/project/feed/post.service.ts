@@ -6,9 +6,6 @@ import { RestApiService } from '../../core/rest-api.service';
 import { SocketApiService } from '../../core/socket-api.service';
 import { Paginator } from '../../core/paginator.service';
 import { ResourceSubject } from '../../core/utils/subjects/resource-subject';
-import { Conversation } from '../../core/models/conversation.model';
-import { Participation } from '../../core/models/participation.model';
-import { User } from '../../core/models/user.model';
 import { Post } from '../../core/models/post.model';
 
 @Injectable()

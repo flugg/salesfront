@@ -7,10 +7,10 @@ import { TeamsComponent } from './teams.component';
 @NgModule({
   imports: [
     SharedModule,
-    TeamsRoutingModule,
+    TeamsRoutingModule
   ],
   declarations: [
-    TeamsComponent,
-  ],
+    TeamsComponent
+  ]
 })
 export class TeamsModule {}

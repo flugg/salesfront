@@ -2,37 +2,41 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
 import { MessagingRoutingModule } from './messaging-routing.module';
-import { MessagingComponent } from './messaging.component';
+import { BottomInputComponent } from '../messaging/shared/bottom-input/bottom-input.component';
 import { ConversationListComponent } from './conversation-list/conversation-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { MessageBoxComponent } from './conversation/message-box/message-box.component';
 import { ParticipantListComponent } from './participant-list/participant-list.component';
 import { AddParticipantComponent } from './add-participant/add-participant.component';
 import { StartConversationComponent } from './start-conversation/start-conversation.component';
-import { ParticipatingPipe } from './shared/participating.pipe';
-import { NotParticipatingPipe } from './add-participant/not-participating.pipe';
-import { IgnoreEmptyPipe } from './conversation-list/ignore-empty.pipe';
+import { FilteredParticipationsPipe } from './shared/filtered-participations.pipe';
+import { FilteredConversationsPipe } from './conversation-list/filtered-conversations';
+import { FilteredUsersPipe } from './add-participant/filtered-users.pipe';
+import { ConversationTitlePipe } from './shared/conversation-title.pipe';
 import { ConversationService } from './shared/conversation.service';
 import { MessageService } from './shared/message.service';
 
 @NgModule({
   imports: [
     MessagingRoutingModule,
-    SharedModule,
+    SharedModule
   ],
   declarations: [
-    MessagingComponent,
-    ConversationComponent,
+    BottomInputComponent,
     ConversationListComponent,
+    ConversationComponent,
+    MessageBoxComponent,
     ParticipantListComponent,
-    ParticipatingPipe,
     AddParticipantComponent,
-    NotParticipatingPipe,
-    IgnoreEmptyPipe,
     StartConversationComponent,
+    FilteredParticipationsPipe,
+    FilteredConversationsPipe,
+    FilteredUsersPipe,
+    ConversationTitlePipe
   ],
   providers: [
     ConversationService,
-    MessageService,
-  ],
+    MessageService
+  ]
 })
 export class MessagingModule {}

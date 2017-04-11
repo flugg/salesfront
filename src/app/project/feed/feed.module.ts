@@ -5,18 +5,20 @@ import { FeedRoutingModule } from './feed-routing.module';
 import { FeedComponent } from './feed.component';
 import { PostService } from './post.service';
 import { CommentService } from './comment.service';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   imports: [
     SharedModule,
-    FeedRoutingModule,
+    FeedRoutingModule
   ],
   declarations: [
     FeedComponent,
+    PostComponent
   ],
   providers: [
     PostService,
     CommentService
-  ],
+  ]
 })
 export class FeedModule {}

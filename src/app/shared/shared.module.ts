@@ -7,13 +7,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MomentModule } from 'angular2-moment';
 
 import { ExcludePipe } from './exclude.pipe';
+import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
+import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
+    FlexLayoutModule,
     RouterModule
   ],
   exports: [
@@ -23,13 +25,15 @@ import { LoaderComponent } from './loader/loader.component';
     MaterialModule,
     MomentModule,
     ExcludePipe,
-    ToolbarComponent,
-    LoaderComponent
+    LoadMoreButtonComponent,
+    ProgressSpinnerComponent,
+    ToolbarComponent
   ],
   declarations: [
     ExcludePipe,
-    ToolbarComponent,
-    LoaderComponent
+    LoadMoreButtonComponent,
+    ProgressSpinnerComponent,
+    ToolbarComponent
   ]
 })
 export class SharedModule {}

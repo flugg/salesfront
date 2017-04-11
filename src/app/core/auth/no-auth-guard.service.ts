@@ -10,7 +10,8 @@ export class NoAuthGuard implements CanActivate, CanActivateChild, CanLoad {
   /**
    * Constructs the guard.
    */
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService) {
+  }
 
   /**
    * Indicates if a route can be activated.

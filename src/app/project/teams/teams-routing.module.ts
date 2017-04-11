@@ -6,12 +6,12 @@ import { TeamsComponent } from './teams.component';
 const routes: Routes = [
   {
     path: '',
-    component: TeamsComponent,
-  },
+    component: TeamsComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class TeamsRoutingModule {}

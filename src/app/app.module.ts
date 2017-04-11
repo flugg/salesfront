@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,11 +14,12 @@ import { ProjectListComponent } from './project-list/project-list.component';
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpModule,
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    ErrorsModule,
+    ErrorsModule
   ],
   declarations: [
     AppComponent,
@@ -25,6 +27,6 @@ import { ProjectListComponent } from './project-list/project-list.component';
   ],
   bootstrap: [
     AppComponent
-  ],
+  ]
 })
 export class AppModule {}

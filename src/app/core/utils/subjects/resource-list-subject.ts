@@ -29,15 +29,16 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
    * Checks if an item with the given id exists in the list.
    */
   public has(id: string) {
-    return this.value.find(item => item.id === id);
+    return !!this.value.find(item => item.id === id);
   }
 
   /**
    * Moves an item to the front of the list.
    */
   public moveToFront(id: string) {
-    const resource = this.value.find(item => item.id === id);
-    const items = this.value.filter(item => item.id !== id);
+    const list = this.value.slice();
+    const resource = list.find(item => item.id === id);
+    const items = list.filter(item => item.id !== id);
     items.unshift(resource);
 
     this.next(items);
@@ -47,8 +48,10 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
    * Moves an item to the back of the list.
    */
   public moveToBack(id: string) {
-    const resource = this.value.find(item => item.id === id);
-    const items = this.value.filter(item => item.id !== id).push(resource);
+    const list = this.value.slice();
+    const resource = list.find(item => item.id === id);
+    const items = list.filter(item => item.id !== id);
+    items.push(resource);
 
     this.next(items);
   }
@@ -57,60 +60,68 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
    * Prepends a new item to the list.
    */
   public prepend(item: any) {
-    this.value.unshift(item);
-    this.next(this.value);
+    this.prependMany([item]);
   }
 
   /**
    * Prepends many new items to the list.
    */
   public prependMany(items: any[]) {
-    this.value.unshift(...items);
-    this.next(this.value);
+    const list = this.value.slice();
+    list.unshift(...items);
+
+    this.next(list);
   }
 
   /**
    * Appends a new item to the list.
    */
   public append(item: any) {
-    this.value.push(item);
-    this.next(this.value);
+    this.appendMany([item]);
   }
 
   /**
    * Appends many new items to the list.
    */
   public appendMany(items: any[]) {
-    this.value.push(...items);
-    this.next(this.value);
+    const list = this.value.slice();
+    list.push(...items);
+
+    this.next(list);
   }
 
   /**
    * Adds new related item to the list of resources.
    */
   public addRelated(id: string, key: string, nestedItem: any) {
-    this.value.find(item => item.id === id)[key].push(nestedItem);
-    this.next(this.value);
+    const list = this.value.slice();
+    list.find(item => item.id === id)[key].push(nestedItem);
+
+    this.next(list);
   }
 
   /**
    * Adds many new related items to the list of resources.
    */
   public addManyRelated(id: string, key: string, nestedItems: any[]) {
-    this.value.find(item => item.id === id)[key] = this.value.concat(nestedItems);
-    this.next(this.value);
+    const list = this.value.slice();
+    list.find(item => item.id === id)[key] = list.concat(nestedItems);
+
+    this.next(list);
   }
 
   /**
    * Sets an item based on id.
    */
   public set(id: string, key: string, value: any) {
-    const field = this.value.find(item => item.id === id);
+    const list = this.value.slice();
+    const field = list.find(item => item.id === id);
 
     if (field) {
       field[key] = value;
       field[key + 'Id'] = value.id;
-      this.next(this.value);
+
+      this.next(list);
     }
   }
 
@@ -118,12 +129,14 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
    * Sets a related item based on id.
    */
   public setRelated(id: string, key: string, relatedId: string, value: any) {
-    const relations = this.value.find(item => item.id === id)[key].map(relation => {
+    const list = this.value.slice();
+    const relations = list.find(item => item.id === id)[key].map(relation => {
       return relation.id === relatedId ? value : relation;
     });
 
-    this.value.find(item => item.id === id)[key] = relations;
-    this.next(this.value);
+    list.find(item => item.id === id)[key] = relations;
+
+    this.next(list);
   }
 
   /**

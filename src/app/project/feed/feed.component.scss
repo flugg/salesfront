@@ -1,0 +1,20 @@
+form {
+  width: 100%;
+}
+
+.post-input {
+  margin-bottom: 12px;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    height: 56px;
+  }
+}
+
+.mat-input-container {
+  padding: 0;
+}

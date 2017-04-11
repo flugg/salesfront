@@ -1,0 +1,35 @@
+button:not([disabled]) {
+  color: #2175ff !important;
+}
+
+.mat-toolbar {
+  position: fixed !important;
+  bottom: 0;
+  background: white;
+  font-size: inherit !important;
+}
+
+/deep/ .mat-input-container {
+  font-weight: 400;
+
+  .mat-input-wrapper {
+    padding-bottom: 0;
+  }
+
+  .mat-input-underline {
+    opacity: 0;
+  }
+
+  .mat-input-placeholder {
+    transform: none !important;
+
+    &:not(.mat-empty) {
+      display: none !important;
+    }
+
+    &,
+    &.mat-focused {
+      color: rgba(0, 0, 0, .38);
+    }
+  }
+}

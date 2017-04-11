@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { User } from '../models/user.model';
 import { RestApiService } from '../rest-api.service';
-import { SocketApiService } from '../socket-api.service';
 import { Paginator } from '../paginator.service';
 import { ResourceSubject } from '../utils/subjects/resource-subject';
 
@@ -15,8 +14,8 @@ export class UserService {
    * Construct the service.
    */
   constructor(private api: RestApiService,
-              private sockets: SocketApiService,
-              private paginator: Paginator) {}
+              private paginator: Paginator) {
+  }
 
   /**
    * Fetch a list of the account's users.
