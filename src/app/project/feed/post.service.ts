@@ -16,8 +16,7 @@ export class PostService {
    */
   constructor(private api: RestApiService,
               private sockets: SocketApiService,
-              private paginator: Paginator) {
-  }
+              private paginator: Paginator) {}
 
   /**
    * Fetch a list of posts.

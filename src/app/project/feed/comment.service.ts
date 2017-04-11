@@ -8,8 +8,7 @@ export class CommentService {
   /**
    * Construct the service.
    */
-  constructor(private api: RestApiService) {
-  }
+  constructor(private api: RestApiService) {}
 
   /**
    * Posts a new comment in the given post.

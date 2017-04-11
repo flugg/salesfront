@@ -37,8 +37,7 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private postService: PostService,
-              private commentService: CommentService) {
-  }
+              private commentService: CommentService) {}
 
   /**
    * Initializes the component.
@@ -63,13 +62,17 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Submits the form to publish a post.
    */
   publishPost(body: string) {
-    this.postService.publish(body);
+    if (body) {
+      this.postService.publish(body);
+    }
   }
 
   /**
    * Submits the form to post a comment.
    */
   postComment(post: Post, body: string) {
-    this.commentService.post(post.id, body);
+    if (body) {
+      this.commentService.post(post.id, body);
+    }
   }
 }
