@@ -93,6 +93,13 @@ export class SocketApiService {
   }
 
   /**
+   * Listens for an event for the current account.
+   */
+  listenForAccount(event: string, callback: Function) {
+    this.listen(`accounts.1`, event, callback);
+  }
+
+  /**
    * Listens for an event for the given project.
    */
   listenForProject(projectId: string, event: string, callback: Function) {
