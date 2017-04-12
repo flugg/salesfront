@@ -6,7 +6,7 @@
   </vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="isLoading">
-    <md-list class="vmo-list">
+    <md-list class="vmo-list" *ngIf="conversations?.length">
       <md-list-item md-ripple
                     *ngFor="let conversation of conversations | filteredConversations"
                     [routerLink]="conversation.id"
