@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Project } from "../core/models/project.model";
+import { Subscription } from "rxjs";
+import { ProjectService } from "../project/project.service";
 
 @Component({
   selector: 'vmo-project-list',
@@ -18,15 +21,29 @@ export class ProjectListComponent implements OnInit {
   cursor = new BehaviorSubject(15);
 
   /**
+   * List of all observable subscriptions.
+   */
+  private subscriptions: Subscription[] = [];
+
+  /**
+   * Projects
+   * */
+  projects: Project[];
+
+  /**
    * Constructs the component.
    */
-  constructor() {
+  constructor(private projectService: ProjectService) {
+
   }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.isLoading = false;
+    this.subscriptions.push(this.projectService.getWithUpdates(this.cursor).subscribe(projects => {
+      this.projects = projects;
+      this.isLoading = false;
+    }));
   }
 }

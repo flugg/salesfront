@@ -8,17 +8,19 @@
   <vmo-progress-spinner [hasLoaded]="isLoading">
     <md-list class="vmo-list">
       <md-list-item md-ripple
-                    [routerLink]="1"
+                    *ngFor="let project of projects"
+                    [routerLink]="project.id"
                     class="u-clickable">
 
         <div md-list-avatar
              fxLayoutAlign="center center"
              class="vmo-project-icon">
-          TP
+          {{ project.iconName }}
         </div>
-        <h4 md-line class="mdc-typography--subheading1">Test Project</h4>
-        <span md-line class="mdc-typography--body1 u-weak">5 users, 2 teams</span>
+        <h4 md-line class="mdc-typography--subheading1">{{ project.name }}</h4>
+        <span md-line class="mdc-typography--body1 u-weak">{{ project.userCount }} users, {{ project.teamCount }} teams</span>
       </md-list-item>
+
     </md-list>
 
     <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
