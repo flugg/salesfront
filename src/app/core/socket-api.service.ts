@@ -61,10 +61,11 @@ export class SocketApiService {
       snackBar.dismiss();
       this.echo.connector.connect();
       this.snackBar.open('Reconnecting....');
-      this.getPusher().connection.bind('connected', () => {
-        this.snackBar.open('Connected', null, { duration: 3000 });
-        this.getPusher().connection.unbind('connected');
-      });
+    });
+
+    this.getPusher().connection.bind('connected', () => {
+      this.snackBar.open('Connected', null, { duration: 3000 });
+      this.getPusher().connection.unbind('connected');
     });
   }
 

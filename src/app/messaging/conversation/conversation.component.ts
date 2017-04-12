@@ -13,7 +13,6 @@ import { Message } from '../../core/models/message.model';
 import { User } from '../../core/models/user.model';
 
 @Component({
-  selector: 'vmo-conversation',
   templateUrl: 'conversation.component.html',
   styleUrls: ['conversation.component.scss']
 })

@@ -10,8 +10,7 @@ export class Paginator {
   /**
    * Constructs the service.
    */
-  constructor(private api: RestApiService) {
-  }
+  constructor(private api: RestApiService) {}
 
   /**
    * Fetch paginated data.

@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { User } from '../../core/models/user.model';
 
 @Component({
-  selector: 'vmo-users',
   templateUrl: 'users.component.html'
 })
 export class UsersComponent implements OnInit {

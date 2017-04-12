@@ -8,7 +8,6 @@ import { Conversation } from '../../core/models/conversation.model';
 import { User } from '../../core/models/user.model';
 
 @Component({
-  selector: 'vmo-conversations',
   templateUrl: 'conversation-list.component.html'
 })
 export class ConversationListComponent implements OnInit, OnDestroy {
@@ -61,6 +60,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
    * Destroys the component.
    */
   ngOnDestroy(): void {
+
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });

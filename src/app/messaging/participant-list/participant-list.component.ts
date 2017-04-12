@@ -8,7 +8,6 @@ import { Participation } from '../../core/models/participation.model';
 import { User } from '../../core/models/user.model';
 
 @Component({
-  selector: 'vmo-participant-list',
   templateUrl: 'participant-list.component.html'
 })
 export class ParticipantListComponent implements OnInit, OnDestroy {

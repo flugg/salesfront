@@ -10,7 +10,6 @@ import { User } from '../../core/models/user.model';
 import { UserService } from '../../core/auth/user.service';
 
 @Component({
-  selector: 'vmo-start-conversation',
   templateUrl: 'start-conversation.component.html'
 })
 export class StartConversationComponent implements OnInit, OnDestroy {
@@ -52,8 +51,7 @@ export class StartConversationComponent implements OnInit, OnDestroy {
               private messageService: MessageService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private router: Router) {
-  }
+              private router: Router) {}
 
   /**
    * Initializes the component.
