@@ -22,56 +22,61 @@ export class ProjectService {
    * Fetch a list of projects
    * */
   get(cursor: BehaviorSubject<number>): Observable<Project[]> {
-    const projects = this.paginator.paginate(`projects`, cursor, {});
+    const projects = this.paginator.paginate('projects', cursor);
 
     return projects.asObservable();
   }
 
+  /**
+   * Fetch an updating stream of projects.
+   */
   getWithUpdates(cursor: BehaviorSubject<number>): Observable<Project[]> {
     const projects = this.paginator.paginate('projects', cursor);
 
-    this.onStarted(project => projects.prepend(project));
-        // .onMembershipAdded();
+    this.onCreated(project => {
+      projects.append(project);
+    });
+
     return projects.asObservable();
   }
 
   /**
-   * Registers a listener for new conversations.
+   * Registers a listener for new projects.
    */
-  onStarted(callback: Function): ProjectService {
-    this.sockets.listenForUser('project_started', conversation => callback(conversation));
+  onCreated(callback: Function): ProjectService {
+    this.sockets.listenForAccount('project_created', conversation => callback(conversation));
     return this;
   }
 
   /**
    * Registers a listener for new members.
    */
-  onMembershipAdded(callback: Function): ProjectService {
-    this.sockets.listenForUser('member_added', message => callback(message));
+  onMemberAdded(callback: Function): ProjectService {
+    this.sockets.listenForAccount('member_added', user => callback(user));
     return this;
   }
 
   /**
    * Registers a listener for leaving members.
    */
-  onMembershipRemoved(callback: Function): ProjectService {
-    this.sockets.listenForUser('member_removed', message => callback(message));
+  onMemberRemoved(callback: Function): ProjectService {
+    this.sockets.listenForAccount('member_removed', user => callback(user));
     return this;
   }
 
   /**
-   * Registers a listener for new members.
+   * Registers a listener for new teams.
    */
   onTeamAdded(callback: Function): ProjectService {
-    this.sockets.listenForUser('team_added', message => callback(message));
+    this.sockets.listenForAccount('team_added', team => callback(team));
     return this;
   }
 
   /**
-   * Registers a listener for leaving members.
+   * Registers a listener for removed teams.
    */
   onTeamRemoved(callback: Function): ProjectService {
-    this.sockets.listenForUser('team_removed', message => callback(message));
+    this.sockets.listenForAccount('team_removed', team => callback(team));
     return this;
   }
 }
