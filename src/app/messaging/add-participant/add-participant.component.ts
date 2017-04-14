@@ -54,7 +54,7 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
       this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.params['id']),
-      this.userService.getWithUpdates(this.cursor)
+      this.userService.getAllWithUpdates(this.cursor)
     ).subscribe(data => {
       [this.conversation, this.users] = data;
       this.isLoading = false;

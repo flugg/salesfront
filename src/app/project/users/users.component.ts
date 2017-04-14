@@ -40,7 +40,7 @@ export class UsersComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.userService.getWithUpdates(this.cursor).subscribe(users => {
+    this.subscriptions.push(this.userService.getWithUpdates('1', this.cursor).subscribe(users => {
       this.users = users;
       this.isLoading = false;
     }));

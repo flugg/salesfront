@@ -27,11 +27,19 @@ export class UserService {
   }
 
   /**
-   * Fetch an updating stream of the users.
+   * Fetch an updating stream of the users belonging to a project.
    */
-  getWithUpdates(cursor: BehaviorSubject<number>, included?: any): Observable<User[]> {
-    const users = (included) ?
-        this.paginator.paginate('users', cursor, {include: included}) : this.paginator.paginate('users', cursor);
+  getWithUpdates(projectId: string, cursor: BehaviorSubject<number>, included?: any): Observable<User[]> {
+    const users = this.paginator.paginate('project/${projectId}/users', cursor, {include: included})
+
+    return users.asObservable();
+  }
+
+  /**
+   * Fetch an updating stream of the users belonging to an account.
+   */
+  getAllWithUpdates(cursor: BehaviorSubject<number>, included?: any): Observable<User[]> {
+    const users = this.paginator.paginate('users', cursor, {include: included})
 
     return users.asObservable();
   }

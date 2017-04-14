@@ -59,7 +59,7 @@ export class StartConversationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
 
-    this.subscriptions.push(this.userService.getWithUpdates(this.cursor).subscribe(users => {
+    this.subscriptions.push(this.userService.getAllWithUpdates(this.cursor).subscribe(users => {
       this.users = users;
       this.isLoading = false;
     }));
