@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { AccountsRoutingModule } from './accounts-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -9,7 +8,6 @@ import { ProjectModule } from '../project/project.module';
 
 @NgModule({
   imports: [
-    CommonModule,
     SharedModule,
     AccountsRoutingModule,
     ProjectModule

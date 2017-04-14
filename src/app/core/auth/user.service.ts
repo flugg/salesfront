@@ -29,8 +29,9 @@ export class UserService {
   /**
    * Fetch an updating stream of the users.
    */
-  getWithUpdates(cursor: BehaviorSubject<number>): Observable<User[]> {
-    const users = this.paginator.paginate('users', cursor);
+  getWithUpdates(cursor: BehaviorSubject<number>, included?: any): Observable<User[]> {
+    const users = (included) ?
+        this.paginator.paginate('users', cursor, {include: included}) : this.paginator.paginate('users', cursor);
 
     return users.asObservable();
   }
