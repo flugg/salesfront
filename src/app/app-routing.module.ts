@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/auth/auth-guard.service';
 import { UserResolver } from './core/auth/user-resolver.service';
-import { ProjectListComponent } from './project-list/project-list.component';
+import { ProjectListComponent } from './accounts/project-list/project-list.component';
 
 export const routes: Routes = [
   {
@@ -20,10 +20,6 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: 'projects',
-        component: ProjectListComponent
-      },
-      {
         path: 'messages',
         loadChildren: 'app/messaging/messaging.module#MessagingModule'
       },
@@ -32,8 +28,8 @@ export const routes: Routes = [
         loadChildren: 'app/notifications/notifications.module#NotificationsModule'
       },
       {
-        path: 'projects/1',
-        loadChildren: 'app/project/project.module#ProjectModule'
+        path: 'projects',
+        loadChildren: 'app/accounts/accounts.module#AccountsModule'
       }
     ]
   },

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Project } from "../core/models/project.model";
-import { Subscription } from "rxjs";
-import { ProjectService } from "../project/project.service";
+import { Subscription } from 'rxjs/Subscription';
+
+import { Project } from '../../core/models/project.model';
+import { ProjectService } from '../../project/project.service';
 
 @Component({
   selector: 'vmo-project-list',

@@ -9,4 +9,6 @@ export interface Project {
     iconName: string;
     userCount: number;
     teamCount: number;
+    createdAt: string;
+    updatedAt: string;
 }

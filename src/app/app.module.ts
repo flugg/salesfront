@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ErrorsModule } from './errors/errors.module';
 import { AppComponent } from './app.component';
-import { ProjectModule } from './project/project.module';
+import { AccountsComponent } from './accounts/accounts.component';
 
 @NgModule({
   imports: [
@@ -19,11 +19,11 @@ import { ProjectModule } from './project/project.module';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    ErrorsModule,
-      ProjectModule
+    ErrorsModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    AccountsComponent
   ],
   bootstrap: [
     AppComponent
