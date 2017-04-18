@@ -3,10 +3,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { User } from '../../core/models/user.model';
 import { Subscription } from 'rxjs/Subscription';
-import { UserService } from '../../core/auth/user.service';
 
 @Component({
-  templateUrl: 'users.component.html'
+  templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit {
 
@@ -31,18 +30,21 @@ export class UsersComponent implements OnInit {
   cursor = new BehaviorSubject(15);
 
   /**
+   * The links and text for tabs
+   * */
+  tablinks: string[][];
+
+  /**
    * Constructs the component.
    */
-  constructor(private userService: UserService) {
+  constructor() {
   }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.userService.getWithUpdates('1', this.cursor).subscribe(users => {
-      this.users = users;
-      this.isLoading = false;
-    }));
+    this.tablinks = [['Members', 'members'], ['Invites', 'invites']];
+    this.isLoading = false;
   }
 }

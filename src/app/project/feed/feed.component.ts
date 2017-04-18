@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { PostService } from './post.service';
 import { Post } from '../../core/models/post.model';
 import { CommentService } from './comment.service';
+import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'vmo-feed',
@@ -37,13 +38,14 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private postService: PostService,
-              private commentService: CommentService) {}
+              private commentService: CommentService,
+              private projectService: ProjectService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.postService.getWithUpdates(this.cursor).subscribe(posts => {
+    this.subscriptions.push(this.postService.getWithUpdates(this.projectService.savedProject(), this.cursor).subscribe(posts => {
       this.posts = posts;
       this.isLoading = false;
     }));

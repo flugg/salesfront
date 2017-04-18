@@ -1,0 +1,18 @@
+<div>
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list">
+      <md-list-item md-ripple
+                    [routerLink]="1"
+                    class="u-clickable">
+
+        <h4 md-line class="mdc-typography--subheading1">
+          Tempy
+        </h4>
+      </md-list-item>
+    </md-list>
+
+    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

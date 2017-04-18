@@ -17,6 +17,23 @@ export class ProjectService {
               private sockets: SocketApiService,
               private paginator: Paginator) {}
 
+  savedProject() {
+    return localStorage.getItem('currentProject');
+  }
+  /**
+  * Get the last active project
+  * */
+  project(): Observable<Project> {
+    const currentProject = this.savedProject();
+
+    const projectSubject = new BehaviorSubject(null);
+
+    if (currentProject)
+      this.api.get('projects/${currentProject}').map(project => project.data).subscribe(data => projectSubject.next(data));
+
+    return projectSubject.filter(project => project != null);
+  }
+
   /**
    * Fetch a list of projects
    * */
@@ -37,6 +54,14 @@ export class ProjectService {
     });
 
     return projects.asObservable();
+  }
+
+  /**
+   * Fetch a project by id.
+   */
+  find(id: string): Observable<Project> {
+    localStorage.setItem('currentProject', id);
+    return this.api.get(`project/${id}`).map(response => response.data);
   }
 
   /**

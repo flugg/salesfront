@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Project } from '../../core/models/project.model';
 import { ProjectService } from '../../project/project.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'vmo-project-list',
@@ -34,7 +35,8 @@ export class ProjectListComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor(private projectService: ProjectService) {
+  constructor(private projectService: ProjectService,
+              private router: Router) {
 
   }
 
@@ -46,5 +48,10 @@ export class ProjectListComponent implements OnInit {
       this.projects = projects;
       this.isLoading = false;
     }));
+  }
+
+  navigate(projectId: string){
+    localStorage.setItem('currentProject', projectId);
+    // console.log(localStorage.getItem('currentProject'));
   }
 }

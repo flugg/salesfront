@@ -30,8 +30,8 @@ export class PostService {
   /**
    * Fetch an updating stream of the user's conversations.
    */
-  getWithUpdates(cursor: BehaviorSubject<number>): Observable<Post[]> {
-    const posts = this.paginator.paginate('posts', cursor, { include: 'user' });
+  getWithUpdates(projectId: string, cursor: BehaviorSubject<number>): Observable<Post[]> {
+    const posts = this.paginator.paginate('projects/' + projectId + '/posts', cursor, { include: 'user' });
 
     this.onPublished(post => {
       posts.prepend(post);

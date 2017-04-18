@@ -1,0 +1,23 @@
+<div>
+  <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list">
+      <md-list-item md-ripple
+                    [routerLink]="1"
+                    *ngFor="let user of users"
+                    class="u-clickable">
+
+        <div md-list-avatar
+             fxLayoutAlign="center center"
+             class="vmo-project-icon">
+          abc
+        </div>
+        <h4 md-line class="mdc-typography--subheading1">{{ user.name }}</h4>
+        <span md-line class="mdc-typography--body1 u-weak">Helping out since {{ user.createdAt }}</span>
+      </md-list-item>
+    </md-list>
+
+    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

@@ -6,19 +6,18 @@
   </vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="isLoading">
-    <md-list class="vmo-list">
-      <md-list-item md-ripple
-                    [routerLink]="1"
-                    class="u-clickable">
 
-        <h4 md-line class="mdc-typography--subheading1">
-          Tempy
-        </h4>
-      </md-list-item>
-    </md-list>
-
-    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
   </vmo-progress-spinner>
-</div>
 
-<router-outlet></router-outlet>
+  <nav md-tab-nav-bar>
+    <a md-tab-link
+       *ngFor="let link of tablinks"
+       [routerLink]="link[1]"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      {{link[0]}}
+    </a>
+  </nav>
+
+  <router-outlet></router-outlet>
+</div>
