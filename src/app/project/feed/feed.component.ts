@@ -27,7 +27,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   /**
    * The cursor for the paginated posts.
    */
-  private cursor = new BehaviorSubject(15);
+  cursor = new BehaviorSubject(15);
 
   /**
    * List of all observable subscriptions.
