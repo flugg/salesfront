@@ -34,6 +34,10 @@ export class UserService {
   getWithUpdates(projectId: string, cursor: BehaviorSubject<number>): Observable<User[]> {
     const users = this.paginator.paginate(`projects/${projectId}/memberships`, cursor, {include: 'project'});
 
+    this.onMemberAdded(projectId, member => users.prepend(member));
+        // .onMemberRemoved(projectId, member =>)
+        // .onMemberEdited(projectId, member => users.set(member.id, ))
+
     return users.asObservable();
   }
 
@@ -69,21 +73,27 @@ export class UserService {
   /**
    * Registers a listener for new memberships in project.
    * */
-  onMemberAdded(projectId: string, callback: Function) {
+  onMemberAdded(projectId: string, callback: Function): UserService {
     this.sockets.listenForProject(projectId, 'InviteAccepted', user => callback(user));
+
+    return this;
   }
 
   /**
    * Registers a listener for new memberships in project.
    * */
-  onMemberEdited(projectId: string, callback: Function) {
+  onMemberEdited(projectId: string, callback: Function): UserService {
     this.sockets.listenForProject(projectId, 'MemberEdited', user => callback(user));
+
+    return this;
   }
 
   /**
    * Registers a listener for new memberships in project.
    * */
-  onMemberRemoved(projectId: string, callback: Function) {
+  onMemberRemoved(projectId: string, callback: Function): UserService {
     this.sockets.listenForProject(projectId, 'MemberRemoved', user => callback(user));
+
+    return this;
   }
 }

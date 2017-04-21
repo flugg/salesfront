@@ -32,6 +32,9 @@ export class InviteService {
     getWithUpdates(projectId: string, cursor: BehaviorSubject<number>): Observable<User[]> {
         const invites = this.paginator.paginate(`projects/${projectId}/invites`, cursor, {include: 'project'});
 
+        this.onInvite(projectId, invite => invites.prepend(invite));
+            // .on
+
         return invites.asObservable();
     }
 
@@ -75,20 +78,20 @@ export class InviteService {
      * Registers a listener for new invites.
      * */
     onInvite(projectId: string, callback: Function) {
-        this.sockets.listenForProject(projectId, 'InviteAdded', invite => callback(invite));
+        this.sockets.listenForProject(projectId, 'invite_sent', invite => callback(invite));
     }
 
     /**
      * Registers a listener for new accepted invites
      * */
     onInviteAccepted(projectId: string, callback: Function) {
-        this.sockets.listenForProject(projectId, 'InviteAccepted', invite => callback(invite));
+        this.sockets.listenForProject(projectId, 'member_added', invite => callback(invite));
     }
 
     /**
      * Registers a listener for new invites.
      * */
-    onInviteDenied(projectId: string, callback: Function) {
-        this.sockets.listenForProject(projectId, 'InviteRemoved', invite => callback(invite));
+    onInviteCancelled(projectId: string, callback: Function) {
+        this.sockets.listenForProject(projectId, 'invite_cancelled', invite => callback(invite));
     }
 }
