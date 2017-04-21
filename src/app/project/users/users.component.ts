@@ -16,21 +16,6 @@ export class UsersComponent implements OnInit {
   isLoading = true;
 
   /**
-   * List of loaded users.
-   */
-  users: User[];
-
-  /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
-
-  /**
-   * The cursor for the paginated users.
-   */
-  cursor = new BehaviorSubject(15);
-
-  /**
    * The links and text for tabs
    * */
   tablinks: string[][];
