@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 
 import { PostService } from './post.service';
 import { Post } from '../../core/models/post.model';
 import { CommentService } from './comment.service';
-import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'vmo-feed',
@@ -27,7 +27,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   /**
    * The cursor for the paginated posts.
    */
-  private cursor = new BehaviorSubject(15);
+  cursor = new BehaviorSubject(15);
 
   /**
    * List of all observable subscriptions.
@@ -39,13 +39,13 @@ export class FeedComponent implements OnInit, OnDestroy {
    */
   constructor(private postService: PostService,
               private commentService: CommentService,
-              private projectService: ProjectService) {}
+              private route: ActivatedRoute) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.postService.getWithUpdates(this.projectService.savedProject(), this.cursor).subscribe(posts => {
+    this.subscriptions.push(this.postService.getWithUpdates(this.route.snapshot.parent.parent.params['id'], this.cursor).subscribe(posts => {
       this.posts = posts;
       this.isLoading = false;
     }));
@@ -65,7 +65,7 @@ export class FeedComponent implements OnInit, OnDestroy {
    */
   publishPost(body: string) {
     if (body) {
-      this.postService.publish(body);
+      this.postService.publish(this.route.snapshot.parent.parent.params['id'], body);
     }
   }
 

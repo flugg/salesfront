@@ -12,7 +12,7 @@ export class ToolbarComponent {
   /**
    * Indicates what mode the toolbar is in.
    */
-  @Input() mode: number;
+  @Input() mode: string;
 
   /**
    * The title of the current page displayed on the toolbar.
