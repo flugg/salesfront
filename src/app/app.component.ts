@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from './core/auth/auth.service';
 import { User } from './core/models/user.model';
 import { SidebarService } from './core/sidebar.service';
+import { ProjectService } from './project/project.service';
 
 @Component({
   selector: 'vmo-root',
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit {
    */
   constructor(private sidebar: SidebarService,
               private auth: AuthService,
+              private projectService: ProjectService,
               private router: Router) {
   }
 

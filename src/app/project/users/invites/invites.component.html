@@ -3,11 +3,16 @@
     <md-list class="vmo-list">
       <md-list-item md-ripple
                     [routerLink]="1"
+                    *ngFor="let invitee of invites"
                     class="u-clickable">
 
-        <h4 md-line class="mdc-typography--subheading1">
-          Tempy
-        </h4>
+        <div md-list-avatar
+             fxLayoutAlign="center center"
+             class="vmo-project-icon">
+          abc
+        </div>
+        <h4 md-line class="mdc-typography--subheading1">{{ invitee.name }}</h4>
+        <span md-line class="mdc-typography--body1 u-weak">Helping out since {{ invitee.createdAt }}</span>
       </md-list-item>
     </md-list>
 

@@ -6,6 +6,7 @@ import { User } from '../models/user.model';
 import { RestApiService } from '../rest-api.service';
 import { Paginator } from '../paginator.service';
 import { ResourceSubject } from '../utils/subjects/resource-subject';
+import { SocketApiService } from '../socket-api.service';
 
 @Injectable()
 export class UserService {
@@ -14,6 +15,7 @@ export class UserService {
    * Construct the service.
    */
   constructor(private api: RestApiService,
+              private sockets: SocketApiService,
               private paginator: Paginator) {
   }
 
@@ -21,7 +23,7 @@ export class UserService {
    * Fetch a list of the account's users.
    */
   get(cursor: BehaviorSubject<number>): Observable<User[]> {
-    const users = this.paginator.paginate('users', cursor);
+    const users = this.paginator.paginate('memberships', cursor);
 
     return users.asObservable();
   }
@@ -30,7 +32,7 @@ export class UserService {
    * Fetch an updating stream of the users belonging to a project.
    */
   getWithUpdates(projectId: string, cursor: BehaviorSubject<number>): Observable<User[]> {
-    const users = this.paginator.paginate('project/' + projectId + '/users', cursor, {include: 'project'})
+    const users = this.paginator.paginate(`projects/${projectId}/memberships`, cursor, {include: 'project'});
 
     return users.asObservable();
   }
@@ -39,7 +41,7 @@ export class UserService {
    * Fetch an updating stream of the users belonging to an account.
    */
   getAllWithUpdates(cursor: BehaviorSubject<number>): Observable<User[]> {
-    const users = this.paginator.paginate('users', cursor)
+    const users = this.paginator.paginate('memberships', cursor);
 
     return users.asObservable();
   }
@@ -62,5 +64,26 @@ export class UserService {
     });
 
     return user.asObservable();
+  }
+
+  /**
+   * Registers a listener for new memberships in project.
+   * */
+  onMemberAdded(projectId: string, callback: Function) {
+    this.sockets.listenForProject(projectId, 'InviteAccepted', user => callback(user));
+  }
+
+  /**
+   * Registers a listener for new memberships in project.
+   * */
+  onMemberEdited(projectId: string, callback: Function) {
+    this.sockets.listenForProject(projectId, 'MemberEdited', user => callback(user));
+  }
+
+  /**
+   * Registers a listener for new memberships in project.
+   * */
+  onMemberRemoved(projectId: string, callback: Function) {
+    this.sockets.listenForProject(projectId, 'MemberRemoved', user => callback(user));
   }
 }

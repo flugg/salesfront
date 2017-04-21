@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../../core/models/user.model';
 import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { UserService } from '../../../core/auth/user.service';
 import { ProjectService } from '../../project.service';
+import { InviteService } from './invite.service';
 
 @Component({
   selector: 'vmo-invites',
@@ -20,7 +20,7 @@ export class InvitesComponent implements OnInit {
   /**
    * List of loaded users.
    */
-  users: User[];
+  invites: User[];
 
   /**
    * List of all observable subscriptions.
@@ -33,12 +33,12 @@ export class InvitesComponent implements OnInit {
   cursor = new BehaviorSubject(15);
 
 
-  constructor(private userService: UserService,
+  constructor(private inviteService: InviteService,
               private projectService: ProjectService) { }
 
   ngOnInit() {
-    this.subscriptions.push(this.userService.getWithUpdates(this.projectService.savedProject(), this.cursor).subscribe(users => {
-      this.users = users;
+    this.subscriptions.push(this.inviteService.getWithUpdates(this.projectService.savedProject(), this.cursor).subscribe(invites => {
+      this.invites = invites;
       this.isLoading = false;
     }));
   }

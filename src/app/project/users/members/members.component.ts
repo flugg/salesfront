@@ -40,7 +40,9 @@ export class MembersComponent implements OnInit {
     this.subscriptions.push(this.userService.getWithUpdates(this.projectService.savedProject(), this.cursor).subscribe(users => {
       this.users = users;
       this.isLoading = false;
+      console.log(users);
     }));
+    console.log(this.users);
   }
 
 }

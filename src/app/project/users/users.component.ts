@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { User } from '../../core/models/user.model';
 import { Subscription } from 'rxjs/Subscription';
+import { InviteService } from './invites/invite.service';
 
 @Component({
   templateUrl: './users.component.html'
@@ -37,7 +38,7 @@ export class UsersComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor() {
+  constructor(private inviteService: InviteService) {
   }
 
   /**
@@ -46,5 +47,11 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.tablinks = [['Members', 'members'], ['Invites', 'invites']];
     this.isLoading = false;
+  }
+
+  /**
+   * Opens invite dialog
+   * */
+  startInvite() {
   }
 }

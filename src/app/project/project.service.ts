@@ -65,6 +65,13 @@ export class ProjectService {
   }
 
   /**
+   * Create a new project
+   */
+  create(Project): Promise<Project> {
+    return this.api.post('conversations', Project).then(response => response.data);
+  }
+
+  /**
    * Registers a listener for new projects.
    */
   onCreated(callback: Function): ProjectService {

@@ -10,11 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: ':id',
-        loadChildren: '../project/project.module#ProjectModule' // 'src/app/accounts/project/project.module#ProjectModule'
-        /*
-        * resolve: {
-         currentProject: ProjectResolver
-         }*/
+        loadChildren: '../project/project.module#ProjectModule'
       }
     ]
   }
