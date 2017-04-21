@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { RestApiService } from '../../../core/rest-api.service';
 import { Paginator } from '../../../core/paginator.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { User } from '../../../core/models/user.model';
 import { Observable } from 'rxjs/Observable';
 import { ResourceSubject } from '../../../core/utils/subjects/resource-subject';
 import { SocketApiService } from '../../../core/socket-api.service';
+import { Invite } from '../../../core/models/invite.model';
 
 @Injectable()
 export class InviteService {
@@ -20,7 +20,7 @@ export class InviteService {
     /**
      * Fetch a list of the account's users.
      */
-    get(cursor: BehaviorSubject<number>): Observable<User[]> {
+    get(cursor: BehaviorSubject<number>): Observable<Invite[]> {
         const invites = this.paginator.paginate('invites', cursor);
 
         return invites.asObservable();
@@ -29,7 +29,7 @@ export class InviteService {
     /**
      * Fetch an updating stream of the users belonging to a project.
      */
-    getWithUpdates(projectId: string, cursor: BehaviorSubject<number>): Observable<User[]> {
+    getWithUpdates(projectId: string, cursor: BehaviorSubject<number>): Observable<Invite[]> {
         const invites = this.paginator.paginate(`projects/${projectId}/invites`, cursor, {include: 'project'});
 
         this.onInvite(projectId, invite => invites.prepend(invite));
@@ -41,7 +41,7 @@ export class InviteService {
     /**
      * Fetch an updating stream of the users belonging to an account.
      */
-    getAllWithUpdates(cursor: BehaviorSubject<number>): Observable<User[]> {
+    getAllWithUpdates(cursor: BehaviorSubject<number>): Observable<Invite[]> {
         const invites = this.paginator.paginate('invites', cursor);
 
         return invites.asObservable();
@@ -50,14 +50,14 @@ export class InviteService {
     /**
      * Fetch an invite by id.
      */
-    find(id: string): Observable<User> {
+    find(id: string): Observable<Invite> {
         return this.api.get(`invites/${id}`).map(response => response.data);
     }
 
     /**
      * Fetch an updating stream of a single user by id.
      */
-    findWithUpdates(id: string): Observable<User> {
+    findWithUpdates(id: string): Observable<Invite> {
         const invite = new ResourceSubject(null);
 
         this.find(id).subscribe(data => {
@@ -70,8 +70,8 @@ export class InviteService {
     /**
      * Sends an invite to another user to join this project
      * */
-    invite(user: User, projectId: string) {
-        return this.api.post(`/projects/${projectId}/invites`, user).then(response => response.data);
+    invite(invite: Invite, projectId: string) {
+        return this.api.post(`/projects/${projectId}/invites`, invite).then(response => response.data);
     }
 
     /**

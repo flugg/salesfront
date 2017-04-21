@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../../core/models/user.model';
 import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ProjectService } from '../../project.service';
 import { InviteService } from './invite.service';
+import { Invite } from '../../../core/models/invite.model';
 
 @Component({
   selector: 'vmo-invites',
@@ -20,7 +20,7 @@ export class InvitesComponent implements OnInit {
   /**
    * List of loaded users.
    */
-  invites: User[];
+  invites: Invite[];
 
   /**
    * List of all observable subscriptions.
