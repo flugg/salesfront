@@ -60,7 +60,6 @@ export class ProjectService {
    * Fetch a project by id.
    */
   find(id: string): Observable<Project> {
-    localStorage.setItem('currentProject', id);
     return this.api.get(`project/${id}`).map(response => response.data);
   }
 
