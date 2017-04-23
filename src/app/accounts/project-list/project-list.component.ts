@@ -36,9 +36,7 @@ export class ProjectListComponent implements OnInit {
    * Constructs the component.
    */
   constructor(private projectService: ProjectService,
-              private router: Router) {
-
-  }
+              private router: Router) {}
 
   /**
    * Initializes the component.

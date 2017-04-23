@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MdSidenav } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -33,6 +33,11 @@ export class AppComponent implements OnInit {
   ];
 
   /**
+   * The mode of the sidenav.
+   */
+  sidebarMode = 'over';
+
+  /**
    * The side navigation component.
    */
   @ViewChild('sidenav') sidenav: MdSidenav;
@@ -42,18 +47,44 @@ export class AppComponent implements OnInit {
    */
   constructor(private sidebar: SidebarService,
               private auth: AuthService,
-              private router: Router) {
-  }
+              private router: Router) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.sidebar.isOpened.subscribe(open => open ? this.sidenav.open() : this.sidenav.close());
-
-    this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
-      this.sidenav.close();
+    this.sidebar.isOpened.subscribe(open => {
+      if (open) {
+        this.sidenav.open();
+      } else {
+        this.sidenav.close();
+      }
     });
+
+    this.sidebarMode = window.innerWidth < 768 ? 'over' : 'side';
+    if (this.sidebarMode === 'side') {
+      this.sidenav.open();
+    }
+
+    this.router.events.filter(event => event instanceof NavigationEnd).subscribe(a => {
+      if (window.innerWidth < 768) {
+        this.sidenav.close();
+      }
+    });
+  }
+
+  /**
+   * Event listener for window resizing.
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (event.target.innerWidth < 768) {
+      this.sidebarMode = 'over';
+      this.sidenav.close();
+    } else {
+      this.sidebarMode = 'side';
+      this.sidenav.open();
+    }
   }
 
   /**
