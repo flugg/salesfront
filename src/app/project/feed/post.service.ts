@@ -33,9 +33,9 @@ export class PostService {
   getWithUpdates(projectId: string, cursor: BehaviorSubject<number>): Observable<Post[]> {
     const posts = this.paginator.paginate(`projects/${projectId}/posts`, cursor, { include: 'user' });
 
-    this.onPublished(post => {
+    this.onPublished(projectId, post => {
       posts.prepend(post);
-    }).onCommentPosted(comment => {
+    }).onCommentPosted(projectId, comment => {
       posts.addRelated(comment.postId, 'comments', comment);
     });
 
@@ -72,16 +72,16 @@ export class PostService {
   /**
    * Registers a listener for new posts.
    */
-  onPublished(callback: Function): PostService {
-    this.sockets.listenForProject('1', 'post_published', post => callback(post));
+  onPublished(projectId: string, callback: Function): PostService {
+    this.sockets.listenForProject(projectId, 'post_published', comment => callback(comment));
     return this;
   }
 
   /**
    * Registers a listener for new comments.
    */
-  onCommentPosted(callback: Function): PostService {
-    this.sockets.listenForProject('1', 'comment_posted', comment => callback(comment));
+  onCommentPosted(projectId: string, callback: Function): PostService {
+    this.sockets.listenForProject(projectId, 'comment_posted', comment => callback(comment));
     return this;
   }
 }

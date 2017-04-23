@@ -45,9 +45,11 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.postService.getWithUpdates(this.route.snapshot.parent.parent.params['id'], this.cursor).subscribe(posts => {
-      this.posts = posts;
-      this.isLoading = false;
+    this.subscriptions
+        .push(this.postService.getWithUpdates(this.route.snapshot.parent.parent.params['id'], this.cursor)
+        .subscribe(posts => {
+          this.posts = posts;
+          this.isLoading = false;
     }));
   }
 

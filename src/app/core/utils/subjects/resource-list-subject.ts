@@ -126,6 +126,19 @@ export class ResourceListSubject<Array> extends BehaviorSubject<any> {
   }
 
   /**
+   * Removes an entry based on value
+   * */
+  public remove(value: any) {
+    const list = this.value.slice();
+    const index = list.indexOf(value);
+
+    if (index) {
+      list.splice(index, 1);
+    }
+    this.next(list);
+  }
+
+  /**
    * Sets a related item based on id.
    */
   public setRelated(id: string, key: string, relatedId: string, value: any) {

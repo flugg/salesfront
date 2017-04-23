@@ -51,5 +51,6 @@ export class ProjectListComponent implements OnInit {
   navigate(projectId: string){
     localStorage.setItem('currentProject', projectId);
     // console.log(localStorage.getItem('currentProject'));
+    this.router.navigateByUrl(`projects/${projectId}`);
   }
 }

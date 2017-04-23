@@ -47,7 +47,8 @@ export class AppComponent implements OnInit {
    */
   constructor(private sidebar: SidebarService,
               private auth: AuthService,
-              private router: Router) {}
+              private router: Router) {
+  }
 
   /**
    * Initializes the component.

@@ -1,8 +1,26 @@
 <div class="vmo-component">
-  <vmo-toolbar title="Teams" mode="menu"></vmo-toolbar>
+  <vmo-toolbar title="Teams" mode="menu">
+    <button md-icon-button >
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="isLoading">
-    <!-- // -->
+    <md-list class="vmo-list">
+      <md-list-item md-ripple
+                    [routerLink]="1"
+                    *ngFor="let team of teams"
+                    class="u-clickable">
+
+        <div md-list-avatar
+             fxLayoutAlign="center center"
+             class="vmo-project-icon">
+          abc
+        </div>
+        <h4 md-line class="mdc-typography--subheading1">{{ team.name }}</h4>
+        <span md-line class="mdc-typography--body1 u-weak">Score breakers since {{ team.startedAt}}</span>
+      </md-list-item>
+    </md-list>
 
     <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
   </vmo-progress-spinner>

@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { User } from '../../core/models/user.model';
 import { Subscription } from 'rxjs/Subscription';
+import { InviteService } from './invites/invite.service';
 
 @Component({
   templateUrl: './users.component.html'
@@ -15,21 +16,6 @@ export class UsersComponent implements OnInit {
   isLoading = true;
 
   /**
-   * List of loaded users.
-   */
-  users: User[];
-
-  /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
-
-  /**
-   * The cursor for the paginated users.
-   */
-  cursor = new BehaviorSubject(15);
-
-  /**
    * The links and text for tabs
    * */
   tablinks: string[][];
@@ -37,7 +23,7 @@ export class UsersComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor() {
+  constructor(private inviteService: InviteService) {
   }
 
   /**
@@ -46,5 +32,11 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.tablinks = [['Members', 'members'], ['Invites', 'invites']];
     this.isLoading = false;
+  }
+
+  /**
+   * Opens invite dialog
+   * */
+  startInvite() {
   }
 }
