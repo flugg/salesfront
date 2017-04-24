@@ -21,6 +21,7 @@
         <span md-line
               class="mdc-typography--body1 u-weak"
               [class.u-highlight]="hasUnread(conversation)">
+          <span *ngIf="conversation.lastMessage.userId === currentUser.id">You: </span>
           {{ conversation.lastMessage?.body }}
         </span>
 

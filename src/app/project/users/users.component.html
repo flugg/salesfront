@@ -6,18 +6,15 @@
   </vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="isLoading">
+    <md-list class="vmo-list" *ngIf="memberships?.length">
+      <md-list-item md-ripple
+                    *ngFor="let membership of memberships"
+                    class="u-clickable">
 
+        <img md-list-avatar src="http://lorempixel.com/40/40">
+
+        <span md-line class="mdc-typography--subheading1">{{ membership.user.name }}</span>
+      </md-list-item>
+    </md-list>
   </vmo-progress-spinner>
-
-  <nav md-tab-nav-bar>
-    <a md-tab-link
-       *ngFor="let link of tablinks"
-       [routerLink]="link[1]"
-       routerLinkActive #rla="routerLinkActive"
-       [active]="rla.isActive">
-      {{link[0]}}
-    </a>
-  </nav>
-
-  <router-outlet></router-outlet>
 </div>

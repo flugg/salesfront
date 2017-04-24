@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ErrorsModule } from './errors/errors.module';
 import { AppComponent } from './app.component';
-import { AccountsComponent } from './accounts/accounts.component';
+import { OrganizationComponent } from './organization/organization.component';
 
 @NgModule({
   imports: [
@@ -23,10 +23,11 @@ import { AccountsComponent } from './accounts/accounts.component';
   ],
   declarations: [
     AppComponent,
-    AccountsComponent
+    OrganizationComponent
   ],
   bootstrap: [
     AppComponent
   ]
 })
-export class AppModule {}
+export class AppModule {
+}

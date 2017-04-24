@@ -1,8 +1,7 @@
-export interface Project {
+export interface Organization {
     id: string;
     name: string;
-    userCount: number;
-    teamCount: number;
+    slug: string;
     createdAt: string;
     updatedAt: string;
 }

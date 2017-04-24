@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProjectListComponent } from './project-list/project-list.component';
-import { ProjectResolver } from '../core/auth/project-resolver.service';
 
 const routes: Routes = [
   {
@@ -21,4 +20,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class AccountsRoutingModule { }
+export class OrganizationRoutingModule { }

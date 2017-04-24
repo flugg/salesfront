@@ -8,9 +8,13 @@ import { InviteService } from './users/invites/invite.service';
 @NgModule({
   imports: [
     SharedModule,
-    ProjectRoutingModule,
+    ProjectRoutingModule
   ],
-  declarations: [ProjectComponent],
-  providers: [InviteService]
+  declarations: [
+    ProjectComponent
+  ],
+  providers: [
+    InviteService
+  ]
 })
 export class ProjectModule {}

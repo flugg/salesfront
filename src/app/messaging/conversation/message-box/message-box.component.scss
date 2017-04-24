@@ -12,6 +12,15 @@
         background: #2175ff;
         color: white;
       }
+
+      @media (max-width: 960px) {
+        img {
+          display: none;
+        }
+        .mat-card {
+          margin-right: 0 !important;
+        }
+      }
     }
 
     .mat-card {

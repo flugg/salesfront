@@ -35,8 +35,7 @@ export class ProjectListComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor(private projectService: ProjectService,
-              private router: Router) {}
+  constructor(private projectService: ProjectService) {}
 
   /**
    * Initializes the component.
@@ -46,11 +45,5 @@ export class ProjectListComponent implements OnInit {
       this.projects = projects;
       this.isLoading = false;
     }));
-  }
-
-  navigate(projectId: string){
-    localStorage.setItem('currentProject', projectId);
-    // console.log(localStorage.getItem('currentProject'));
-    this.router.navigateByUrl(`projects/${projectId}`);
   }
 }

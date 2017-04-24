@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MdSidenav } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from './core/auth/auth.service';
 import { User } from './core/models/user.model';
 import { SidebarService } from './core/sidebar.service';
+import { ObservableMedia } from '@angular/flex-layout';
+import { ActiveProjectService } from './core/active-project.service';
 
 @Component({
   selector: 'vmo-root',
@@ -20,15 +22,22 @@ export class AppComponent implements OnInit {
   currentUser: Observable<User>;
 
   /**
+   * The active project id.
+   */
+  projectId: string;
+
+  /**
    * The navigation links.
    */
   links = [
-    { name: 'Feed', route: 'feed', icon: 'question_answer' },
-    { name: 'Scoreboard', route: 'scoreboard', icon: 'subject' },
-    { name: 'Budgets', route: 'budgets', icon: 'track_changes' },
+    { name: 'Feed', route: 'feed', icon: 'forum' },
+    { name: 'Leaderboard', route: 'leaderboard', icon: 'star' },
+    /* { name: 'Budgets', route: 'budgets', icon: 'track_changes' }, */
     { name: 'Sales', route: 'sales', icon: 'attach_money' },
-    { name: 'Users', route: 'users', icon: 'person' },
+    { name: 'Products', route: 'products', icon: 'shopping_basket' },
+    { name: 'Departments', route: 'departments', icon: 'domain' },
     { name: 'Teams', route: 'teams', icon: 'group' },
+    { name: 'Users', route: 'users', icon: 'person' },
     { name: 'Settings', route: 'settings', icon: 'settings' }
   ];
 
@@ -47,13 +56,27 @@ export class AppComponent implements OnInit {
    */
   constructor(private sidebar: SidebarService,
               private auth: AuthService,
-              private router: Router) {
+              private activeProject: ActiveProjectService,
+              private router: Router,
+              private media: ObservableMedia) {
   }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
+    this.projectId = this.activeProject.get();
+
+    this.media.subscribe(media => {
+      if (media.mqAlias === 'xs' || media.mqAlias === 'sm') {
+        this.sidebarMode = 'over';
+        this.sidenav.close();
+      } else {
+        this.sidebarMode = 'side';
+        this.sidenav.open();
+      }
+    });
+
     this.sidebar.isOpened.subscribe(open => {
       if (open) {
         this.sidenav.open();
@@ -62,30 +85,16 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.sidebarMode = window.innerWidth < 768 ? 'over' : 'side';
+    this.sidebarMode = window.innerWidth < 960 ? 'over' : 'side';
     if (this.sidebarMode === 'side') {
       this.sidenav.open();
     }
 
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(a => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 960) {
         this.sidenav.close();
       }
     });
-  }
-
-  /**
-   * Event listener for window resizing.
-   */
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    if (event.target.innerWidth < 768) {
-      this.sidebarMode = 'over';
-      this.sidenav.close();
-    } else {
-      this.sidebarMode = 'side';
-      this.sidenav.open();
-    }
   }
 
   /**

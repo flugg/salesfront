@@ -1,6 +1,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 
 import { SidebarService } from '../../core/sidebar.service';
+import { ObservableMedia } from '@angular/flex-layout';
 
 @Component({
   selector: 'vmo-toolbar',
@@ -27,24 +28,21 @@ export class ToolbarComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor(public sidebar: SidebarService) {}
+  constructor(public sidebar: SidebarService,
+              private media: ObservableMedia) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.state = window.innerWidth >= 768 && this.mode === 'menu' ? 'none' : this.mode;
-  }
+    this.media.subscribe(media => {
+      if (this.mode === 'menu' && (media.mqAlias === 'xs' || media.mqAlias === 'sm')) {
+        this.state = 'menu';
+      } else {
+        this.state = 'none';
+      }
+    });
 
-  /**
-   * Event listener for window resizing.
-   */
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    if (event.target.innerWidth >= 768 && this.mode === 'menu') {
-      this.state = 'none';
-    } else {
-      this.state = this.mode;
-    }
+    this.state = window.innerWidth >= 960 && this.mode === 'menu' ? 'none' : this.mode;
   }
 }

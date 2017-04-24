@@ -93,10 +93,10 @@ export class SocketApiService {
   }
 
   /**
-   * Listens for an event for the current account.
+   * Listens for an event for the current organization.
    */
-  listenForAccount(event: string, callback: Function) {
-    this.listen(`accounts.1`, event, callback);
+  listenForOrganization(event: string, callback: Function) {
+    this.listen(`organizations.b3256N`, event, callback);
   }
 
   /**

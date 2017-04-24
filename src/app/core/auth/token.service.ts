@@ -9,8 +9,7 @@ export class TokenService {
   /**
    * Constructs the service.
    */
-  constructor(private http: Http) {
-  }
+  constructor(private http: Http) {}
 
   /**
    * Checks if the token exists and is not expired.
@@ -34,7 +33,7 @@ export class TokenService {
   }
 
   /**
-   * Unsets the given token in storage.
+   * Unsets the given token from storage.
    */
   unset(): void {
     localStorage.removeItem('token');

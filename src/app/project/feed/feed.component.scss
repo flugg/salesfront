@@ -18,3 +18,9 @@ form {
 .mat-input-container {
   padding: 0;
 }
+
+.container {
+  @media (min-width: 960px) {
+    padding: 16px 16px 8px;
+  }
+}
