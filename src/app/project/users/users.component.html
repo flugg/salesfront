@@ -1,6 +1,6 @@
 <div class="vmo-component">
   <vmo-toolbar title="Users" mode="menu">
-    <button md-icon-button (click)="startInvite()">
+    <button md-icon-button routerLink="invite">
       <md-icon>add</md-icon>
     </button>
   </vmo-toolbar>
@@ -13,7 +13,9 @@
 
         <img md-list-avatar src="http://lorempixel.com/40/40">
 
-        <span md-line class="mdc-typography--subheading1">{{ membership.user.name }}</span>
+        <span md-line class="mdc-typography--subheading1">
+          {{ membership.user.name }}
+        </span>
       </md-list-item>
     </md-list>
   </vmo-progress-spinner>
