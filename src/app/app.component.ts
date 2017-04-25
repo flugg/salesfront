@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   /**
    * The active project id.
    */
-  projectId: string;
+  projectId: Observable<string>;
 
   /**
    * The navigation links.
@@ -65,9 +65,9 @@ export class AppComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
-    this.projectId = this.activeProject.snapshot();
+    this.projectId = this.activeProject.get();
 
-    if (this.projectId) {
+    this.projectId.subscribe(projectId => {if (projectId) {
       this.media.subscribe(media => {
         if (media.mqAlias === 'xs' || media.mqAlias === 'sm') {
           this.sidebarMode = 'over';
@@ -96,7 +96,7 @@ export class AppComponent implements OnInit {
           this.sidenav.close();
         }
       });
-    }
+    }});
   }
 
   /**
