@@ -1,15 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../../core/auth/user.service';
-import { Subscription } from 'rxjs/Subscription';
-import { User } from '../../../core/models/user.model';
+import { TeamService } from '../team.service';
 import { ActivatedRoute } from '@angular/router';
+import { Team } from '../../../core/models/team.model';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'vmo-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'vmo-team',
+  templateUrl: './team.component.html',
+  styleUrls: ['./team.component.css']
 })
-export class UserComponent implements OnInit, OnDestroy {
+export class TeamComponent implements OnInit, OnDestroy {
 
   /**
    * Weather or not the component is currently loading.
@@ -17,9 +17,9 @@ export class UserComponent implements OnInit, OnDestroy {
   isLoading = true;
 
   /**
-   * The user being shown
+   * The team being shown
    */
-  user: User;
+  team: Team;
 
   /**
    * List of all observable subscriptions.
@@ -29,12 +29,12 @@ export class UserComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private userService: UserService,
+  constructor(private teamService: TeamService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.subscriptions.push(this.userService.findWithUpdates(this.route.snapshot.url[0].path).subscribe(user => {
-      this.user = user;
+    this.subscriptions.push(this.teamService.findWithUpdates(this.route.snapshot.url[0].path).subscribe(team => {
+      this.team = team;
       this.isLoading = false;
     }));
   }

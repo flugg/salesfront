@@ -8,8 +8,8 @@
   <vmo-progress-spinner [hasLoaded]="isLoading">
     <md-list class="vmo-list">
       <md-list-item md-ripple
-                    [routerLink]="1"
                     *ngFor="let team of teams"
+                    [routerLink]="team.id"
                     class="u-clickable">
 
         <div md-list-avatar

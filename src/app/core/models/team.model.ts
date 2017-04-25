@@ -3,6 +3,7 @@ import { Project } from './project.model';
 
 export interface Team {
     id: string;
+    name: string;
     projectId: string;
     project?: Project;
     members?: User[];

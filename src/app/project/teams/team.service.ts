@@ -51,7 +51,7 @@ export class TeamService {
    * Fetch an invite by id.
    */
   find(id: string): Observable<Team> {
-    return this.api.get(`invites/${id}`).map(response => response.data);
+    return this.api.get(`teams/${id}`).map(response => response.data);
   }
 
   /**
