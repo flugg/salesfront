@@ -22,9 +22,14 @@ export class AppComponent implements OnInit {
   currentUser: Observable<User>;
 
   /**
-   * The active project id.
+   * The active project.
    */
-  projectId: Observable<string>;
+  activeProject: Observable<string>;
+
+  /**
+   * Tells if the sidenav should be hidden
+   */
+  hideSidenav = true;
 
   /**
    * The navigation links.
@@ -56,7 +61,7 @@ export class AppComponent implements OnInit {
    */
   constructor(private sidebar: SidebarService,
               private auth: AuthService,
-              private activeProject: ActiveProjectService,
+              private activeProjectService: ActiveProjectService,
               private router: Router,
               private media: ObservableMedia) {
   }
@@ -65,37 +70,41 @@ export class AppComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
-    this.projectId = this.activeProject.get();
+    this.activeProject = this.activeProjectService.get();
 
-    this.projectId.subscribe(projectId => {if (projectId) {
-      this.media.subscribe(media => {
-        if (media.mqAlias === 'xs' || media.mqAlias === 'sm') {
-          this.sidebarMode = 'over';
-          this.sidenav.close();
-        } else {
-          this.sidebarMode = 'side';
+    this.activeProject.subscribe(projectId => {
+
+      if (projectId) {
+        this.hideSidenav = false;
+
+        this.media.subscribe(media => {
+          if (media.mqAlias === 'xs' || media.mqAlias === 'sm') {
+            this.sidebarMode = 'over';
+            this.sidenav.close();
+          } else {
+            this.sidebarMode = 'side';
+            this.sidenav.open();
+          }
+        });
+
+        this.sidebar.isOpened.subscribe(open => {
+          if (open) {
+            this.sidenav.open();
+          } else {
+            this.sidenav.close();
+          }
+        });
+
+        this.sidebarMode = window.innerWidth < 960 ? 'over' : 'side';
+        if (this.sidebarMode === 'side') {
           this.sidenav.open();
         }
-      });
 
-      this.sidebar.isOpened.subscribe(open => {
-        if (open) {
-          this.sidenav.open();
-        } else {
-          this.sidenav.close();
-        }
-      });
-
-      this.sidebarMode = window.innerWidth < 960 ? 'over' : 'side';
-      if (this.sidebarMode === 'side') {
-        this.sidenav.open();
-      }
-
-      this.router.events.filter(event => event instanceof NavigationEnd).subscribe(a => {
-        if (window.innerWidth < 960) {
-          this.sidenav.close();
-        }
-      });
+        this.router.events.filter(event => event instanceof NavigationEnd).subscribe(a => {
+          if (window.innerWidth < 960) {
+            this.sidenav.close();
+          }
+        });
     }});
   }
 
