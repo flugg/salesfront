@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
+
+import { ActiveProjectService } from '../../core/active-project.service';
 import { TeamService } from './team.service';
-import { ProjectService } from '../project.service';
 
 @Component({
   selector: 'vmo-teams',
   templateUrl: 'teams.component.html'
 })
-export class TeamsComponent implements OnInit {
+export class TeamsComponent implements OnInit, OnDestroy {
 
   /**
    * Wether or not the component is currently loading.
@@ -34,16 +35,25 @@ export class TeamsComponent implements OnInit {
    * Constructs the component.
    */
   constructor(private teamSearvice: TeamService,
-              private projectService: ProjectService) {
+              private activeProject: ActiveProjectService) {
   }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.teamSearvice.getWithUpdates(this.projectService.savedProject(), this.cursor).subscribe(teams => {
+    this.subscriptions.push(this.teamSearvice.getWithUpdates(this.activeProject.snapshot(), this.cursor).subscribe(teams => {
       this.teams = teams;
       this.isLoading = false;
     }));
+  }
+
+  /**
+   * Destroys the component.
+   */
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    });
   }
 }

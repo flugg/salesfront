@@ -15,6 +15,7 @@ import { ErrorHandlerService } from './error-handler.service';
 import { SidebarService } from './sidebar.service';
 import { ProjectService } from '../project/project.service';
 import { ProjectResolver } from './auth/project-resolver.service';
+import { ActiveProjectService } from './active-project.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -46,7 +47,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ProjectResolver,
     UserService,
     ProjectService,
-    SidebarService
+    SidebarService,
+    ActiveProjectService,
   ]
 })
 export class CoreModule {}

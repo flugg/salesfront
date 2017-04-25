@@ -29,7 +29,7 @@ export const routes: Routes = [
       },
       {
         path: 'projects',
-        loadChildren: 'app/accounts/accounts.module#AccountsModule'
+        loadChildren: 'app/organization/organization.module#OrganizationModule'
       }
     ]
   },

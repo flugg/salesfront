@@ -1,5 +1,5 @@
 <md-sidenav-container>
-  <md-sidenav #sidenav>
+  <md-sidenav #sidenav [mode]="sidebarMode">
     <md-toolbar>
       <button md-icon-button routerLink="messages" routerLinkActive="active-link">
         <md-icon>email</md-icon>
@@ -39,7 +39,7 @@
     <md-nav-list>
       <md-list-item md-ripple
                     *ngFor="let link of links"
-                    [routerLink]="['projects', projectService.savedProject(), link.route]"
+                    [routerLink]="['/projects', projectId, link.route]"
                     routerLinkActive="active-link">
         <md-icon md-list-icon>{{ link.icon }}</md-icon>
         <a md-line class="mdc-typography--body1">

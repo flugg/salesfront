@@ -1,14 +1,14 @@
 <md-toolbar color="primary">
-  <button md-icon-button *ngIf="mode == 'menu'" (click)="sidebar.open()">
+  <button md-icon-button *ngIf="state == 'menu'" (click)="sidebar.open()">
     <md-icon>menu</md-icon>
   </button>
-  <button md-icon-button *ngIf="mode == 'back'" [routerLink]="'../'">
+  <button md-icon-button *ngIf="state == 'back'" [routerLink]="'../'">
     <md-icon>arrow_back</md-icon>
   </button>
-  <button md-icon-button *ngIf="mode == 'close'" [routerLink]="'../'">
+  <button md-icon-button *ngIf="state == 'close'" [routerLink]="'../'">
     <md-icon>close</md-icon>
   </button>
-  <h2 class="mdc-typography--title" [class.toolbar-heading]="mode != 'none'">
+  <h2 class="mdc-typography--title" [class.toolbar-heading]="state != 'none'">
     {{ title }}
   </h2>
   <span class="u-fill"></span>

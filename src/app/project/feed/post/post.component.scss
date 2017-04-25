@@ -2,13 +2,25 @@
   margin-left: 16px !important;
 }
 
+.mdc-typography--subheading1 {
+  font-weight: 500;
+}
+
 .mat-card-title {
   margin-bottom: 8px;
 }
 
+.container-card {
+  padding: 0;
+}
+
+.post-card {
+  box-shadow: none;
+}
+
 .comments {
+  box-shadow: none;
   background: #fafafa;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
   padding-top: 12px !important;
   padding-bottom: 12px !important;
 
@@ -18,9 +30,9 @@
 }
 
 .comment-input {
-  background: white;
+  box-shadow: none;
+  background: #fafafa;
   font-size: 14px !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
   padding-top: 10px !important;
   padding-bottom: 10px !important;
   margin-bottom: 12px;

@@ -5,6 +5,7 @@ import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
 import { MembersComponent } from './members/members.component';
 import { InvitesComponent } from './invites/invites.component';
+import { MemberService } from './member.service';
 
 @NgModule({
   imports: [
@@ -15,6 +16,9 @@ import { InvitesComponent } from './invites/invites.component';
     UsersComponent,
     MembersComponent,
     InvitesComponent
+  ],
+  providers: [
+    MemberService
   ]
 })
 export class UsersModule {}

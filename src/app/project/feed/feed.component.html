@@ -2,20 +2,22 @@
   <vmo-toolbar title="Feed" mode="menu"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="isLoading">
-    <md-card class="post-input">
-      <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
-            fxLayoutAlign="stretch center">
-        <md-input-container class="vmo-fixed-input">
-          <input #input mdInput name="post" placeholder="Write a post...">
-        </md-input-container>
-      </form>
-    </md-card>
+    <div class="container">
+      <md-card class="post-input">
+        <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
+              fxLayoutAlign="stretch center">
+          <md-input-container class="vmo-fixed-input">
+            <input #input mdInput name="post" placeholder="Write a post...">
+          </md-input-container>
+        </form>
+      </md-card>
 
-    <div *ngFor="let post of posts">
-      <vmo-post [post]="post" (commentPosted)="postComment(post, $event)"></vmo-post>
+      <div *ngFor="let post of posts">
+        <vmo-post [post]="post" (commentPosted)="postComment(post, $event)"></vmo-post>
+      </div>
+
+      <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
     </div>
-
-    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
   </vmo-progress-spinner>
 </div>
 

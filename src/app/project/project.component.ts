@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { ActiveProjectService } from '../core/active-project.service';
+
 @Component({
-  selector: 'vmo-project',
   templateUrl: './project.component.html',
-  styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  /**
+   * Constructs the component.
+   */
+  constructor(private route: ActivatedRoute,
+              private activeProject: ActiveProjectService) {}
 
+  /**
+   * Initializes the component.
+   */
   ngOnInit() {
-    localStorage.setItem('currentProject', this.route.parent.snapshot.url[0].path);
+    this.activeProject.set(this.route.snapshot.params.id);
   }
-
 }

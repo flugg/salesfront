@@ -3,7 +3,7 @@
     <md-list class="vmo-list">
       <md-list-item md-ripple
                     [routerLink]="1"
-                    *ngFor="let user of users"
+                    *ngFor="let membership of memberships"
                     class="u-clickable">
 
         <div md-list-avatar
@@ -11,8 +11,8 @@
              class="vmo-project-icon">
           abc
         </div>
-        <h4 md-line class="mdc-typography--subheading1">{{ user.name }}</h4>
-        <span md-line class="mdc-typography--body1 u-weak">Helping out since {{ user.createdAt }}</span>
+        <h4 md-line class="mdc-typography--subheading1">{{ membership.name }}</h4>
+        <span md-line class="mdc-typography--body1 u-weak">Helping out since {{ membership.createdAt }}</span>
       </md-list-item>
     </md-list>
 

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
-  selector: 'vmo-scoreboard',
-  templateUrl: 'scoreboard.component.html'
+  selector: 'vmo-leaderboard',
+  templateUrl: 'leaderboard.component.html'
 })
-export class ScoreboardComponent implements OnInit {
+export class LeaderboardComponent implements OnInit {
 
   /**
    * Wether or not the component is currently loading.

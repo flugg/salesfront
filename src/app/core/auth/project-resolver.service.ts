@@ -12,6 +12,6 @@ export class ProjectResolver implements Resolve<Project>{
     constructor(private projectService: ProjectService) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):  Observable<any> {
-        return this.projectService.project();
+        return null; // this.projectService.project();
     }
 }

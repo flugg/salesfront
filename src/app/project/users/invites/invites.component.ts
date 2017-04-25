@@ -4,11 +4,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ProjectService } from '../../project.service';
 import { InviteService } from './invite.service';
 import { Invite } from '../../../core/models/invite.model';
+import { ActiveProjectService } from '../../../core/active-project.service';
 
 @Component({
   selector: 'vmo-invites',
   templateUrl: './invites.component.html',
-  styleUrls: ['./invites.component.css']
 })
 export class InvitesComponent implements OnInit {
 
@@ -34,10 +34,10 @@ export class InvitesComponent implements OnInit {
 
 
   constructor(private inviteService: InviteService,
-              private projectService: ProjectService) { }
+              private activeProject: ActiveProjectService) { }
 
   ngOnInit() {
-    this.subscriptions.push(this.inviteService.getWithUpdates(this.projectService.savedProject(), this.cursor).subscribe(invites => {
+    this.subscriptions.push(this.inviteService.getWithUpdates(this.activeProject.snapshot(), this.cursor).subscribe(invites => {
       this.invites = invites;
       this.isLoading = false;
     }));

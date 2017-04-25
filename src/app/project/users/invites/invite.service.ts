@@ -18,7 +18,7 @@ export class InviteService {
     }
 
     /**
-     * Fetch a list of the account's users.
+     * Fetch a list of the organization's users.
      */
     get(cursor: BehaviorSubject<number>): Observable<Invite[]> {
         const invites = this.paginator.paginate('invites', cursor);
@@ -39,7 +39,7 @@ export class InviteService {
     }
 
     /**
-     * Fetch an updating stream of the users belonging to an account.
+     * Fetch an updating stream of the users belonging to an organization.
      */
     getAllWithUpdates(cursor: BehaviorSubject<number>): Observable<Invite[]> {
         const invites = this.paginator.paginate('invites', cursor);

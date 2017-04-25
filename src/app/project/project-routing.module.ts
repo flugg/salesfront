@@ -17,8 +17,8 @@ const routes: Routes = [
         loadChildren: 'app/project/feed/feed.module#FeedModule'
       },
       {
-        path: 'scoreboard',
-        loadChildren: 'app/project/scoreboard/scoreboard.module#ScoreboardModule'
+        path: 'leaderboard',
+        loadChildren: 'app/project/leaderboard/leaderboard.module#LeaderboardModule'
       },
       {
         path: 'budgets',
