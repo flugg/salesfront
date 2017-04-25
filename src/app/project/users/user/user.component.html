@@ -1,4 +1,9 @@
-<div>
+<div class="vmo-component">
+  <vmo-toolbar title="{{ user?.name }}" mode="menu">
+    <button md-icon-button>
+      <md-icon>edit</md-icon>
+    </button>
+  </vmo-toolbar>
   <vmo-progress-spinner [hasLoaded]="isLoading">
 
   </vmo-progress-spinner>
