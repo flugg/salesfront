@@ -2,9 +2,17 @@
   <vmo-toolbar title="Leaderboard" mode="menu"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="isLoading">
-    <!-- // -->
+    <nav md-tab-nav-bar>
+      <a md-tab-link
+         *ngFor="let link of navLinks"
+         [routerLink]="link[1]"
+         routerLinkActive #rla="routerLinkActive"
+         [active]="rla.isActive">
+        {{ link[0] }}
+      </a>
+    </nav>
 
-    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+    <router-outlet></router-outlet>
   </vmo-progress-spinner>
 </div>
 
