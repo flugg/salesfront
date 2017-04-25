@@ -14,7 +14,6 @@ import { UserService } from './auth/user.service';
 import { ErrorHandlerService } from './error-handler.service';
 import { SidebarService } from './sidebar.service';
 import { ProjectService } from '../project/project.service';
-import { ProjectResolver } from './auth/project-resolver.service';
 import { ActiveProjectService } from './active-project.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -44,7 +43,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AuthService,
     TokenService,
     UserResolver,
-    ProjectResolver,
     UserService,
     ProjectService,
     SidebarService,

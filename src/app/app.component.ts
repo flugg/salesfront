@@ -65,36 +65,38 @@ export class AppComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
-    this.activeProject.get().subscribe(p => this.projectId = p);
+    this.projectId = this.activeProject.snapshot();
 
-    this.media.subscribe(media => {
-      if (media.mqAlias === 'xs' || media.mqAlias === 'sm') {
-        this.sidebarMode = 'over';
-        this.sidenav.close();
-      } else {
-        this.sidebarMode = 'side';
+    if (this.projectId) {
+      this.media.subscribe(media => {
+        if (media.mqAlias === 'xs' || media.mqAlias === 'sm') {
+          this.sidebarMode = 'over';
+          this.sidenav.close();
+        } else {
+          this.sidebarMode = 'side';
+          this.sidenav.open();
+        }
+      });
+
+      this.sidebar.isOpened.subscribe(open => {
+        if (open) {
+          this.sidenav.open();
+        } else {
+          this.sidenav.close();
+        }
+      });
+
+      this.sidebarMode = window.innerWidth < 960 ? 'over' : 'side';
+      if (this.sidebarMode === 'side') {
         this.sidenav.open();
       }
-    });
 
-    this.sidebar.isOpened.subscribe(open => {
-      if (open) {
-        this.sidenav.open();
-      } else {
-        this.sidenav.close();
-      }
-    });
-
-    this.sidebarMode = window.innerWidth < 960 ? 'over' : 'side';
-    if (this.sidebarMode === 'side') {
-      this.sidenav.open();
+      this.router.events.filter(event => event instanceof NavigationEnd).subscribe(a => {
+        if (window.innerWidth < 960) {
+          this.sidenav.close();
+        }
+      });
     }
-
-    this.router.events.filter(event => event instanceof NavigationEnd).subscribe(a => {
-      if (window.innerWidth < 960) {
-        this.sidenav.close();
-      }
-    });
   }
 
   /**

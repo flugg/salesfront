@@ -1,5 +1,5 @@
 <md-sidenav-container>
-  <md-sidenav #sidenav [mode]="sidebarMode">
+  <md-sidenav #sidenav [mode]="sidebarMode" *ngIf="projectId">
     <md-toolbar>
       <button md-icon-button routerLink="messages" routerLinkActive="active-link">
         <md-icon>email</md-icon>
