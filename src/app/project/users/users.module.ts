@@ -6,6 +6,7 @@ import { UsersComponent } from './users.component';
 import { MembersComponent } from './members/members.component';
 import { InvitesComponent } from './invites/invites.component';
 import { MemberService } from './member.service';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { MemberService } from './member.service';
   declarations: [
     UsersComponent,
     MembersComponent,
-    InvitesComponent
+    InvitesComponent,
+    UserComponent
   ],
   providers: [
     MemberService

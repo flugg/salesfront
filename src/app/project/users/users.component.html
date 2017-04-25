@@ -9,7 +9,8 @@
     <md-list class="vmo-list" *ngIf="memberships?.length">
       <md-list-item md-ripple
                     *ngFor="let membership of memberships"
-                    class="u-clickable">
+                    class="u-clickable"
+                    [routerLink]="[membership.id]">
 
         <img md-list-avatar src="http://lorempixel.com/40/40">
 

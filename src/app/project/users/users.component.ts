@@ -45,7 +45,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.memberService.getWithUpdates(this.activeProject.snapshot(), this.cursor).subscribe(memberships => {
       this.memberships = memberships;
       this.isLoading = false;
-      console.log(this.activeProject.snapshot());
     }));
   }
 
