@@ -11,7 +11,6 @@ import { ProjectService } from '../../project.service';
   styleUrls: ['./members.component.css']
 })
 export class MembersComponent implements OnInit {
-
   /**
    * Wether or not the component is currently loading.
    */
