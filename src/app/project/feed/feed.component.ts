@@ -57,6 +57,7 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Destroys the component.
    */
   ngOnDestroy(): void {
+    this.cursor.complete();
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });

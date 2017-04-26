@@ -11,8 +11,10 @@ import { MessageService } from '../shared/message.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { Message } from '../../core/models/message.model';
 import { User } from '../../core/models/user.model';
+import { ActiveConversationService } from '../shared/active-conversation.service';
 
 @Component({
+  providers: [ActiveConversationService],
   templateUrl: 'conversation.component.html',
   styleUrls: ['conversation.component.scss']
 })
@@ -61,10 +63,10 @@ export class ConversationComponent implements OnInit, OnDestroy {
   /**
    * Constructs the components.
    */
-  constructor(private conversationService: ConversationService,
+  constructor(private activeConversationService: ActiveConversationService,
+              private conversationService: ConversationService,
               private messageService: MessageService,
-              private route: ActivatedRoute) {
-  }
+              private route: ActivatedRoute) {}
 
   /**
    * Initializes the component.
@@ -73,7 +75,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
 
     this.subscriptions.push(Observable.combineLatest(
-      this.conversationService.findWithUpdates(this.route.snapshot.params['id']),
+      this.activeConversationService.get(),
       this.messageService.getWithUpdates(this.route.snapshot.params['id'], this.cursor)
     ).subscribe(data => {
       [this.conversation, this.messages] = data;

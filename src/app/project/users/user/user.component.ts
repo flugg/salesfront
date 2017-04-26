@@ -33,7 +33,6 @@ export class UserComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.route.snapshot.url[0].path);
     this.subscriptions.push(this.userService.findWithUpdates(this.route.snapshot.url[0].path).subscribe(user => {
       this.user = user;
       this.isLoading = false;

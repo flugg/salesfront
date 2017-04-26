@@ -6,6 +6,7 @@ import { ConversationService } from '../shared/conversation.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { Participation } from '../../core/models/participation.model';
 import { User } from '../../core/models/user.model';
+import { ActiveConversationService } from '../shared/active-conversation.service';
 
 @Component({
   templateUrl: 'participant-list.component.html'
@@ -35,7 +36,8 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private conversationService: ConversationService,
+  constructor(private activeConversationService: ActiveConversationService,
+              private conversationService: ConversationService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -46,7 +48,7 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentUser = this.route.snapshot.parent.parent.parent.data['currentUser'];
 
-    this.subscriptions.push(this.conversationService.findWithUpdates(this.route.snapshot.parent.params['id']).subscribe(conversation => {
+    this.subscriptions.push(this.activeConversationService.get().subscribe(conversation => {
       this.conversation = conversation;
       this.isLoading = false;
     }));

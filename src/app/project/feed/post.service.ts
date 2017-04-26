@@ -34,9 +34,13 @@ export class PostService {
     const posts = this.paginator.paginate(`projects/${projectId}/posts`, cursor, { include: 'user' });
 
     this.onPublished(projectId, post => {
-      posts.prepend(post);
+      if (! cursor.isStopped) {
+        posts.prepend(post);
+      }
     }).onCommentPosted(projectId, comment => {
-      posts.addRelated(comment.postId, 'comments', comment);
+      if (! cursor.isStopped) {
+        posts.addRelated(comment.postId, 'comments', comment);
+      }
     });
 
     return posts.asObservable();

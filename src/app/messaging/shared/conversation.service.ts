@@ -74,6 +74,7 @@ export class ConversationService {
     });
 
     this.onLastMessageUpdated(message => {
+      console.log(1);
       conversation.set('lastMessage', message);
     }).onParticipantAdded(participation => {
       conversation.addRelated('participations', participation);

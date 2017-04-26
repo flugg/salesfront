@@ -18,7 +18,6 @@ export class SidebarService {
    * Opens the sidebar navigation.
    */
   open() {
-    console.log('open');
     this.isOpened.emit(true);
   }
 
@@ -26,7 +25,6 @@ export class SidebarService {
    * Closes the sidebar navigation.
    */
   close() {
-    console.log('close');
     this.isOpened.emit(false);
   }
 }
