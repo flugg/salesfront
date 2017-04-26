@@ -80,8 +80,6 @@ export class SocketApiService {
    * Listens for an event and registers a callback.
    */
   listen(channel: string, event: string, callback: Function) {
-
-    console.log(this.echo.connector.pusher.allChannels().forEach(c => console.log(c)));
     return this.getChannel(channel).listen(event, callback);
   }
 
@@ -113,6 +111,13 @@ export class SocketApiService {
    */
   getChannel(channel: string) {
     return this.echo.private(channel);
+  }
+
+  /**
+   * Unbinds a callback from a channels event.
+   */
+  unlisten(channel: string, event: string, callback?: Function) {
+     this.getPusher().channel('private-' + channel).callbacks.remove(event, callback);
   }
 }
 
