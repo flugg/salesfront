@@ -1,30 +1,21 @@
-<div class="vmo-component">
-  <vmo-toolbar title="Teams" mode="menu">
-    <button md-icon-button >
-      <md-icon>add</md-icon>
-    </button>
-  </vmo-toolbar>
-
+<div>
   <vmo-progress-spinner [hasLoaded]="isLoading">
     <md-list class="vmo-list">
       <md-list-item md-ripple
+                    [routerLink]="team?.id"
                     *ngFor="let team of teams"
-                    [routerLink]="team.id"
                     class="u-clickable">
 
         <div md-list-avatar
              fxLayoutAlign="center center"
              class="vmo-project-icon">
-          A
+          abc
         </div>
-        <h4 md-line class="mdc-typography--subheading1">
-          {{ team.name }}
-        </h4>
+        <h4 md-line class="mdc-typography--subheading1">{{ team.name }}</h4>
+        <span md-line class="mdc-typography--body1 u-weak">Ground breakers since {{ team.createdAt }}</span>
       </md-list-item>
     </md-list>
 
     <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
   </vmo-progress-spinner>
 </div>
-
-<router-outlet></router-outlet>

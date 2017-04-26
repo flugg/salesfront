@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectComponent } from './project.component';
 import { InviteService } from './users/invites/invite.service';
+import { SaleService } from './sales/sale.service';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { InviteService } from './users/invites/invite.service';
     ProjectComponent
   ],
   providers: [
-    InviteService
+    InviteService,
+    SaleService
   ]
 })
 export class ProjectModule {}

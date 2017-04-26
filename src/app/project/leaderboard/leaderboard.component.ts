@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
+import { SaleService } from '../sales/sale.service';
 
 @Component({
   selector: 'vmo-leaderboard',
@@ -12,15 +13,12 @@ export class LeaderboardComponent implements OnInit {
    */
   isLoading = true;
 
-  /**
-   * List of loaded sales.
-   */
-  sales: any[];
+  navLinks = [['Teams', 'teams'], ['Users', 'users']];
 
   /**
-   * The cursor for the paginated sales.
+   * List of all observable subscriptions.
    */
-  cursor = new BehaviorSubject(15);
+  private subscriptions: Subscription[] = [];
 
   /**
    * Constructs the component.
@@ -32,7 +30,6 @@ export class LeaderboardComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
-    this.sales = [];
     this.isLoading = false;
   }
 }

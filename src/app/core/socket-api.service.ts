@@ -112,5 +112,12 @@ export class SocketApiService {
   getChannel(channel: string) {
     return this.echo.private(channel);
   }
+
+  /**
+   * Unbinds a callback from a channels event.
+   */
+  unlisten(channel: string, event: string, callback?: Function) {
+     this.getPusher().channel('private-' + channel).callbacks.remove(event, callback);
+  }
 }
 

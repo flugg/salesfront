@@ -71,6 +71,7 @@ export class AppComponent implements OnInit {
    */
   ngOnInit() {
     this.activeProject = this.activeProjectService.get();
+    console.log(this.auth.user());
 
     this.activeProject.subscribe(projectId => {
 

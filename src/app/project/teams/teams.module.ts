@@ -4,6 +4,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { TeamsRoutingModule } from './teams-routing.module';
 import { TeamsComponent } from './teams.component';
 import { TeamService } from './team.service';
+import { TeamComponent } from './team/team.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { TeamService } from './team.service';
     TeamsRoutingModule
   ],
   declarations: [
-    TeamsComponent
+    TeamsComponent,
+    TeamComponent
   ],
   providers: [
       TeamService
