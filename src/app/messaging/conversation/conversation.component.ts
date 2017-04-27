@@ -12,9 +12,13 @@ import { Conversation } from '../../core/models/conversation.model';
 import { Message } from '../../core/models/message.model';
 import { User } from '../../core/models/user.model';
 import { ActiveConversationService } from '../shared/active-conversation.service';
+import { MessageListService } from '../shared/message-list.service';
 
 @Component({
-  providers: [ActiveConversationService],
+  providers: [
+    ActiveConversationService,
+    MessageListService
+  ],
   templateUrl: 'conversation.component.html',
   styleUrls: ['conversation.component.scss']
 })
@@ -46,11 +50,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
   isLocked = new BehaviorSubject(true);
 
   /**
-   * The cursor for the paginated messages.
-   */
-  cursor = new BehaviorSubject(30);
-
-  /**
    * List of all observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
@@ -63,7 +62,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
   /**
    * Constructs the components.
    */
-  constructor(private activeConversationService: ActiveConversationService,
+  constructor(public messageListService: MessageListService,
+              private activeConversationService: ActiveConversationService,
               private conversationService: ConversationService,
               private messageService: MessageService,
               private route: ActivatedRoute) {}
@@ -76,7 +76,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(Observable.combineLatest(
       this.activeConversationService.get(),
-      this.messageService.getWithUpdates(this.route.snapshot.params['id'], this.cursor)
+      this.messageListService.get()
     ).subscribe(data => {
       [this.conversation, this.messages] = data;
 
@@ -86,9 +86,9 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.isLoading = false;
     }));
 
-    this.messageService.onMessagePosted(() => {
-      this.scrollToBottom();
-    });
+    //this.messageService.onMessagePosted(() => {
+    //  this.scrollToBottom();
+    //});
   }
 
   /**
@@ -120,7 +120,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   shouldDisplayTimestamp(message: Message): boolean {
     const index = this.messages.indexOf(message);
     if (index === this.messages.length - 1) {
-      return this.cursor.isStopped;
+      return this.messageListService.isComplete();
     }
 
     const previousMessage = this.messages[index + 1];

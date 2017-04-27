@@ -80,7 +80,10 @@ export class SocketApiService {
    * Listens for an event and registers a callback.
    */
   listen(channel: string, event: string, callback: Function) {
-    return this.getChannel(channel).listen(event, callback);
+    const a = this.getChannel(channel).listen(event, callback);
+    // console.log(channel, event);
+    // console.log(this.echo);
+    return a;
   }
 
   /**
@@ -90,6 +93,20 @@ export class SocketApiService {
     this.auth.user().subscribe(user => {
       this.listen(`users.${user.id}`, event, callback);
     });
+  }
+
+  /**
+   * Listens for an event in the current user channel and registers a callback.
+   */
+  listenForUserr(events: any, source: any) {
+    this.auth.user().subscribe(user => {
+      const channel = this.getChannel(`users.${user.id}`);
+
+      for (const event in events) {
+        channel.subscription.bind(channel.eventFormatter.format(event), events[event], source);
+      }
+    });
+    console.log(this.getPusher());
   }
 
   /**
@@ -114,10 +131,20 @@ export class SocketApiService {
   }
 
   /**
+   * Unbinds all callbacks from a given source.
+   */
+  stopListening(source: any) {
+    this.getPusher().allChannels().forEach(channel => {
+      channel.unbind(null, null, source);
+    });
+    console.log(this.getPusher());
+  }
+
+  /**
    * Unbinds a callback from a channels event.
    */
   unlisten(channel: string, event: string, callback?: Function) {
-     this.getPusher().channel('private-' + channel).callbacks.remove(event, callback);
+    this.getPusher().channel('private-' + channel).callbacks.remove(event, callback);
   }
 }
 

@@ -51,6 +51,8 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.activeConversationService.get().subscribe(conversation => {
       this.conversation = conversation;
       this.isLoading = false;
+    }, () => {}, () => {
+      console.log('kompletto');
     }));
   }
 

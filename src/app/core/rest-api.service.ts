@@ -16,8 +16,7 @@ export class RestApiService {
   /**
    * Constructs the service.
    */
-  constructor(private http: AuthHttp, private tokenService: TokenService) {
-  }
+  constructor(private http: AuthHttp, private tokenService: TokenService) {}
 
   /**
    * Performs a GET request to the API.
