@@ -76,7 +76,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(Observable.combineLatest(
       this.activeConversationService.get(),
-      this.messageListService.get()
+      this.messageListService.messages
     ).subscribe(data => {
       [this.conversation, this.messages] = data;
 

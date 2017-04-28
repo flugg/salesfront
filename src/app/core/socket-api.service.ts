@@ -89,16 +89,7 @@ export class SocketApiService {
   /**
    * Listens for an event in the current user channel and registers a callback.
    */
-  listenForUser(event: string, callback: Function) {
-    this.auth.user().subscribe(user => {
-      this.listen(`users.${user.id}`, event, callback);
-    });
-  }
-
-  /**
-   * Listens for an event in the current user channel and registers a callback.
-   */
-  listenForUserr(events: any, source: any) {
+  listenForUser(events: any, source: any) {
     this.auth.user().subscribe(user => {
       const channel = this.getChannel(`users.${user.id}`);
 
@@ -106,7 +97,6 @@ export class SocketApiService {
         channel.subscription.bind(channel.eventFormatter.format(event), events[event], source);
       }
     });
-    console.log(this.getPusher());
   }
 
   /**

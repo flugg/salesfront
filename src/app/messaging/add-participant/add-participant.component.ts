@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
@@ -9,6 +8,7 @@ import { ConversationService } from '../shared/conversation.service';
 import { UserService } from '../../core/auth/user.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { User } from '../../core/models/user.model';
+import { ActiveConversationService } from '../shared/active-conversation.service';
 
 @Component({
   templateUrl: 'add-participant.component.html'
@@ -43,9 +43,9 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private conversationService: ConversationService,
-              private userService: UserService,
-              private route: ActivatedRoute) {
+  constructor(private activeConversationService: ActiveConversationService,
+              private conversationService: ConversationService,
+              private userService: UserService) {
   }
 
   /**
@@ -53,7 +53,7 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
-      this.conversationService.findWithUpdates(this.route.snapshot.parent.parent.params['id']),
+      this.activeConversationService.get(),
       this.userService.getAllWithUpdates(this.cursor)
     ).subscribe(data => {
       [this.conversation, this.users] = data;

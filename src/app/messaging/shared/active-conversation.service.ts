@@ -34,9 +34,9 @@ export class ActiveConversationService implements OnDestroy {
     });
 
     this.sockets.listenForUserr({
-      message_sent: (message) => this.setLastMessage(message),
-      participant_added: (participation) => this.addParticipant(participation),
-      participant_removed: (participation) => this.setParticipant(participation),
+      'message_sent': (message) => this.setLastMessage(message),
+      'participant_added': (participation) => this.addParticipant(participation),
+      'participant_removed': (participation) => this.setParticipant(participation),
     }, this);
   }
 
@@ -66,7 +66,9 @@ export class ActiveConversationService implements OnDestroy {
    * Sets the last message on the conversation.
    */
   private setLastMessage(message: Message) {
-    this.snapshot['lastMessage'] = message;
+    this.snapshot.lastMessage = message;
+    this.snapshot.lastMessageId = message.id;
+
     this.set(this.snapshot);
   }
 
@@ -74,7 +76,7 @@ export class ActiveConversationService implements OnDestroy {
    * Adds a participant to the conversation.
    */
   private addParticipant(participation: Participation) {
-    this.snapshot['participations'].push(participation);
+    this.snapshot.participations.push(participation);
     this.set(this.snapshot);
   }
 
@@ -82,7 +84,7 @@ export class ActiveConversationService implements OnDestroy {
    * Sets a participant on the conversation.
    */
   private setParticipant(participation: Participation) {
-    this.snapshot['participations'] = this.snapshot['participations'].map(relation => {
+    this.snapshot.participations = this.snapshot.participations.map(relation => {
       return relation.id === participation.id ? participation : relation;
     });
 

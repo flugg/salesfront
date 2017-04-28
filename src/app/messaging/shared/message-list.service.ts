@@ -1,30 +1,19 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 
-import { ConversationService } from './conversation.service';
-import { Conversation } from '../../core/models/conversation.model';
-import { Message } from '../../core/models/message.model';
-import { Participation } from '../../core/models/participation.model';
-import { SocketApiService } from '../../core/socket-api.service';
 import { MessageService } from './message.service';
-import { BehaviorSubject } from 'rxjs';
-import { RestApiService } from '../../core/rest-api.service';
+import { SocketApiService } from '../../core/socket-api.service';
 import { PaginatedList } from '../../core/paginated-list';
+import { Message } from '../../core/models/message.model';
 
 @Injectable()
 export class MessageListService extends PaginatedList implements OnDestroy {
 
   /**
-   * A snapshot of the list of messages.
+   * The observable list of messages.
    */
-  private snapshot: Message[] = [];
-
-  /**
-   * The message list subject.
-   */
-  private messages: ReplaySubject<Message[]> = new ReplaySubject(1);
+  readonly messages: Observable<Message[]> = this.subject.asObservable();
 
   /**
    * Constructs the service.
@@ -35,17 +24,12 @@ export class MessageListService extends PaginatedList implements OnDestroy {
     super(30);
 
     this.paginator.subscribe(limit => {
-      this.messageService.get(this.route.snapshot.params.id, limit, this.cursor).subscribe(response => {
-        this.snapshot.push(...response.data);
-        this.set(this.snapshot);
-        this.setCursor(response.cursor);
-      });
+      this.pagination(this.messageService.get(this.route.snapshot.params.id, limit, this.cursor))
+        .subscribe(messages => this.add(messages));
     });
 
-    this.paginate();
-
-    this.sockets.listenForUserr({
-      message_sent: (message) => this.addMessage(message),
+    this.sockets.listenForUser({
+      'message_sent': (message) => this.addMessage(message)
     }, this);
   }
 
@@ -53,22 +37,8 @@ export class MessageListService extends PaginatedList implements OnDestroy {
    * Destroys the service.
    */
   ngOnDestroy(): void {
-    this.messages.unsubscribe();
     this.sockets.stopListening(this);
-  }
-
-  /**
-   * Fetch the message list.
-   */
-  get(): Observable<Message[]> {
-    return this.messages.asObservable();
-  }
-
-  /**
-   * Sets the list of messages.
-   */
-  private set(messages: Message[]) {
-    this.messages.next(messages);
+    super.ngOnDestroy();
   }
 
   /**
@@ -77,7 +47,7 @@ export class MessageListService extends PaginatedList implements OnDestroy {
   private addMessage(message: Message) {
     if (message.conversationId === this.route.snapshot.params.id) {
       this.snapshot.unshift(message);
-      this.set(this.snapshot);
+      this.updateFromSnapshot();
     }
   }
 }

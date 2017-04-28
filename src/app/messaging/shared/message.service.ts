@@ -16,7 +16,7 @@ export class MessageService {
    * Fetch a list of the conversation's messages.
    */
   get(conversationId: string, limit: number, cursor?: string): Observable<any> {
-    return this.api.paginate(`conversations/${conversationId}/messages`, cursor, limit, {include: 'user'});
+    return this.api.paginate(`conversations/${conversationId}/messages`, cursor, limit);
   }
 
   /**

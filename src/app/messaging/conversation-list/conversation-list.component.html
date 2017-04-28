@@ -35,7 +35,11 @@
       </md-list-item>
     </md-list>
 
-    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+    <div *ngIf="! conversationListService.isComplete()" fxLayoutAlign="center">
+      <button md-raised-button (click)="conversationListService.paginate()">
+        Load more
+      </button>
+    </div>
   </vmo-progress-spinner>
 </div>
 

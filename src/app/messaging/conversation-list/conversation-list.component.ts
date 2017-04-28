@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 
-import { ConversationService } from '../shared/conversation.service';
 import { Conversation } from '../../core/models/conversation.model';
 import { User } from '../../core/models/user.model';
+import { ConversationListService } from '../shared/conversation-list.service';
 
 @Component({
+  providers: [
+    ConversationListService
+  ],
   templateUrl: 'conversation-list.component.html'
 })
 export class ConversationListComponent implements OnInit, OnDestroy {
@@ -28,11 +30,6 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   conversations: Conversation[];
 
   /**
-   * The cursor for the paginated conversations.
-   */
-  cursor = new BehaviorSubject(15);
-
-  /**
    * List of all observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
@@ -40,7 +37,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private conversationService: ConversationService,
+  constructor(public conversationListService: ConversationListService,
               private route: ActivatedRoute) {
   }
 
@@ -50,7 +47,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentUser = this.route.snapshot.parent.data['currentUser'];
 
-    this.subscriptions.push(this.conversationService.getWithUpdates(this.cursor).subscribe(conversations => {
+    this.subscriptions.push(this.conversationListService.conversations.subscribe(conversations => {
       this.conversations = conversations;
       this.isLoading = false;
     }));
@@ -60,7 +57,6 @@ export class ConversationListComponent implements OnInit, OnDestroy {
    * Destroys the component.
    */
   ngOnDestroy(): void {
-
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });

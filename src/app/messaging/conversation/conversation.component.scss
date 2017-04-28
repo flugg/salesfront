@@ -1,7 +1,7 @@
 .vmo-conversation {
-  height: calc(100% - 128px);
+  max-height: calc(100% - 128px);
   @media (max-width: 600px) {
-    height: calc(100% - 112px);
+    max-height: calc(100% - 112px);
   }
 
   &--locked {
