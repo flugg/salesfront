@@ -29,5 +29,4 @@ import { OrganizationComponent } from './organization/organization.component';
     AppComponent
   ]
 })
-export class AppModule {
-}
+export class AppModule {}

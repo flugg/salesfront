@@ -15,6 +15,5 @@ export class ProgressSpinnerComponent {
   /**
    * Constructs the component.
    */
-  constructor() {
-  }
+  constructor() {}
 }

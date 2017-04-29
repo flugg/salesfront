@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NoAuthGuard } from '../core/auth/no-auth-guard.service';
+import { NoAuthGuard } from '../core/auth/guards/no-auth-guard.service';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
@@ -15,8 +15,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [
-    NoAuthGuard
-  ]
+  providers: [NoAuthGuard]
 })
 export class AuthRoutingModule {}

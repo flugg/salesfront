@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Project } from '../../core/models/project.model';
-import { ProjectService } from '../../project/project.service';
-import { Router } from '@angular/router';
-import { ActiveProjectService } from '../../core/active-project.service';
+import { ProjectListService } from './project-list.service';
+import { Project } from '../project.model';
 
 @Component({
-  selector: 'vmo-project-list',
+  providers: [ProjectListService],
   templateUrl: 'project-list.component.html'
 })
 export class ProjectListComponent implements OnInit {
@@ -17,11 +14,6 @@ export class ProjectListComponent implements OnInit {
    * Wether or not the component is currently loading.
    */
   isLoading = true;
-
-  /**
-   * The cursor for the paginated projects.
-   */
-  cursor = new BehaviorSubject(15);
 
   /**
    * List of all observable subscriptions.
@@ -36,14 +28,13 @@ export class ProjectListComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor(private projectService: ProjectService,
-              private activeProjectService: ActiveProjectService) {}
+  constructor(private projectList: ProjectListService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.projectService.getWithUpdates(this.cursor).subscribe(projects => {
+    this.subscriptions.push(this.projectList.projects.subscribe(projects => {
       this.projects = projects;
       this.isLoading = false;
     }));

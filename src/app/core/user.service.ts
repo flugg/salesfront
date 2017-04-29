@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+import { RestApiService } from './http/rest-api.service';
+import { PaginationResponse } from './http/pagination-response';
+import { User } from './user.model';
+
+@Injectable()
+export class UserService {
+
+  /**
+   * Constructs the service.
+   */
+  constructor(private api: RestApiService) {}
+
+  /**
+   * Fetches a list of users.
+   */
+  get(limit: number, cursor?: string): Observable<PaginationResponse> {
+    return this.api.paginate('users', cursor, limit);
+  }
+
+  /**
+   * Fetches a single user by id.
+   */
+  find(id: string): Observable<User> {
+    return this.api.get(`users/${id}`).map(response => response.data);
+  }
+}

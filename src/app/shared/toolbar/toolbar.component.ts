@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { SidebarService } from '../../core/sidebar.service';
 import { ObservableMedia } from '@angular/flex-layout';

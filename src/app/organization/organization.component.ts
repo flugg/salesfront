@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  templateUrl: './organization.component.html',
+  templateUrl: './organization.component.html'
 })
 export class OrganizationComponent implements OnInit {
 
@@ -13,5 +13,7 @@ export class OrganizationComponent implements OnInit {
   /**
    * Initializes the component.
    */
-  ngOnInit() {}
+  ngOnInit() {
+    //
+  }
 }

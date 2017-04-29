@@ -4,25 +4,24 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class SidebarService {
 
   /**
-   * Emits event when the sidebar should be opened.
+   * Emits an event when the sidebar should be opened.
    */
   isOpened = new EventEmitter();
 
   /**
    * Constructs the service.
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
-   * Opens the sidebar navigation.
+   * Opens the sidebar.
    */
   open() {
     this.isOpened.emit(true);
   }
 
   /**
-   * Closes the sidebar navigation.
+   * Closes the sidebar.
    */
   close() {
     this.isOpened.emit(false);

@@ -4,49 +4,36 @@ import { RouterModule } from '@angular/router';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
 
 import { SharedModule } from '../shared/shared.module';
-import { SocketApiService } from './socket-api.service';
-import { RestApiService } from './rest-api.service';
-import { Paginator } from './paginator.service';
+import { ActiveProjectService } from './auth/active-project.service';
 import { AuthService } from './auth/auth.service';
+import { ErrorHandlerService } from './error-handler.service';
+import { RestApiService } from './http/rest-api.service';
+import { SidebarService } from './sidebar.service';
+import { SocketApiService } from './sockets/socket-api.service';
 import { TokenService } from './auth/token.service';
 import { UserResolver } from './auth/user-resolver.service';
-import { UserService } from './auth/user.service';
-import { ErrorHandlerService } from './error-handler.service';
-import { SidebarService } from './sidebar.service';
-import { ProjectService } from '../project/project.service';
-import { ActiveProjectService } from './active-project.service';
+import { UserService } from './user.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig({
-    tokenName: 'token'
-  }), http, options);
+  return new AuthHttp(new AuthConfig({ tokenName: 'token' }), http, options);
 }
 
 @NgModule({
   imports: [
-    SharedModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   providers: [
-    {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
-    },
-    {
-      provide: ErrorHandler,
-      useClass: ErrorHandlerService
-    },
-    RestApiService,
-    SocketApiService,
-    Paginator,
+    { provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http, RequestOptions] },
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
+    ActiveProjectService,
     AuthService,
+    RestApiService,
+    SidebarService,
+    SocketApiService,
     TokenService,
     UserResolver,
-    UserService,
-    ProjectService,
-    SidebarService,
-    ActiveProjectService,
+    UserService
   ]
 })
 export class CoreModule {}

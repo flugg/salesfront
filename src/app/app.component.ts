@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MdSidenav } from '@angular/material';
+import { ObservableMedia } from '@angular/flex-layout';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './core/auth/auth.service';
-import { User } from './core/models/user.model';
 import { SidebarService } from './core/sidebar.service';
-import { ObservableMedia } from '@angular/flex-layout';
-import { ActiveProjectService } from './core/active-project.service';
+import { ActiveProjectService } from './core/auth/active-project.service';
+import { User } from './core/user.model';
 
 @Component({
   selector: 'vmo-root',
@@ -59,12 +59,11 @@ export class AppComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor(private sidebar: SidebarService,
+  constructor(private router: Router,
+              private media: ObservableMedia,
+              private sidebar: SidebarService,
               private auth: AuthService,
-              private activeProjectService: ActiveProjectService,
-              private router: Router,
-              private media: ObservableMedia) {
-  }
+              private activeProjectService: ActiveProjectService) {}
 
   /**
    * Initializes the component.
@@ -105,7 +104,8 @@ export class AppComponent implements OnInit {
             this.sidenav.close();
           }
         });
-    }});
+      }
+    });
   }
 
   /**

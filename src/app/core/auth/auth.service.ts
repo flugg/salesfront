@@ -3,9 +3,9 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { RestApiService } from '../http/rest-api.service';
 import { TokenService } from './token.service';
-import { RestApiService } from '../rest-api.service';
-import { User } from '../models/user.model';
+import { User } from '../user.model';
 
 @Injectable()
 export class AuthService {
@@ -16,10 +16,10 @@ export class AuthService {
   private currentUser: BehaviorSubject<User>;
 
   /**
-   * Construct the service.
+   * Constructs the service.
    */
-  constructor(private tokenService: TokenService,
-              private api: RestApiService) {
+  constructor(private api: RestApiService,
+              private tokenService: TokenService) {
   }
 
   /**
