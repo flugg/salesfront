@@ -1,7 +1,7 @@
 <div class="vmo-component">
   <vmo-toolbar title="Feed" mode="menu"></vmo-toolbar>
 
-  <vmo-progress-spinner [hasLoaded]="isLoading">
+  <vmo-progress-spinner [hasLoaded]="! loading">
     <div class="container">
       <md-card class="post-input">
         <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
@@ -16,7 +16,7 @@
         <vmo-post [post]="post" (commentPosted)="postComment(post, $event)"></vmo-post>
       </div>
 
-      <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+      <vmo-load-more-button [paginator]="postList"></vmo-load-more-button>
     </div>
   </vmo-progress-spinner>
 </div>

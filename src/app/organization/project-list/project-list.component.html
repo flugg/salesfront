@@ -5,27 +5,26 @@
     </button>
   </vmo-toolbar>
 
-  <vmo-progress-spinner [hasLoaded]="isLoading">
+  <vmo-progress-spinner [hasLoaded]="! loading">
     <md-list class="vmo-list">
       <md-list-item md-ripple
                     *ngFor="let project of projects"
                     [routerLink]="project.id"
                     class="u-clickable">
 
-        <div md-list-avatar
-             fxLayoutAlign="center center"
-             class="vmo-project-icon">
-          {{ project.iconName }}
+        <div md-list-avatar fxLayoutAlign="center center" class="vmo-project-icon">
+          A
         </div>
-        <h4 md-line class="mdc-typography--subheading1">{{ project.name }}</h4>
-        <span md-line
-              class="mdc-typography--body1 u-weak">{{ project.userCount }} users, {{ project.teamCount }} teams</span>
+        <h4 md-line class="mdc-typography--subheading1">
+          {{ project.name }}
+        </h4>
+        <span md-line class="mdc-typography--body1 u-weak">
+          {{ project.userCount }} users, {{ project.teamCount }} teams
+        </span>
       </md-list-item>
 
     </md-list>
 
-    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+    <vmo-load-more-button [paginator]="projectList"></vmo-load-more-button>
   </vmo-progress-spinner>
 </div>
-
-<router-outlet></router-outlet>

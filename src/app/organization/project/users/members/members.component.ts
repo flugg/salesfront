@@ -28,7 +28,7 @@ export class MembersComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private membershipList: MembershipListService) {}
+  constructor(public membershipList: MembershipListService) {}
 
   /**
    * Initializes the component.

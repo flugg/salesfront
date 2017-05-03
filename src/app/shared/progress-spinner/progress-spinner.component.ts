@@ -10,10 +10,5 @@ export class ProgressSpinnerComponent {
   /**
    * The loading indicator.
    */
-  @Input() hasLoaded: boolean;
-
-  /**
-   * Constructs the component.
-   */
-  constructor() {}
+  @Input() hasLoaded: boolean | undefined;
 }

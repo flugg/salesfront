@@ -131,12 +131,16 @@ body {
 
 .vmo-component {
   overflow-y: scroll;
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 56px;
   bottom: 0;
   z-index: 1;
   width: 100%;
   background: #f2f2f2;
+
+  @media (min-width: 960px) {
+    top: 64px;
+  }
 }
 
 .vmo-list {

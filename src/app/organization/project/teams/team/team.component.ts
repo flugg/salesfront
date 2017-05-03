@@ -1,52 +1,36 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
 
-import { TeamService } from '../team.service';
+import { ActiveTeamService } from './active-team.service';
 import { Team } from '../../shared/team.model';
 
 @Component({
+  providers: [ActiveTeamService],
   templateUrl: './team.component.html'
 })
-export class TeamComponent implements OnInit, OnDestroy {
+export class TeamComponent implements OnInit {
 
   /**
-   * Weather or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
-   * The team being shown
+   * The selected team.
    */
   team: Team;
 
   /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
-
-  /**
    * Constructs the component.
    */
-  constructor(private route: ActivatedRoute,
-              private teamService: TeamService) {}
+  constructor(private activeTeam: ActiveTeamService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.teamService.find(this.route.snapshot.url[0].path).subscribe(team => {
+    this.activeTeam.team.subscribe(team => {
       this.team = team;
-      this.isLoading = false;
-    }));
-  }
-
-  /**
-   * Destroys the component.
-   */
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => {
-      subscription.unsubscribe();
+      this.loading = false;
     });
   }
 }

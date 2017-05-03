@@ -6,6 +6,7 @@ import { ObservableResourceList } from '../../../core/sockets/observable-resourc
 import { SocketApiService } from '../../../core/sockets/socket-api.service';
 import { TeamService } from './team.service';
 import { Team } from '../shared/team.model';
+import { ActiveProjectService } from '../../../core/active-project.service';
 
 @Injectable()
 export class TeamListService extends ObservableResourceList implements OnDestroy {
@@ -18,14 +19,20 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
   /**
    * Constructs the service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(private activeProject: ActiveProjectService,
               private sockets: SocketApiService,
               private teamService: TeamService) {
     super();
 
-    this.paginator.subscribe(limit => {
-      this.pagination(this.teamService.get(this.route.snapshot.params.id, limit, this.cursor))
-        .subscribe(teams => this.add(teams));
+    this.activeProject.project.first().subscribe(project => {
+      this.paginator.subscribe(limit => {
+        this.pagination(this.teamService.get(project.id, limit, this.cursor))
+          .subscribe(teams => this.add(teams));
+      });
+
+      this.sockets.listenForProject(project.id, {
+        'team_created': team => this.addTeam(team)
+      }, this);
     });
   }
 
@@ -35,5 +42,13 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();
+  }
+
+  /**
+   * Adds a team to the list.
+   */
+  private addTeam(team: Team) {
+    this.snapshot.push(team);
+    this.updateFromSnapshot();
   }
 }

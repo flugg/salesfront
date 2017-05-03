@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { TeamsComponent } from './teams.component';
+import { CreateTeamComponent } from './create-team/create-team.component';
 import { TeamComponent } from './team/team.component';
 
 const routes: Routes = [
@@ -10,7 +11,11 @@ const routes: Routes = [
     component: TeamsComponent
   },
   {
-    path: ':id',
+    path: 'new',
+    component: CreateTeamComponent
+  },
+  {
+    path: ':team',
     component: TeamComponent
   }
 ];

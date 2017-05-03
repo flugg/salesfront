@@ -1,26 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { RestApiService } from '../http/rest-api.service';
 import { TokenService } from './token.service';
-import { User } from '../user.model';
+import { ActiveUserService } from './active-user.service';
 
 @Injectable()
 export class AuthService {
 
   /**
-   * The authenticated user.
-   */
-  private currentUser: BehaviorSubject<User>;
-
-  /**
    * Constructs the service.
    */
-  constructor(private api: RestApiService,
-              private tokenService: TokenService) {
-  }
+  constructor(private tokenService: TokenService,
+              private activeUser: ActiveUserService) {}
 
   /**
    * Attempts to authenticate the user by the given credentials.
@@ -33,7 +25,6 @@ export class AuthService {
       authenticated.next(true);
     }, () => {
       authenticated.next(false);
-
     });
 
     return authenticated.asObservable();
@@ -47,24 +38,10 @@ export class AuthService {
   }
 
   /**
-   * Fetch the logged in user.
-   */
-  user(): Observable<User> {
-    if (!this.currentUser) {
-      this.currentUser = new BehaviorSubject(null);
-
-      this.api.get('users/me').map(response => response.data).subscribe(data => {
-        this.currentUser.next(data);
-      });
-    }
-
-    return this.currentUser.filter(user => user != null);
-  }
-
-  /**
    * Logs the user out by destroying the token from storage.
    */
   logout() {
     this.tokenService.unset();
+    this.activeUser.logout();
   }
 }

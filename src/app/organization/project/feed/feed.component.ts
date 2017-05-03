@@ -1,23 +1,30 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
 
 import { PostService } from './post.service';
 import { CommentService } from './comment.service';
 import { Post } from './post.model';
 import { PostListService } from './post-list.service';
+import { ActiveProjectService } from '../../../core/active-project.service';
+import { Project } from '../../../core/project.model';
 
 @Component({
   providers: [PostListService],
   templateUrl: 'feed.component.html',
   styleUrls: ['feed.component.scss']
 })
-export class FeedComponent implements OnInit, OnDestroy {
+export class FeedComponent implements OnInit {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
+
+  /**
+   * The active project.
+   */
+  project: Project;
 
   /**
    * List of loaded posts.
@@ -25,15 +32,10 @@ export class FeedComponent implements OnInit, OnDestroy {
   posts: Post[];
 
   /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
-
-  /**
    * Constructs the component.
    */
-  constructor(private route: ActivatedRoute,
-              private postList: PostListService,
+  constructor(public postList: PostListService,
+              private activeProject: ActiveProjectService,
               private postService: PostService,
               private commentService: CommentService) {}
 
@@ -41,18 +43,12 @@ export class FeedComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.postList.posts.subscribe(posts => {
-      this.posts = posts;
-      this.isLoading = false;
-    }));
-  }
-
-  /**
-   * Destroys the component.
-   */
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => {
-      subscription.unsubscribe();
+    Observable.combineLatest(
+      this.activeProject.project,
+      this.postList.posts
+    ).subscribe(data => {
+      [this.project, this.posts] = data;
+      this.loading = false;
     });
   }
 
@@ -61,7 +57,7 @@ export class FeedComponent implements OnInit, OnDestroy {
    */
   publishPost(body: string) {
     if (body) {
-      this.postService.publish(this.route.snapshot.parent.parent.params['id'], body);
+      this.postService.publish(this.project.id, body);
     }
   }
 

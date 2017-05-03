@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 
 import { ProjectListService } from './project-list.service';
-import { Project } from '../project.model';
+import { Project } from '../../core/project.model';
+import { SidebarService } from '../../core/sidebar/sidebar.service';
 
 @Component({
   providers: [ProjectListService],
@@ -11,32 +11,30 @@ import { Project } from '../project.model';
 export class ProjectListComponent implements OnInit {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
-
-  /**
-   * Projects
-   * */
+   * List of projects.
+   **/
   projects: Project[];
 
   /**
    * Constructs the component.
    */
-  constructor(private projectList: ProjectListService) {}
+  constructor(public projectList: ProjectListService,
+              private sidebar: SidebarService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.projectList.projects.subscribe(projects => {
+    this.sidebar.disable();
+
+    this.projectList.projects.subscribe(projects => {
       this.projects = projects;
-      this.isLoading = false;
-    }));
+      this.loading = false;
+    });
   }
 }

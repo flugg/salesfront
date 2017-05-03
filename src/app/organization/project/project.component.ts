@@ -1,30 +1,23 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
-import { ActiveProjectService } from '../../core/auth/active-project.service';
+import { SidebarService } from '../../core/sidebar/sidebar.service';
+import { ActiveProjectService } from '../../core/active-project.service';
 
 @Component({
   templateUrl: './project.component.html'
 })
-export class ProjectComponent implements OnInit, OnChanges {
+export class ProjectComponent implements OnInit {
 
   /**
    * Constructs the component.
    */
-  constructor(private route: ActivatedRoute,
-              private activeProject: ActiveProjectService) {}
+  constructor(private activeProject: ActiveProjectService,
+              private sidebar: SidebarService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.activeProject.set(this.route.snapshot.params.id);
-  }
-
-  /**
-   * Tracks input changes.
-   */
-  ngOnChanges() {
-    this.activeProject.set(this.route.snapshot.params.id);
+    this.activeProject.project.first().subscribe(() => this.sidebar.enable());
   }
 }

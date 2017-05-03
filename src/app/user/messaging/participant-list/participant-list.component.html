@@ -5,7 +5,7 @@
     </button>
   </vmo-toolbar>
 
-  <vmo-progress-spinner [hasLoaded]="isLoading">
+  <vmo-progress-spinner [hasLoaded]="! loading">
     <md-list class="vmo-list">
       <md-list-item *ngFor="let participation of conversation?.participations | filteredParticipations">
         <img md-list-avatar src="http://lorempixel.com/40/40">

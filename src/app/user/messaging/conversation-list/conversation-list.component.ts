@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
 
+import { ActiveUserService } from '../../../core/auth/active-user.service';
 import { ConversationListService } from '../shared/conversation-list.service';
 import { Conversation } from '../shared/conversation.model';
 import { User } from '../../../core/user.model';
@@ -10,61 +11,47 @@ import { User } from '../../../core/user.model';
   providers: [ConversationListService],
   templateUrl: 'conversation-list.component.html'
 })
-export class ConversationListComponent implements OnInit, OnDestroy {
+export class ConversationListComponent implements OnInit {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
    * The currently logged in user.
    */
-  currentUser: User;
+  user: User;
 
   /**
-   * List of loaded conversations.
+   * The loaded conversations.
    */
   conversations: Conversation[];
 
   /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
-
-  /**
    * Constructs the component.
    */
-  constructor(public conversationListService: ConversationListService,
-              private route: ActivatedRoute) {
-  }
+  constructor(public conversationList: ConversationListService,
+              private activeUser: ActiveUserService) {}
 
   /**
    * Initializes the component.
    */
-  ngOnInit() {
-    this.currentUser = this.route.snapshot.parent.data['currentUser'];
-
-    this.subscriptions.push(this.conversationListService.conversations.subscribe(conversations => {
-      this.conversations = conversations;
-      this.isLoading = false;
-    }));
-  }
-
-  /**
-   * Destroys the component.
-   */
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => {
-      subscription.unsubscribe();
+  ngOnInit(): void {
+    Observable.combineLatest(
+      this.activeUser.user,
+      this.conversationList.conversations
+    ).subscribe(data => {
+      [this.user, this.conversations] = data;
+      this.loading = false;
     });
   }
 
   /**
-   * Checks if there are any unread messages in the given conversation.
+   * Checks if there are unread messages in the given conversation for the given user.
    */
-  hasUnread(conversation: Conversation): boolean {
-    const participation = conversation.participations.find(item => item.userId === this.currentUser.id);
+  hasUnreadMessages(conversation: Conversation): boolean {
+    const participation = conversation.participations.find(item => item.userId === this.user.id);
 
     if (participation.lastReadMessage && conversation.lastMessage) {
       return participation.lastReadMessage.id !== conversation.lastMessage.id;

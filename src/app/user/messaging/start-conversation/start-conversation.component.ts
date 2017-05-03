@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/filter';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
 
+import { ActiveUserService } from '../../../core/auth/active-user.service';
 import { UserListService } from '../shared/user-list.service';
 import { ConversationService } from '../shared/conversation.service';
 import { MessageService } from '../shared/message.service';
@@ -12,17 +13,17 @@ import { User } from '../../../core/user.model';
   providers: [UserListService],
   templateUrl: 'start-conversation.component.html'
 })
-export class StartConversationComponent implements OnInit, OnDestroy {
+export class StartConversationComponent implements OnInit {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
    * The currently logged in user.
    */
-  currentUser: User;
+  user: User;
 
   /**
    * List of loaded users.
@@ -35,16 +36,11 @@ export class StartConversationComponent implements OnInit, OnDestroy {
   participants: User[] = [];
 
   /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
-
-  /**
    * Constructs the component.
    */
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private userList: UserListService,
+  constructor(public userList: UserListService,
+              private router: Router,
+              private activeUser: ActiveUserService,
               private conversationService: ConversationService,
               private messageService: MessageService) {}
 
@@ -52,20 +48,12 @@ export class StartConversationComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.currentUser = this.route.snapshot.parent.parent.data['currentUser'];
-
-    this.subscriptions.push(this.userList.users.subscribe(users => {
-      this.users = users;
-      this.isLoading = false;
-    }));
-  }
-
-  /**
-   * Destroys the component.
-   */
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => {
-      subscription.unsubscribe();
+    Observable.combineLatest(
+      this.activeUser.user,
+      this.userList.users
+    ).subscribe(data => {
+      [this.user, this.users] = data;
+      this.loading = false;
     });
   }
 

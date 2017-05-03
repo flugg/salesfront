@@ -2,11 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ProjectComponent } from './project.component';
+import { SidebarResolver } from '../../core/sidebar/sidebar-resolver.service';
 
 const routes: Routes = [
   {
     path: '',
     component: ProjectComponent,
+    resolve: {
+      sidebar: SidebarResolver
+    },
     children: [
       {
         path: '',
@@ -15,31 +19,31 @@ const routes: Routes = [
       },
       {
         path: 'feed',
-        loadChildren: 'app/project/feed/feed.module#FeedModule'
+        loadChildren: 'app/organization/project/feed/feed.module#FeedModule'
       },
       {
         path: 'leaderboard',
-        loadChildren: 'app/project/leaderboard/leaderboard.module#LeaderboardModule'
+        loadChildren: 'app/organization/project/leaderboard/leaderboard.module#LeaderboardModule'
       },
       {
         path: 'budgets',
-        loadChildren: 'app/project/budgets/budgets.module#BudgetsModule'
+        loadChildren: 'app/organization/project/budgets/budgets.module#BudgetsModule'
       },
       {
         path: 'sales',
-        loadChildren: 'app/project/sales/sales.module#SalesModule'
+        loadChildren: 'app/organization/project/sales/sales.module#SalesModule'
       },
       {
         path: 'users',
-        loadChildren: 'app/project/users/users.module#UsersModule'
+        loadChildren: 'app/organization/project/users/users.module#UsersModule'
       },
       {
         path: 'teams',
-        loadChildren: 'app/project/teams/teams.module#TeamsModule'
+        loadChildren: 'app/organization/project/teams/teams.module#TeamsModule'
       },
       {
         path: 'settings',
-        loadChildren: 'app/project/settings/settings.module#SettingsModule'
+        loadChildren: 'app/organization/project/settings/settings.module#SettingsModule'
       }
     ]
   }
@@ -49,4 +53,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProjectRoutingModule {}
+export class ProjectRoutingModule {
+}

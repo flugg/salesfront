@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { SidebarService } from '../../core/sidebar.service';
+import { SidebarService } from '../../core/sidebar/sidebar.service';
 import { ObservableMedia } from '@angular/flex-layout';
 
 @Component({

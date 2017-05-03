@@ -1,7 +1,7 @@
 <div class="vmo-component">
   <vmo-toolbar title="Add Participant" mode="close"></vmo-toolbar>
 
-  <vmo-progress-spinner [hasLoaded]="isLoading">
+  <vmo-progress-spinner [hasLoaded]="! loading">
     <md-list class="vmo-list" *ngIf="(users | filteredUsers:conversation)?.length">
       <md-list-item *ngFor="let user of users | filteredUsers:conversation">
         <img md-list-avatar src="http://lorempixel.com/40/40">
@@ -15,6 +15,6 @@
       </md-list-item>
     </md-list>
 
-    <vmo-load-more-button [cursor]="cursor" amount="30"></vmo-load-more-button>
+    <vmo-load-more-button [paginator]="userList"></vmo-load-more-button>
   </vmo-progress-spinner>
 </div>

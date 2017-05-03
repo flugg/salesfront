@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { ObservableResourceList } from '../../../core/sockets/observable-resource-list';
 import { SocketApiService } from '../../../core/sockets/socket-api.service';
+import { ActiveProjectService } from '../../../core/active-project.service';
 import { PostService } from './post.service';
 import { Post } from './post.model';
 
@@ -18,14 +18,21 @@ export class PostListService extends ObservableResourceList implements OnDestroy
   /**
    * Constructs the service.
    */
-  constructor(private route: ActivatedRoute,
-              private sockets: SocketApiService,
+  constructor(private sockets: SocketApiService,
+              private activeProject: ActiveProjectService,
               private postService: PostService) {
     super();
 
-    this.paginator.subscribe(limit => {
-      this.pagination(this.postService.get(this.route.snapshot.params.id, limit, this.cursor))
-        .subscribe(posts => this.add(posts));
+    this.activeProject.project.first().subscribe(project => {
+      this.paginator.subscribe(limit => {
+        this.pagination(this.postService.get(project.id, limit, this.cursor))
+          .subscribe(posts => this.add(posts));
+      });
+
+      this.sockets.listenForProject(project.id, {
+        'post_published': (post) => this.addPost(post),
+        'comment_posted': (comment) => this.addComment(comment)
+      }, this);
     });
   }
 
@@ -35,5 +42,21 @@ export class PostListService extends ObservableResourceList implements OnDestroy
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();
+  }
+
+  /**
+   * Adds a new post to the list.
+   */
+  private addPost(post: any) {
+    this.snapshot.unshift(post);
+    this.updateFromSnapshot();
+  }
+
+  /**
+   * Adds a related comment to the list.
+   */
+  private addComment(comment: any) {
+    this.snapshot.find(post => post.id === comment.postId)['comments'].push(comment);
+    this.updateFromSnapshot();
   }
 }

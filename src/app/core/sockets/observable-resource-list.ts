@@ -57,7 +57,9 @@ export abstract class ObservableResourceList implements OnDestroy {
    * Sets the observable list of resources to the current snapshot.
    */
   protected updateFromSnapshot() {
-    this.subject.next(this.snapshot);
+    if (!this.subject.isStopped) {
+      this.subject.next(this.snapshot);
+    }
   }
 
   /**

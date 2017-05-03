@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
 
 import { ActiveConversationService } from '../shared/active-conversation.service';
+import { ActiveUserService } from '../../../core/auth/active-user.service';
 import { ConversationService } from '../shared/conversation.service';
 import { Conversation } from '../shared/conversation.model';
 import { Participation } from '../shared/participation.model';
@@ -11,17 +13,17 @@ import { User } from '../../../core/user.model';
 @Component({
   templateUrl: 'participant-list.component.html'
 })
-export class ParticipantListComponent implements OnInit, OnDestroy {
+export class ParticipantListComponent implements OnInit {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
    * The currently logged in user.
    */
-  currentUser: User;
+  user: User;
 
   /**
    * The selected conversation.
@@ -29,36 +31,23 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
   conversation: Conversation;
 
   /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
-
-  /**
    * Constructs the component.
    */
   constructor(private router: Router,
-              private route: ActivatedRoute,
-              private activeConversationService: ActiveConversationService,
+              private activeUser: ActiveUserService,
+              private activeConversation: ActiveConversationService,
               private conversationService: ConversationService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.currentUser = this.route.snapshot.parent.parent.parent.data['currentUser'];
-
-    this.subscriptions.push(this.activeConversationService.conversation.subscribe(conversation => {
-      this.conversation = conversation;
-      this.isLoading = false;
-    }));
-  }
-
-  /**
-   * Destroys the component.
-   */
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => {
-      subscription.unsubscribe();
+    Observable.combineLatest(
+      this.activeUser.user,
+      this.activeConversation.conversation
+    ).subscribe(data => {
+      [this.user, this.conversation] = data;
+      this.loading = false;
     });
   }
 
@@ -68,7 +57,7 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
   removeParticipant(participation: Participation) {
     this.conversationService.removeParticipant(participation);
 
-    if (participation.userId === this.currentUser.id) {
+    if (participation.userId === this.user.id) {
       this.router.navigate(['messages', this.conversation.id]);
     }
   }

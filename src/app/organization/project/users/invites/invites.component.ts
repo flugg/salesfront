@@ -28,7 +28,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private inviteList: InviteListService) {}
+  constructor(public inviteList: InviteListService) {}
 
   /**
    * Initializes the component.

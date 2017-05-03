@@ -27,4 +27,11 @@ export class TeamService {
   find(id: string): Observable<Team> {
     return this.api.get(`teams/${id}`).map(response => response.data);
   }
+
+  /**
+   * Creates a new team.
+   */
+  create(projectId: string, name): Promise<Team> {
+    return this.api.post(`projects/${projectId}/teams`, {name}).then(response => response.data);
+  }
 }

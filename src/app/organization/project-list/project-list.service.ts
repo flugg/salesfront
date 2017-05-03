@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { ObservableResourceList } from '../../core/sockets/observable-resource-list';
 import { SocketApiService } from '../../core/sockets/socket-api.service';
-import { ProjectService } from '../project/project.service';
-import { Project } from '../project.model';
+import { ProjectService } from '../../core/project.service';
+import { Project } from '../../core/project.model';
 
 @Injectable()
 export class ProjectListService extends ObservableResourceList implements OnDestroy {

@@ -1,3 +1,25 @@
-<p>
-  create-project works!
-</p>
+<div class="vmo-component">
+  <vmo-toolbar title="Create Project" mode="close">
+    <button md-icon-button (click)="submit">
+      <md-icon>check</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <div class="container">
+    <md-input-container>
+      <input mdInput placeholder="Project Name">
+    </md-input-container>
+
+    <md-button-toggle-group>
+      <md-button-toggle value="count">
+        <md-icon>plus_one</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="value">
+        <md-icon>attach_money</md-icon>
+      </md-button-toggle>
+      <md-button-toggle value="product">
+        <md-icon>shopping_basket</md-icon>
+      </md-button-toggle>
+    </md-button-toggle-group>
+  </div>
+</div>

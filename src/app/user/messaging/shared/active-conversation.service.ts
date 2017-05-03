@@ -27,10 +27,10 @@ export class ActiveConversationService extends ObservableResource implements OnD
 
     this.conversationService.find(this.route.snapshot.params.id).subscribe(conversation => this.set(conversation));
 
-    this.sockets.listenForUser({
-      'message_sent': (message) => this.setLastMessage(message),
-      'participant_added': (participation) => this.addParticipant(participation),
-      'participant_removed': (participation) => this.setParticipant(participation)
+    this.sockets.listenForConversation(this.route.snapshot.params.id, {
+      'message_sent': message => this.setLastMessage(message),
+      'participant_added': participation => this.addParticipant(participation),
+      'participant_removed': participation => this.setParticipant(participation)
     }, this);
   }
 

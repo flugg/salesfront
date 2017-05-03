@@ -1,12 +1,12 @@
 <div class="vmo-component">
-  <vmo-toolbar [title]="conversation?.participations | filteredParticipations:currentUser | conversationTitle"
+  <vmo-toolbar [title]="conversation?.participations | filteredParticipations:user | conversationTitle"
                mode="back">
     <button md-icon-button *ngIf="conversation?.group && ! (isLocked | async)" routerLink="participants">
       <md-icon>group</md-icon>
     </button>
   </vmo-toolbar>
 
-  <vmo-progress-spinner [hasLoaded]="isLoading">
+  <vmo-progress-spinner [hasLoaded]="! loading">
     <div fxLayout="column"
          fxLayoutAlign="end"
          class="vmo-conversation"
@@ -34,7 +34,7 @@
           <vmo-message-box [message]="message" [own]="isPostedByUser(message)"></vmo-message-box>
         </div>
 
-        <vmo-load-more-button [cursor]="messageListService.paginator" amount="30"></vmo-load-more-button>
+        <vmo-load-more-button [paginator]="messageList"></vmo-load-more-button>
       </div>
     </div>
   </vmo-progress-spinner>

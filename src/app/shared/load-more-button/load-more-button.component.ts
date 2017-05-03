@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ObservableResourceList } from '../../core/sockets/observable-resource-list';
 
 @Component({
   selector: 'vmo-load-more-button',
@@ -9,38 +10,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class LoadMoreButtonComponent {
 
   /**
-   * The press event emitted on click.
+   * The observable pagination list.
    */
-  @Input() cursor: BehaviorSubject<number>;
-
-  /**
-   * The press event emitted on click.
-   */
-  @Input() amount: number;
-
-  /**
-   * The press event emitted on click.
-   */
-  @Output() press = new EventEmitter<any>();
-
-  /**
-   * Handles click events on the button.
-   */
-  onClick() {
-    this.press.emit();
-  }
-
-  /**
-   * Load more items.
-   */
-  loadMore() {
-    this.cursor.next(this.amount);
-  }
-
-  /**
-   * Check if all items has been loaded.
-   */
-  hasLoadedAll() {
-    return this.cursor.isStopped;
-  }
+  @Input() paginator: ObservableResourceList;
 }

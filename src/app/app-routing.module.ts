@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './core/auth/guards/auth-guard.service';
-import { UserResolver } from './core/auth/user-resolver.service';
+import { AuthGuard } from './core/auth/auth-guard.service';
 
 export const routes: Routes = [
   {
@@ -14,9 +13,6 @@ export const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    resolve: {
-      currentUser: UserResolver
-    },
     children: [
       {
         path: 'messages',
@@ -43,4 +39,5 @@ export const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthGuard]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

@@ -1,5 +1,5 @@
-<div *ngIf="! hasLoadedAll()" fxLayoutAlign="center">
-  <button md-raised-button (click)="loadMore()">
+<div *ngIf="! paginator.isComplete()" fxLayoutAlign="center">
+  <button md-raised-button (click)="paginator.paginate()">
     Load more
   </button>
 </div>

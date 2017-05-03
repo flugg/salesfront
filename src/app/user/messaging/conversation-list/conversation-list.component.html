@@ -5,41 +5,35 @@
     </button>
   </vmo-toolbar>
 
-  <vmo-progress-spinner [hasLoaded]="isLoading">
-    <md-list class="vmo-list" *ngIf="conversations?.length">
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <md-list class="vmo-list">
       <md-list-item md-ripple
                     *ngFor="let conversation of conversations | filteredConversations"
                     [routerLink]="conversation.id"
+                    [class.highlight]="hasUnreadMessages(conversation)"
                     class="u-clickable">
 
         <img md-list-avatar src="http://lorempixel.com/40/40">
 
-        <span md-line class="mdc-typography--subheading1" [class.u-highlight]="hasUnread(conversation)">
-          {{ conversation.participations | filteredParticipations:currentUser | conversationTitle }}
+        <span md-line class="mdc-typography--subheading1">
+          {{ conversation.participations | filteredParticipations:user | conversationTitle }}
         </span>
 
-        <span md-line
-              class="mdc-typography--body1 u-weak"
-              [class.u-highlight]="hasUnread(conversation)">
-          <span *ngIf="conversation.lastMessage.userId === currentUser.id">You: </span>
+        <span md-line class="mdc-typography--body1 u-weak">
+          <span *ngIf="conversation.lastMessage.userId === user.id">You: </span>
           {{ conversation.lastMessage?.body }}
         </span>
 
         <span class="u-fill"></span>
 
-        <span class="mdc-typography--caption u-weak u-nowrap"
-              [class.u-highlight]="hasUnread(conversation)">
+        <span class="mdc-typography--caption u-weak u-nowrap">
           {{ (conversation.lastMessage ? conversation.lastMessage.sentAt : conversation.startedAt) | amTimeAgo }}
         </span>
 
       </md-list-item>
     </md-list>
 
-    <div *ngIf="! conversationListService.isComplete()" fxLayoutAlign="center">
-      <button md-raised-button (click)="conversationListService.paginate()">
-        Load more
-      </button>
-    </div>
+    <vmo-load-more-button [paginator]="conversationList"></vmo-load-more-button>
   </vmo-progress-spinner>
 </div>
 

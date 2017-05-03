@@ -32,6 +32,8 @@ export abstract class ObservableResource implements OnDestroy {
    * Updates the observable list of conversations from the snapshot.
    */
   protected updateFromSnapshot() {
-    this.subject.next(this.snapshot);
+    if (!this.subject.isStopped) {
+      this.subject.next(this.snapshot);
+    }
   }
 }

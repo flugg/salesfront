@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { RestApiService } from '../../core/http/rest-api.service';
-import { Project } from '../project.model';
-import { PaginationResponse } from '../../core/http/pagination-response';
+import { RestApiService } from './http/rest-api.service';
+import { PaginationResponse } from './http/pagination-response';
+import { Project } from './project.model';
 
 @Injectable()
 export class ProjectService {
@@ -24,7 +24,7 @@ export class ProjectService {
    * Fetches a single project by id.
    */
   find(id: string): Observable<Project> {
-    return this.api.get(`project/${id}`).map(response => response.data);
+    return this.api.get(`projects/${id}`).map(response => response.data);
   }
 
   /**

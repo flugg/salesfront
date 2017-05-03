@@ -1,4 +1,4 @@
-import { Project } from '../../project.model';
+import { Project } from '../../../core/project.model';
 import { User } from '../../../core/user.model';
 
 export interface Team {

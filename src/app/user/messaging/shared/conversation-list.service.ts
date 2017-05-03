@@ -7,6 +7,7 @@ import { ConversationService } from './conversation.service';
 import { Conversation } from './conversation.model';
 import { Participation } from './participation.model';
 import { Message } from './message.model';
+import { ActiveUserService } from '../../../core/auth/active-user.service';
 
 @Injectable()
 export class ConversationListService extends ObservableResourceList implements OnDestroy {
@@ -20,6 +21,7 @@ export class ConversationListService extends ObservableResourceList implements O
    * Constructs the service.
    */
   constructor(private sockets: SocketApiService,
+              private activeUser: ActiveUserService,
               private conversationService: ConversationService) {
     super();
 
@@ -28,13 +30,15 @@ export class ConversationListService extends ObservableResourceList implements O
         .subscribe(conversations => this.add(conversations));
     });
 
-    this.sockets.listenForUser({
-      'conversation_started': (conversation) => this.addConversation(conversation),
-      'message_sent': (message) => this.setLastMessage(message),
-      'last_message_read': (participation) => this.setParticipant(participation),
-      'participant_added': (participation) => this.addParticipant(participation),
-      'participant_removed': (participation) => this.setParticipant(participation)
-    }, this);
+    this.activeUser.user.first().subscribe(user => {
+      this.sockets.listenForUser(user.id, {
+        'conversation_started': (conversation) => this.addConversation(conversation),
+        'message_sent': (message) => this.setLastMessage(message),
+        'last_message_read': (participation) => this.setParticipant(participation),
+        'participant_added': (participation) => this.addParticipant(participation),
+        'participant_removed': (participation) => this.setParticipant(participation)
+      }, this);
+    });
   }
 
   /**

@@ -20,6 +20,9 @@ form {
 }
 
 .container {
+  max-width: 740px;
+  padding-top: 12px;
+
   @media (min-width: 960px) {
     padding: 16px 16px 8px;
   }

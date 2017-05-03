@@ -1,10 +1,10 @@
 <div class="vmo-component">
   <vmo-toolbar title="Notifications" mode="menu"></vmo-toolbar>
 
-  <vmo-progress-spinner [hasLoaded]="isLoading">
+  <vmo-progress-spinner [hasLoaded]="! loading">
     <!-- // -->
 
-    <vmo-load-more-button [cursor]="cursor" amount="15"></vmo-load-more-button>
+    <!-- <vmo-load-more-button [paginator]="notificationList"></vmo-load-more-button> -->
   </vmo-progress-spinner>
 </div>
 

@@ -17,11 +17,6 @@ export class BudgetsComponent implements OnInit {
   budgets: any[];
 
   /**
-   * The cursor for the paginated budgets.
-   */
-  cursor = new BehaviorSubject(15);
-
-  /**
    * Constructs the component.
    */
   constructor() {}

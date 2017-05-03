@@ -6,6 +6,25 @@
   color: white !important;
   background: #253238 !important;
   user-select: none;
+  width: calc(100% - 56px);
+
+  @media (min-width: 400px) {
+    width: calc(100% - 72px);
+    width: 340px;
+  }
+
+  &.mat-sidenav-side {
+    max-width: 280px;
+  }
+
+  .mat-list-item.active-link {
+    color: white !important;
+    background: rgba(0, 0, 0, 0.12) !important;
+
+    a {
+      font-weight: 600 !important;
+    }
+  }
 
   hr {
     border: 0;

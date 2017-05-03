@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ObservableResourceList } from '../../../core/sockets/observable-resource-list';
 import { SocketApiService } from '../../../core/sockets/socket-api.service';
+import { ActiveConversationService } from './active-conversation.service';
 import { MessageService } from './message.service';
 import { Message } from './message.model';
 
@@ -33,7 +34,7 @@ export class MessageListService extends ObservableResourceList implements OnDest
         .subscribe(messages => this.add(messages));
     });
 
-    this.sockets.listenForUser({
+    this.sockets.listenForConversation(this.route.snapshot.params.id, {
       'message_sent': (message) => this.addMessage(message)
     }, this);
   }

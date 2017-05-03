@@ -1,5 +1,5 @@
-<div *ngIf="hasLoaded">
+<div *ngIf="! hasLoaded">
   <md-progress-spinner mode="indeterminate" color="accent"></md-progress-spinner>
 </div>
 
-<ng-content *ngIf="! hasLoaded"></ng-content>
+<ng-content *ngIf="hasLoaded"></ng-content>

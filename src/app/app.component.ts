@@ -1,12 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MdSidenav } from '@angular/material';
 import { ObservableMedia } from '@angular/flex-layout';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
 
 import { AuthService } from './core/auth/auth.service';
-import { SidebarService } from './core/sidebar.service';
-import { ActiveProjectService } from './core/auth/active-project.service';
+import { SidebarService } from './core/sidebar/sidebar.service';
+import { ActiveProjectService } from './core/active-project.service';
+import { ActiveUserService } from './core/auth/active-user.service';
+import { Project } from './core/project.model';
 import { User } from './core/user.model';
 
 @Component({
@@ -17,19 +20,24 @@ import { User } from './core/user.model';
 export class AppComponent implements OnInit {
 
   /**
+   * Indicates if the component is currently loading.
+   */
+  loading = true;
+
+  /**
    * The currently logged in user.
    */
-  currentUser: Observable<User>;
+  user: User;
 
   /**
    * The active project.
    */
-  activeProject: Observable<string>;
+  project: Project;
 
   /**
-   * Tells if the sidenav should be hidden
+   * The mode of the sidenav.
    */
-  hideSidenav = true;
+  sidebarMode = 'over';
 
   /**
    * The navigation links.
@@ -40,21 +48,15 @@ export class AppComponent implements OnInit {
     /* { name: 'Budgets', route: 'budgets', icon: 'track_changes' }, */
     { name: 'Sales', route: 'sales', icon: 'attach_money' },
     { name: 'Products', route: 'products', icon: 'shopping_basket' },
-    { name: 'Departments', route: 'departments', icon: 'domain' },
     { name: 'Teams', route: 'teams', icon: 'group' },
     { name: 'Users', route: 'users', icon: 'person' },
     { name: 'Settings', route: 'settings', icon: 'settings' }
   ];
 
   /**
-   * The mode of the sidenav.
-   */
-  sidebarMode = 'over';
-
-  /**
    * The side navigation component.
    */
-  @ViewChild('sidenav') sidenav: MdSidenav;
+  @ViewChild('sidenav') private sidenav: MdSidenav;
 
   /**
    * Constructs the component.
@@ -63,49 +65,22 @@ export class AppComponent implements OnInit {
               private media: ObservableMedia,
               private sidebar: SidebarService,
               private auth: AuthService,
-              private activeProjectService: ActiveProjectService) {}
+              private activeUser: ActiveUserService,
+              private activeProject: ActiveProjectService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.activeProject = this.activeProjectService.get();
-
-    this.activeProject.subscribe(projectId => {
-
-      if (projectId) {
-        this.hideSidenav = false;
-
-        this.media.subscribe(media => {
-          if (media.mqAlias === 'xs' || media.mqAlias === 'sm') {
-            this.sidebarMode = 'over';
-            this.sidenav.close();
-          } else {
-            this.sidebarMode = 'side';
-            this.sidenav.open();
-          }
-        });
-
-        this.sidebar.isOpened.subscribe(open => {
-          if (open) {
-            this.sidenav.open();
-          } else {
-            this.sidenav.close();
-          }
-        });
-
-        this.sidebarMode = window.innerWidth < 960 ? 'over' : 'side';
-        if (this.sidebarMode === 'side') {
-          this.sidenav.open();
-        }
-
-        this.router.events.filter(event => event instanceof NavigationEnd).subscribe(a => {
-          if (window.innerWidth < 960) {
-            this.sidenav.close();
-          }
-        });
-      }
+    Observable.combineLatest(
+      this.activeUser.user,
+      this.activeProject.project
+    ).subscribe(data => {
+      [this.user, this.project] = data;
+      this.loading = this.user == null || this.project == null;
     });
+
+    this.sidebar.setSidenav(this.sidenav);
   }
 
   /**

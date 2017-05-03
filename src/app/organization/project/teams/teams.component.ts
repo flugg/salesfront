@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
 
 import { TeamListService } from './team-list.service';
 
@@ -7,17 +6,12 @@ import { TeamListService } from './team-list.service';
   providers: [TeamListService],
   templateUrl: 'teams.component.html'
 })
-export class TeamsComponent implements OnInit, OnDestroy {
+export class TeamsComponent implements OnInit {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
-
-  /**
-   * List of all observable subscriptions.
-   */
-  private subscriptions: Subscription[] = [];
+  loading = true;
 
   /**
    * List of loaded teams.
@@ -27,24 +21,15 @@ export class TeamsComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private teamList: TeamListService) {}
+  constructor(public teamList: TeamListService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.teamList.teams.subscribe(teams => {
+    this.teamList.teams.subscribe(teams => {
       this.teams = teams;
-      this.isLoading = false;
-    }));
-  }
-
-  /**
-   * Destroys the component.
-   */
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => {
-      subscription.unsubscribe();
+      this.loading = false;
     });
   }
 }

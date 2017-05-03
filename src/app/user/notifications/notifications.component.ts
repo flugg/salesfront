@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   templateUrl: 'notifications.component.html'
@@ -7,9 +6,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class NotificationsComponent implements OnInit {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
    * List of loaded notifications.
@@ -17,21 +16,15 @@ export class NotificationsComponent implements OnInit {
   notifications: any[];
 
   /**
-   * The cursor for the paginated notifications.
-   */
-  cursor = new BehaviorSubject(15);
-
-  /**
    * Constructs the component.
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
     this.notifications = [];
-    this.isLoading = false;
+    this.loading = false;
   }
 }

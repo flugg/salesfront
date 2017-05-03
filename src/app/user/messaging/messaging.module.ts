@@ -39,4 +39,5 @@ import { MessageService } from './shared/message.service';
     MessageService
   ]
 })
-export class MessagingModule {}
+export class MessagingModule {
+}

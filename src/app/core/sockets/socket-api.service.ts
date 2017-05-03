@@ -4,7 +4,6 @@ import * as Pusher from 'pusher-js';
 import * as Echo from 'laravel-echo';
 
 import { TokenService } from '../auth/token.service';
-import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class SocketApiService {
@@ -18,7 +17,6 @@ export class SocketApiService {
    * Constructs the service.
    */
   constructor(private tokenService: TokenService,
-              private auth: AuthService,
               private snackBar: MdSnackBar) {
     this.connect();
   }
@@ -80,23 +78,40 @@ export class SocketApiService {
    * Listens for an event and registers a callback.
    */
   listen(channel: string, event: string, callback: Function) {
-    const a = this.getChannel(channel).listen(event, callback);
-    // console.log(channel, event);
-    // console.log(this.echo);
-    return a;
+    return this.getChannel(channel).listen(event, callback);
   }
 
   /**
    * Listens for an event in the current user channel and registers a callback.
    */
-  listenForUser(events: any, source: any) {
-    this.auth.user().subscribe(user => {
-      const channel = this.getChannel(`users.${user.id}`);
+  listenForUser(userId: string, events: any, source: any) {
+    const channel = this.getChannel(`users.${userId}`);
 
-      for (const event in events) {
-        channel.subscription.bind(channel.eventFormatter.format(event), events[event], source);
-      }
-    });
+    for (const event in events) {
+      channel.subscription.bind(channel.eventFormatter.format(event), events[event], source);
+    }
+  }
+
+  /**
+   * Listens for an event in the given conversation and registers a callback.
+   */
+  listenForConversation(conversationId: string, events: any, source: any) {
+    const channel = this.getChannel(`conversations.${conversationId}`);
+
+    for (const event in events) {
+      channel.subscription.bind(channel.eventFormatter.format(event), events[event], source);
+    }
+  }
+
+  /**
+   * Listens for an event in the given project and registers a callback.
+   */
+  listenForProject(projectId: string, events: any, source: any) {
+    const channel = this.getChannel(`projects.${projectId}`);
+
+    for (const event in events) {
+      channel.subscription.bind(channel.eventFormatter.format(event), events[event], source);
+    }
   }
 
   /**
@@ -104,13 +119,6 @@ export class SocketApiService {
    */
   listenForOrganization(event: string, callback: Function) {
     this.listen(`organizations.b3256N`, event, callback);
-  }
-
-  /**
-   * Listens for an event for the given project.
-   */
-  listenForProject(projectId: string, event: string, callback: Function) {
-    this.listen(`projects.${projectId}`, event, callback);
   }
 
   /**
@@ -127,7 +135,6 @@ export class SocketApiService {
     this.getPusher().allChannels().forEach(channel => {
       channel.unbind(null, null, source);
     });
-    console.log(this.getPusher());
   }
 
   /**
