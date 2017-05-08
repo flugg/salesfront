@@ -56,7 +56,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav') private sidenav: MdSidenav;
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

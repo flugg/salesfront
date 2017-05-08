@@ -21,7 +21,7 @@ export class UserComponent implements OnInit, OnDestroy {
   user: User;
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

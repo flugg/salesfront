@@ -1,0 +1,18 @@
+<vmo-toolbar title="Sales" mode="menu" tabs="true">
+  <nav md-tab-nav-bar>
+    <a md-tab-link routerLink="teams"
+       routerLinkActive #membersLink="routerLinkActive"
+       [active]="membersLink.isActive"
+       [class.is-active]="membersLink.isActive">
+      Teams
+    </a>
+    <a md-tab-link routerLink="users"
+       routerLinkActive #invitesLink="routerLinkActive"
+       [active]="invitesLink.isActive"
+       [class.is-active]="invitesLink.isActive">
+      Members
+    </a>
+  </nav>
+</vmo-toolbar>
+
+<router-outlet></router-outlet>

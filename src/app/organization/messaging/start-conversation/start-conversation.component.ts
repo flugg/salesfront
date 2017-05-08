@@ -37,7 +37,7 @@ export class StartConversationComponent implements OnInit, OnDestroy {
   participants: User[] = [];
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

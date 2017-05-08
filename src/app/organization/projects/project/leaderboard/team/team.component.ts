@@ -19,7 +19,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   teams: Sale[];
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

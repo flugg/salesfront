@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
+import { tryCatch } from 'rxjs/util/tryCatch';
 
 @Injectable()
 export class TokenService {

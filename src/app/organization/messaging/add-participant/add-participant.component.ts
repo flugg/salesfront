@@ -31,7 +31,7 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
   users: User[];
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

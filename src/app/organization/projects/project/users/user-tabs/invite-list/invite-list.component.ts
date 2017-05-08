@@ -20,7 +20,7 @@ export class InviteListComponent implements OnInit, OnDestroy {
   invites: Invite[];
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

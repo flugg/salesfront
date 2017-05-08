@@ -20,7 +20,7 @@ export class MemberListComponent implements OnInit, OnDestroy {
   memberships: Membership[];
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

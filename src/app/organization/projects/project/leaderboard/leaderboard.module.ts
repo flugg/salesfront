@@ -5,6 +5,7 @@ import { LeaderboardRoutingModule } from './leaderboard-routing.module';
 import { LeaderboardComponent } from './leaderboard.component';
 import { TeamComponent } from './team/team.component';
 import { UsersComponent } from './users/users.component';
+import { LeaderboardTabsComponent } from './leaderboard-tabs/leaderboard-tabs.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { UsersComponent } from './users/users.component';
   declarations: [
     LeaderboardComponent,
     TeamComponent,
-    UsersComponent
+    UsersComponent,
+    LeaderboardTabsComponent
   ]
 })
 export class LeaderboardModule {}

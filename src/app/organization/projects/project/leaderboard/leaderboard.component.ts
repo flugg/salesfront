@@ -14,7 +14,7 @@ export class LeaderboardComponent implements OnInit {
   navLinks = [['Teams', 'teams'], ['Users', 'users']];
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

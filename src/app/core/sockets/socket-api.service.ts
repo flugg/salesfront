@@ -129,7 +129,7 @@ export class SocketApiService {
   }
 
   /**
-   * Unbinds all callbacks from a given source.
+   * Unbinds selectAll callbacks from a given source.
    */
   stopListening(source: any) {
     this.getPusher().allChannels().forEach(channel => {
