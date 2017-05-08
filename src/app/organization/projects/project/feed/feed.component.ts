@@ -33,7 +33,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   posts: Post[];
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

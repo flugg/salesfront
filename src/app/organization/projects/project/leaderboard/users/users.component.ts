@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
   users: Sale[];
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

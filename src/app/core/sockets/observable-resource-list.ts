@@ -47,7 +47,7 @@ export abstract class ObservableResourceList implements OnDestroy {
   }
 
   /**
-   * Indicates if all resources have been loaded.
+   * Indicates if selectAll resources have been loaded.
    */
   isComplete(): boolean {
     return this.paginator.isStopped;

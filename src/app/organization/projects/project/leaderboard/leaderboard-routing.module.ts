@@ -8,13 +8,13 @@ import { UsersComponent } from './users/users.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'teams',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: LeaderboardComponent,
     children: [
-      {
-        path: '',
-        redirectTo: 'teams',
-        pathMatch: 'full'
-      },
       {
         path: 'teams',
         component: TeamComponent

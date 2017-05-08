@@ -1,37 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Sale } from '../shared/sale.model';
+import { SalesListService } from './sales-list.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
+  providers: [SalesListService],
   templateUrl: 'sales.component.html'
 })
-export class SalesComponent implements OnInit {
+export class SalesComponent implements OnInit, OnDestroy {
+
+  selectAll = false;
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
-   * List of loaded sales.
+   * List of loaded membersips.
    */
-  sales: any[];
+  sales: Sale[];
 
   /**
-   * The cursor for the paginated sales.
+   * List of selectAll observable subscriptions.
    */
-  cursor = new BehaviorSubject(15);
+  private subscriptions: Subscription[] = [];
 
   /**
    * Constructs the component.
    */
-  constructor() {
-  }
+  constructor(public salesList: SalesListService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.sales = [];
-    this.isLoading = false;
+    this.subscriptions.push(this.salesList.sales.subscribe(sales => {
+      this.sales = sales;
+      this.loading = false;
+    }));
+  }
+
+  /**
+   * Destroys the component.
+   */
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

@@ -57,7 +57,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   @ViewChild('window') private window: ElementRef;
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

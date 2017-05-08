@@ -32,7 +32,7 @@ export class ParticipantListComponent implements OnInit, OnDestroy {
   conversation: Conversation;
 
   /**
-   * List of all observable subscriptions.
+   * List of selectAll observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
 

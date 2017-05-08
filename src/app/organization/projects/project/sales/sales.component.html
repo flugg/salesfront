@@ -1,10 +1,33 @@
 <div class="vmo-component">
   <vmo-toolbar title="Sales" mode="menu"></vmo-toolbar>
 
-  <vmo-progress-spinner [hasLoaded]="isLoading">
-    <!-- // -->
+  <vmo-progress-spinner [hasLoaded]=" loading">
+    <div class="vmo-scrollable-area">
+      <md-list class="vmo-list">
+        <md-list-item
+                class="u-clickable">
+          <md-checkbox [(ngModel)]="selectAll"></md-checkbox>
+          <p>Id</p>
+          <p>Sold by</p>
+          <p>Team</p>
+          <p>Date</p>
+        </md-list-item>
 
-    <!-- <vmo-load-more-button [paginator]="saleList"></vmo-load-more-button> -->
+        <md-list-item md-ripple
+                      routerLink="../1"
+                      *ngFor="let sale of sales"
+                      class="u-clickable">
+
+          <md-checkbox [checked]="selectAll"></md-checkbox>
+          <p>Id</p>
+          <p>Sold by</p>
+          <p>Team</p>
+          <p>Date</p>
+        </md-list-item>
+      </md-list>
+
+      <vmo-load-more-button [paginator]="salesList"></vmo-load-more-button>
+    </div>
   </vmo-progress-spinner>
 </div>
 
