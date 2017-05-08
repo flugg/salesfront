@@ -17,4 +17,11 @@ export class CreateProjectComponent implements OnInit {
   ngOnInit() {
     //
   }
+
+  /**
+   * Submits the form to create a new project.
+   */
+  submit() {
+    //
+  }
 }

@@ -16,4 +16,11 @@ export class InviteUserComponent implements OnInit {
   ngOnInit() {
     //
   }
+
+  /**
+   * Submits the form to invite a user.
+   */
+  submit(email: string) {
+    //
+  }
 }
