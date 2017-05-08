@@ -1,6 +1,6 @@
-import { Project } from '../../../../core/project.model';
-import { Team } from './team.model';
-import { User } from '../../../../core/user.model';
+import { Project } from '../../core/project.model';
+import { Team } from '../projects/project/shared/team.model';
+import { User } from '../../core/user.model';
 
 export interface Sale {
   id: string;

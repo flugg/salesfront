@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Sale } from '../../shared/sale.model';
+import { Sale } from '../../../../shared/sale.model';
 
 @Component({
   templateUrl: './users.component.html'
