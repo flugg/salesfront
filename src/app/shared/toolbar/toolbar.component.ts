@@ -21,6 +21,11 @@ export class ToolbarComponent implements OnInit {
   @Input() title: number;
 
   /**
+   * Indicates if the toolbar include tabs.
+   */
+  @Input() tabs = false;
+
+  /**
    * Indicates what mode the toolbar is in.
    */
   @Input() private mode: string;

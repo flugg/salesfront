@@ -6,10 +6,10 @@ import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MomentModule } from 'angular2-moment';
 
-import { ExcludePipe } from './exclude.pipe';
 import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ExcludePipe } from './exclude.pipe';
 
 @NgModule({
   imports: [
@@ -24,16 +24,16 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     FlexLayoutModule,
     MaterialModule,
     MomentModule,
-    ExcludePipe,
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ExcludePipe
   ],
   declarations: [
-    ExcludePipe,
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ExcludePipe
   ]
 })
 export class SharedModule {}

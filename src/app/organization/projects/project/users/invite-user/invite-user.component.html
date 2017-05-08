@@ -1,0 +1,15 @@
+<div class="vmo-component vmo-component--important">
+  <form novalidate (submit)="submit(emailInput.value); $event.preventDefault()">
+    <vmo-toolbar title="Invite User" mode="close">
+      <button md-icon-button>
+        <md-icon>check</md-icon>
+      </button>
+    </vmo-toolbar>
+
+    <div class="u-big-container">
+      <md-input-container>
+        <input #emailInput mdInput placeholder="Email" type="email">
+      </md-input-container>
+    </div>
+  </form>
+</div>

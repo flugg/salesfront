@@ -11,6 +11,8 @@
   <h2 class="mdc-typography--title" [class.toolbar-heading]="state != 'none'">
     {{ title }}
   </h2>
-  <span class="u-fill"></span>
   <ng-content></ng-content>
+  <md-toolbar-row *ngIf="tabs" style="height: 48px">
+    <ng-content></ng-content>
+  </md-toolbar-row>
 </md-toolbar>

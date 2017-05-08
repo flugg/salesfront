@@ -1,0 +1,20 @@
+.vmo-conversation {
+  max-height: calc(100% - 64px);
+  @media (max-width: 600px) {
+    max-height: calc(100% - 56px);
+  }
+
+  &--locked {
+    opacity: 0.54;
+  }
+
+  &-window {
+    padding: 0 16px;
+    overflow-y: scroll;
+  }
+}
+
+.vmo-message-name {
+  padding-bottom: 6px;
+  margin-left: 56px;
+}

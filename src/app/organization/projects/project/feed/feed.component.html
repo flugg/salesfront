@@ -1,0 +1,26 @@
+<div class="vmo-component">
+  <vmo-toolbar title="Feed" mode="menu"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <div class="container">
+        <md-card class="post-input">
+          <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
+                fxLayoutAlign="stretch center">
+            <md-input-container class="vmo-fixed-input">
+              <input #input mdInput name="post" placeholder="Write a post...">
+            </md-input-container>
+          </form>
+        </md-card>
+
+        <div *ngFor="let post of posts">
+          <vmo-post [post]="post" (commentPosted)="postComment(post, $event)"></vmo-post>
+        </div>
+
+        <vmo-load-more-button [paginator]="postList"></vmo-load-more-button>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

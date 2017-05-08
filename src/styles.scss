@@ -10,7 +10,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 $candy-app-primary: mat-palette($mat-pink, 500);
-$candy-app-accent: mat-palette($mat-blue, A200, A100, A700);
+$candy-app-accent: mat-palette($mat-blue, A400, A100, A700);
 
 // The warn palette is optional (defaults to red).
 $candy-app-warn: mat-palette($mat-red);
@@ -29,6 +29,7 @@ body {
 
 html,
 body {
+  overflow: hidden;
   height: 100%;
 }
 
@@ -71,6 +72,34 @@ body {
 }
 
 .mat-toolbar {
+  .mat-tab-link {
+    font-weight: 500 !important;
+    text-transform: uppercase;
+  }
+
+  .mat-tab-link.is-active {
+    opacity: 1;
+  }
+
+  .mat-tab-nav-bar, .mat-tab-header {
+    border-width: 0;
+  }
+
+  .mat-ink-bar {
+    background: white;
+  }
+
+  @media(max-width: 600px) {
+    .mat-tab-nav-bar {
+      width: 100%;
+    }
+    .mat-tab-link {
+      width: 50%;
+    }
+  }
+}
+
+.mat-toolbar {
   position: relative;
   z-index: 2;
   @include mat-elevation(4);
@@ -88,8 +117,16 @@ body {
   padding: 16px;
 }
 
+.u-big-container {
+  padding: 24px;
+}
+
 .u-fill {
   flex: 1 1 auto;
+}
+
+.u-stretch {
+  height: 100%;
 }
 
 .u-clickable {
@@ -129,18 +166,42 @@ body {
   border-radius: 50%;
 }
 
+.u-push-button {
+  margin-top: 16px !important;
+}
+
 .vmo-component {
-  overflow-y: scroll;
+  overflow: hidden;
   position: absolute;
-  top: 56px;
+  padding-top: 56px;
+  top: 0;
   bottom: 0;
   z-index: 1;
   width: 100%;
   background: #f2f2f2;
 
-  @media (min-width: 960px) {
-    top: 64px;
+  @media (min-width: 599px) {
+    padding-top: 64px;
   }
+
+  &--tabs {
+    padding-top: 104px;
+
+    @media (min-width: 599px) {
+      padding-top: 112px;
+    }
+  }
+
+  &--important,
+  &--important .vmo-component{
+    z-index: 9999;
+  }
+}
+
+.vmo-scrollable-area {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
 }
 
 .vmo-list {
@@ -157,6 +218,11 @@ body {
   background: map-get($mat-pink, 500);
   color: white;
   font-weight: 800;
+}
+
+.vmo-group-icon {
+  background: #f2f2f2;
+  color: rgba(black, 0.38);
 }
 
 .vmo-fixed-input {
@@ -183,5 +249,34 @@ body {
     &.mat-focused {
       color: rgba(0, 0, 0, .38);
     }
+  }
+}
+
+.sale-splash {
+  background: #2979ff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: white;
+  user-select: none;
+  cursor: default;
+
+  .mat-icon {
+    height: 120px;
+    width: 120px;
+    font-size: 120px;
+    color: white;
+    margin-bottom: 24px;
+  }
+
+  .u-weak {
+    color: rgba(white, 0.7);
+  }
+
+  .close-info {
+    position: absolute;
+    bottom: 24px;
   }
 }

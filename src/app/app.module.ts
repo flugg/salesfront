@@ -4,26 +4,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import 'hammerjs';
 
-import { AppRoutingModule } from './app-routing.module';
-import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { ErrorsModule } from './errors/errors.module';
+import { CoreModule } from './core/core.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OrganizationComponent } from './organization/organization.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
-    AppRoutingModule,
-    CoreModule,
     SharedModule,
-    ErrorsModule
+    CoreModule,
+    AppRoutingModule
   ],
   declarations: [
-    AppComponent,
-    OrganizationComponent
+    AppComponent
   ],
   bootstrap: [
     AppComponent

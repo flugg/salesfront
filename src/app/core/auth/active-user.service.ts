@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { ObservableResource } from '../sockets/observable-resource';
@@ -6,12 +6,12 @@ import { UserService } from '../user.service';
 import { User } from '../user.model';
 
 @Injectable()
-export class ActiveUserService extends ObservableResource {
+export class ActiveUserService extends ObservableResource implements OnDestroy {
 
   /**
    * The observable active conversation.
    */
-  readonly user: Observable<User | null> = this.subject.asObservable();
+  readonly user: Observable<User> = this.subject.asObservable();
 
   /**
    * Constructs the service.
@@ -22,11 +22,7 @@ export class ActiveUserService extends ObservableResource {
     this.userService.find('me').subscribe(user => this.set(user));
   }
 
-  /**
-   * Unsets the active user.
-   */
-  logout() {
-    this.snapshot = null;
-    this.updateFromSnapshot();
+  ngOnDestroy() {
+    console.log('WTF ALEX');
   }
 }

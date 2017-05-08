@@ -1,1 +1,59 @@
-<router-outlet></router-outlet>
+<md-sidenav-container>
+  <md-sidenav #sidenav opened="false" [fxShow]="! loading">
+    <div *ngIf="! loading">
+      <md-toolbar>
+        <button md-icon-button routerLink="/messages" routerLinkActive="active-link">
+          <md-icon>email</md-icon>
+        </button>
+        <button md-icon-button routerLink="/notifications" routerLinkActive="active-link">
+          <md-icon>notifications</md-icon>
+        </button>
+        <span class="u-fill"></span>
+        <button md-icon-button (click)="logout()">
+          <md-icon>exit_to_app</md-icon>
+        </button>
+      </md-toolbar>
+      <div class="vmo-scrollable-area">
+        <md-list>
+          <md-list-item md-ripple routerLink="/projects/{{ project.id }}/users/{{ user.id }}" class="u-clickable">
+            <img md-list-avatar src="http://lorempixel.com/40/40">
+            <span md-line class="mdc-typography--body1">{{ user.name }}</span>
+            <span md-line class="mdc-typography--caption u-weak">Team Bravo</span>
+            <span class="u-fill"></span>
+            <md-icon>chevron_right</md-icon>
+          </md-list-item>
+        </md-list>
+        <hr>
+        <md-list>
+          <md-list-item md-ripple routerLink="/projects" class="u-clickable">
+            <div md-list-avatar
+                 src="http://lorempixel.com/40/40"
+                 class="vmo-project-icon"
+                 fxLayoutAlign="center center">TP
+            </div>
+            <span md-line class="mdc-typography--body1">{{ project?.name }}</span>
+            <span md-line class="mdc-typography--caption u-weak">{{ project?.organizationId }}</span>
+            <span class="u-fill"></span>
+            <md-icon>chevron_right</md-icon>
+          </md-list-item>
+        </md-list>
+        <hr>
+        <md-nav-list>
+          <md-list-item md-ripple
+                        *ngFor="let link of links"
+                        [routerLink]="['/projects', project?.id, link.route]"
+                        routerLinkActive="active-link">
+            <md-icon md-list-icon>{{ link.icon }}</md-icon>
+            <a md-line class="mdc-typography--body1">
+              {{ link.name }}
+            </a>
+          </md-list-item>
+        </md-nav-list>
+      </div>
+    </div>
+  </md-sidenav>
+  <button md-fab (click)="registerSale()">
+    <md-icon class="md-24">attach_money</md-icon>
+  </button>
+  <router-outlet></router-outlet>
+</md-sidenav-container>

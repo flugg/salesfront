@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { TokenService } from './token.service';
-import { ActiveUserService } from './active-user.service';
 
 @Injectable()
 export class AuthService {
@@ -11,8 +10,7 @@ export class AuthService {
   /**
    * Constructs the service.
    */
-  constructor(private tokenService: TokenService,
-              private activeUser: ActiveUserService) {}
+  constructor(private tokenService: TokenService) {}
 
   /**
    * Attempts to authenticate the user by the given credentials.
@@ -42,6 +40,5 @@ export class AuthService {
    */
   logout() {
     this.tokenService.unset();
-    this.activeUser.logout();
   }
 }

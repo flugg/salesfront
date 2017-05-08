@@ -1,0 +1,15 @@
+<div fxLayout="column" fxLayoutGap="24px">
+  <span class="mdc-typography--headline">Register sale</span>
+  <md-input-container>
+    <input #emailInput mdInput placeholder="Quanity" type="email" value="1">
+  </md-input-container>
+  <div>
+    <button md-raised-button color="accent">Register</button>
+  </div>
+</div>
+<div *ngIf="complete" class="sale-splash" fxLayout="column" fxLayoutGap="24px" fxLayoutAlign="center center">
+  <md-icon class="md-24">check</md-icon>
+  <div class="mdc-typography--display3">1 sale added</div>
+  <div class="mdc-typography--display1 u-weak">Great job!</div>
+  <div class="mdc-typography--body1 u-weak close-info">Click anywhere to close</div>
+</div>

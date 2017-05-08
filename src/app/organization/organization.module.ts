@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 
-import { OrganizationRoutingModule } from './organization-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { CreateProjectComponent } from './create-project/create-project.component';
-import { ProjectListComponent } from './project-list/project-list.component';
+import { OrganizationRoutingModule } from './organization-routing.module';
+import { OrganizationComponent } from './organization.component';
+import { ActiveProjectService } from '../core/active-project.service';
+import { ActiveUserService } from '../core/auth/active-user.service';
+import { SalesDialogComponent } from './sales-dialog/sales-dialog.component';
 
 @NgModule({
   imports: [
@@ -11,8 +13,15 @@ import { ProjectListComponent } from './project-list/project-list.component';
     OrganizationRoutingModule
   ],
   declarations: [
-    CreateProjectComponent,
-    ProjectListComponent
+    OrganizationComponent,
+    SalesDialogComponent
+  ],
+  providers: [
+    ActiveProjectService,
+    ActiveUserService
+  ],
+  entryComponents: [
+    SalesDialogComponent
   ]
 })
 export class OrganizationModule {}

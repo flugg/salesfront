@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { ProjectListComponent } from './project-list/project-list.component';
-import { CreateProjectComponent } from './create-project/create-project.component';
-import { ProjectResolver } from '../core/project-resolver.service';
+import { OrganizationComponent } from './organization.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProjectListComponent
-  },
-  {
-    path: 'new',
-    component: CreateProjectComponent
-  },
-  {
-    path: ':project',
-    loadChildren: 'app/organization/project/project.module#ProjectModule',
-    resolve: {
-      project: ProjectResolver
-    }
+    component: OrganizationComponent,
+    children: [
+      {
+        path: 'messages',
+        loadChildren: 'app/organization/messaging/messaging.module#MessagingModule'
+      },
+      {
+        path: 'notifications',
+        loadChildren: 'app/organization/notifications/notifications.module#NotificationsModule'
+      },
+      {
+        path: 'projects',
+        loadChildren: 'app/organization/projects/projects.module#ProjectsModule'
+      }
+    ]
   }
 ];
 
@@ -27,5 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class OrganizationRoutingModule {
-}
+export class OrganizationRoutingModule {}
