@@ -1,10 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ObservableResourceList } from '../../../../core/sockets/observable-resource-list';
 import { Observable } from 'rxjs/Observable';
-import { Sale } from '../shared/sale.model';
-import { ActiveProjectService } from '../../../../core/active-project.service';
+
+import { ObservableResourceList } from '../../../../core/sockets/observable-resource-list';
 import { SocketApiService } from '../../../../core/sockets/socket-api.service';
-import { SaleService } from '../shared/sale.service';
+import { SaleService } from '../../../shared/sale.service';
+import { ActiveProjectService } from '../../../../core/active-project.service';
+import { Sale } from '../../../shared/sale.model';
 
 @Injectable()
 export class SalesListService extends ObservableResourceList implements OnDestroy {

@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Sale } from '../shared/sale.model';
-import { SalesListService } from './sales-list.service';
 import { Subscription } from 'rxjs/Subscription';
+
+import { SalesListService } from './sales-list.service';
+import { Sale } from '../../../shared/sale.model';
 
 @Component({
   providers: [SalesListService],
