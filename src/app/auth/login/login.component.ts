@@ -20,7 +20,7 @@ export class LoginComponent {
    */
   submit(email, password) {
     this.auth.attempt(email, password).subscribe(() => {
-      this.router.navigate(['projects']);
+      this.router.navigate(['/projects']);
     });
   }
 }

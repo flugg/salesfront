@@ -9,7 +9,7 @@ button:not([disabled]) {
   font-size: inherit !important;
 }
 
-/deep/ .mat-input-container {
+.mat-input-container /deep/ {
   font-weight: 400;
 
   .mat-input-wrapper {

@@ -89,6 +89,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
    * Destroys the component.
    */
   ngOnDestroy(): void {
+    this.sidebar.setSidenav(null);
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
