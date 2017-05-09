@@ -5,6 +5,8 @@ import { ActiveProjectService } from '../../../../core/active-project.service';
 import { SocketApiService } from '../../../../core/sockets/socket-api.service';
 import { LeaderboardService } from './leaderboard.service';
 import { ActivatedRoute } from '@angular/router';
+import { User } from '../../../../core/user.model';
+import { Team } from '../shared/team.model';
 
 @Injectable()
 export class LeaderboardListService extends ObservableResourceList implements OnDestroy {
@@ -12,7 +14,7 @@ export class LeaderboardListService extends ObservableResourceList implements On
   /**
    * The observable list of memberships.
    */
-  readonly sales: Observable<any[]> = this.subject.asObservable();
+  readonly sales: Observable<User[] | Team[]> = this.subject.asObservable();
 
   /**
    * Constructs the service.

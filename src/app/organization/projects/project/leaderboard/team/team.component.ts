@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Sale } from '../../../../shared/sale.model';
 import { LeaderboardListService } from '../leaderboard-list.service';
+import { Team } from '../../shared/team.model';
 
 @Component({
   providers: [LeaderboardListService],
@@ -18,7 +19,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   /**
    * List of teams sale stats
    */
-  teams: Sale[];
+  teams: Team[];
 
   /**
    * List of selectAll observable subscriptions.
@@ -35,7 +36,7 @@ export class TeamComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.subscriptions.push(this.leaderboardListService.sales.subscribe(sales => {
-      this.teams = sales;
+      this.teams = sales as Team[];
       this.isLoading = false;
     }));
   }

@@ -35,7 +35,7 @@ export class UsersComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.subscriptions.push(this.leaderboardListService.sales.subscribe(sales => {
-      this.users = sales;
+      this.users = sales as User[];
       this.isLoading = false;
     }));
   }
