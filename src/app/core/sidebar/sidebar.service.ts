@@ -41,9 +41,12 @@ export class SidebarService {
   /**
    * Sets the sidenav.
    */
-  setSidenav(sidenav: MdSidenav) {
+  setSidenav(sidenav?: MdSidenav) {
     this.sidenav = sidenav;
-    this.mode.subscribe(mode => this.setMode(mode));
+
+    if (this.sidenav) {
+      this.mode.subscribe(mode => this.setMode(mode));
+    }
   }
 
   /**

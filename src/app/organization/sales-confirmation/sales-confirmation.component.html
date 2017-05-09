@@ -5,6 +5,6 @@
     <div class="mdc-typography--display1 u-weak">{{ cheer }}</div>
   </div>
 </div>
-<div fxLayoutAlign="center">
-  <div class="mdc-typography--body1 u-weak close-info" fxHide [fxShow.lt-sm]="true">Click anywhere to close</div>
+<div fxLayoutAlign="center" (click)="dialog.close()">
+  <div class="mdc-typography--body1 u-weak close-info" fxHide [fxShow.lt-md]="true">Click anywhere to close</div>
 </div>

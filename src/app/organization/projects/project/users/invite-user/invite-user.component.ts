@@ -21,6 +21,6 @@ export class InviteUserComponent implements OnInit {
    * Submits the form to invite a user.
    */
   submit(email: string) {
-    //
+    console.log(email);
   }
 }
