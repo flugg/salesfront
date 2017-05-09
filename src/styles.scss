@@ -1,4 +1,4 @@
-@import '~@angular/material/_theming';
+@import '~@angular/material/_theming.scss';
 @import '~material-components-web/dist/material-components-web.css';
 // Plus imports for other components in your app.
 
@@ -197,7 +197,7 @@ body {
   }
 
   &--important,
-  &--important .vmo-component{
+  &--important .vmo-component {
     z-index: 9999;
   }
 
