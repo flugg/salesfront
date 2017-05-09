@@ -35,8 +35,8 @@ export class TeamComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.leaderboardListService.sales.subscribe(sales => {
-      this.teams = sales as Team[];
+    this.subscriptions.push(this.leaderboardListService.sales.subscribe(teams => {
+      this.teams = teams as Team[];
       this.isLoading = false;
     }));
   }
