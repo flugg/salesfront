@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { OrganizationComponent } from './organization.component';
+import { SidebarResolver } from '../core/sidebar/sidebar-resolver.service';
 
 const routes: Routes = [
   {
     path: '',
     component: OrganizationComponent,
+    resolve: {
+      sidebar: SidebarResolver
+    },
     children: [
       {
         path: 'messages',

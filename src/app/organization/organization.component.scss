@@ -76,7 +76,7 @@ button[md-fab] {
   bottom: 28px;
   z-index: 9999;
   background: white;
-  color: #2979ff;
+  color: black;
 }
 
 .mat-toolbar.sales-bar {
@@ -92,6 +92,7 @@ button[md-fab] {
 }
 
 .sales-amount {
-  font-weight: 600;
-  padding-left: 8
+  font-weight: 800 !important;
+  font-size: 18px !important;
+  padding-left: 8px;
 }

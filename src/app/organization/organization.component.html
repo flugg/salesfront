@@ -55,9 +55,15 @@
   <md-toolbar class="sales-bar">
     <span class="mdc-typography--subheading1 u-weak">Sales today: </span>
     <strong class="mdc-typography--subheading1 sales-amount">10</strong>
+    <span class="u-fill"></span>
+    <button md-button (click)="registerSale()">
+      Add sale
+    </button>
   </md-toolbar>
-  <button md-fab (click)="registerSale()">
+  <!--<button md-fab (click)="registerSale()">
     <md-icon class="md-24">attach_money</md-icon>
-  </button>
-  <router-outlet></router-outlet>
+  </button>-->
+  <div class="vmo-component vmo-component--salesbar">
+    <router-outlet></router-outlet>
+  </div>
 </md-sidenav-container>

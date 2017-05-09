@@ -3,7 +3,7 @@ button:not([disabled]) {
 }
 
 .mat-toolbar {
-  position: fixed !important;
+  position: absolute !important;
   bottom: 0;
   background: white;
   font-size: inherit !important;

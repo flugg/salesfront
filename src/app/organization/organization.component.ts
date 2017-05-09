@@ -5,15 +5,14 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
 
+import { SalesConfirmationComponent } from './sales-confirmation/sales-confirmation.component';
 import { AuthService } from '../core/auth/auth.service';
 import { SidebarService } from '../core/sidebar/sidebar.service';
+import { SaleService } from './shared/sale.service';
 import { ActiveProjectService } from '../core/active-project.service';
 import { ActiveUserService } from '../core/auth/active-user.service';
 import { Project } from '../core/project.model';
 import { User } from '../core/user.model';
-import { SalesDialogComponent } from './sales-dialog/sales-dialog.component';
-import { SaleService } from './shared/sale.service';
-import { SalesConfirmationComponent } from './sales-confirmation/sales-confirmation.component';
 
 @Component({
   templateUrl: './organization.component.html',
@@ -81,9 +80,9 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
       [this.user, this.project] = data;
       this.loading = this.user == null || this.project == null;
-    }));
 
-    this.sidebar.setSidenav(this.sidenav);
+      setTimeout(() => this.sidebar.setSidenav(this.sidenav), 10);
+    }));
   }
 
   /**

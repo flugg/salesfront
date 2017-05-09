@@ -170,6 +170,10 @@ body {
   margin-top: 16px !important;
 }
 
+.u-no-elevation {
+  box-shadow: none !important;
+}
+
 .vmo-component {
   overflow: hidden;
   position: absolute;
@@ -195,6 +199,10 @@ body {
   &--important,
   &--important .vmo-component{
     z-index: 9999;
+  }
+
+  &--salesbar {
+    bottom: 56px;
   }
 }
 
