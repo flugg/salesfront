@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Sale } from '../../shared/sale.model';
@@ -6,7 +6,7 @@ import { Sale } from '../../shared/sale.model';
 @Component({
   templateUrl: './users.component.html'
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   /**
    * Wether or not the component is currently loading.
