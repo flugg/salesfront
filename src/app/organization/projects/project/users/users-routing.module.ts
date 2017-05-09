@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UsersComponent } from './users.component';
-import { UserComponent } from './user/user.component';
+import { UserProfileComponent } from './user/user-profile.component';
 import { MemberListComponent } from './user-tabs/member-list/member-list.component';
 import { InviteListComponent } from './user-tabs/invite-list/invite-list.component';
 import { InviteUserComponent } from './invite-user/invite-user.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: UserComponent
+    component: UserProfileComponent
   }
 ];
 

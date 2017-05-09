@@ -4,7 +4,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { TeamsRoutingModule } from './teams-routing.module';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { TeamsComponent } from './team-list/team-list.component';
-import { TeamComponent } from './team/team.component';
+import { TeamProfileComponent } from './team-profile/team-profile.component';
 import { TeamService } from './team.service';
 
 @NgModule({
@@ -15,7 +15,7 @@ import { TeamService } from './team.service';
   declarations: [
     CreateTeamComponent,
     TeamsComponent,
-    TeamComponent
+    TeamProfileComponent
   ],
   providers: [
     TeamService,

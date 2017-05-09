@@ -6,7 +6,7 @@ import { InviteUserComponent } from './invite-user/invite-user.component';
 import { InviteListComponent } from './user-tabs/invite-list/invite-list.component';
 import { MemberListComponent } from './user-tabs/member-list/member-list.component';
 import { UsersComponent } from './users.component';
-import { UserComponent } from './user/user.component';
+import { UserProfileComponent } from './user/user-profile.component';
 import { MembershipService } from './membership.service';
 import { UserTabsComponent } from './user-tabs/user-tabs.component';
 
@@ -21,7 +21,7 @@ import { UserTabsComponent } from './user-tabs/user-tabs.component';
     InviteListComponent,
     MemberListComponent,
     UsersComponent,
-    UserComponent
+    UserProfileComponent
   ],
   providers: [
     MembershipService

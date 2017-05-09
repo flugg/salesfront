@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeaderboardTabsComponent implements OnInit {
 
+  date: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.date = 'Today';
   }
 
 }
