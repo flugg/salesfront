@@ -1,5 +1,5 @@
 <md-card class="container-card">
-  <md-card class="post-card">
+  <md-card class="post-card u-no-elevation">
     <md-card-header>
       <img md-card-avatar src="http://lorempixel.com/40/40">
       <md-card-title class="mdc-typography--subheading1">
@@ -15,7 +15,7 @@
       </p>
     </md-card-content>
   </md-card>
-  <md-card class="comments" *ngIf="post.comments.length">
+  <md-card class="comments u-no-elevation" *ngIf="post.comments.length">
     <md-list>
       <md-list-item *ngFor="let comment of post.comments">
         <img md-list-avatar
@@ -35,7 +35,7 @@
       </md-list-item>
     </md-list>
   </md-card>
-  <md-card class="comment-input">
+  <md-card class="comment-input u-no-elevation">
     <form (submit)="onSubmit(input.value); input.value = ''; $event.preventDefault()" fxLayoutAlign="stretch center">
       <img md-list-avatar src="http://lorempixel.com/40/40" class="u-avatar">
       <md-input-container class="vmo-fixed-input">

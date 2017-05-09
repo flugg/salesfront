@@ -72,7 +72,27 @@
 
 button[md-fab] {
   position: fixed;
-  right: 16px;
-  bottom: 16px;
+  right: 24px;
+  bottom: 28px;
   z-index: 9999;
+  background: white;
+  color: black;
+}
+
+.mat-toolbar.sales-bar {
+  position: fixed;
+  bottom: 0;
+  background: #2979ff;
+  color: white;
+  min-height: 56px !important;
+
+  /deep/ .mat-toolbar-row {
+    height: 56px !important;
+  }
+}
+
+.sales-amount {
+  font-weight: 800 !important;
+  font-size: 18px !important;
+  padding-left: 8px;
 }

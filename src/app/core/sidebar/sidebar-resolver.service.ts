@@ -16,6 +16,7 @@ export class SidebarResolver implements Resolve<MdSidenavToggleResult> {
    * Resolves the active project.
    */
   resolve(): Promise<any> {
+    console.log(123);
     return this.sidebar.enable();
   }
 }

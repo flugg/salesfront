@@ -2,15 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ProjectComponent } from './project.component';
-import { SidebarResolver } from '../../../core/sidebar/sidebar-resolver.service';
 
 const routes: Routes = [
   {
     path: '',
     component: ProjectComponent,
-    resolve: {
-      sidebar: SidebarResolver
-    },
     children: [
       {
         path: '',
