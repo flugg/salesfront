@@ -22,7 +22,7 @@ export class SaleService {
   }
 
   /**
-   * Fetches a list of sales for a team.
+   * Fetches a list of sales for a team-profile.
    */
   getForTeam(teamId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
     return this.api.paginate(`teams/${teamId}/sales`, cursor, limit);

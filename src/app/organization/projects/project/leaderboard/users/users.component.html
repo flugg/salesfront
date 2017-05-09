@@ -2,8 +2,8 @@
   <vmo-progress-spinner [hasLoaded]="isLoading">
     <md-list class="vmo-list">
       <md-list-item md-ripple
-                    [routerLink]="user?.id"
                     *ngFor="let user of users"
+                    [routerLink]="'../../users/' + user?.id"
                     class="u-clickable">
 
         <div md-list-avatar

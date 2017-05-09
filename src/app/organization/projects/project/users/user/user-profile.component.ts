@@ -6,9 +6,9 @@ import { UserService } from '../../../../../core/user.service';
 import { User } from '../../../../../core/user.model';
 
 @Component({
-  templateUrl: './user.component.html'
+  templateUrl: './user-profile.html'
 })
-export class UserComponent implements OnInit, OnDestroy {
+export class UserProfileComponent implements OnInit, OnDestroy {
 
   /**
    * Indicates if the component is currently loading.

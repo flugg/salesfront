@@ -5,9 +5,9 @@ import { Team } from '../../shared/team.model';
 
 @Component({
   providers: [SelectedTeamService],
-  templateUrl: './team.component.html'
+  templateUrl: './team-profile.component.html'
 })
-export class TeamComponent implements OnInit {
+export class TeamProfileComponent implements OnInit {
 
   /**
    * Indicates if the component is currently loading.
@@ -15,7 +15,7 @@ export class TeamComponent implements OnInit {
   loading = true;
 
   /**
-   * The selected team.
+   * The selected team-profile.
    */
   team: Team;
 

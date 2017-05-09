@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Sale } from '../../../../shared/sale.model';
+import { LeaderboardListService } from '../leaderboard-list.service';
+import { User } from '../../../../../core/user.model';
 
 @Component({
+  providers: [LeaderboardListService],
   templateUrl: './users.component.html'
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   /**
    * Wether or not the component is currently loading.
@@ -16,7 +18,7 @@ export class UsersComponent implements OnInit {
   /**
    * Users sales in project
    */
-  users: Sale[];
+  users: User[];
 
   /**
    * List of selectAll observable subscriptions.
@@ -26,13 +28,16 @@ export class UsersComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor() {}
+  constructor(public leaderboardListService: LeaderboardListService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.isLoading = false;
+    this.subscriptions.push(this.leaderboardListService.sales.subscribe(users => {
+      this.users = users as User[];
+      this.isLoading = false;
+    }));
   }
 
   /**

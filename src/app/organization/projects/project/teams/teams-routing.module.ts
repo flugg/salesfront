@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TeamsComponent } from './team-list/team-list.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
-import { TeamComponent } from './team/team.component';
+import { TeamProfileComponent } from './team-profile/team-profile.component';
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
       },
       {
         path: ':team',
-        component: TeamComponent
+        component: TeamProfileComponent
       }
     ]
   }
