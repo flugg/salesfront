@@ -4,6 +4,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectComponent } from './project.component';
 import { InviteService } from './users/invite.service';
+import { LeaderboardService } from './leaderboard/leaderboard.service';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { InviteService } from './users/invite.service';
   ],
   providers: [
     InviteService,
+    LeaderboardService
   ]
 })
 export class ProjectModule {}
