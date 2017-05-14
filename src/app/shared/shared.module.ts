@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdProgressSpinnerModule, MdSidenavModule, MdSnackBarModule, MdTabsModule, MdToolbarModule, MdTooltipModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdProgressSpinnerModule, MdSidenavModule, MdSnackBarModule, MdTabsModule, MdToolbarModule, MdTooltipModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MomentModule } from 'angular2-moment';
 
@@ -21,6 +21,7 @@ import { ExcludePipe } from './exclude.pipe';
     FlexLayoutModule,
     MdButtonModule,
     MdCardModule,
+    MdCheckboxModule,
     MdChipsModule,
     MdDialogModule,
     MdIconModule,
@@ -44,4 +45,5 @@ import { ExcludePipe } from './exclude.pipe';
     ExcludePipe
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+}
