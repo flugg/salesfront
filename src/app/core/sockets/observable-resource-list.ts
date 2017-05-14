@@ -37,6 +37,7 @@ export abstract class ObservableResourceList implements OnDestroy {
    */
   ngOnDestroy(): void {
     this.subject.unsubscribe();
+    this.paginator.unsubscribe();
   }
 
   /**
@@ -47,7 +48,7 @@ export abstract class ObservableResourceList implements OnDestroy {
   }
 
   /**
-   * Indicates if selectAll resources have been loaded.
+   * Indicates if all resources have been loaded.
    */
   isComplete(): boolean {
     return this.paginator.isStopped;

@@ -3,11 +3,10 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { OrganizationRoutingModule } from './organization-routing.module';
 import { OrganizationComponent } from './organization.component';
-import { SalesDialogComponent } from './sales-dialog/sales-dialog.component';
-import { SalesConfirmationComponent } from './sales-confirmation/sales-confirmation.component';
-import { ActiveProjectService } from '../core/active-project.service';
-import { ActiveUserService } from '../core/auth/active-user.service';
-import { SaleService } from './shared/sale.service';
+import { CreateProjectComponent } from './create-project/create-project.component';
+import { ProjectListComponent } from './project-list/project-list.component';
+import { ProjectService } from './shared/project.service';
+import { UserService } from './shared/user.service';
 
 @NgModule({
   imports: [
@@ -16,17 +15,12 @@ import { SaleService } from './shared/sale.service';
   ],
   declarations: [
     OrganizationComponent,
-    SalesDialogComponent,
-    SalesConfirmationComponent
+    CreateProjectComponent,
+    ProjectListComponent
   ],
   providers: [
-    ActiveProjectService,
-    ActiveUserService,
-    SaleService
-  ],
-  entryComponents: [
-    SalesDialogComponent,
-    SalesConfirmationComponent
+    ProjectService,
+    UserService
   ]
 })
 export class OrganizationModule {}

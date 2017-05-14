@@ -2,27 +2,27 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { OrganizationComponent } from './organization.component';
-import { SidebarResolver } from '../core/sidebar/sidebar-resolver.service';
+import { ProjectListComponent } from './project-list/project-list.component';
+import { CreateProjectComponent } from './create-project/create-project.component';
 
 const routes: Routes = [
   {
     path: '',
     component: OrganizationComponent,
-    resolve: {
-      sidebar: SidebarResolver
-    },
     children: [
       {
-        path: 'messages',
-        loadChildren: 'app/organization/messaging/messaging.module#MessagingModule'
-      },
-      {
-        path: 'notifications',
-        loadChildren: 'app/organization/notifications/notifications.module#NotificationsModule'
-      },
-      {
         path: 'projects',
-        loadChildren: 'app/organization/projects/projects.module#ProjectsModule'
+        component: ProjectListComponent,
+        children: [
+          {
+            path: 'new',
+            component: CreateProjectComponent
+          }
+        ]
+      },
+      {
+        path: '',
+        loadChildren: 'app/organization/workspace/workspace.module#WorkspaceModule'
       }
     ]
   }

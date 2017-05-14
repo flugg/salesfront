@@ -1,0 +1,20 @@
+<div class="vmo-component vmo-component--tabs">
+  <vmo-toolbar title="Users" mode="menu" tabs="true">
+    <nav md-tab-nav-bar toolbar-tabs>
+      <a md-tab-link routerLink="members"
+         routerLinkActive #membersLink="routerLinkActive"
+         [active]="membersLink.isActive"
+         [class.is-active]="membersLink.isActive">
+        Members
+      </a>
+      <a md-tab-link routerLink="invites"
+         routerLinkActive #invitesLink="routerLinkActive"
+         [active]="invitesLink.isActive"
+         [class.is-active]="invitesLink.isActive">
+        Invites
+      </a>
+    </nav>
+  </vmo-toolbar>
+
+  <router-outlet></router-outlet>
+</div>

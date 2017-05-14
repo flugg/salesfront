@@ -6,13 +6,10 @@ import { AuthConfig, AuthHttp } from 'angular2-jwt';
 import { SharedModule } from '../shared/shared.module';
 import { AuthService } from './auth/auth.service';
 import { ErrorHandlerService } from './error-handler.service';
-import { ProjectService } from './project.service';
 import { RestApiService } from './http/rest-api.service';
-import { SidebarService } from './sidebar/sidebar.service';
 import { SocketApiService } from './sockets/socket-api.service';
 import { TokenService } from './auth/token.service';
-import { UserService } from './user.service';
-import { SidebarResolver } from './sidebar/sidebar-resolver.service';
+import { ScreenService } from './screen.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({ tokenName: 'token' }), http, options);
@@ -26,15 +23,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   providers: [
     { provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http, RequestOptions] },
     { provide: ErrorHandler, useClass: ErrorHandlerService },
+    ScreenService,
     AuthService,
-    ProjectService,
-    RestApiService,
-    SidebarService,
-    SidebarResolver,
-    SocketApiService,
     TokenService,
-    UserService
+    RestApiService,
+    SocketApiService
   ]
 })
-export class CoreModule {
-}
+export class CoreModule {}

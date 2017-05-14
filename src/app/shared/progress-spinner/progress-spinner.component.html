@@ -1,5 +1,7 @@
 <div *ngIf="! hasLoaded">
-  <md-progress-spinner mode="indeterminate" color="accent"></md-progress-spinner>
+  <md-progress-spinner *ngIf="visible" [@fadeInOut]="true" mode="indeterminate" color="accent"></md-progress-spinner>
 </div>
 
-<ng-content *ngIf="hasLoaded"></ng-content>
+<div *ngIf="hasLoaded" [@fadeInOut]="true" fxFlexFill>
+  <ng-content></ng-content>
+</div>
