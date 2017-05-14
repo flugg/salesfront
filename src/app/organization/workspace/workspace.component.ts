@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MdDialog, MdSidenav } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -88,24 +88,32 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(Observable.combineLatest(
-      this.activeUser.user,
-      this.activeProject.project
-    ).subscribe(data => {
-      [this.user, this.project] = data;
-      this.loading = false;
-    }));
+    this.subscriptions = [
+      Observable.combineLatest(
+        this.activeUser.user,
+        this.activeProject.project
+      ).subscribe(data => {
+        [this.user, this.project] = data;
+        this.loading = false;
+      }),
 
-    this.subscriptions.push(this.screen.asObservable().subscribe(breakpoint => {
-      const mode = this.resolveMode(breakpoint);
-      this.mode = mode;
-      if (this.mode === 'over') {
-        this.sidenav.close();
-      } else {
-        this.sidenav.open();
-      }
-      this.sidebar.setSidenav(this.sidenav);
-    }));
+      this.screen.asObservable().subscribe(breakpoint => {
+        const mode = this.resolveMode(breakpoint);
+        this.mode = mode;
+        if (this.mode === 'over') {
+          this.sidenav.close();
+        } else {
+          this.sidenav.open();
+        }
+        this.sidebar.setSidenav(this.sidenav);
+      }),
+
+      this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
+        if (this.mode === 'over') {
+          this.sidenav.close();
+        }
+      })
+    ];
   }
 
   /**

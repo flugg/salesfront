@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdProgressSpinnerModule, MdSidenavModule, MdSnackBarModule, MdTabsModule, MdToolbarModule, MdTooltipModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MomentModule } from 'angular2-moment';
 
@@ -12,14 +12,27 @@ import { ExcludePipe } from './exclude.pipe';
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MdProgressSpinnerModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     FlexLayoutModule,
-    MaterialModule,
+    MdButtonModule,
+    MdCardModule,
+    MdChipsModule,
+    MdDialogModule,
+    MdIconModule,
+    MdInputModule,
+    MdLineModule,
+    MdListModule,
+    MdSidenavModule,
+    MdSnackBarModule,
+    MdTabsModule,
+    MdProgressSpinnerModule,
+    MdToolbarModule,
+    MdTooltipModule,
     MomentModule,
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
