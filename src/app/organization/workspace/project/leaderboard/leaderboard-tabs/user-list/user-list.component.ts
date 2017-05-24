@@ -30,6 +30,11 @@ export class UserListComponent implements OnInit, OnDestroy {
   memberships: Membership[];
 
   /**
+   * The total value.
+   */
+  total: number;
+
+  /**
    * List of observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
@@ -45,6 +50,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(this.userList.members.subscribe(memberships => {
       this.memberships = memberships;
+      this.total = this.calculateTotal(memberships);
       this.loading = false;
     }));
   }
@@ -54,5 +60,12 @@ export class UserListComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  /**
+   * Calculates the total from a list of memberships.
+   */
+  private calculateTotal(memberships: Membership[]): number {
+    return memberships.reduce((value, membership) => value + membership.sales.length, 0);
   }
 }

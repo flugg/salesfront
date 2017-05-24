@@ -1,16 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
-import * as moment from 'moment';
 
 import { ObservableResourceList } from '../../../../../../core/sockets/observable-resource-list';
 import { SocketApiService } from '../../../../../../core/sockets/socket-api.service';
-import { SaleService } from '../../../../shared/sale.service';
 import { MembershipService } from '../../../../../shared/membership.service';
 import { ActiveProjectService } from '../../../../shared/active-project.service';
 import { SalesListService } from '../sales-list.service';
 import { Membership } from '../../../../../shared/membership.model';
-import { Sale } from '../../../../shared/sale.model';
 
 @Injectable()
 export class UserListService extends ObservableResourceList implements OnDestroy {
@@ -32,8 +29,12 @@ export class UserListService extends ObservableResourceList implements OnDestroy
     this.activeProject.project.first().subscribe(project => {
       this.membershipService.getAllForProject(project.id).subscribe(memberships => {
         this.salesList.sales.subscribe(sales => {
-          this.set(memberships.map(membership => {
+          memberships = this.sortTeams(memberships.map(membership => {
             membership.sales = sales.filter(sale => sale.membershipId === membership.id);
+            return membership;
+          }));
+          this.set(memberships.map(membership => {
+            membership.position = this.calculatePosition(memberships, membership);
             return membership;
           }));
         });
@@ -50,27 +51,27 @@ export class UserListService extends ObservableResourceList implements OnDestroy
   }
 
   /**
-   * Sets the observable list of resources to the current snapshot.
+   * Sorts the teams based on sales.
    */
-  protected updateFromSnapshot() {
-    this.snapshot.sort((a, b) => {
-      if (a.sales.length > b.sales.length) {
+  protected sortTeams(teams: Membership[]): Membership[] {
+    return teams.sort((previous, current) => {
+      if (previous.sales.length > current.sales.length) {
         return -1;
-      } else if (a.sales.length < b.sales.length) {
+      } else if (previous.sales.length < current.sales.length) {
         return 1;
       } else {
         return 0;
       }
     });
-
-    super.updateFromSnapshot();
   }
 
   /**
-   * Adds a sale to the respecting membership in the list.
+   * Calculates the position of the member.
    */
-  private addSale(sale: Sale) {
-    this.snapshot.find(membership => membership.id === sale.membershipId).sales.push(sale);
-    this.updateFromSnapshot();
+  private calculatePosition(memberships: Membership[], membership: Membership): number {
+    const index = memberships.indexOf(membership);
+    return memberships.reduce((value, current) => {
+      return memberships.indexOf(current) >= index || current.sales.length === membership.sales.length ? value : value + 1;
+    }, 1);
   }
 }

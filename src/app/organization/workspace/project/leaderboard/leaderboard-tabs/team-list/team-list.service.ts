@@ -6,9 +6,8 @@ import { ObservableResourceList } from '../../../../../../core/sockets/observabl
 import { SocketApiService } from '../../../../../../core/sockets/socket-api.service';
 import { TeamService } from '../../../shared/team.service';
 import { ActiveProjectService } from '../../../../shared/active-project.service';
-import { Sale } from '../../../../shared/sale.model';
-import { Team } from '../../../shared/team.model';
 import { SalesListService } from '../sales-list.service';
+import { Team } from '../../../shared/team.model';
 
 @Injectable()
 export class TeamListService extends ObservableResourceList implements OnDestroy {
@@ -30,8 +29,12 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
     this.activeProject.project.first().subscribe(project => {
       this.teamService.getAll(project.id).subscribe(teams => {
         this.salesList.sales.subscribe(sales => {
-          this.set(teams.map(team => {
+          teams = this.sortTeams(teams.map(team => {
             team.sales = sales.filter(sale => sale.teamId === team.id);
+            return team;
+          }));
+          this.set(teams.map(team => {
+            team.position = this.calculatePosition(teams, team);
             return team;
           }));
         });
@@ -48,27 +51,27 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
   }
 
   /**
-   * Sets the observable list of resources to the current snapshot.
+   * Sorts the teams based on sales.
    */
-  protected updateFromSnapshot() {
-    this.snapshot.sort((a, b) => {
-      if (a.sales.length > b.sales.length) {
+  protected sortTeams(teams: Team[]): Team[] {
+    return teams.sort((previous, current) => {
+      if (previous.sales.length > current.sales.length) {
         return -1;
-      } else if (a.sales.length < b.sales.length) {
+      } else if (previous.sales.length < current.sales.length) {
         return 1;
       } else {
         return 0;
       }
     });
-
-    super.updateFromSnapshot();
   }
 
   /**
-   * Adds a sale to the respecting team in the list.
+   * Calculates the position of the team.
    */
-  private addSale(sale: Sale) {
-    this.snapshot.find(team => team.id === sale.teamId).sales.push(sale);
-    this.updateFromSnapshot();
+  private calculatePosition(teams: Team[], team: Team): number {
+    const index = teams.indexOf(team);
+    return teams.reduce((value, current) => {
+      return teams.indexOf(current) >= index || current.sales.length === team.sales.length ? value : value + 1;
+    }, 1);
   }
 }

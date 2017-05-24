@@ -11,4 +11,5 @@ export interface Team {
   project?: Project;
   users?: User[];
   sales?: Sale[];
+  position?: number;
 }

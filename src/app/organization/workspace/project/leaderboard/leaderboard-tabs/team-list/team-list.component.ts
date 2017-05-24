@@ -30,6 +30,11 @@ export class TeamListComponent implements OnInit, OnDestroy {
   teams: Team[];
 
   /**
+   * The total value.
+   */
+  total: number;
+
+  /**
    * List of observable subscriptions.
    */
   private subscriptions: Subscription[] = [];
@@ -45,6 +50,7 @@ export class TeamListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(this.teamList.teams.subscribe(teams => {
       this.teams = teams;
+      this.total = this.calculateTotal(teams);
       this.loading = false;
     }));
   }
@@ -56,5 +62,12 @@ export class TeamListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
+  }
+
+  /**
+   * Calculates the total from a list of teams.
+   */
+  private calculateTotal(teams: Team[]): number {
+    return teams.reduce((value, team) => value + team.sales.length, 0);
   }
 }

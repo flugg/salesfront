@@ -1,16 +1,28 @@
 <div>
   <vmo-progress-spinner [hasLoaded]="! loading">
     <md-list class="vmo-list leaderboard-list">
+      <div class="vmo-list-title">
+        <div fxLayout="row">
+          <span class="mdc-typography--subheading1 strong">
+            Redd Barna
+          </span>
+          <span class="u-fill"></span>
+          <span class="mdc-typography--subheading1 strong">
+            {{ total }}
+          </span>
+        </div>
+        <md-divider></md-divider>
+      </div>
       <md-list-item *ngFor="let membership of memberships"
                     [routerLink]="'../../members/' + membership.id">
 
         <img md-list-avatar src="http://lorempixel.com/40/40">
-        <div md-line fxLayout="row">
-          <span class="mdc-typography--subheading1">
-            <span class="strong">1.</span> {{ membership.user.name }}
+        <div md-line fxLayout="row" class="leaderboard-title">
+          <span class="mdc-typography--body1">
+            <span class="strong">{{ membership.position }}.</span> {{ membership.user.name }}
           </span>
           <span class="u-fill"></span>
-          <span class="mdc-typography--subheading1 strong">
+          <span class="mdc-typography--body1 strong">
             {{ membership.sales.length }}
           </span>
         </div>

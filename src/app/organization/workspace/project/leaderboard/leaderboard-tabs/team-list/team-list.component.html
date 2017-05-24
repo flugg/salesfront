@@ -1,6 +1,18 @@
 <div>
   <vmo-progress-spinner [hasLoaded]="! loading">
     <md-list class="vmo-list leaderboard-list">
+      <div class="vmo-list-title">
+        <div fxLayout="row">
+          <span class="mdc-typography--subheading1 strong">
+            Redd Barna
+          </span>
+          <span class="u-fill"></span>
+          <span class="mdc-typography--subheading1 strong">
+            {{ total }}
+          </span>
+        </div>
+        <md-divider></md-divider>
+      </div>
       <md-list-item *ngFor="let team of teams"
                     [routerLink]="'../../teams/' + team.id">
 
@@ -10,11 +22,11 @@
           <md-icon md-list-icon>group</md-icon>
         </div>
         <div md-line fxLayout="row">
-          <span class="mdc-typography--subheading1">
-            <span class="strong">1.</span> {{ team.name }}
+          <span class="mdc-typography--body1">
+            <span class="strong">{{ team.position }}.</span> {{ team.name }}
           </span>
           <span class="u-fill"></span>
-          <span class="mdc-typography--subheading1 strong">
+          <span class="mdc-typography--body1 strong">
             {{ team.sales.length }}
           </span>
         </div>

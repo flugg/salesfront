@@ -15,4 +15,5 @@ export interface Membership {
   team?: Team;
   user?: User;
   sales?: Sale[];
+  position?: number;
 }
