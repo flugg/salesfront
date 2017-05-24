@@ -4,7 +4,7 @@
 }
 
 .pulse {
-  @media (max-width: 600px) {
+  @media (max-width: 960px) {
     animation: pulse 2s infinite ease-in-out;
     animation-delay: 100ms;
   }
@@ -46,7 +46,7 @@
   100% { transform: scale(1) }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 960px) {
   @keyframes pulse {
     0% { transform: scale(1) }
     50% { transform: scale(1.06) }

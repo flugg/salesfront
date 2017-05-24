@@ -10,16 +10,22 @@ import { fadeInOut } from '../../core/animations/fade-in-out';
 import { slideUpDown } from '../../core/animations/slide-up-down';
 import { ActiveProjectService } from './shared/active-project.service';
 import { ActiveSidebarService } from './active-sidebar.service';
+import { ActiveMembershipService } from './active-membership.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { ScreenService } from '../../core/screen.service';
 import { ActiveUserService } from '../active-user.service';
+import { SalesTodayListService } from './shared/sales-today-list.service';
 import { SaleService } from './shared/sale.service';
 import { Project } from '../shared/project.model';
 import { User } from '../shared/user.model';
+import { Membership } from '../shared/membership.model';
+import { Sale } from './shared/sale.model';
 
 @Component({
   providers: [
-    ActiveSidebarService
+    ActiveSidebarService,
+    ActiveMembershipService,
+    SalesTodayListService
   ],
   templateUrl: 'workspace.component.html',
   styleUrls: ['workspace.component.scss'],
@@ -49,6 +55,16 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
    * The active project.
    */
   project: Project;
+
+  /**
+   * The active membership.
+   */
+  membership: Membership;
+
+  /**
+   * The sales added today.
+   */
+  sales: Sale[];
 
   /**
    * List of navigation links.
@@ -82,7 +98,9 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               private saleService: SaleService,
               private sidebar: ActiveSidebarService,
               private activeUser: ActiveUserService,
-              private activeProject: ActiveProjectService) {}
+              private activeProject: ActiveProjectService,
+              private activeMembership: ActiveMembershipService,
+              private salesToday: SalesTodayListService) {}
 
   /**
    * Initializes the component.
@@ -91,9 +109,12 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     this.subscriptions = [
       Observable.combineLatest(
         this.activeUser.user,
-        this.activeProject.project
+        this.activeProject.project,
+        this.activeMembership.membership,
+        this.salesToday.sales
       ).subscribe(data => {
-        [this.user, this.project] = data;
+        [this.user, this.project, this.membership, this.sales] = data;
+
         this.loading = false;
       }),
 
@@ -135,7 +156,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
    * Adds a sale and opens the sales confirmation dialog.
    */
   addSale() {
-    this.saleService.register(this.project).then(sale => this.dialog.open(SalesConfirmationComponent));
+    this.saleService.register(this.membership.id).then(sale => this.dialog.open(SalesConfirmationComponent));
   }
 
   /**

@@ -1,19 +1,28 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs/Subscription';
 
-import { LeaderboardListService } from '../leaderboard-list.service';
+import { TeamListService } from './team-list.service';
 import { Team } from '../../../shared/team.model';
 
 @Component({
-  providers: [LeaderboardListService],
-  templateUrl: 'team-list.component.html'
+  providers: [TeamListService],
+  templateUrl: 'team-list.component.html',
+  animations: [
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'scaleX(0)' }),
+        animate('800ms ease-in-out', style({ transform: 'scaleX(1)' }))
+      ])
+    ])
+  ]
 })
 export class TeamListComponent implements OnInit, OnDestroy {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
    * List of teams sale stats
@@ -28,15 +37,15 @@ export class TeamListComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(public leaderboardListService: LeaderboardListService) {}
+  constructor(private teamList: TeamListService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.leaderboardListService.sales.subscribe(teams => {
-      this.teams = teams as Team[];
-      this.isLoading = false;
+    this.subscriptions.push(this.teamList.teams.subscribe(teams => {
+      this.teams = teams;
+      this.loading = false;
     }));
   }
 

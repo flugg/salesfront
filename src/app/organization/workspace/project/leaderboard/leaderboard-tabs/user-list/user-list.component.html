@@ -1,18 +1,24 @@
 <div>
-  <vmo-progress-spinner [hasLoaded]="isLoading">
-    <md-list class="vmo-list">
-      <md-list-item md-ripple
-                    *ngFor="let user of users"
-                    [routerLink]="'../../users/' + user?.id"
-                    class="u-clickable">
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <md-list class="vmo-list leaderboard-list">
+      <md-list-item *ngFor="let membership of memberships"
+                    [routerLink]="'../../members/' + membership.id">
 
-        <div md-list-avatar
-             fxLayoutAlign="center center"
-             class="vmo-project-icon">
-          abc
+        <img md-list-avatar src="http://lorempixel.com/40/40">
+        <div md-line fxLayout="row">
+          <span class="mdc-typography--subheading1">
+            <span class="strong">1.</span> {{ membership.user.name }}
+          </span>
+          <span class="u-fill"></span>
+          <span class="mdc-typography--subheading1 strong">
+            {{ membership.sales.length }}
+          </span>
         </div>
-        <h4 md-line class="mdc-typography--subheading1">{{ user.name }}</h4>
-        <span md-line class="mdc-typography--body1 u-weak">Ground breakers since {{ user.createdAt }}</span>
+        <div md-line class="leaderboard-bar">
+          <div [@slideIn]="true"
+               class="leaderboard-progress"
+               [style.width]="membership.sales.length * 100 / memberships[0].sales.length + '%'"></div>
+        </div>
       </md-list-item>
     </md-list>
   </vmo-progress-spinner>

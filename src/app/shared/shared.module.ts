@@ -13,6 +13,7 @@ import { ExcludePipe } from './exclude.pipe';
   imports: [
     CommonModule,
     FlexLayoutModule,
+    MdButtonModule,
     MdProgressSpinnerModule
   ],
   exports: [
@@ -45,5 +46,4 @@ import { ExcludePipe } from './exclude.pipe';
     ExcludePipe
   ]
 })
-export class SharedModule {
-}
+export class SharedModule {}

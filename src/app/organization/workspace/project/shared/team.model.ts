@@ -1,5 +1,6 @@
 import { Project } from '../../../shared/project.model';
 import { User } from '../../../shared/user.model';
+import { Sale } from '../../shared/sale.model';
 
 export interface Team {
   id: string;
@@ -9,4 +10,5 @@ export interface Team {
   updatedAt: string;
   project?: Project;
   users?: User[];
+  sales?: Sale[];
 }

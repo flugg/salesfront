@@ -55,21 +55,23 @@ export abstract class ObservableResourceList implements OnDestroy {
   }
 
   /**
-   * Sets the observable list of resources to the current snapshot.
-   */
-  protected updateFromSnapshot() {
-    if (!this.subject.isStopped) {
-      this.subject.next(this.snapshot);
-    }
-  }
-
-  /**
    * Parses a pagination observable response.
    */
   protected pagination(pagination: Observable<PaginationResponse>): Observable<any> {
     return pagination.do(response => {
       this.setCursor(response.cursor.next);
     }).map(response => response.data);
+  }
+
+  /**
+   * Sets the current cursor id.
+   */
+  protected setCursor(cursor: string | null): void {
+    this.cursor = cursor;
+
+    if (cursor == null) {
+      this.paginator.complete();
+    }
   }
 
   /**
@@ -81,13 +83,19 @@ export abstract class ObservableResourceList implements OnDestroy {
   }
 
   /**
-   * Sets the current cursor id.
+   * Sets a data set to the observable list.
    */
-  protected setCursor(cursor: string | null): void {
-    this.cursor = cursor;
+  protected set(resources: any[]): void {
+    this.snapshot = resources;
+    this.updateFromSnapshot();
+  }
 
-    if (cursor == null) {
-      this.paginator.complete();
+  /**
+   * Sets the observable list of resources to the current snapshot.
+   */
+  protected updateFromSnapshot() {
+    if (!this.subject.isStopped) {
+      this.subject.next(this.snapshot);
     }
   }
 }

@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { RestApiService } from '../../../core/http/rest-api.service';
 import { PaginationResponse } from '../../../core/http/pagination-response';
-import { Project } from '../../shared/project.model';
 import { Sale } from './sale.model';
+import { Moment } from 'moment';
 
 @Injectable()
 export class SaleService {
@@ -22,6 +22,16 @@ export class SaleService {
   }
 
   /**
+   * Fetches a list of sales for a project.
+   */
+  getForProject(projectId: string, after?: Moment, before?: Moment): Observable<Sale[]> {
+    return this.api.get(`projects/${projectId}/sales`, {
+      after: after.toISOString(),
+      before: before.toISOString()
+    }).map(response => response.data);
+  }
+
+  /**
    * Fetches a list of sales for a team-profile.
    */
   getForTeam(teamId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
@@ -29,9 +39,19 @@ export class SaleService {
   }
 
   /**
-   * Registers a sale in the given project.
+   * Fetches a list of sales for a user.
    */
-  register(project: Project): Promise<Sale> {
-    return this.api.post(`teams/${project.id}/sales`).then(response => response.data);
+  getForMember(membershipId: string, after?: Moment, before?: Moment): Observable<Sale[]> {
+    return this.api.get(`memberships/${membershipId}/sales`, {
+      after: after.toISOString(),
+      before: before.toISOString()
+    }).map(response => response.data);
+  }
+
+  /**
+   * Registers a sale for the given membership.
+   */
+  register(membershipId: string): Promise<Sale> {
+    return this.api.post(`memberships/${membershipId}/sales`).then(response => response.data);
   }
 }

@@ -9,7 +9,6 @@ import { InviteListComponent } from './user-tabs/invite-list/invite-list.compone
 import { MemberListComponent } from './user-tabs/member-list/member-list.component';
 import { InviteUserComponent } from './invite-user/invite-user.component';
 import { InviteService } from './shared/invite.service';
-import { MembershipService } from './shared/membership.service';
 
 @NgModule({
   imports: [
@@ -25,8 +24,7 @@ import { MembershipService } from './shared/membership.service';
     InviteUserComponent
   ],
   providers: [
-    InviteService,
-    MembershipService
+    InviteService
   ]
 })
 export class UsersModule {}

@@ -17,6 +17,13 @@ export class TeamService {
   /**
    * Fetches a list of teams in a project.
    */
+  getAll(projectId: string): Observable<Team[]> {
+    return this.api.get(`projects/${projectId}/teams`).map(response => response.data);
+  }
+
+  /**
+   * Fetches a list of teams in a project.
+   */
   get(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
     return this.api.paginate(`projects/${projectId}/teams`, cursor, limit);
   }

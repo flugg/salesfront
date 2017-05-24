@@ -1,24 +1,33 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs/Subscription';
 
-import { LeaderboardListService } from '../leaderboard-list.service';
-import { User } from '../../../../../shared/user.model';
+import { UserListService } from './user-list.service';
+import { Membership } from '../../../../../shared/membership.model';
 
 @Component({
-  providers: [LeaderboardListService],
-  templateUrl: 'user-list.component.html'
+  providers: [UserListService],
+  templateUrl: 'user-list.component.html',
+  animations: [
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'scaleX(0)' }),
+        animate('800ms ease-in-out', style({ transform: 'scaleX(1)' }))
+      ])
+    ])
+  ]
 })
 export class UserListComponent implements OnInit, OnDestroy {
 
   /**
-   * Wether or not the component is currently loading.
+   * Indicates if the component is currently loading.
    */
-  isLoading = true;
+  loading = true;
 
   /**
-   * Users sales in project
+   * Membership sales in project
    */
-  users: User[];
+  memberships: Membership[];
 
   /**
    * List of observable subscriptions.
@@ -28,15 +37,15 @@ export class UserListComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(public leaderboardListService: LeaderboardListService) {}
+  constructor(private userList: UserListService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.leaderboardListService.sales.subscribe(users => {
-      this.users = users as User[];
-      this.isLoading = false;
+    this.subscriptions.push(this.userList.members.subscribe(memberships => {
+      this.memberships = memberships;
+      this.loading = false;
     }));
   }
 

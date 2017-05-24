@@ -66,6 +66,13 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   hasUnreadMessages(conversation: Conversation): boolean {
     const participation = conversation.participations.find(item => item.userId === this.user.id);
 
+    if (!participation) {
+      console.log('hmm');
+      console.log(conversation);
+      console.log(conversation.participations);
+      return false;
+    }
+
     if (participation.lastReadMessage && conversation.lastMessage) {
       return participation.lastReadMessage.id !== conversation.lastMessage.id;
     }

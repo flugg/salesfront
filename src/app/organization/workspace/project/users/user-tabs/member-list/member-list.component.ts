@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { MemberListService } from './member-list.service';
-import { Membership } from '../../shared/membership.model';
+import { Membership } from '../../../../../shared/membership.model';
 
 @Component({
   templateUrl: 'member-list.component.html'

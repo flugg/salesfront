@@ -54,7 +54,9 @@
   </md-sidenav>
   <md-toolbar class="sales-bar" [@slideUpDown]="true">
     <span class="mdc-typography--subheading1 u-weak">Sales today: </span>
-    <strong class="mdc-typography--subheading1 sales-amount">10</strong>
+    <strong class="mdc-typography--subheading1 sales-amount">
+      {{ sales?.length }}
+    </strong>
     <span class="u-fill"></span>
     <button md-button (click)="addSale()">
       Add sale

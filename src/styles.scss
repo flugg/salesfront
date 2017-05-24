@@ -289,3 +289,37 @@ body {
     color: rgba(white, 0.7);
   }
 }
+
+.leaderboard-bar {
+  background: #f2f2f2;
+  height: 12px;
+  border-radius: 6px;
+  margin-top: 4px !important;
+  @include mat-elevation(1);
+}
+
+.leaderboard-list {
+  padding: 16px 0 !important;
+
+  .mat-list-text {
+    overflow: visible !important;
+  }
+
+  .mat-list-item {
+    border-bottom: 0 !important;
+    height: 64px !important;
+  }
+
+  .strong {
+    font-weight: 600;
+  }
+}
+
+.leaderboard-progress {
+  transform-origin: 0;
+  border-radius: 6px;
+  height: 100%;
+  width: 0%;
+  background: #2979ff;
+  transition: width 0.4s ease-in-out;
+}
