@@ -1,41 +1,39 @@
-<div>
-  <vmo-progress-spinner [hasLoaded]="! loading">
-    <md-list class="vmo-list leaderboard-list">
-      <div class="vmo-list-title">
-        <div fxLayout="row">
-          <span class="mdc-typography--subheading1 strong">
-            Redd Barna
-          </span>
-          <span class="u-fill"></span>
-          <span class="mdc-typography--subheading1 strong">
-            {{ total }}
-          </span>
-        </div>
-        <md-divider></md-divider>
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <md-list class="vmo-list leaderboard-list">
+    <div class="vmo-list-title">
+      <div fxLayout="row">
+        <span class="mdc-typography--subheading1 strong">
+          Redd Barna
+        </span>
+        <span class="u-fill"></span>
+        <span class="mdc-typography--subheading1 strong">
+          {{ total }}
+        </span>
       </div>
-      <md-list-item *ngFor="let team of teams"
-                    [routerLink]="'../../teams/' + team.id">
+      <md-divider></md-divider>
+    </div>
+    <md-list-item *ngFor="let team of teams" [routerLink]="team.id" class="u-clickable">
+      <div md-list-avatar
+           fxLayoutAlign="center center"
+           class="vmo-group-icon">
+        <md-icon md-list-icon>group</md-icon>
+      </div>
+      <div md-line fxLayout="row">
+        <span class="mdc-typography--body1">
+          <span class="strong">{{ team.position }}.</span> {{ team.name }}
+        </span>
+        <span class="u-fill"></span>
+        <span class="mdc-typography--body1 strong">
+          {{ team.sales.length }}
+        </span>
+      </div>
+      <div md-line class="leaderboard-bar">
+        <div [@slideIn]="true"
+             class="leaderboard-progress"
+             [style.width]="team.sales.length * 100 / teams[0].sales.length + '%'"></div>
+      </div>
+    </md-list-item>
+  </md-list>
+</vmo-progress-spinner>
 
-        <div md-list-avatar
-             fxLayoutAlign="center center"
-             class="vmo-group-icon">
-          <md-icon md-list-icon>group</md-icon>
-        </div>
-        <div md-line fxLayout="row">
-          <span class="mdc-typography--body1">
-            <span class="strong">{{ team.position }}.</span> {{ team.name }}
-          </span>
-          <span class="u-fill"></span>
-          <span class="mdc-typography--body1 strong">
-            {{ team.sales.length }}
-          </span>
-        </div>
-        <div md-line class="leaderboard-bar">
-          <div [@slideIn]="true"
-               class="leaderboard-progress"
-               [style.width]="team.sales.length * 100 / teams[0].sales.length + '%'"></div>
-        </div>
-      </md-list-item>
-    </md-list>
-  </vmo-progress-spinner>
-</div>
+<router-outlet></router-outlet>

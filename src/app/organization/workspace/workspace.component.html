@@ -58,7 +58,7 @@
       {{ sales?.length }}
     </strong>
     <span class="u-fill"></span>
-    <button md-button (click)="addSale()">
+    <button md-button (click)="addSale()" [disabled]="pending">
       Add sale
     </button>
   </md-toolbar>

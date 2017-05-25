@@ -1,12 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/combineLatest';
 
-import { TeamListService } from './team-list.service';
-import { Team } from '../../../shared/team.model';
+import { SelectedTeamService } from './selected-team.service';
+import { MemberListService } from './member-list.service';
+import { Membership } from '../../../../../../shared/membership.model';
+import { Team } from '../../../../shared/team.model';
 
 @Component({
-  templateUrl: 'team-list.component.html',
+  providers: [SelectedTeamService, MemberListService],
+  templateUrl: 'team.component.html',
   animations: [
     trigger('slideIn', [
       transition(':enter', [
@@ -16,7 +21,7 @@ import { Team } from '../../../shared/team.model';
     ])
   ]
 })
-export class TeamListComponent implements OnInit, OnDestroy {
+export class TeamComponent implements OnInit, OnDestroy {
 
   /**
    * Indicates if the component is currently loading.
@@ -24,9 +29,14 @@ export class TeamListComponent implements OnInit, OnDestroy {
   loading = true;
 
   /**
-   * List of teams sale stats
+   * The selected team.
    */
-  teams: Team[];
+  team: Team;
+
+  /**
+   * The members of the selected team.
+   */
+  memberships: Membership[];
 
   /**
    * The total value.
@@ -41,15 +51,19 @@ export class TeamListComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private teamList: TeamListService) {}
+  constructor(private selectedTeam: SelectedTeamService,
+              private memberList: MemberListService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.teamList.teams.subscribe(teams => {
-      this.teams = teams;
-      this.total = this.calculateTotal(teams);
+    this.subscriptions.push(Observable.combineLatest(
+      this.selectedTeam.team,
+      this.memberList.members
+    ).subscribe(data => {
+      [this.team, this.memberships] = data;
+      this.total = this.team.sales.length;
       this.loading = false;
     }));
   }
@@ -61,12 +75,5 @@ export class TeamListComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => {
       subscription.unsubscribe();
     });
-  }
-
-  /**
-   * Calculates the total from a list of teams.
-   */
-  private calculateTotal(teams: Team[]): number {
-    return teams.reduce((value, team) => value + team.sales.length, 0);
   }
 }

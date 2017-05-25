@@ -42,6 +42,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   loading = true;
 
   /**
+   * Indicates if the salesbar has a pending sales request.
+   */
+  pending = false;
+
+  /**
    * The mode of the side navigation.
    */
   mode: string;
@@ -156,7 +161,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
    * Adds a sale and opens the sales confirmation dialog.
    */
   addSale() {
-    this.saleService.register(this.membership.id).then(sale => this.dialog.open(SalesConfirmationComponent));
+    this.pending = true;
+    this.saleService.register(this.membership.id).then(() => {
+      this.dialog.open(SalesConfirmationComponent);
+      this.pending = false;
+    });
   }
 
   /**

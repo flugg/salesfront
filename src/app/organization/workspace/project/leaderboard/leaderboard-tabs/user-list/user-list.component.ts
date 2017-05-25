@@ -6,7 +6,6 @@ import { UserListService } from './user-list.service';
 import { Membership } from '../../../../../shared/membership.model';
 
 @Component({
-  providers: [UserListService],
   templateUrl: 'user-list.component.html',
   animations: [
     trigger('slideIn', [

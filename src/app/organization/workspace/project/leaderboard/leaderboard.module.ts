@@ -6,6 +6,7 @@ import { LeaderboardRoutingModule } from './leaderboard-routing.module';
 import { LeaderboardTabsComponent } from './leaderboard-tabs/leaderboard-tabs.component';
 import { UserListComponent } from './leaderboard-tabs/user-list/user-list.component';
 import { TeamListComponent } from './leaderboard-tabs/team-list/team-list.component';
+import { TeamComponent } from './leaderboard-tabs/team-list/team/team.component';
 import { LeaderboardService } from './shared/leaderboard.service';
 
 @NgModule({
@@ -17,7 +18,8 @@ import { LeaderboardService } from './shared/leaderboard.service';
   declarations: [
     LeaderboardTabsComponent,
     UserListComponent,
-    TeamListComponent
+    TeamListComponent,
+    TeamComponent
   ],
   providers: [
     LeaderboardService

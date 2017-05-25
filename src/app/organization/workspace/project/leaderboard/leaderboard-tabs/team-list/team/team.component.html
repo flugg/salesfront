@@ -1,10 +1,16 @@
-<div>
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar [title]="team?.name" mode="close">
+    <button md-icon-button>
+      <md-icon>date_range</md-icon>
+    </button>
+  </vmo-toolbar>
+
   <vmo-progress-spinner [hasLoaded]="! loading">
     <md-list class="vmo-list leaderboard-list">
       <div class="vmo-list-title">
         <div fxLayout="row">
           <span class="mdc-typography--subheading1 strong">
-            Redd Barna
+            {{ team?.name }}
           </span>
           <span class="u-fill"></span>
           <span class="mdc-typography--subheading1 strong">
@@ -13,8 +19,10 @@
         </div>
         <md-divider></md-divider>
       </div>
-      <md-list-item *ngFor="let membership of memberships">
-        <img md-list-avatar src="http://lorempixel.com/40/40" [routerLink]="'../../users/members/' + membership.id" class="u-clickable">
+      <md-list-item *ngFor="let membership of memberships"
+                    [routerLink]="'../../members/' + membership.id">
+
+        <img md-list-avatar src="http://lorempixel.com/40/40">
         <div md-line fxLayout="row" class="leaderboard-title">
           <span class="mdc-typography--body1">
             <span class="strong">{{ membership.position }}.</span> {{ membership.user.name }}
@@ -30,6 +38,9 @@
                [style.width]="membership.sales.length * 100 / memberships[0].sales.length + '%'"></div>
         </div>
       </md-list-item>
+      <div *ngIf="! memberships?.length" fxLayoutAlign="center center" class="u-vertical-spacing">
+      <div class="mdc-typography--body1 u-weak">This team is empty.</div>
+      </div>
     </md-list>
   </vmo-progress-spinner>
 </div>

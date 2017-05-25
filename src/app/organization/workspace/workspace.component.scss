@@ -96,3 +96,7 @@ button[md-fab] {
   font-size: 18px !important;
   padding-left: 8px;
 }
+
+.mat-button[disabled] {
+  color: rgba(white, 0.5);
+}
