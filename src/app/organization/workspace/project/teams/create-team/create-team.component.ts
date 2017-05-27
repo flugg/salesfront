@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MdSnackBar } from '@angular/material';
 import 'rxjs/add/operator/first';
 
 import { ActiveProjectService } from '../../../shared/active-project.service';
@@ -15,6 +16,7 @@ export class CreateTeamComponent {
    * Constructs the component.
    */
   constructor(private router: Router,
+              private snackBar: MdSnackBar,
               private activeProject: ActiveProjectService,
               private teamService: TeamService) {}
 
@@ -25,6 +27,7 @@ export class CreateTeamComponent {
     this.activeProject.project.first().subscribe(project => {
       this.teamService.create(project.id, name).then(team => {
         this.router.navigate(['projects', project.id, 'teams', team.id]);
+        this.snackBar.open('Team created', null, { duration: 1500 });
       });
     });
   }

@@ -1,3 +1,11 @@
+.vmo-scrollable-area {
+  height: calc(100% - 56px);
+
+  @media (min-width: 599px) {
+    height: calc(100% - 64px);
+  }
+}
+
 .u-weak {
   color: rgba(white, 0.7);
 }
@@ -60,6 +68,10 @@
   }
 }
 
+.mat-sidenav-container {
+  background: #f2f2f2;
+}
+
 .active-link {
   .mat-icon {
     opacity: 1;
@@ -67,6 +79,14 @@
   .mat-list-text > * {
     color: white !important;
     font-weight: 800 !important;
+  }
+}
+
+.mat-raised-button {
+  background: #2962FF;
+
+  &[disabled] {
+    color: rgba(white, 0.5);
   }
 }
 
@@ -79,6 +99,10 @@ button[md-fab] {
   color: black;
 }
 
+.mat-button {
+  background: rgba(0, 0, 0, 0.12);
+}
+
 .mat-toolbar.sales-bar {
   position: fixed;
   bottom: 0;
@@ -89,12 +113,6 @@ button[md-fab] {
   /deep/ .mat-toolbar-row {
     height: 56px !important;
   }
-}
-
-.sales-amount {
-  font-weight: 800 !important;
-  font-size: 18px !important;
-  padding-left: 8px;
 }
 
 .mat-button[disabled] {

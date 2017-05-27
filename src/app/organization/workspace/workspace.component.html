@@ -1,6 +1,6 @@
 <md-sidenav-container>
   <md-sidenav #sidenav [mode]="mode">
-    <div *ngIf="! loading" [@fadeInOut]="true">
+    <div *ngIf="! loading" [@fadeInOut]="true" fxFill>
       <md-toolbar>
         <button md-icon-button routerLink="/messages" routerLinkActive="active-link">
           <md-icon>email</md-icon>
@@ -52,13 +52,13 @@
       </div>
     </div>
   </md-sidenav>
-  <md-toolbar class="sales-bar" [@slideUpDown]="true">
+  <md-toolbar *ngIf="! loading" class="sales-bar" [@slideUpDown]="true">
     <span class="mdc-typography--subheading1 u-weak">Sales today: </span>
     <strong class="mdc-typography--subheading1 sales-amount">
       {{ sales?.length }}
     </strong>
     <span class="u-fill"></span>
-    <button md-button (click)="addSale()" [disabled]="pending">
+    <button md-raised-button (click)="addSale()" [disabled]="pending">
       Add sale
     </button>
   </md-toolbar>

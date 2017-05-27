@@ -1,0 +1,31 @@
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <div class="vmo-scrollable-area">
+    <md-list *ngIf="leaders?.length" class="vmo-list">
+      <md-list-item *ngFor="let leader of leaders">
+        <div md-list-avatar
+             fxLayoutAlign="center center"
+             class="vmo-group-icon">
+          <md-icon md-list-icon>send</md-icon>
+        </div>
+        <h4 md-line class="mdc-typography--subheading1">{{ leader.id }}</h4>
+        <div class="u-fill"></div>
+        <div>
+          <button md-button>Send again</button>
+        </div>
+        <div>
+          <button md-button>Cancel leader</button>
+        </div>
+      </md-list-item>
+    </md-list>
+
+    <vmo-load-more-button [paginator]="leaderList"></vmo-load-more-button>
+
+    <div *ngIf="! leaders?.length" class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <span class="mdc-typography--headline">No team leaders.</span>
+      <span class="u-weak">Send an leader to give someone access to the project.</span>
+      <button md-raised-button color="accent" routerLink="send" class="u-push-button">Send an leader</button>
+    </div>
+  </div>
+</vmo-progress-spinner>
+
+<router-outlet></router-outlet>

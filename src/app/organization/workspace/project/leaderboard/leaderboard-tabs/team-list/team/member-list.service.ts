@@ -22,8 +22,11 @@ export class MemberListService extends ObservableResourceList implements OnDestr
               private userList: UserListService) {
     super();
 
-    this.userList.members.map(members => members.filter(member => member.teamId === route.snapshot.params.team))
-      .subscribe(members => this.set(members));
+    this.userList.members.map(members => members.filter(member => member.sales.find(sale => sale.teamId === route.snapshot.params.team)))
+      .subscribe(memberships => this.set(memberships.map(membership => {
+        membership.position = this.calculatePosition(memberships, membership);
+        return membership;
+      })));
   }
 
   /**
@@ -31,5 +34,15 @@ export class MemberListService extends ObservableResourceList implements OnDestr
    */
   ngOnDestroy(): void {
     super.ngOnDestroy();
+  }
+
+  /**
+   * Calculates the position of the member.
+   */
+  private calculatePosition(memberships: Membership[], membership: Membership): number {
+    const index = memberships.indexOf(membership);
+    return memberships.reduce((value, current) => {
+      return memberships.indexOf(current) >= index || current.sales.length === membership.sales.length ? value : value + 1;
+    }, 1);
   }
 }

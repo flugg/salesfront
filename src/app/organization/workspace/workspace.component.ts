@@ -162,8 +162,14 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
    */
   addSale() {
     this.pending = true;
-    this.saleService.register(this.membership.id).then(() => {
-      this.dialog.open(SalesConfirmationComponent);
+    this.saleService.register(this.membership.id).then(sale => {
+      this.dialog.open(SalesConfirmationComponent, {
+        data: {
+          sale: sale,
+          count: this.sales.length,
+          membership: this.membership
+        }
+      });
       this.pending = false;
     });
   }

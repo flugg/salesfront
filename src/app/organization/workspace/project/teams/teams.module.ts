@@ -6,6 +6,8 @@ import { TeamsRoutingModule } from './teams-routing.module';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { TeamListComponent } from './team-list/team-list.component';
 import { TeamProfileComponent } from './team-profile/team-profile.component';
+import { LeaderListComponent } from './team-profile/leader-list/leader-list.component';
+import { MemberListComponent } from './team-profile/member-list/member-list.component';
 
 @NgModule({
   imports: [
@@ -16,7 +18,9 @@ import { TeamProfileComponent } from './team-profile/team-profile.component';
   declarations: [
     CreateTeamComponent,
     TeamListComponent,
-    TeamProfileComponent
+    TeamProfileComponent,
+    LeaderListComponent,
+    MemberListComponent
   ]
 })
 export class TeamsModule {}

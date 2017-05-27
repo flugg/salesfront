@@ -1,13 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { Component, Inject, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 
 import { WorkspaceComponent } from '../workspace.component';
+import { SaleService } from '../shared/sale.service';
 
 @Component({
   templateUrl: 'sales-confirmation.component.html',
-  styleUrls: ['sales-confirmation.component.scss']
+  styleUrls: ['sales-confirmation.component.scss'],
+  animations: [
+    trigger('popInOut', [
+      transition(':enter', [
+        style({ transform: 'scale(0)', opacity: 0 }),
+        animate('360ms cubic-bezier(0.0, 0.0, 0.2, 1)', style({ transform: 'scale(1)', opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ transform: 'scale(1)' }),
+        animate('120ms cubic-bezier(0.4, 0.0, 0.6, 1)', style({ transform: 'scale(0)' }))
+      ])
+    ])
+  ]
 })
 export class SalesConfirmationComponent implements OnInit {
+
+  /**
+   * Indicates if the component is currently loading.
+   */
+  loading = true;
 
   /**
    * The chosen motivational cheer.
@@ -22,37 +41,82 @@ export class SalesConfirmationComponent implements OnInit {
     'Nice one!',
     'Wow!',
     'Brilliant!',
+    'Excellent!',
     'Amazing!',
-    'Unbelievable!',
+    'Exceptional!',
     'Incredible!',
-    'You are good!',
+    'Superb work!',
     'Awesome!',
     'Magnificent!',
     'Well done!',
     'Sweet!',
     'Smooth!',
-    'Yes! Yes! Yes!',
     'Go! Go! Go!',
     'Keep it up!',
-    'Oh yeah!'
+    'You know it!',
+    'Outstanding!',
+    'Bravo!',
+    'Huzzah!',
+    'Bingo!',
+    'Spot on!',
+    'You rock!',
+    'You rule!',
+    'Swell!',
+    'Gooooooaaal!',
+    'Strike!',
+    'Hole in one!',
+    'Success!',
+    'Fantastic!',
+    'Lovely!',
+    'Remarkable!',
+    'Spectacular!',
+    'Beautiful!',
+    'Wonderful!',
+    'Glorious!',
+    'Splendid!',
+    'Tremendous!',
+    'Phenomonal!',
+    'Sensational!',
+    'Grand!',
+    'Top-notch!',
   ];
 
   /**
    * Constructs the component.
    */
-  constructor(public dialog: MdDialogRef<WorkspaceComponent>) { }
+  constructor(@Inject(MD_DIALOG_DATA) public data: any,
+              public dialog: MdDialogRef<WorkspaceComponent>,
+              private saleService: SaleService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
+    console.log(this.data);
     this.cheer = this.getRandomCheer();
+    setTimeout(() => this.loading = false, 200);
+  }
+
+  /**
+   * Adds a sale and opens the sales confirmation dialog.
+   */
+  addSale() {
+    this.loading = true;
+    this.saleService.register(this.data.membership.id).then(sale => {
+      setTimeout(() => {
+        this.data.sale = sale;
+        this.data.count++;
+        this.cheer = this.getRandomCheer();
+        this.loading = false;
+      }, 100);
+    });
   }
 
   /**
    * Retrieves a random cheer from the list of cheers.
    */
   private getRandomCheer(): string {
-    return this.cheers[Math.floor(Math.random() * this.cheers.length)];
+    const cheer = this.cheers[Math.floor(Math.random() * this.cheers.length)];
+    return this.cheer === cheer ? this.getRandomCheer() : cheer;
   }
 }

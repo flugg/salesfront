@@ -36,6 +36,7 @@
     "pusher-js": "^4.0.0",
     "rxjs": "^5.1.0",
     "ts-helpers": "^1.1.1",
+    "web-animations-js": "^2.2.5",
     "zone.js": "0.8.4"
   },
   "devDependencies": {

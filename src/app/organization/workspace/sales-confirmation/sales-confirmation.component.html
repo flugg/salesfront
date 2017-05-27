@@ -1,10 +1,21 @@
-<div class="sale-splash" (click)="dialog.close()" fxLayoutAlign="center">
-  <div class="pulse" fxLayout="column" fxLayoutGap="24px" fxLayoutAlign="center center">
-    <md-icon class="md-24">check</md-icon>
-    <div class="mdc-typography--display3">Sale added</div>
-    <div class="mdc-typography--display1 u-weak">{{ cheer }}</div>
+<div fxLayout="column" fxFill>
+  <div class="sale-splash" fxLayoutAlign="center">
+    <div *ngIf="! loading" class="pulse" fxLayout="column" fxLayoutGap="24px" fxLayoutAlign="center center" [@popInOut]="true">
+      <md-icon class="md-24">check</md-icon>
+      <div class="mdc-typography--display1 u-weak">Sale added</div>
+      <div class="mdc-typography--display3">{{ cheer }}</div>
+    </div>
   </div>
-</div>
-<div fxLayoutAlign="center" (click)="dialog.close()">
-  <div class="mdc-typography--body1 u-weak close-info" fxHide [fxShow.lt-md]="true">Click anywhere to close</div>
+  <div>
+    <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
+      <span class="mdc-typography--subheading2" fxLayout="row" fxLayoutAlign="center">
+        <span class="u-weak">Sales today:</span><strong class="sales-amount">{{ data.count }}</strong>
+      </span>
+      <button md-raised-button (click)="dialog.close()" class="strong-button">Close</button>
+      <div fxLayout="row">
+        <button md-button (click)="dialog.close()" [disabled]="loading">Undo</button>
+        <button md-button (click)="addSale()" [disabled]="loading">Add another</button>
+      </div>
+    </div>
+  </div>
 </div>

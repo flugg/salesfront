@@ -1,13 +1,35 @@
+:host, strong {
+  color: white;
+}
+
+.mat-raised-button {
+  height: 48px;
+  width: 90%;
+}
+
+.mat-raised-button,
+.mat-button {
+  &[disabled] {
+    color: rgba(white, 0.5);
+  }
+}
+
+.strong-button {
+  background: #2962ff;
+}
+
 .sale-splash {
   position: static;
   height: 100%;
+
+  @media (min-width: 959px) {
+    height: 350px;
+  }
 }
 
 .pulse {
-  @media (max-width: 960px) {
-    animation: pulse 2s infinite ease-in-out;
-    animation-delay: 100ms;
-  }
+  animation: pulse 2s infinite ease-in-out;
+  animation-delay: 100ms;
 }
 
 .mat-icon {
@@ -16,13 +38,8 @@
 
 /deep/ .mat-dialog-container {
   background: #2979ff;
-  padding: 128px !important;
+  padding: 24px !important;
   width: 600px;
-
-  @media (min-width: 959px) {
-    animation: pulse 2s infinite ease-in-out;
-    animation-delay: 100ms;
-  }
 
   @media (max-width: 960px) {
     position: fixed;
@@ -31,7 +48,6 @@
     right: 0;
     bottom: 0;
     max-width: 100%;
-    padding: 24px !important;
     width: auto;
   }
 }
@@ -41,16 +57,14 @@
 }
 
 @keyframes pulse {
-  0% { transform: scale(1) }
-  50% { transform: scale(1.02) }
-  100% { transform: scale(1) }
-}
-
-@media (max-width: 960px) {
-  @keyframes pulse {
-    0% { transform: scale(1) }
-    50% { transform: scale(1.06) }
-    100% { transform: scale(1) }
+  0% {
+    transform: scale(1)
+  }
+  50% {
+    transform: scale(1.06)
+  }
+  100% {
+    transform: scale(1)
   }
 }
 

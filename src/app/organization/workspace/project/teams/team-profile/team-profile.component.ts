@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { SelectedTeamService } from './selected-team.service';
 import { Team } from '../../shared/team.model';
+import { LeaderListService } from './leader-list/leader-list.service';
+import { MemberListService } from './member-list/member-list.service';
 
 @Component({
-  providers: [SelectedTeamService],
+  providers: [SelectedTeamService, LeaderListService, MemberListService],
   templateUrl: 'team-profile.component.html'
 })
 export class TeamProfileComponent implements OnInit {

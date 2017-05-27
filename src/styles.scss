@@ -334,7 +334,7 @@ body {
   background: #f2f2f2;
   height: 14px;
   border-radius: 6px;
-  margin-top: 6px !important;
+  margin-top: 8px !important;
   @include mat-elevation(1);
 }
 
@@ -351,4 +351,10 @@ body {
   span {
     line-height: 1 !important;
   }
+}
+
+.sales-amount {
+  font-weight: 800 !important;
+  font-size: 18px !important;
+  padding-left: 8px;
 }
