@@ -1,7 +1,7 @@
-<div *ngIf="! hasLoaded">
+<div *ngIf="! hasLoaded" fxFill fxLayoutAlign="center center">
   <md-progress-spinner *ngIf="visible" [@fadeInOut]="true" mode="indeterminate" color="accent"></md-progress-spinner>
 </div>
 
-<div *ngIf="hasLoaded" [@fadeInOut]="true" fxFlexFill>
+<div *ngIf="hasLoaded" [@fadeInOut]="true" fxFill>
   <ng-content></ng-content>
 </div>

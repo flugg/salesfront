@@ -12,6 +12,12 @@
     </md-list>
 
     <vmo-load-more-button [paginator]="membershipList"></vmo-load-more-button>
+
+    <div *ngIf="! memberships?.length" class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <span class="mdc-typography--headline">Project has no members.</span>
+      <span class="u-weak">Send an invite to give someone access to the project.</span>
+      <button md-raised-button color="accent" routerLink="../invites/send" class="u-push-button">Send an invite</button>
+    </div>
   </div>
 </vmo-progress-spinner>
 

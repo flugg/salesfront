@@ -1,15 +1,18 @@
 <div class="vmo-component vmo-component--important">
-  <form novalidate (submit)="submit(emailInput.value); $event.preventDefault()">
-    <vmo-toolbar title="Invite User" mode="close">
-      <button md-icon-button type="button">
-        <md-icon>check</md-icon>
-      </button>
-    </vmo-toolbar>
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
 
-    <div class="u-big-container">
-      <md-input-container>
-        <input #emailInput mdInput placeholder="Email" type="email">
-      </md-input-container>
+  <form novalidate (submit)="submit(emailInput.value); $event.preventDefault()">
+    <div class="container">
+      <md-card>
+        <span class="mdc-typography--display1">Invite User</span>
+        <p class="mdc-typography--body1 u-weak">Teams help organize users in a project. Give your new team a suiting name!</p>
+        <div class="u-vertical-spacing">
+          <md-input-container>
+            <input #emailInput mdInput placeholder="Email" type="email">
+          </md-input-container>
+        </div>
+        <button md-raised-button color="accent">Invite</button>
+      </md-card>
     </div>
   </form>
 </div>

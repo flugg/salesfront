@@ -27,7 +27,7 @@ export class CreateTeamComponent {
     this.activeProject.project.first().subscribe(project => {
       this.teamService.create(project.id, name).then(team => {
         this.router.navigate(['projects', project.id, 'teams', team.id]);
-        this.snackBar.open('Team created', null, { duration: 1500 });
+        this.snackBar.open('Team created', null, { duration: 2000 });
       });
     });
   }

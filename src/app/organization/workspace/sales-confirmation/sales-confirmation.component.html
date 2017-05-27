@@ -8,12 +8,12 @@
   </div>
   <div>
     <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
-      <span class="mdc-typography--subheading2" fxLayout="row" fxLayoutAlign="center">
+      <span class="mdc-typography--subheading2" fxLayout="row" fxLayoutAlign="center" [fxHide.gt-sm]="true">
         <span class="u-weak">Sales today:</span><strong class="sales-amount">{{ data.count }}</strong>
       </span>
       <button md-raised-button (click)="dialog.close()" class="strong-button">Close</button>
       <div fxLayout="row">
-        <button md-button (click)="dialog.close()" [disabled]="loading">Undo</button>
+        <button md-button (click)="undoSale()" [disabled]="loading">Undo</button>
         <button md-button (click)="addSale()" [disabled]="loading">Add another</button>
       </div>
     </div>

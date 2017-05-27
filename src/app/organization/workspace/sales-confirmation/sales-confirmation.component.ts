@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogRef, MdSnackBar } from '@angular/material';
 
 import { WorkspaceComponent } from '../workspace.component';
 import { SaleService } from '../shared/sale.service';
@@ -86,15 +86,28 @@ export class SalesConfirmationComponent implements OnInit {
    */
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
               public dialog: MdDialogRef<WorkspaceComponent>,
+              private snackbar: MdSnackBar,
               private saleService: SaleService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    console.log(this.data);
     this.cheer = this.getRandomCheer();
     setTimeout(() => this.loading = false, 200);
+  }
+
+  /**
+   * Regrets the last sale done.
+   */
+  undoSale() {
+    this.loading = true;
+    setTimeout(() => {
+      this.dialog.afterClosed().subscribe(() => {
+        this.snackbar.open('Sale undone', null, { duration: 2000 });
+      });
+      this.dialog.close();
+    }, 300);
   }
 
   /**
