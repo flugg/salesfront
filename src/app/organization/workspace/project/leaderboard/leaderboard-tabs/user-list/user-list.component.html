@@ -1,40 +1,38 @@
-<div>
-  <vmo-progress-spinner [hasLoaded]="! loading">
-    <div class="vmo-scrollable-area">
-      <md-list class="vmo-list leaderboard-list">
-        <div class="vmo-list-title">
-          <div fxLayout="row">
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <div class="vmo-scrollable-area" [class.u-top-spacing]="datepicker.visible">
+    <md-list class="vmo-list leaderboard-list">
+      <div class="vmo-list-title">
+        <div fxLayout="row">
+        <span class="mdc-typography--subheading1 strong">
+          Total
+        </span>
+          <span class="u-fill"></span>
           <span class="mdc-typography--subheading1 strong">
-            Total
-          </span>
-            <span class="u-fill"></span>
-            <span class="mdc-typography--subheading1 strong">
-            {{ total }}
-          </span>
-          </div>
-          <md-divider></md-divider>
+          {{ total }}
+        </span>
         </div>
-        <md-list-item *ngFor="let membership of memberships">
-          <img md-list-avatar
-               src="http://lorempixel.com/40/40"
-               [routerLink]="'../../users/members/' + membership.id"
-               class="u-clickable">
-          <div md-line fxLayout="row" class="leaderboard-title">
-          <span class="mdc-typography--body1">
-            <span class="strong">{{ membership.position }}.</span> {{ membership.user.name }}
-          </span>
-            <span class="u-fill"></span>
-            <span class="mdc-typography--body1 strong">
-            {{ membership.sales.length }}
-          </span>
-          </div>
-          <div md-line class="leaderboard-bar">
-            <div [@slideIn]="true"
-                 class="leaderboard-progress"
-                 [style.width]="membership.sales.length * 100 / memberships[0].sales.length + '%'"></div>
-          </div>
-        </md-list-item>
-      </md-list>
-    </div>
-  </vmo-progress-spinner>
-</div>
+        <md-divider></md-divider>
+      </div>
+      <md-list-item *ngFor="let membership of memberships">
+        <img md-list-avatar
+             src="http://lorempixel.com/40/40"
+             [routerLink]="'../../users/members/' + membership.id"
+             class="u-clickable">
+        <div md-line fxLayout="row" class="leaderboard-title">
+        <span class="mdc-typography--body1">
+          <span class="strong">{{ membership.position }}.</span> {{ membership.user.name }}
+        </span>
+          <span class="u-fill"></span>
+          <span class="mdc-typography--body1 strong">
+          {{ membership.sales.length }}
+        </span>
+        </div>
+        <div md-line class="leaderboard-bar">
+          <div [@slideIn]="true"
+               class="leaderboard-progress"
+               [style.width]="membership.sales.length * 100 / memberships[0].sales.length + '%'"></div>
+        </div>
+      </md-list-item>
+    </md-list>
+  </div>
+</vmo-progress-spinner>

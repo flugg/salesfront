@@ -1,18 +1,23 @@
 <div class="vmo-component vmo-component--important">
   <vmo-toolbar title="" mode="close"></vmo-toolbar>
 
-  <form novalidate (submit)="submit(emailInput.value); $event.preventDefault()">
-    <div class="container">
-      <md-card>
-        <span class="mdc-typography--display1">Invite User</span>
-        <p class="mdc-typography--body1 u-weak">Teams help organize users in a project. Give your new team a suiting name!</p>
-        <div class="u-vertical-spacing">
-          <md-input-container>
-            <input #emailInput mdInput placeholder="Email" type="email">
-          </md-input-container>
-        </div>
-        <button md-raised-button color="accent">Invite</button>
-      </md-card>
-    </div>
-  </form>
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <form novalidate (submit)="submit(emailInput.value); $event.preventDefault()">
+      <div class="container">
+        <md-card>
+          <span class="mdc-typography--display1">Invite User</span>
+          <p class="mdc-typography--body1 u-weak">Send an invitation to the given email address to give the user access to the project.</p>
+          <div class="u-vertical-spacing">
+            <md-input-container color="accent">
+              <input #emailInput mdInput placeholder="Email" type="email" autofocus>
+            </md-input-container>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+            <button md-raised-button color="accent">Send</button>
+            <md-checkbox>Invite more</md-checkbox>
+          </div>
+        </md-card>
+      </div>
+    </form>
+  </vmo-progress-spinner>
 </div>

@@ -8,6 +8,8 @@ import { UserListComponent } from './leaderboard-tabs/user-list/user-list.compon
 import { TeamListComponent } from './leaderboard-tabs/team-list/team-list.component';
 import { TeamComponent } from './leaderboard-tabs/team-list/team/team.component';
 import { LeaderboardService } from './shared/leaderboard.service';
+import { DatepickerComponent } from './shared/datepicker/datepicker.component';
+import { DatepickerService } from './shared/datepicker/datepicker.service';
 
 @NgModule({
   imports: [
@@ -19,10 +21,12 @@ import { LeaderboardService } from './shared/leaderboard.service';
     LeaderboardTabsComponent,
     UserListComponent,
     TeamListComponent,
-    TeamComponent
+    TeamComponent,
+    DatepickerComponent
   ],
   providers: [
-    LeaderboardService
+    LeaderboardService,
+    DatepickerService
   ]
 })
 export class LeaderboardModule {}

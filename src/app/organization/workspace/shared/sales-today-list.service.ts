@@ -28,7 +28,7 @@ export class SalesTodayListService extends ObservableResourceList implements OnD
     super();
 
     this.activeMembership.membership.first().subscribe(membership => {
-      this.saleService.getForMember(membership.id, moment(), moment()).subscribe(sales => this.add(sales));
+      this.saleService.getForMember(membership.id, moment().startOf('day'), moment().endOf('day')).subscribe(sales => this.add(sales));
     });
 
     this.activeUser.user.first().subscribe(user => {

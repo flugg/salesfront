@@ -8,6 +8,7 @@ import { SelectedTeamService } from './selected-team.service';
 import { MemberListService } from './member-list.service';
 import { Membership } from '../../../../../../shared/membership.model';
 import { Team } from '../../../../shared/team.model';
+import { DatepickerService } from '../../../shared/datepicker/datepicker.service';
 
 @Component({
   providers: [SelectedTeamService, MemberListService],
@@ -51,7 +52,8 @@ export class TeamComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private selectedTeam: SelectedTeamService,
+  constructor(public datepicker: DatepickerService,
+              private selectedTeam: SelectedTeamService,
               private memberList: MemberListService) {}
 
   /**
@@ -63,7 +65,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       this.memberList.members
     ).subscribe(data => {
       [this.team, this.memberships] = data;
-      this.total = this.team.sales.length;
+      this.total = this.memberships.reduce((value, membership) => value + membership.sales.length, 0);
       this.loading = false;
     }));
   }

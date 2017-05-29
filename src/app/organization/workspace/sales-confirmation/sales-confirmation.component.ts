@@ -79,6 +79,7 @@ export class SalesConfirmationComponent implements OnInit {
     'Sensational!',
     'Grand!',
     'Top-notch!',
+    'Impressive!',
   ];
 
   /**

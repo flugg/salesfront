@@ -1,0 +1,44 @@
+<div class="vmo-component">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <form novalidate (submit)="submit(quantityInput.value, dateInput.value, timeInput.value); $event.preventDefault()">
+      <div class="container">
+        <md-card>
+          <span class="mdc-typography--display1">Add Sale</span>
+          <p class="mdc-typography--body1 u-weak">Register sales for yourself or someone else if permitted.</p>
+          <div class="u-vertical-spacing">
+            <md-input-container color="accent">
+              <input #quantityInput mdInput placeholder="Quantity" value="1" type="number" min="1">
+            </md-input-container>
+          </div>
+          <div class="u-vertical-spacing">
+            <md-select placeholder="User" color="accent" [(ngModel)]="selectedMembership" name="userInput">
+              <md-option *ngFor="let membership of memberships" [value]="membership.id">
+                {{ membership.user.name }}
+              </md-option>
+            </md-select>
+          </div>
+          <div class="u-vertical-spacing">
+            <div fxLayout="row" fxLayoutGap="16px">
+              <div fxFlex="50">
+                <md-input-container color="accent">
+                  <input #dateInput mdInput [mdDatepicker]="picker" placeholder="Date" [value]="todaysDate">
+                  <button mdSuffix [mdDatepickerToggle]="picker" type="button"></button>
+                </md-input-container>
+                <md-datepicker #picker></md-datepicker>
+              </div>
+              <md-input-container color="accent" fxFlex="50">
+                <input #timeInput mdInput placeholder="Time" type="time" value="12:00">
+              </md-input-container>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+            <button md-raised-button color="accent">Add</button>
+            <md-checkbox [(ngModel)]="addMore" name="addMore">Add more</md-checkbox>
+          </div>
+        </md-card>
+      </div>
+    </form>
+  </vmo-progress-spinner>
+</div>

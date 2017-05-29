@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdProgressSpinnerModule, MdSidenavModule, MdSnackBarModule, MdTabsModule, MdToolbarModule, MdTooltipModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDatepickerModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdNativeDateModule, MdProgressSpinnerModule, MdSelectModule, MdSidenavModule, MdSnackBarModule, MdTabsModule, MdToolbarModule, MdTooltipModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MomentModule } from 'angular2-moment';
 
@@ -35,6 +35,10 @@ import { ExcludePipe } from './exclude.pipe';
     MdProgressSpinnerModule,
     MdToolbarModule,
     MdTooltipModule,
+    MdCheckboxModule,
+    MdSelectModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
     MomentModule,
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,

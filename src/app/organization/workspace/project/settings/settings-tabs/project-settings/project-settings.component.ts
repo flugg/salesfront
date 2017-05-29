@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  templateUrl: 'settings-list.component.html'
+  templateUrl: 'project-settings.component.html'
 })
-export class SettingsListComponent implements OnInit {
+export class ProjectSettingsComponent implements OnInit {
 
   /**
    * Indicates if the component is currently loading.

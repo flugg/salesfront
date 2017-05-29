@@ -362,3 +362,22 @@ snack-bar-container {
   font-size: 18px !important;
   padding-left: 8px;
 }
+
+.mat-input-container input {
+  height: 19px;
+}
+
+.top-card.mat-card {
+  position: relative;
+  z-index: 1;
+  padding-top: 16px;
+  padding-bottom: 0;
+}
+
+.mat-input-container {
+  width: 100%;
+}
+
+.u-top-spacing {
+  padding-top: 16px;
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 import 'rxjs/add/operator/first';
 
@@ -10,7 +10,12 @@ import { Router } from '@angular/router';
   templateUrl: 'create-team.component.html',
   styleUrls: ['create-team.component.scss']
 })
-export class CreateTeamComponent {
+export class CreateTeamComponent implements OnInit {
+
+  /**
+   * Indicates if the component is currently loading.
+   */
+  loading = true;
 
   /**
    * Constructs the component.
@@ -19,6 +24,13 @@ export class CreateTeamComponent {
               private snackBar: MdSnackBar,
               private activeProject: ActiveProjectService,
               private teamService: TeamService) {}
+
+  /**
+   * Initializes the component.
+   */
+  ngOnInit() {
+    this.loading = false;
+  }
 
   /**
    * Submits the form.

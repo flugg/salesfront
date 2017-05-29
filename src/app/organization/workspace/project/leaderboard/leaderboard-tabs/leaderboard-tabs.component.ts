@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SalesListService } from './sales-list.service';
 import { UserListService } from './user-list/user-list.service';
 import { TeamListService } from './team-list/team-list.service';
+import { DatepickerService } from '../shared/datepicker/datepicker.service';
 
 @Component({
   providers: [SalesListService, UserListService, TeamListService],
@@ -16,7 +17,7 @@ export class LeaderboardTabsComponent implements OnInit {
   /**
    * Constructs the component.
    */
-  constructor() {}
+  constructor(public datepicker: DatepickerService) {}
 
   /**
    * Initializes the component.

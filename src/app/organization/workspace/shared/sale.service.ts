@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 
 import { RestApiService } from '../../../core/http/rest-api.service';
 import { PaginationResponse } from '../../../core/http/pagination-response';
 import { Sale } from './sale.model';
-import { Moment } from 'moment';
 
 @Injectable()
 export class SaleService {
@@ -51,7 +52,9 @@ export class SaleService {
   /**
    * Registers a sale for the given membership.
    */
-  register(membershipId: string): Promise<Sale> {
-    return this.api.post(`memberships/${membershipId}/sales`).then(response => response.data);
+  register(membershipId: string, date?: Moment): Promise<Sale> {
+    return this.api.post(`memberships/${membershipId}/sales`, !date ? {} : {
+      date: date.toISOString() || moment().toISOString()
+    }).then(response => response.data);
   }
 }

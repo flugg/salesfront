@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
+import 'rxjs/add/observable/combineLatest';
 import * as moment from 'moment';
 
 import { ObservableResourceList } from '../../../../../core/sockets/observable-resource-list';
@@ -8,6 +9,7 @@ import { SocketApiService } from '../../../../../core/sockets/socket-api.service
 import { ActiveProjectService } from '../../../shared/active-project.service';
 import { SaleService } from '../../../shared/sale.service';
 import { Sale } from '../../../shared/sale.model';
+import { DatepickerService } from '../shared/datepicker/datepicker.service';
 
 @Injectable()
 export class SalesListService extends ObservableResourceList implements OnDestroy {
@@ -22,11 +24,20 @@ export class SalesListService extends ObservableResourceList implements OnDestro
    */
   constructor(private sockets: SocketApiService,
               private activeProject: ActiveProjectService,
-              private saleService: SaleService) {
+              private saleService: SaleService,
+              private datepicker: DatepickerService) {
     super();
 
     this.activeProject.project.first().subscribe(project => {
-      this.saleService.getForProject(project.id, moment().startOf('day'), moment()).subscribe(sales => this.add(sales));
+      Observable.combineLatest([
+        datepicker.before,
+        datepicker.after
+      ]).subscribe(data => {
+        const [before, after] = data;
+        this.saleService.getForProject(project.id, moment(after).startOf('day'), moment(before).endOf('day')).subscribe(sales => {
+          this.set(sales);
+        });
+      });
 
       this.sockets.listenForProject(project.id, {
         'sale_registered': sale => this.addSale(sale)

@@ -1,5 +1,9 @@
 <div class="vmo-component">
-  <vmo-toolbar title="Sales" mode="menu"></vmo-toolbar>
+  <vmo-toolbar title="Sales" mode="menu">
+    <button md-icon-button routerLink="add">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="! loading">
     <div class="vmo-scrollable-area">

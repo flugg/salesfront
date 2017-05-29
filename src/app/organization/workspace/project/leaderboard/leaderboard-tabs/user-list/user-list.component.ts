@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { UserListService } from './user-list.service';
 import { Membership } from '../../../../../shared/membership.model';
+import { DatepickerService } from '../../shared/datepicker/datepicker.service';
 
 @Component({
   templateUrl: 'user-list.component.html',
@@ -41,7 +42,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private userList: UserListService) {}
+  constructor(public datepicker: DatepickerService,
+              private userList: UserListService) {}
 
   /**
    * Initializes the component.

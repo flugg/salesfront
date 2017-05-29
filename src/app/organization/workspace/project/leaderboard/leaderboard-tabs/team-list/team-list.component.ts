@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { TeamListService } from './team-list.service';
 import { Team } from '../../../shared/team.model';
+import { DatepickerService } from '../../shared/datepicker/datepicker.service';
 
 @Component({
   templateUrl: 'team-list.component.html',
@@ -41,7 +42,8 @@ export class TeamListComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private teamList: TeamListService) {}
+  constructor(public datepicker: DatepickerService,
+              private teamList: TeamListService) {}
 
   /**
    * Initializes the component.

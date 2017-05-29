@@ -1,0 +1,20 @@
+<div class="vmo-component vmo-component--tabs">
+  <vmo-toolbar title="Settings" mode="menu" tabs="true">
+    <nav md-tab-nav-bar toolbar-tabs>
+      <a md-tab-link routerLink="project"
+         routerLinkActive #projectLink="routerLinkActive"
+         [active]="projectLink.isActive"
+         [class.is-active]="projectLink.isActive">
+        Project
+      </a>
+      <a md-tab-link routerLink="organization"
+         routerLinkActive #organizationLink="routerLinkActive"
+         [active]="organizationLink.isActive"
+         [class.is-active]="organizationLink.isActive">
+        Organization
+      </a>
+    </nav>
+  </vmo-toolbar>
+
+  <router-outlet></router-outlet>
+</div>
