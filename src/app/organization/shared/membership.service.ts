@@ -28,6 +28,13 @@ export class MembershipService {
   }
 
   /**
+   * Fetches a list of memberships in a team.
+   */
+  getForTeam(teamId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
+    return this.api.paginate(`teams/${teamId}/memberships`, cursor, limit);
+  }
+
+  /**
    * Fetches a list of memberships in a projet.
    */
   getForOrganization(organizationId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
