@@ -18,6 +18,8 @@ export class ErrorHandlerService extends ErrorHandler {
     const snackBar = this.injector.get(MdSnackBar).open('Something went wrong', 'Reload');
     snackBar.onAction().subscribe(() => window.location.reload());
 
+    window['Bugsnag'].notifyException(error);
+
     super.handleError(error);
   }
 }
