@@ -2,24 +2,26 @@
   <vmo-toolbar title="New Conversation" mode="close"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="user && users">
-    <md-list class="vmo-list u-clickable">
-      <md-list-item *ngIf="participants.length > 0" class="u-spacing-bottom-small">
-        <md-chip-list selectable="false">
-          <md-chip *ngFor="let participant of participants" (click)="removeParticipant(participant)">
-            {{ participant.name }}
-          </md-chip>
-        </md-chip-list>
-      </md-list-item>
+    <div class="vmo-scrollable-area">
+      <md-list class="vmo-list u-clickable">
+        <md-list-item *ngIf="participants.length > 0" class="u-spacing-bottom-small">
+          <md-chip-list selectable="false">
+            <md-chip *ngFor="let participant of participants" (click)="removeParticipant(participant)">
+              {{ participant.name }}
+            </md-chip>
+          </md-chip-list>
+        </md-list-item>
 
-      <md-list-item md-ripple
-                    *ngFor="let user of users | exclude:participants | exclude:user"
-                    (click)="addParticipant(user)">
-        <img md-list-avatar src="http://lorempixel.com/40/40">
-        <h4 md-line class="mdc-typography--subheading1">
-          {{ user.name }}
-        </h4>
-      </md-list-item>
-    </md-list>
+        <md-list-item md-ripple
+                      *ngFor="let user of users | exclude:participants | exclude:user"
+                      (click)="addParticipant(user)">
+          <img md-list-avatar src="http://lorempixel.com/40/40">
+          <h4 md-line class="mdc-typography--subheading1">
+            {{ user.name }}
+          </h4>
+        </md-list-item>
+      </md-list>
+    </div>
 
     <vmo-load-more-button [paginator]="userList"></vmo-load-more-button>
   </vmo-progress-spinner>
