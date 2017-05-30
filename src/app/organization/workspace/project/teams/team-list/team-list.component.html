@@ -1,6 +1,6 @@
 <div class="vmo-component">
   <vmo-toolbar title="Teams" mode="menu">
-    <button md-icon-button routerLink="new">
+    <button md-icon-button routerLink="new" *ngIf="user?.isAdmin">
       <md-icon>add</md-icon>
     </button>
   </vmo-toolbar>

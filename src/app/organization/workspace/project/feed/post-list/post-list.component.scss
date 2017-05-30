@@ -13,6 +13,10 @@ form {
   @media (max-width: 600px) {
     height: 56px;
   }
+
+  @media (min-width: 960px) {
+    margin-bottom: 16px;
+  }
 }
 
 .mat-input-container {
@@ -23,7 +27,7 @@ form {
   padding-top: 12px;
 
   @media (min-width: 960px) {
-    max-width: 740px;
-    padding: 16px 16px 8px;
+    max-width: 960px;
+    padding: 24px 24px 8px;
   }
 }

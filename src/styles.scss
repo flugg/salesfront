@@ -164,6 +164,10 @@ snack-bar-container {
   padding: 16px 0;
 }
 
+.u-horizontal-spacing {
+  padding: 0 16px;
+}
+
 .u-vertical-spacing-big {
   padding: 24px 0;
 }
@@ -230,6 +234,10 @@ snack-bar-container {
   background: white;
   padding-bottom: 8px;
   @include mat-elevation(2);
+
+  &--small {
+    max-width: 600px;
+  }
 
   .mat-list-item:not(:last-child) {
     border-bottom: 1px solid rgba(black, 0.12);
@@ -311,6 +319,12 @@ snack-bar-container {
 .leaderboard-list {
   padding: 16px 0 !important;
 
+  @media (min-width: 960px) {
+    max-width: 960px;
+    margin: 24px;
+    padding: 16px !important;
+  }
+
   .mat-list-text {
     overflow: visible !important;
     padding-right: 0 !important;
@@ -379,5 +393,14 @@ snack-bar-container {
 }
 
 .u-top-spacing {
-  padding-top: 16px;
+  @media (max-width: 960px) {
+    padding-top: 16px;
+  }
+}
+
+.u-container {
+  @media (min-width: 960px) {
+    max-width: 960px;
+    margin: 24px;
+  }
 }

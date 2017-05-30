@@ -80,7 +80,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     { name: 'Sales', route: 'sales', icon: 'attach_money' },
     { name: 'Teams', route: 'teams', icon: 'group' },
     { name: 'Users', route: 'users', icon: 'person' },
-    { name: 'Settings', route: 'settings', icon: 'settings' }
+    /*{ name: 'Settings', route: 'settings', icon: 'settings' }*/
   ];
 
   /**

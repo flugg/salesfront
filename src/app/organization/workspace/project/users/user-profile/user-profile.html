@@ -1,10 +1,14 @@
-<div class="vmo-component">
+<div class="vmo-component vmo-component--important">
   <vmo-toolbar title="{{ user?.name }}" mode="back">
-    <button md-icon-button>
+    <!--<button md-icon-button>
       <md-icon>edit</md-icon>
-    </button>
+    </button>-->
   </vmo-toolbar>
   <vmo-progress-spinner [hasLoaded]="! loading">
-
+    <div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <span class="mdc-typography--headline">Hey, this is {{ user?.name }}'s profile!</span>
+      <span class="u-weak">Hit back in a couple weeks for more insight about this person...</span>
+      <button md-raised-button color="accent" routerLink="../../../../../messages/new" class="u-push-button">Send a message</button>
+    </div>
   </vmo-progress-spinner>
 </div>

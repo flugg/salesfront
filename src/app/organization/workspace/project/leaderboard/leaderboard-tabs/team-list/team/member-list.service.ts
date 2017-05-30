@@ -21,12 +21,13 @@ export class MemberListService extends ObservableResourceList implements OnDestr
   constructor(private route: ActivatedRoute,
               private userList: UserListService) {
     super();
-
-    this.userList.members.map(members => members.filter(member => member.sales.find(sale => sale.teamId === route.snapshot.params.team)))
-      .subscribe(memberships => this.set(memberships.map(membership => {
-        membership.position = this.calculatePosition(memberships, membership);
-        return membership;
-      })));
+    const teamId = route.snapshot.params.team;
+    this.userList.members.map(members => members.filter(member => {
+      return member.sales.length ? member.sales.find(sale => sale.teamId === teamId) : member.teamId === teamId;
+    })).subscribe(memberships => this.set(memberships.map(membership => {
+      membership.position = this.calculatePosition(memberships, membership);
+      return membership;
+    })));
   }
 
   /**

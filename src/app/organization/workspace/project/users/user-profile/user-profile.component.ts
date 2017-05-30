@@ -35,7 +35,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.userService.find(this.route.snapshot.params.user).subscribe(user => {
+    this.subscriptions.push(this.userService.find(this.route.snapshot.params.member).subscribe(user => {
       this.user = user;
       this.loading = false;
     }));

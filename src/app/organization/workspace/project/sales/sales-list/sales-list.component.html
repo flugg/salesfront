@@ -6,24 +6,26 @@
   </vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="! loading">
-    <div class="vmo-scrollable-area">
-      <md-list class="vmo-list">
+    <div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+    <span class="mdc-typography--headline">Sorry, this page isn't done yet.</span>
+    <span class="u-weak">However, feel free to add a sale using the button above or below. Also, enjoy the fresh air.</span>
+      <button md-raised-button color="accent" routerLink="add" class="u-push-button">Add a sale</button>
+    </div>
+   <!-- <div class="vmo-scrollable-area">
+      <md-list class="vmo-list u-container">
         <md-list-item
                 class="u-clickable">
           <md-checkbox [(ngModel)]="selectAll"></md-checkbox>
         </md-list-item>
 
-        <md-list-item md-ripple
-                      routerLink="../1"
-                      *ngFor="let sale of sales"
-                      class="u-clickable">
+        <md-list-item *ngFor="let sale of sales">
 
           <md-checkbox [checked]="selectAll"></md-checkbox>
         </md-list-item>
       </md-list>
 
       <vmo-load-more-button [paginator]="salesList"></vmo-load-more-button>
-    </div>
+    </div>-->
   </vmo-progress-spinner>
 </div>
 

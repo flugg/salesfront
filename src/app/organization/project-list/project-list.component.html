@@ -1,17 +1,11 @@
-<div class="vmo-component">
-  <md-toolbar color="primary" class="vmo-toolbar">
-    <h2 class="mdc-typography--title">
-      Choose Project
-    </h2>
-    <span class="u-fill"></span>
-    <button md-icon-button routerLink="new">
-      <md-icon>add</md-icon>
-    </button>
-  </md-toolbar>
-
-  <vmo-progress-spinner [hasLoaded]="! loading">
-    <div class="vmo-scrollable-area">
-      <md-list *ngIf="memberships?.length" class="vmo-list">
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <div fxLayoutAlign="center center" fxFill class="u-horizontal-spacing">
+    <div fxLayout="column" fxLayoutGap="24px">
+      <div fxLayout="column" fxLayoutGap="8px">
+        <span class="mdc-typography--display1">Switch Communication</span>
+        <span class="mdc-typography--subheading1 u-weak">Choose a project from the list below to get started.</span>
+      </div>
+      <md-list *ngIf="memberships?.length" class="vmo-list vmo-list--small">
         <md-list-item md-ripple
                       *ngFor="let membership of memberships"
                       [routerLink]="membership.projectId"
@@ -24,18 +18,22 @@
             {{ membership.project.name }}
           </h4>
           <span md-line class="mdc-typography--body1 u-weak">
-            {{ membership.project.userCount }} users, {{ membership.project.teamCount }} teams
-          </span>
+          {{ membership.project.userCount }} users, {{ membership.project.teamCount }} teams
+        </span>
         </md-list-item>
       </md-list>
-
-      <vmo-load-more-button [paginator]="membershipList"></vmo-load-more-button>
-
-      <div *ngIf="! memberships?.length" class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
-        <span class="mdc-typography--headline">No projects, yet.</span>
-        <span class="u-weak">Looks like you haven't created any projects.</span>
-        <button md-raised-button color="accent" routerLink="new" class="u-push-button">Create a project</button>
-      </div>
+      <!--<div fxLayoutAlign="center">-->
+        <!--<button md-fab><md-icon>add</md-icon></button>-->
+      <!--</div>-->
     </div>
-  </vmo-progress-spinner>
-</div>
+    <div *ngIf="! memberships?.length"
+         class="u-stretch"
+         fxLayout="column"
+         fxLayoutAlign="center center"
+         fxLayoutGap="16px">
+      <span class="mdc-typography--headline">No projects, yet.</span>
+      <span class="u-weak">Looks like you haven't created any projects.</span>
+      <button md-raised-button color="accent" routerLink="new" class="u-push-button">Create a project</button>
+    </div>
+  </div>
+</vmo-progress-spinner>

@@ -6,6 +6,7 @@ import { ObservableResourceList } from '../../../../../core/sockets/observable-r
 import { MembershipService } from '../../../../shared/membership.service';
 import { ActiveProjectService } from '../../../shared/active-project.service';
 import { Membership } from '../../../../shared/membership.model';
+import { ActiveUserService } from '../../../../active-user.service';
 
 @Injectable()
 export class MembershipListService extends ObservableResourceList implements OnDestroy {
@@ -19,11 +20,17 @@ export class MembershipListService extends ObservableResourceList implements OnD
    * Constructs the service.
    */
   constructor(private activeProject: ActiveProjectService,
+              private activeUser: ActiveUserService,
               private membershipService: MembershipService) {
     super();
 
     this.activeProject.project.first().subscribe(project => {
-      this.membershipService.getAllForProject(project.id).subscribe(users => this.set(users));
+      this.activeUser.user.first().subscribe(user => {
+        this.membershipService.getAllForProject(project.id).subscribe(users => {
+          console.log(user.isAdmin ? users : [user]);
+          this.set(user.isAdmin ? users : users.filter(membership => membership.userId === user.id));
+        });
+      });
     });
   }
 

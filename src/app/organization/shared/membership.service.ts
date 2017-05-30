@@ -17,7 +17,7 @@ export class MembershipService {
    * Fetches a list of all memberships in a project.
    */
   getAllForProject(projectId: string): Observable<Membership[]> {
-    return this.api.get(`projects/${projectId}/memberships`, { with: 'users' }).map(response => response.data);
+    return this.api.get(`projects/${projectId}/memberships`, { include: 'user' }).map(response => response.data);
   }
 
   /**

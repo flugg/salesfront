@@ -6,9 +6,11 @@ import 'rxjs/add/observable/combineLatest';
 import { PostService } from '../shared/post.service';
 import { CommentService } from '../shared/comment.service';
 import { ActiveProjectService } from '../../../shared/active-project.service';
+import { ActiveUserService } from '../../../../active-user.service';
 import { PostListService } from './post-list.service';
 import { Project } from '../../../../shared/project.model';
 import { Post } from '../shared/post.model';
+import { User } from '../../../../shared/user.model';
 
 @Component({
   providers: [PostListService],
@@ -28,6 +30,11 @@ export class PostListComponent implements OnInit, OnDestroy {
   project: Project;
 
   /**
+   * The active user.
+   */
+  user: User;
+
+  /**
    * List of loaded posts.
    */
   posts: Post[];
@@ -42,6 +49,7 @@ export class PostListComponent implements OnInit, OnDestroy {
    */
   constructor(public postList: PostListService,
               private activeProject: ActiveProjectService,
+              private activeUser: ActiveUserService,
               private postService: PostService,
               private commentService: CommentService) {}
 
@@ -51,12 +59,12 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
       this.activeProject.project,
+      this.activeUser.user,
       this.postList.posts
     ).subscribe(data => {
-      [this.project, this.posts] = data;
+      [this.project, this.user, this.posts] = data;
       this.loading = false;
     }));
-
   }
 
   /**

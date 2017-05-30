@@ -4,7 +4,7 @@
   <vmo-progress-spinner [hasLoaded]="! loading">
     <div class="vmo-scrollable-area">
       <div class="container">
-        <md-card class="post-input">
+        <md-card *ngIf="user?.isAdmin" class="post-input">
           <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
                 fxLayoutAlign="stretch center">
             <md-input-container class="vmo-fixed-input">

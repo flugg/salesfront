@@ -15,10 +15,10 @@
       </md-toolbar>
       <div class="vmo-scrollable-area">
         <md-list>
-          <md-list-item md-ripple routerLink="/projects/{{ project.id }}/users/{{ user.id }}" class="u-clickable">
+          <md-list-item md-ripple routerLink="/projects/{{ project.id }}/users/members/{{ user.id }}" class="u-clickable">
             <img md-list-avatar src="http://lorempixel.com/40/40">
             <span md-line class="mdc-typography--body1">{{ user.name }}</span>
-            <span md-line class="mdc-typography--caption u-weak">Team Bravo</span>
+            <span *ngIf="membership?.team" md-line class="mdc-typography--caption u-weak">{{ membership?.team.name }}</span>
             <span class="u-fill"></span>
             <md-icon>chevron_right</md-icon>
           </md-list-item>
@@ -32,7 +32,7 @@
                  fxLayoutAlign="center center">TP
             </div>
             <span md-line class="mdc-typography--body1">{{ project?.name }}</span>
-            <span md-line class="mdc-typography--caption u-weak">{{ project?.organizationId }}</span>
+            <span md-line class="mdc-typography--caption u-weak">Switch Communication</span>
             <span class="u-fill"></span>
             <md-icon>chevron_right</md-icon>
           </md-list-item>
