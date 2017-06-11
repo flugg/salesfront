@@ -1,0 +1,16 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="container">
+      <md-card fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="16px">
+        <div fxFill>
+          <div class="mdc-typography--display1">Upload Avatar</div>
+          <p class="mdc-typography--body1 u-weak">Choose one of your many pretty pictures to present yourself.</p>
+        </div>
+        <img-cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+        <button md-raised-button color="accent" (click)="upload(data)">Save</button>
+      </md-card>
+    </div>
+  </vmo-progress-spinner>
+</div>

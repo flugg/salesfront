@@ -1,0 +1,12 @@
+.container {
+  padding: 24px;
+
+  @media (min-width: 960px) {
+    max-width: 740px;
+  }
+}
+
+.u-avatar {
+  height: 160px;
+  width: 160px;
+}

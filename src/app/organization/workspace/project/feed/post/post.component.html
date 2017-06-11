@@ -1,7 +1,7 @@
 <md-card [@fadeInOut]="true" class="container-card">
   <md-card class="post-card u-no-elevation">
     <md-card-header>
-      <img md-card-avatar src="http://lorempixel.com/40/40">
+      <vmo-avatar md-card-avatar [user]="post.user"></vmo-avatar>
       <md-card-title class="mdc-typography--subheading1">
         {{ post.user.name }}
       </md-card-title>
@@ -18,9 +18,7 @@
   <md-card class="comments u-no-elevation" *ngIf="post.comments.length">
     <md-list>
       <md-list-item *ngFor="let comment of post.comments">
-        <img md-list-avatar
-             fxFlexAlign="start"
-             src="http://lorempixel.com/40/40">
+        <vmo-avatar md-list-avatar [user]="comment.user" fxFlexAlign="start"></vmo-avatar>
         <div md-line fxLayoutGap="6px">
           <span class="mdc-typography--body2">
             {{ comment.user.name }}
@@ -37,7 +35,7 @@
   </md-card>
   <md-card class="comment-input u-no-elevation">
     <form (submit)="onSubmit(input.value); input.value = ''; $event.preventDefault()" fxLayoutAlign="stretch center">
-      <img md-list-avatar src="http://lorempixel.com/40/40" class="u-avatar">
+      <vmo-avatar md-list-avatar [user]="user"></vmo-avatar>
       <md-input-container class="vmo-fixed-input">
         <input #input mdInput name="comment" placeholder="Post comment...">
       </md-input-container>

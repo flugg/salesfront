@@ -179,6 +179,10 @@ snack-bar-container {
   border-radius: 50%;
 }
 
+.u-default-avatar {
+  background: #e2e2e2;
+}
+
 .u-push-button {
   margin-top: 16px !important;
 }
@@ -228,6 +232,10 @@ snack-bar-container {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   height: 100%;
+
+  &--withInput {
+    height: calc(100% - 64px);
+  }
 }
 
 .vmo-list {
@@ -261,8 +269,8 @@ snack-bar-container {
 }
 
 .vmo-group-icon {
-  background: #f2f2f2;
-  color: rgba(black, 0.38);
+  background: #e2e2e2;
+  color: rgba(black, 0.87);
 }
 
 .vmo-fixed-input {

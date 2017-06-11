@@ -6,6 +6,8 @@ import { MemberListComponent } from './user-tabs/member-list/member-list.compone
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { InviteListComponent } from './user-tabs/invite-list/invite-list.component';
 import { InviteUserComponent } from './invite-user/invite-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 
 const routes: Routes = [
   {
@@ -23,7 +25,17 @@ const routes: Routes = [
         children: [
           {
             path: ':member',
-            component: UserProfileComponent
+            component: UserProfileComponent,
+            children: [
+              {
+                path: 'edit',
+                component: EditUserComponent
+              },
+              {
+                path: 'upload-avatar',
+                component: UploadAvatarComponent
+              }
+            ]
           }
         ]
       },

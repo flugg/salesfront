@@ -4,7 +4,7 @@
   <vmo-progress-spinner [hasLoaded]="! loading">
     <md-list class="vmo-list" *ngIf="(users | filteredUsers:conversation)?.length">
       <md-list-item *ngFor="let user of users | filteredUsers:conversation">
-        <img md-list-avatar src="http://lorempixel.com/40/40">
+        <vmo-avatar md-list-avatar [user]="user"></vmo-avatar>
         <h4 md-line>
           {{ user.name }}
         </h4>

@@ -1,0 +1,39 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <form novalidate (submit)="submit(nameInput.value); $event.preventDefault()">
+      <div class="container">
+        <md-card>
+          <span class="mdc-typography--display1">Update Profile</span>
+          <p class="mdc-typography--body1 u-weak">Teams help organize users in a project. Give your new team a suiting name!</p>
+          <div class="u-vertical-spacing">
+            <div fxLayout="row" fxLayoutGap="16px">
+              <md-input-container color="accent">
+                <input #nameInput mdInput placeholder="First Name" autofocus required>
+              </md-input-container>
+              <md-input-container color="accent">
+                <input #nameInput mdInput placeholder="Last Name" autofocus required>
+              </md-input-container>
+            </div>
+            <md-input-container color="accent">
+              <input #nameInput mdInput placeholder="Email" type="email" autofocus required>
+            </md-input-container>
+            <md-input-container color="accent">
+              <input #nameInput mdInput placeholder="Phone Number" type="tel" autofocus>
+            </md-input-container>
+            <md-input-container color="accent">
+              <input #afterDateInput
+                     mdInput
+                     [mdDatepicker]="afterPicker"
+                     placeholder="Birthdate">
+              <button mdSuffix [mdDatepickerToggle]="afterPicker" type="button"></button>
+            </md-input-container>
+            <md-datepicker #afterPicker [touchUi]="mobile"></md-datepicker>
+            <button md-raised-button color="accent">Save</button>
+          </div>
+        </md-card>
+      </div>
+    </form>
+  </vmo-progress-spinner>
+</div>

@@ -6,7 +6,7 @@
                     *ngFor="let membership of memberships"
                     class="u-clickable">
 
-        <img md-list-avatar src="http://lorempixel.com/40/40">
+        <vmo-avatar md-list-avatar [user]="membership.user"></vmo-avatar>
         <h4 md-line class="mdc-typography--subheading1">{{ membership.user.name }}</h4>
       </md-list-item>
     </md-list>

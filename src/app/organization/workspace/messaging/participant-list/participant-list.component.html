@@ -8,7 +8,7 @@
   <vmo-progress-spinner [hasLoaded]="! loading">
     <md-list class="vmo-list">
       <md-list-item *ngFor="let participation of conversation?.participations | filteredParticipations">
-        <img md-list-avatar src="http://lorempixel.com/40/40">
+        <vmo-avatar md-list-avatar [user]="participation.user"></vmo-avatar>
         <h4 md-line>
           {{ participation.user.name }}
         </h4>

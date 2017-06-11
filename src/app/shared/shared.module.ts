@@ -8,13 +8,15 @@ import { MomentModule } from 'angular2-moment';
 import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { ExcludePipe } from './exclude.pipe';
+import { AvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FlexLayoutModule,
     MdButtonModule,
-    MdProgressSpinnerModule
+    MdProgressSpinnerModule,
+    MdIconModule
   ],
   exports: [
     CommonModule,
@@ -42,11 +44,13 @@ import { ExcludePipe } from './exclude.pipe';
     MomentModule,
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
+    AvatarComponent,
     ExcludePipe
   ],
   declarations: [
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
+    AvatarComponent,
     ExcludePipe
   ]
 })

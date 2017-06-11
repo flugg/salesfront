@@ -14,7 +14,7 @@
                       [class.highlight]="hasUnreadMessages(conversation)"
                       class="u-clickable">
 
-          <img md-list-avatar src="http://lorempixel.com/40/40">
+          <vmo-avatar md-list-avatar [user]="conversation.participations[0].user"></vmo-avatar>
 
           <span md-line class="mdc-typography--subheading1">
             {{ conversation.participations | filteredParticipations:user | conversationTitle }}

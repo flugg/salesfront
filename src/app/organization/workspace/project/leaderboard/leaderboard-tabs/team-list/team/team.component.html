@@ -24,7 +24,7 @@
         <md-list-item *ngFor="let membership of memberships"
                       [routerLink]="'../../members/' + membership.id">
 
-          <img md-list-avatar src="http://lorempixel.com/40/40">
+          <vmo-avatar md-list-avatar [user]="membership.user"></vmo-avatar>
           <div md-line fxLayout="row" class="leaderboard-title">
           <span class="mdc-typography--body1">
             <span class="strong">{{ membership.position }}.</span> {{ membership.user.name }}

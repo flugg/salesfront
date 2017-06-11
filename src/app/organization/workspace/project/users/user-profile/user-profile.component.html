@@ -1,0 +1,24 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="{{ user?.name }}" mode="back">
+    <button md-icon-button routerLink="edit">
+      <md-icon>edit</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="container">
+      <md-card>
+        <div class="card-header" fxFill>
+          <img class="u-avatar u-clickable" src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ user?.avatarPath }}" routerLink="upload-avatar">
+        </div>
+        <div class="inner-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+          <span class="mdc-typography--display1">{{ user?.name }}</span>
+          <span class="mdc-typography--body1 u-weak">{{ team?.name }}</span>
+          <button md-raised-button color="accent" routerLink="../../../../../messages/new" class="u-push-button">Send message</button>
+        </div>
+      </md-card>
+    </div>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

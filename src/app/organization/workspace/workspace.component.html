@@ -16,7 +16,7 @@
       <div class="vmo-scrollable-area">
         <md-list>
           <md-list-item md-ripple routerLink="/projects/{{ project.id }}/users/members/{{ user.id }}" class="u-clickable">
-            <img md-list-avatar src="http://lorempixel.com/40/40">
+            <vmo-avatar md-list-avatar [user]="user"></vmo-avatar>
             <span md-line class="mdc-typography--body1">{{ user.name }}</span>
             <span *ngIf="membership?.team" md-line class="mdc-typography--caption u-weak">{{ membership?.team.name }}</span>
             <span class="u-fill"></span>

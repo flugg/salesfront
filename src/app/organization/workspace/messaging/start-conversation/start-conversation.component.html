@@ -2,7 +2,7 @@
   <vmo-toolbar title="New Conversation" mode="close"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="user && users">
-    <div class="vmo-scrollable-area">
+    <div class="vmo-scrollable-area vmo-scrollable-area--withInput">
       <md-list class="vmo-list u-clickable">
         <md-list-item *ngIf="participants.length > 0" class="u-spacing-bottom-small">
           <md-chip-list selectable="false">
@@ -15,7 +15,7 @@
         <md-list-item md-ripple
                       *ngFor="let user of users | exclude:participants | exclude:user"
                       (click)="addParticipant(user)">
-          <img md-list-avatar src="http://lorempixel.com/40/40">
+          <vmo-avatar md-list-avatar [user]="user"></vmo-avatar>
           <h4 md-line class="mdc-typography--subheading1">
             {{ user.name }}
           </h4>
