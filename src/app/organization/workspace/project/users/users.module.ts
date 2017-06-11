@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ImageCropperComponent } from 'ng2-img-cropper';
 
 import { SharedModule } from '../../../../shared/shared.module';
 import { WorkspaceSharedModule } from '../../shared/workspace-shared.module';
@@ -17,7 +18,8 @@ import { AvatarService } from './shared/avatar.service';
   imports: [
     SharedModule,
     WorkspaceSharedModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    ImageCropperComponent
   ],
   declarations: [
     UserProfileComponent,
@@ -33,5 +35,4 @@ import { AvatarService } from './shared/avatar.service';
     AvatarService
   ]
 })
-export class UsersModule {
-}
+export class UsersModule {}
