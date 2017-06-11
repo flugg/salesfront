@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
+import { ImageCropperModule } from 'ng2-img-cropper';
 import 'hammerjs';
 
 import { SharedModule } from './shared/shared.module';
@@ -16,7 +17,8 @@ import { AppComponent } from './app.component';
     HttpModule,
     SharedModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ImageCropperModule
   ],
   declarations: [
     AppComponent
