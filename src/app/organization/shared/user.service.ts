@@ -26,4 +26,11 @@ export class UserService {
   find(id: string): Observable<User> {
     return this.api.get(`users/${id}`).map(response => response.data);
   }
+
+  /**
+   * Updates the given user.
+   */
+  update(userId: string, attributes: any) {
+    return this.api.put(`users/${userId}`, attributes).then(response => response.data);
+  }
 }

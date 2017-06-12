@@ -9,12 +9,50 @@
     <div class="container">
       <md-card>
         <div class="card-header" fxFill>
-          <img class="u-avatar u-clickable" src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ user?.avatarPath }}" routerLink="upload-avatar">
+          <img class="u-avatar u-clickable"
+               src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ user?.avatarPath }}"
+               routerLink="upload-avatar">
         </div>
         <div class="inner-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
           <span class="mdc-typography--display1">{{ user?.name }}</span>
-          <span class="mdc-typography--body1 u-weak">{{ team?.name }}</span>
-          <button md-raised-button color="accent" routerLink="../../../../../messages/new" class="u-push-button">Send message</button>
+          <span class="mdc-typography--body1 u-weak">{{ user?.isAdmin ? 'Administrator' : 'Seller' }}</span>
+          <button md-raised-button
+                  color="accent"
+                  routerLink="../../../../../messages/new"
+                  class="u-push-button">Send message
+          </button>
+        </div>
+        <md-divider></md-divider>
+        <div class="inner-spacing inner-spacing--push">
+          <md-list fxFill>
+            <md-list-item>
+              <span class="mdc-typography--headline u-weak">About</span>
+            </md-list-item>
+            <md-list-item>
+              <md-icon md-list-icon class="list-icon">group</md-icon>
+              <span class="mdc-typography--subheading2">{{ team?.name }}</span>
+            </md-list-item>
+            <md-list-item>
+              <md-icon md-list-icon class="list-icon">email</md-icon>
+              <span class="mdc-typography--subheading2">{{ user?.email }}</span>
+            </md-list-item>
+            <md-list-item *ngIf="user?.phoneNumber">
+              <md-icon md-list-icon class="list-icon">phone</md-icon>
+              <span class="mdc-typography--subheading2">{{ user?.phoneNumber }}</span>
+            </md-list-item>
+            <md-list-item *ngIf="user?.birthdate">
+              <md-icon md-list-icon class="list-icon">cake</md-icon>
+              <span class="mdc-typography--subheading2">{{ user?.birthdate | amDateFormat: 'DD-MM-YYYY' }}</span>
+            </md-list-item>
+          </md-list>
+        </div>
+        <md-divider></md-divider>
+        <div class="inner-spacing inner-spacing--push">
+          <md-list fxFill>
+            <md-list-item>
+              <span class="mdc-typography--headline u-weak">Achievements</span>
+            </md-list-item>
+          </md-list>
         </div>
       </md-card>
     </div>

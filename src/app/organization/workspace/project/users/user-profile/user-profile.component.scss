@@ -2,7 +2,7 @@
   padding: 24px;
 
   @media (min-width: 960px) {
-    max-width: 740px;
+    max-width: 960px;
   }
 }
 
@@ -17,6 +17,10 @@
 
 .inner-spacing {
   padding: 0 24px 24px;
+
+  &--push {
+    padding-top: 24px;
+  }
 }
 
 .card-header {
@@ -31,4 +35,13 @@
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.list-icon {
+  color: rgba(black, 0.35);
+  padding-right: 12px !important;
+}
+
+.mdc-typography--display1 {
+  text-align: center;
 }

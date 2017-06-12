@@ -2,7 +2,7 @@
   <vmo-toolbar title="" mode="close"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="! loading">
-    <form novalidate (submit)="submit(); $event.preventDefault()">
+    <form novalidate (submit)="submit(firstNameInput.value, lastNameInput.value, emailInput.value, phoneInput.value); $event.preventDefault()">
       <div class="container">
         <md-card>
           <span class="mdc-typography--display1">Update Profile</span>
@@ -10,17 +10,17 @@
           <div class="u-vertical-spacing">
             <div fxLayout="row" fxLayoutGap="16px">
               <md-input-container color="accent">
-                <input #nameInput mdInput placeholder="First Name" autofocus required>
+                <input #firstNameInput mdInput placeholder="First Name" value="{{ user?.firstName }}" autofocus required>
               </md-input-container>
               <md-input-container color="accent">
-                <input #nameInput mdInput placeholder="Last Name" autofocus required>
+                <input #lastNameInput mdInput placeholder="Last Name" value="{{ user?.lastName }}" autofocus required>
               </md-input-container>
             </div>
             <md-input-container color="accent">
-              <input #nameInput mdInput placeholder="Email" type="email" autofocus required>
+              <input #emailInput mdInput placeholder="Email" type="email" value="{{ user?.email }}" autofocus required>
             </md-input-container>
             <md-input-container color="accent">
-              <input #nameInput mdInput placeholder="Phone Number" type="tel" autofocus>
+              <input #phoneInput mdInput placeholder="Phone Number" type="tel" value="{{ user?.phoneNumber}}" autofocus>
             </md-input-container>
             <button md-raised-button color="accent">Save</button>
           </div>

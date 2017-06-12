@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { UserService } from '../../../../shared/user.service';
@@ -29,7 +29,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private userService: UserService) {}
 
   /**
@@ -52,7 +53,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
   /**
    * Submits the form.
    */
-  submit(): void {
-    //
+  submit(firstName: string, lastName: string, email: string, phoneNumber: string): void {
+    this.userService.update(this.user.id, {firstName, lastName, email, phoneNumber}).then(() => {
+      this.router.navigate(['..'], { relativeTo: this.route });
+    });
   }
 }
