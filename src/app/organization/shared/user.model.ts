@@ -6,6 +6,7 @@ export interface User {
   email: string;
   phoneNumber?: string;
   birthdate?: string;
+  avatarPath?: string;
   createdAt: string;
   updatedAt: string;
   isAdmin: boolean;
