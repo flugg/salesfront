@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: 'app/organization/workspace/project/leaderboard/leaderboard.module#LeaderboardModule'
       },
       {
+        path: 'wall-of-fame',
+        loadChildren: 'app/organization/workspace/project/wall-of-fame/wall-of-fame.module#WallOfFameModule'
+      },
+      {
         path: 'sales',
         loadChildren: 'app/organization/workspace/project/sales/sales.module#SalesModule'
       },

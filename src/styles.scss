@@ -161,11 +161,13 @@ snack-bar-container {
 }
 
 .u-vertical-spacing {
-  padding: 16px 0;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .u-horizontal-spacing {
-  padding: 0 16px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .u-vertical-spacing-big {
@@ -179,6 +181,15 @@ snack-bar-container {
   border-radius: 50%;
 }
 
+.u-avatar--big {
+  width: 72px;
+  height: 72px;
+}
+
+.wall-of-fame-name {
+  max-width: 120px;
+}
+
 .u-default-avatar {
   background: #e2e2e2;
 }
@@ -189,6 +200,12 @@ snack-bar-container {
 
 .u-no-elevation {
   box-shadow: none !important;
+}
+
+.u-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .vmo-toolbar {
@@ -350,10 +367,10 @@ snack-bar-container {
       margin-bottom: 8px !important;
     }
   }
+}
 
-  .strong {
-    font-weight: 600 !important;
-  }
+.strong {
+  font-weight: 600 !important;
 }
 
 .leaderboard-bar {
@@ -411,4 +428,14 @@ snack-bar-container {
     max-width: 960px;
     margin: 24px;
   }
+}
+
+.u-center {
+  margin: 0 auto;
+}
+
+.big-face {
+  font-size: 100px;
+  height: 100px !important;
+  width: 100px !important;
 }

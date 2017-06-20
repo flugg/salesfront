@@ -76,7 +76,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
    */
   links = [
     { name: 'Feed', route: 'feed', icon: 'forum' },
-    { name: 'Leaderboard', route: 'leaderboard', icon: 'star' },
+    { name: 'Leaderboard', route: 'leaderboard', icon: 'sort' },
+    { name: 'Wall of Fame', route: 'wall-of-fame', icon: 'star' },
     { name: 'Sales', route: 'sales', icon: 'attach_money' },
     { name: 'Teams', route: 'teams', icon: 'group' },
     { name: 'Users', route: 'users', icon: 'person' },

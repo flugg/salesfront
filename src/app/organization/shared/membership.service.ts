@@ -40,4 +40,11 @@ export class MembershipService {
   getForOrganization(organizationId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
     return this.api.paginate(`organizations/${organizationId}/memberships`, cursor, limit);
   }
+
+  /**
+   * Fetches a single membership by id.
+   */
+  find(id: string): Observable<Membership> {
+    return this.api.get(`memberships/${id}`, {include: 'user'}).map(response => response.data);
+  }
 }

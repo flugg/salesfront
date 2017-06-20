@@ -7,6 +7,8 @@ import { User } from '../../../../shared/user.model';
 import { TeamService } from '../../shared/team.service';
 import { ActiveMembershipService } from '../../../active-membership.service';
 import { Team } from '../../shared/team.model';
+import { MembershipService } from '../../../../shared/membership.service';
+import { Membership } from '../../../../shared/membership.model';
 
 @Component({
   templateUrl: 'user-profile.component.html',
@@ -20,9 +22,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   loading = true;
 
   /**
-   * The selected user.
+   * The selected member.
    */
-  user: User;
+  membership: Membership;
 
   /**
    * The user's team.
@@ -38,22 +40,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private route: ActivatedRoute,
-              private activeMembership: ActiveMembershipService,
-              private userService: UserService,
+              private membershipService: MembershipService,
               private teamService: TeamService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.userService.find(this.route.snapshot.params.member).subscribe(user => {
-      this.subscriptions.push(this.activeMembership.membership.subscribe(membership => {
+    this.subscriptions.push(this.membershipService.find(this.route.snapshot.params.member).subscribe(membership => {
+      if (membership.teamId) {
         this.subscriptions.push(this.teamService.find(membership.teamId).subscribe(team => {
-          this.user = user;
+          this.membership = membership;
           this.team = team;
           this.loading = false;
         }));
-      }));
+      } else {
+        this.membership = membership;
+        this.loading = false;
+      }
     }));
   }
 

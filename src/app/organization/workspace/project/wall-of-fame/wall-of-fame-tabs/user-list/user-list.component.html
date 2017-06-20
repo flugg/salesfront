@@ -1,0 +1,39 @@
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <div class="vmo-scrollable-area">
+    <div class="u-vertical-spacing u-horizontal-spacing">
+      <span class="mdc-typography--caption strong u-weak">
+        Daily Top
+      </span>
+    </div>
+    <md-card>
+      <div fxLayout="column" fxLayoutGap="12px">
+        <span class="mdc-typography--headline">No daily top sellers yet</span>
+        <span class="u-weak">Next one will be picked tomorrow.</span>
+      </div>
+    </md-card>
+    <div class="u-vertical-spacing u-horizontal-spacing">
+      <span class="mdc-typography--caption strong u-weak">
+        Monthly Top
+      </span>
+    </div>
+    <md-card>
+      <div fxLayout="column" fxLayoutGap="12px">
+        <span class="mdc-typography--headline">No montly top sellers yet</span>
+        <span class="u-weak">Next one will be picked 1st of July.</span>
+      </div>
+    </md-card>
+    <div class="u-vertical-spacing u-horizontal-spacing">
+      <span class="mdc-typography--caption strong u-weak">
+        Yearly Top
+      </span>
+    </div>
+    <md-card>
+      <div fxLayout="column" fxLayoutGap="12px">
+        <span class="mdc-typography--headline">No yearly top sellers yet</span>
+        <span class="u-weak">Next one will be picked 1st of January 2018.</span>
+      </div>
+    </md-card>
+  </div>
+</vmo-progress-spinner>
+
+<router-outlet></router-outlet>
