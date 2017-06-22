@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TopDailySellersListService } from './user-list/top-daily-sellers-list.service';
 
 @Component({
+  providers: [TopDailySellersListService],
   selector: 'vmo-wall-of-fame-tabs',
   templateUrl: 'wall-of-fame-tabs.component.html'
 })
