@@ -1,20 +1,31 @@
 <div class="login-container u-container">
-  <md-card>
-    <div fxLayoutAlign="center center" class="login-logo">
-      <img src="/assets/vendumo-logo.svg" width="120">
+  <md-card class="login-card">
+    <div fxLayoutAlign="center center" class="login-logo u-vertical-spacing">
+      <img src="/assets/vendumo-logo.png" width="120">
     </div>
-    <form novalidate>
-      <md-input-container dividerColor="accent">
-        <input #email mdInput required placeholder="Email" type="email" value="">
-      </md-input-container>
-      <md-input-container dividerColor="accent">
-        <input #password mdInput required placeholder="Password" type="password" value="">
-      </md-input-container>
-      <button md-raised-button
-              (click)="submit(email.value, password.value)"
-              color="accent"
-              type="submit">Log In
-      </button>
-    </form>
+    <span class="mdc-typography--display1">Log in</span>
+    <p class="mdc-typography--body1 u-weak">Welcome to Vendumo! Log in to your account below.</p>
+    <div class="u-vertical-spacing">
+      <form novalidate>
+        <md-input-container dividerColor="accent">
+          <input #emailInput="ngModel" name="email" mdInput required placeholder="Email" type="email" required [(ngModel)]="email">
+          <md-error *ngIf="emailInput.errors?.required && (emailInput.dirty || emailInput.touched)">
+            This field is required
+          </md-error>
+        </md-input-container>
+        <md-input-container dividerColor="accent">
+          <input #passwordInput="ngModel" name="password" mdInput required placeholder="Password" type="password" required [(ngModel)]="password">
+          <md-error *ngIf="passwordInput.errors?.required && (passwordInput.dirty || passwordInput.touched)">
+            This field is required
+          </md-error>
+        </md-input-container>
+        <button md-raised-button
+                (click)="submit(email, password)"
+                color="accent"
+                type="submit"
+                [disabled]="emailInput.errors?.required || passwordInput.errors?.required">Log In
+        </button>
+      </form>
+    </div>
   </md-card>
 </div>

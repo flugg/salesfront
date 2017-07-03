@@ -22,6 +22,21 @@ import { User } from '../../../../shared/user.model';
 export class AddSaleComponent implements OnInit, OnDestroy {
 
   /**
+   * The quantity input value.
+   */
+  quantity = 1;
+
+  /**
+   * The date input value.
+   */
+  date: Date;
+
+  /**
+   * The time input value.
+   */
+  time = '12:00';
+
+  /**
    * Indicates if the component is currently loading.
    */
   loading = true;
@@ -36,15 +51,14 @@ export class AddSaleComponent implements OnInit, OnDestroy {
    */
   user: User;
 
+  dd(a) {
+    console.log(a);
+  }
+
   /**
    * The id of the selected member to add sale for.
    */
   selectedMembership: string;
-
-  /**
-   * Todays date.
-   */
-  todaysDate: Date;
 
   /**
    * The list of memberships.
@@ -70,7 +84,7 @@ export class AddSaleComponent implements OnInit, OnDestroy {
    * Initializes the component.
    */
   ngOnInit(): void {
-    this.todaysDate = new Date();
+    this.date = new Date();
     this.subscriptions.push(Observable.combineLatest(
       this.activeUser.user,
       this.membershipList.members

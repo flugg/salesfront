@@ -2,19 +2,22 @@
   <vmo-toolbar title="" mode="close"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="! loading">
-    <form novalidate (submit)="submit(emailInput.value); $event.preventDefault()">
+    <form novalidate (submit)="submit(email); $event.preventDefault()">
       <div class="container">
         <md-card>
           <span class="mdc-typography--display1">Invite User</span>
           <p class="mdc-typography--body1 u-weak">Send an invitation to the given email address to give the user access to the project.</p>
           <div class="u-vertical-spacing">
             <md-input-container color="accent">
-              <input #emailInput mdInput placeholder="Email" type="email" autofocus>
+              <input mdInput #emailInput="ngModel" name="email" placeholder="Email" type="email" [(ngModel)]="email" required autofocus>
+              <md-error *ngIf="emailInput.errors?.required && (emailInput.dirty || emailInput.touched)">
+                This field is required
+              </md-error>
             </md-input-container>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-            <button md-raised-button color="accent">Send</button>
-            <md-checkbox>Invite more</md-checkbox>
+            <button md-raised-button color="accent" [disabled]="emailInput.errors?.required">Send</button>
+            <md-checkbox>Keep inviting</md-checkbox>
           </div>
         </md-card>
       </div>

@@ -13,6 +13,11 @@ import { Router } from '@angular/router';
 export class CreateTeamComponent implements OnInit {
 
   /**
+   * The name input value.
+   */
+  name: string;
+
+  /**
    * Indicates if the component is currently loading.
    */
   loading = true;

@@ -3,6 +3,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 960px) {
+    background: white;
+  }
 }
 
 .mat-card {
@@ -16,4 +20,10 @@
 
 .mat-input-container {
   width: 100%;
+}
+
+.login-card {
+  @media (max-width: 960px) {
+    box-shadow: none !important;
+  }
 }

@@ -2,18 +2,21 @@
   <vmo-toolbar title="" mode="close"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="! loading">
-    <form novalidate (submit)="submit(quantityInput.value, dateInput.value, timeInput.value); $event.preventDefault()">
+    <form novalidate (submit)="submit(quantity, date, time); $event.preventDefault()">
       <div class="container">
         <md-card>
           <span class="mdc-typography--display1">Add Sale</span>
-          <p class="mdc-typography--body1 u-weak">Register sales for yourself or someone else if permitted.</p>
+          <p class="mdc-typography--body1 u-weak">Register sales for yourself or someone you manage.</p>
           <div class="u-vertical-spacing">
             <md-input-container color="accent">
-              <input #quantityInput mdInput placeholder="Quantity" value="1" type="number" min="1">
+              <input #quantityInput="ngModel" name="quantity" mdInput placeholder="Quantity" type="number" [(ngModel)]="quantity" required>
+              <md-error *ngIf="quantityInput.errors?.required && (quantityInput.dirty || quantityInput.touched)">
+                This field is required
+              </md-error>
             </md-input-container>
           </div>
           <div class="u-vertical-spacing">
-            <md-select placeholder="User" color="accent" [(ngModel)]="selectedMembership" name="userInput">
+            <md-select placeholder="User" color="accent" [(ngModel)]="selectedMembership" name="userInput" required>
               <md-option *ngFor="let membership of memberships" [value]="membership.id">
                 {{ membership.user.name }}
               </md-option>
@@ -23,18 +26,24 @@
             <div fxLayout="row" fxLayoutGap="16px">
               <div fxFlex="50">
                 <md-input-container color="accent">
-                  <input #dateInput mdInput [mdDatepicker]="picker" placeholder="Date" [value]="todaysDate">
+                  <input #dateInput="ngModel" mdInput name="date" [mdDatepicker]="picker" placeholder="Date" [(ngModel)]="date" required>
                   <button mdSuffix [mdDatepickerToggle]="picker" type="button"></button>
+                  <md-error *ngIf="dateInput.errors?.required && (dateInput.dirty || dateInput.touched)">
+                    This field is required
+                  </md-error>
                 </md-input-container>
                 <md-datepicker #picker></md-datepicker>
               </div>
               <md-input-container color="accent" fxFlex="50">
-                <input #timeInput mdInput placeholder="Time" type="time" value="12:00">
+                <input #timeInput="ngModel" mdInput name="time" (blur)="dd(form)" placeholder="Time" type="time" [(ngModel)]="time" required>
+                <md-error *ngIf="timeInput.errors?.required && (timeInput.dirty || timeInput.touched)">
+                  This field is required
+                </md-error>
               </md-input-container>
             </div>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-            <button md-raised-button color="accent">Add</button>
+            <button md-raised-button color="accent" [disabled]="quantityInput.errors?.required || dateInput.errors?.required || timeInput.errors?.required">Add</button>
             <md-checkbox [(ngModel)]="addMore" name="addMore">Add more</md-checkbox>
           </div>
         </md-card>

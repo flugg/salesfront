@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   templateUrl: 'invite-user.component.html',
   styleUrls: ['invite-user.component.scss']
 })
 export class InviteUserComponent implements OnInit {
+
+  /**
+   * The email input value.
+   */
+  email: string;
 
   /**
    * Indicates if the component is currently loading.
