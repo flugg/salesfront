@@ -51,10 +51,6 @@ export class AddSaleComponent implements OnInit, OnDestroy {
    */
   user: User;
 
-  dd(a) {
-    console.log(a);
-  }
-
   /**
    * The id of the selected member to add sale for.
    */
@@ -105,9 +101,9 @@ export class AddSaleComponent implements OnInit, OnDestroy {
   /**
    * Submits the form.
    */
-  submit(quantity: number, date: string, time: string) {
+  submit(quantity: number, date: Date, time: string) {
     const promises = [];
-    const datetime = moment(date + ' ' + time, 'YYYY-MM-DD hh:mm');
+    const datetime = moment(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${time}`, 'YYYY-MM-DD hh:mm');
 
     this.activeMembership.membership.first().subscribe(membership => {
       for (let i = 0; i < quantity; i++) {
