@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: none;
 
   @media (max-width: 960px) {
     background: white;
