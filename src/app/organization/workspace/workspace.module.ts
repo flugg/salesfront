@@ -6,6 +6,7 @@ import { WorkspaceComponent } from './workspace.component';
 import { SalesConfirmationComponent } from './sales-confirmation/sales-confirmation.component';
 import { WorkspaceSharedModule } from './shared/workspace-shared.module';
 import { ActiveProjectService } from './shared/active-project.service';
+import { ClockInConfirmationComponent } from './clock-in-confirmation/clock-in-confirmation.component';
 
 @NgModule({
   imports: [
@@ -15,10 +16,12 @@ import { ActiveProjectService } from './shared/active-project.service';
   ],
   declarations: [
     WorkspaceComponent,
-    SalesConfirmationComponent
+    SalesConfirmationComponent,
+    ClockInConfirmationComponent
   ],
   entryComponents: [
-    SalesConfirmationComponent
+    SalesConfirmationComponent,
+    ClockInConfirmationComponent
   ],
   providers: [
     ActiveProjectService

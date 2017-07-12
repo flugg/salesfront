@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { ObservableResourceList } from '../../../../core/sockets/observable-resource-list';
 import { SocketApiService } from '../../../../core/sockets/socket-api.service';
-import { ActiveConversationService } from './active-conversation.service';
 import { MessageService } from './message.service';
 import { Message } from './message.model';
 
@@ -30,11 +29,11 @@ export class MessageListService extends ObservableResourceList implements OnDest
     super();
 
     this.paginator.subscribe(limit => {
-      this.pagination(this.messageService.get(this.route.snapshot.params.conversation, limit, this.cursor))
+      this.pagination(this.messageService.get(this.route.snapshot.params['conversation'], limit, this.cursor))
         .subscribe(messages => this.add(messages));
     });
 
-    this.sockets.listenForConversation(this.route.snapshot.params.conversation, {
+    this.sockets.listenForConversation(this.route.snapshot.params['conversation'], {
       'message_sent': (message) => this.addMessage(message)
     }, this);
   }
@@ -51,7 +50,7 @@ export class MessageListService extends ObservableResourceList implements OnDest
    * Sets the last message on the conversation.
    */
   private addMessage(message: Message) {
-    if (message.conversationId === this.route.snapshot.params.conversation) {
+    if (message.conversationId === this.route.snapshot.params['conversation']) {
       this.snapshot.unshift(message);
       this.updateFromSnapshot();
     }

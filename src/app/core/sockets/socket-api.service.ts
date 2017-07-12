@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import * as Pusher from 'pusher-js';
 import * as Echo from 'laravel-echo';
 
@@ -115,7 +115,7 @@ export class SocketApiService {
     });
 
     this.getPusher().connection.bind('connected', () => {
-      this.snackBar.open('Connected', null, { duration: 1500 });
+      this.snackBar.open('Connected', null, <MdSnackBarConfig>{ duration: 1500 });
       this.getPusher().connection.unbind('connected');
     });
   }

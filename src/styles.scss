@@ -163,6 +163,10 @@ snack-bar-container {
 .u-vertical-spacing {
   padding-top: 16px;
   padding-bottom: 16px;
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
 }
 
 .u-horizontal-spacing {
@@ -315,6 +319,10 @@ snack-bar-container {
       color: rgba(0, 0, 0, .38);
     }
   }
+
+  .mat-input-subscript-wrapper {
+    position: static;
+  }
 }
 
 .sale-splash {
@@ -444,4 +452,20 @@ snack-bar-container {
   font-size: 50px;
   height: 50px !important;
   width: 50px !important;
+}
+
+.sales-dialog .mat-dialog-container {
+  background: #2979ff;
+  padding: 24px !important;
+  width: 600px;
+
+  @media (max-width: 960px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+    width: auto;
+  }
 }

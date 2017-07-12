@@ -1,14 +1,17 @@
-import { Project } from '../../shared/project.model';
 import { Team } from '../project/shared/team.model';
 import { Membership } from '../../shared/membership.model';
+import { User } from '../../shared/user.model';
+import { TeamMember } from '../../shared/team-member.model';
 
 export interface Sale {
   id: string;
-  projectId: string;
-  teamId: string;
-  membershipId: string;
   createdAt: string;
-  project?: Project;
-  team?: Team;
+  membershipId: string;
   membership?: Membership;
+  teamId: string;
+  team?: Team;
+  teamMemberIdId: string;
+  teamMember: TeamMember;
+  registererId: string;
+  registerer?: User;
 }

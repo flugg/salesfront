@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/first';
@@ -57,6 +57,11 @@ export class AddSaleComponent implements OnInit, OnDestroy {
   selectedMembership: string;
 
   /**
+   * The id of the selected team to add sale for.
+   */
+  selectedTeam: string;
+
+  /**
    * The list of memberships.
    */
   memberships: Membership[];
@@ -86,7 +91,10 @@ export class AddSaleComponent implements OnInit, OnDestroy {
       this.membershipList.members
     ).subscribe(data => {
       [this.user, this.memberships] = data;
-      this.selectedMembership = this.memberships.find(membership => membership.userId === this.user.id).id;
+      this.memberships = this.memberships.filter(membership => membership.teamMembers.length);
+      const member = this.memberships.find(membership => membership.userId === this.user.id);
+      this.selectedMembership = member ? member.id : this.memberships[0].id;
+      this.updateTeams();
       this.loading = false;
     }));
   }
@@ -103,11 +111,11 @@ export class AddSaleComponent implements OnInit, OnDestroy {
    */
   submit(quantity: number, date: Date, time: string) {
     const promises = [];
-    const datetime = moment(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${time}`, 'YYYY-MM-DD hh:mm');
+    const datetime = moment(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${time}`, 'YYYY-MM-DD HH:mm');
 
     this.activeMembership.membership.first().subscribe(membership => {
       for (let i = 0; i < quantity; i++) {
-        promises.push(this.saleService.register(this.selectedMembership, datetime));
+        promises.push(this.saleService.register(this.selectedTeam, datetime));
       }
 
       Promise.all(promises).then(() => {
@@ -115,8 +123,31 @@ export class AddSaleComponent implements OnInit, OnDestroy {
           this.router.navigate(['projects', membership.projectId, 'sales']);
         }
 
-        this.snackBar.open(`${quantity} ${quantity > 1 ? 'sales' : 'sale' } added`, null, { duration: 2000 });
+        this.snackBar.open(`${quantity > 1 ? quantity + ' sales' : 'Sale' } added`, null, <MdSnackBarConfig>{ duration: 2000 });
       });
     });
+  }
+
+  /**
+   * Gets team members from the given membership id.
+   */
+  getTeamMembers(membershipId: string) {
+    if (! this.memberships || ! membershipId) {
+      return;
+    }
+
+    const membership = this.memberships.find(member => member.id === membershipId);
+    return membership.teamMembers ? membership.teamMembers : null;
+  }
+
+  /**
+   * Updates the teams select.
+   */
+  updateTeams() {
+    const members = this.getTeamMembers(this.selectedMembership);
+
+    if (members) {
+      this.selectedTeam = members[0].id
+    }
   }
 }

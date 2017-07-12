@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { MdDialog, MdSidenav } from '@angular/material';
+import { MdDialog, MdDialogConfig, MdSidenav, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
@@ -20,6 +20,8 @@ import { Project } from '../shared/project.model';
 import { User } from '../shared/user.model';
 import { Membership } from '../shared/membership.model';
 import { Sale } from './shared/sale.model';
+import { ClockInConfirmationComponent } from './clock-in-confirmation/clock-in-confirmation.component';
+import { SessionService } from '../shared/session.service';
 
 @Component({
   providers: [
@@ -80,7 +82,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
     { name: 'Wall of Fame', route: 'wall-of-fame', icon: 'star' },
     { name: 'Sales', route: 'sales', icon: 'attach_money' },
     { name: 'Teams', route: 'teams', icon: 'group' },
-    { name: 'Users', route: 'users', icon: 'person' },
+    { name: 'Users', route: 'users', icon: 'person' }
     /*{ name: 'Settings', route: 'settings', icon: 'settings' }*/
   ];
 
@@ -99,6 +101,7 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
    */
   constructor(private router: Router,
               private dialog: MdDialog,
+              private snackbar: MdSnackBar,
               private auth: AuthService,
               private screen: ScreenService,
               private saleService: SaleService,
@@ -106,7 +109,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               private activeUser: ActiveUserService,
               private activeProject: ActiveProjectService,
               private activeMembership: ActiveMembershipService,
-              private salesToday: SalesTodayListService) {}
+              private salesToday: SalesTodayListService,
+              private sessionService: SessionService) {}
 
   /**
    * Initializes the component.
@@ -163,8 +167,9 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
    */
   addSale() {
     this.pending = true;
-    this.saleService.register(this.membership.id).then(sale => {
-      this.dialog.open(SalesConfirmationComponent, {
+    this.saleService.register(this.membership.teamMembers[0].id).then(sale => {
+      this.dialog.open(SalesConfirmationComponent, <MdDialogConfig>{
+        panelClass: 'sales-dialog',
         data: {
           sale: sale,
           count: this.sales.length,
@@ -172,6 +177,27 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         }
       });
       this.pending = false;
+    });
+  }
+
+  /**
+   * Clocks into work and starts a new sales session.
+   */
+  clockIn() {
+    this.dialog.open(ClockInConfirmationComponent, <MdDialogConfig>{
+      width: '400px',
+      data: {
+        teamMembers: this.membership.teamMembers
+      }
+    });
+  }
+
+  /**
+   * Clocks out from work by stopping the active session.
+   */
+  clockOut() {
+    this.sessionService.clockOut(this.membership.activeSession).then(() => {
+      this.snackbar.open('Clocked out', null, <MdSnackBarConfig>{ duration: 2000 });
     });
   }
 

@@ -2,6 +2,7 @@ import { OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import 'rxjs/add/operator/do';
 
 import { PaginationResponse } from '../http/pagination-response';
 

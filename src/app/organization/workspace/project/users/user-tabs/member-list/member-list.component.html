@@ -6,7 +6,7 @@
                     [routerLink]="membership.id"
                     class="u-clickable">
 
-        <vmo-avatar md-list-avatar [user]="membership.user"></vmo-avatar>
+        <vmo-avatar md-list-avatar [membership]="membership" [user]="membership.user"></vmo-avatar>
         <h4 md-line class="mdc-typography--subheading1">{{ membership.user.name }}</h4>
       </md-list-item>
     </md-list>

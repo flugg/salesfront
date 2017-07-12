@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/first';
 
 import { ObservableResourceList } from '../../../../core/sockets/observable-resource-list';
 import { SocketApiService } from '../../../../core/sockets/socket-api.service';

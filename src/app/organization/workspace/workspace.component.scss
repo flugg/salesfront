@@ -83,7 +83,7 @@
 }
 
 .mat-raised-button {
-  background: #2962FF;
+  background: #2962ff;
 
   &[disabled] {
     color: rgba(white, 0.5);
@@ -117,4 +117,28 @@ button[md-fab] {
 
 .mat-button[disabled] {
   color: rgba(white, 0.5);
+}
+
+.clock-in-bar {
+  position: fixed;
+  bottom: 0;
+  color: white;
+  min-height: 56px !important;
+
+  /deep/ .mat-toolbar-row {
+    height: 56px !important;
+  }
+
+  button[md-fab] {
+    color: white;
+    background: #2979ff;
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+.clock-out-button {
+  width: 100%;
+  background: #546E7A !important;
+  color: white !important;
 }

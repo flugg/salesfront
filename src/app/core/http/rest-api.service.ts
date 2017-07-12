@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/catch';
 
 import { TokenService } from '../auth/token.service';
 
@@ -86,7 +87,7 @@ export class RestApiService {
 
     return this.http.delete(this.basePath + path, options)
       .toPromise()
-      .then(() => null)
+      .then(response => response.json())
       .catch(this.handleError);
   }
 

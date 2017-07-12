@@ -17,7 +17,7 @@ export class MembershipService {
    * Fetches a list of all memberships in a project.
    */
   getAllForProject(projectId: string): Observable<Membership[]> {
-    return this.api.get(`projects/${projectId}/memberships`, { include: 'user' }).map(response => response.data);
+    return this.api.get(`projects/${projectId}/memberships`, { include: 'teamMembers.team,activeSession,user' }).map(response => response.data);
   }
 
   /**
@@ -38,7 +38,7 @@ export class MembershipService {
    * Fetches a list of memberships in a projet.
    */
   getForOrganization(organizationId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`organizations/${organizationId}/memberships`, cursor, limit);
+    return this.api.paginate(`organizations/${organizationId}/memberships`, cursor, limit, {include: 'teamMembers.team,activeSession'});
   }
 
   /**

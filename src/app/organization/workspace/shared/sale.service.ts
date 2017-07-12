@@ -50,10 +50,10 @@ export class SaleService {
   }
 
   /**
-   * Registers a sale for the given membership.
+   * Registers a sale for the given team member.
    */
-  register(membershipId: string, date?: Moment): Promise<Sale> {
-    return this.api.post(`memberships/${membershipId}/sales`, !date ? {} : {
+  register(teamMemberId: string, date?: Moment): Promise<Sale> {
+    return this.api.post(`team-members/${teamMemberId}/sales`, !date ? {} : {
       date: date.toISOString() || moment().toISOString()
     }).then(response => response.data);
   }

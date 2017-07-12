@@ -16,11 +16,22 @@
             </md-input-container>
           </div>
           <div class="u-vertical-spacing">
-            <md-select placeholder="User" color="accent" [(ngModel)]="selectedMembership" name="userInput" required>
-              <md-option *ngFor="let membership of memberships" [value]="membership.id">
-                {{ membership.user.name }}
-              </md-option>
-            </md-select>
+            <div fxLayout="row" fxLayoutGap="16px">
+              <div fxFlex="50">
+                <md-select placeholder="User" color="accent" [(ngModel)]="selectedMembership" (change)="updateTeams()" name="userInput" required>
+                  <md-option *ngFor="let membership of memberships" [value]="membership.id">
+                    {{ membership.user.name }}
+                  </md-option>
+                </md-select>
+              </div>
+              <div fxFlex="50">
+                <md-select placeholder="Team" color="accent" [(ngModel)]="selectedTeam" name="teamInput" required>
+                  <md-option *ngFor="let teamMember of getTeamMembers(selectedMembership)" [value]="teamMember.id">
+                    {{ teamMember.team.name }}
+                  </md-option>
+                </md-select>
+              </div>
+            </div>
           </div>
           <div class="u-vertical-spacing">
             <div fxLayout="row" fxLayoutGap="16px">
@@ -44,7 +55,7 @@
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
             <button md-raised-button color="accent" [disabled]="quantityInput.errors?.required || dateInput.errors?.required || timeInput.errors?.required">Add</button>
-            <md-checkbox [(ngModel)]="addMore" name="addMore">Add more</md-checkbox>
+            <md-checkbox [(ngModel)]="addMore" name="addMore">Keep adding</md-checkbox>
           </div>
         </md-card>
       </div>

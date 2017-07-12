@@ -36,22 +36,6 @@
   margin-top: -24px;
 }
 
-/deep/ .mat-dialog-container {
-  background: #2979ff;
-  padding: 24px !important;
-  width: 600px;
-
-  @media (max-width: 960px) {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    max-width: 100%;
-    width: auto;
-  }
-}
-
 .u-weak {
   color: rgba(white, 0.7);
 }

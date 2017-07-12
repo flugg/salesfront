@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 import { AuthService } from '../../core/auth/auth.service';
 
@@ -35,7 +35,7 @@ export class LoginComponent {
       if (loggedIn) {
         this.router.navigate(['/projects']);
       } else {
-        this.snackbar.open('Invalid credentials given', null, { duration: 3000 });
+        this.snackbar.open('Invalid credentials given', null, <MdSnackBarConfig>{ duration: 3000 });
       }
     });
   }

@@ -2,16 +2,17 @@
   <div class="vmo-scrollable-area">
     <md-list class="vmo-list">
       <md-list-item md-ripple
-                    routerLink="../../../users/members/{{ membership.userId }}"
-                    *ngFor="let membership of memberships"
+                    *ngFor="let member of members"
+                    routerLink="../../../users/members/{{ member.membership.id }}"
                     class="u-clickable">
 
-        <vmo-avatar md-list-avatar [user]="membership.user"></vmo-avatar>
-        <h4 md-line class="mdc-typography--subheading1">{{ membership.user.name }}</h4>
+        <vmo-avatar md-list-avatar [membership]="member?.membership" [user]="member?.membership?.user"></vmo-avatar>
+        <h4 md-line class="mdc-typography--subheading1">{{ member?.membership?.user.name }}</h4>
+        <md-icon *ngIf="member.isLeader" mdTooltip="Team Leader" mdTooltipPosition="before" class="u-weak">verified_user</md-icon>
       </md-list-item>
     </md-list>
 
-    <vmo-load-more-button [paginator]="membershipList"></vmo-load-more-button>
+    <vmo-load-more-button [paginator]="memberList"></vmo-load-more-button>
   </div>
 </vmo-progress-spinner>
 

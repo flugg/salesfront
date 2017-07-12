@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { MD_DIALOG_DATA, MdDialogRef, MdSnackBar } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogRef, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 import { WorkspaceComponent } from '../workspace.component';
 import { SaleService } from '../shared/sale.service';
@@ -106,7 +106,7 @@ export class SalesConfirmationComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.dialog.afterClosed().subscribe(() => {
-        this.snackbar.open('Sale undone', null, { duration: 2000 });
+        this.snackbar.open('Sale undone', null, <MdSnackBarConfig>{ duration: 2000 });
       });
       this.dialog.close();
     }, 300);
@@ -117,7 +117,7 @@ export class SalesConfirmationComponent implements OnInit {
    */
   addSale() {
     this.loading = true;
-    this.saleService.register(this.data.membership.id).then(sale => {
+    this.saleService.register(this.data.membership.teamMembers[0].id).then(sale => {
       setTimeout(() => {
         this.data.sale = sale;
         this.data.count++;

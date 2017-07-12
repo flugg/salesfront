@@ -14,7 +14,7 @@
         <md-divider></md-divider>
       </div>
       <md-list-item *ngFor="let membership of memberships">
-        <vmo-avatar md-list-avatar [user]="membership.user" [routerLink]="'../../users/members/' + membership.id"></vmo-avatar>
+        <vmo-avatar md-list-avatar [membership]="membership" [user]="membership.user" [routerLink]="'../../users/members/' + membership.id"></vmo-avatar>
         <div md-line fxLayout="row" class="leaderboard-title">
         <span class="mdc-typography--body1">
           <span class="strong">{{ membership.position }}.</span> {{ membership.user.name }}

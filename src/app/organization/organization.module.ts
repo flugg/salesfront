@@ -8,6 +8,8 @@ import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectService } from './shared/project.service';
 import { UserService } from './shared/user.service';
 import { MembershipService } from './shared/membership.service';
+import { TeamMemberService } from './shared/team-member.service';
+import { SessionService } from './shared/session.service';
 
 @NgModule({
   imports: [
@@ -22,7 +24,9 @@ import { MembershipService } from './shared/membership.service';
   providers: [
     ProjectService,
     UserService,
-    MembershipService
+    MembershipService,
+    TeamMemberService,
+    SessionService
   ]
 })
 export class OrganizationModule {}

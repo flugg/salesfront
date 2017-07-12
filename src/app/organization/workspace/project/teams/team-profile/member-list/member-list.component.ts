@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { MemberListService } from './member-list.service';
-import { Membership } from '../../../../../shared/membership.model';
+import { TeamMember } from '../../../../../shared/team-member.model';
 
 @Component({
   templateUrl: 'member-list.component.html'
@@ -15,9 +15,9 @@ export class MemberListComponent implements OnInit, OnDestroy {
   loading = true;
 
   /**
-   * List of loaded membersips.
+   * List of loaded team members.
    */
-  memberships: Membership[];
+  members: TeamMember[];
 
   /**
    * List of observable subscriptions.
@@ -27,14 +27,14 @@ export class MemberListComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(public membershipList: MemberListService) {}
+  constructor(public memberList: MemberListService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.membershipList.memberships.subscribe(memberships => {
-      this.memberships = memberships;
+    this.subscriptions.push(this.memberList.members.subscribe(members => {
+      this.members = members;
       this.loading = false;
     }));
   }
