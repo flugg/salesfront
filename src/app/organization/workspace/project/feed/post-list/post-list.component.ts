@@ -8,9 +8,10 @@ import { CommentService } from '../shared/comment.service';
 import { ActiveProjectService } from '../../../shared/active-project.service';
 import { ActiveUserService } from '../../../../active-user.service';
 import { PostListService } from './post-list.service';
-import { Project } from '../../../../shared/project.model';
+import { Membership } from '../../../../shared/membership.model';
 import { Post } from '../shared/post.model';
 import { User } from '../../../../shared/user.model';
+import { ActiveMembershipService } from '../../../active-membership.service';
 
 @Component({
   providers: [PostListService],
@@ -25,9 +26,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   loading = true;
 
   /**
-   * The active project.
+   * The active membership.
    */
-  project: Project;
+  membership: Membership;
 
   /**
    * The active user.
@@ -48,7 +49,7 @@ export class PostListComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(public postList: PostListService,
-              private activeProject: ActiveProjectService,
+              private activeMembership: ActiveMembershipService,
               private activeUser: ActiveUserService,
               private postService: PostService,
               private commentService: CommentService) {}
@@ -58,11 +59,11 @@ export class PostListComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
-      this.activeProject.project,
+      this.activeMembership.membership,
       this.activeUser.user,
       this.postList.posts
     ).subscribe(data => {
-      [this.project, this.user, this.posts] = data;
+      [this.membership, this.user, this.posts] = data;
       this.loading = false;
     }));
   }
@@ -79,7 +80,7 @@ export class PostListComponent implements OnInit, OnDestroy {
    */
   publishPost(body: string) {
     if (body) {
-      this.postService.publish(this.project.id, body);
+      this.postService.publish(this.membership.id, body);
     }
   }
 

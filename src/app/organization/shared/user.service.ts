@@ -28,6 +28,13 @@ export class UserService {
   }
 
   /**
+   * Register a new user.
+   */
+  register(attributes: any) {
+    return this.api.post('users', attributes).then(response => response.data);
+  }
+
+  /**
    * Updates the given user.
    */
   update(userId: string, attributes: any) {

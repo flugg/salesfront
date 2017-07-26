@@ -12,6 +12,14 @@ button:not([disabled]) {
 .mat-input-container /deep/ {
   font-weight: 400;
 
+  input {
+    height: auto;
+  }
+
+  .mat-input-infix {
+    border-top: 0;
+  }
+
   .mat-input-wrapper {
     padding-bottom: 0;
   }

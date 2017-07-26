@@ -3,18 +3,35 @@
 
   <vmo-progress-spinner [hasLoaded]="! loading">
     <div class="vmo-scrollable-area">
-      <div class="container">
-        <md-card *ngIf="user?.isAdmin" class="post-input">
-          <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
-                fxLayoutAlign="stretch center">
-            <md-input-container class="vmo-fixed-input">
-              <input #input mdInput name="post" placeholder="Write a post...">
-            </md-input-container>
-          </form>
-        </md-card>
-
-        <div *ngFor="let post of posts">
-          <vmo-post [post]="post" [user]="user" (commentPosted)="postComment(post, $event)"></vmo-post>
+      <div class="container" fxFlex>
+        <div *ngIf="! posts?.length"
+             class="u-stretch"
+             fxLayout="column"
+             fxLayoutAlign="center center"
+             fxLayoutGap="16px">
+          <span class="mdc-typography--headline">The feed is empty.</span>
+          <span class="u-weak">No posts have been posted to the feed.</span>
+          <md-card *ngIf="user?.isAdmin" class="post-input">
+            <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
+                  fxLayoutAlign="stretch center">
+              <md-input-container class="vmo-fixed-input">
+                <input #input mdInput name="post" placeholder="Write a post...">
+              </md-input-container>
+            </form>
+          </md-card>
+        </div>
+        <div *ngIf="posts?.length">
+          <md-card *ngIf="user?.isAdmin" class="post-input">
+            <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()"
+                  fxLayoutAlign="stretch center">
+              <md-input-container class="vmo-fixed-input">
+                <input #input mdInput name="post" placeholder="Write a post...">
+              </md-input-container>
+            </form>
+          </md-card>
+          <div *ngFor="let post of posts">
+            <vmo-post [post]="post" [user]="user" (commentPosted)="postComment(post, $event)"></vmo-post>
+          </div>
         </div>
 
         <vmo-load-more-button [paginator]="postList"></vmo-load-more-button>

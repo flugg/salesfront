@@ -14,7 +14,7 @@
         <md-divider></md-divider>
       </div>
       <md-list-item *ngFor="let membership of memberships">
-        <vmo-avatar md-list-avatar [membership]="membership" [user]="membership.user" [routerLink]="'../../users/members/' + membership.id"></vmo-avatar>
+        <vmo-avatar md-list-avatar [membership]="membership" [user]="membership.user"></vmo-avatar>
         <div md-line fxLayout="row" class="leaderboard-title">
         <span class="mdc-typography--body1">
           <span class="strong">{{ membership.position }}.</span> {{ membership.user.name }}
@@ -27,7 +27,7 @@
         <div md-line class="leaderboard-bar">
           <div [@slideIn]="true"
                class="leaderboard-progress"
-               [style.width]="membership.sales.length * 100 / memberships[0].sales.length + '%'"></div>
+               [style.width]="membership.sales.length ? membership.sales.length * 100 / memberships[0].sales.length + '%' : ''"></div>
         </div>
       </md-list-item>
     </md-list>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { SalesListService } from './sales-list.service';
-import { Sale } from '../../../shared/sale.model';
+import { SaleDataSource } from './sale-data-source';
 
 @Component({
   providers: [SalesListService],
@@ -9,17 +9,16 @@ import { Sale } from '../../../shared/sale.model';
 })
 export class SalesListComponent implements OnInit {
 
-  selectAll = false;
-
   /**
    * Indicates if the component is currently loading.
    */
   loading = true;
 
   /**
-   * List of loaded membersips.
+   * The table data source.
    */
-  sales: Sale[];
+  dataSource: SaleDataSource | null;
+  displayedColumns = ['id'];
 
   /**
    * Constructs the component.
@@ -30,9 +29,7 @@ export class SalesListComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
-    this.salesList.sales.subscribe(sales => {
-      this.sales = sales;
-      this.loading = false;
-    });
+    this.dataSource = new SaleDataSource(this.salesList.sales);
+    this.loading = false;
   }
 }

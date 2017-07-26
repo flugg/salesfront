@@ -21,9 +21,8 @@
           </h4>
         </md-list-item>
       </md-list>
+      <vmo-load-more-button [paginator]="userList"></vmo-load-more-button>
     </div>
-
-    <vmo-load-more-button [paginator]="userList"></vmo-load-more-button>
   </vmo-progress-spinner>
 
   <vmo-bottom-input (send)="start($event)"

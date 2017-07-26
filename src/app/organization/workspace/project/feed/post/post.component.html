@@ -1,9 +1,9 @@
 <md-card [@fadeInOut]="true" class="container-card">
   <md-card class="post-card u-no-elevation">
     <md-card-header>
-      <vmo-avatar md-card-avatar [user]="post.user"></vmo-avatar>
-      <md-card-title class="mdc-typography--subheading1">
-        {{ post.user.name }}
+      <vmo-avatar md-card-avatar [membership]="post.membership" [user]="post.membership.user"></vmo-avatar>
+      <md-card-title class="mdc-typography--subheading1 u-clickable" [routerLink]="'/projects/' + post.membership.projectId + '/users/members/' + post.membership.id">
+        {{ post.membership.user.name }}
       </md-card-title>
       <md-card-subtitle class="mdc-typography--caption">
         {{ post.publishedAt | amTimeAgo }}
@@ -18,10 +18,10 @@
   <md-card class="comments u-no-elevation" *ngIf="post.comments.length">
     <md-list>
       <md-list-item *ngFor="let comment of post.comments">
-        <vmo-avatar md-list-avatar [user]="comment.user" fxFlexAlign="start"></vmo-avatar>
+        <vmo-avatar md-list-avatar [membership]="comment.membership" [user]="comment.membership.user" fxFlexAlign="start"></vmo-avatar>
         <div md-line fxLayoutGap="6px">
-          <span class="mdc-typography--body2">
-            {{ comment.user.name }}
+          <span class="mdc-typography--body2 u-clickable" [routerLink]="'/projects/' + post.membership.projectId + '/users/members/' + post.membership.id">
+            {{ comment.membership.user.name }}
           </span>
           <span class="mdc-typography--caption u-weak">
             {{ comment.postedAt | amTimeAgo }}

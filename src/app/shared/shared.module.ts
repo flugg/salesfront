@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDatepickerModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdNativeDateModule, MdProgressSpinnerModule, MdSelectModule, MdSidenavModule, MdSnackBarModule, MdTabsModule, MdToolbarModule, MdTooltipModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDatepickerModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdNativeDateModule, MdProgressSpinnerModule, MdSelectModule, MdSidenavModule, MdSnackBarModule, MdTableModule, MdTabsModule, MdToolbarModule, MdTooltipModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MomentModule } from 'angular2-moment';
 
@@ -9,11 +9,13 @@ import { LoadMoreButtonComponent } from './load-more-button/load-more-button.com
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { ExcludePipe } from './exclude.pipe';
 import { AvatarComponent } from './avatar/avatar.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     FlexLayoutModule,
+    RouterModule,
     MdButtonModule,
     MdProgressSpinnerModule,
     MdIconModule
@@ -41,6 +43,7 @@ import { AvatarComponent } from './avatar/avatar.component';
     MdSelectModule,
     MdDatepickerModule,
     MdNativeDateModule,
+    MdTableModule,
     MomentModule,
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,

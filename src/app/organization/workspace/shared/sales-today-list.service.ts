@@ -33,7 +33,8 @@ export class SalesTodayListService extends ObservableResourceList implements OnD
 
     this.activeUser.user.first().subscribe(user => {
       this.sockets.listenForUser(user.id, {
-        'sale_registered': sale => this.addSale(sale)
+        'sale_registered': sale => this.addSale(sale),
+        'sale_deleted': sale => this.removeSale(sale)
       }, this);
     });
   }
@@ -51,6 +52,14 @@ export class SalesTodayListService extends ObservableResourceList implements OnD
    */
   private addSale(sale: Sale) {
     this.snapshot.push(sale);
+    this.updateFromSnapshot();
+  }
+
+  /**
+   * Removes a sale from the list.
+   */
+  private removeSale(sale: Sale) {
+    this.snapshot = this.snapshot.filter(item => item.id !== sale.id);
     this.updateFromSnapshot();
   }
 }

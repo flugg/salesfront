@@ -4,6 +4,7 @@ import { MD_DIALOG_DATA, MdDialogRef, MdSnackBar, MdSnackBarConfig } from '@angu
 
 import { WorkspaceComponent } from '../workspace.component';
 import { SaleService } from '../shared/sale.service';
+import { Sale } from '../shared/sale.model';
 
 @Component({
   templateUrl: 'sales-confirmation.component.html',
@@ -32,6 +33,11 @@ export class SalesConfirmationComponent implements OnInit {
    * The chosen motivational cheer.
    */
   cheer: string;
+
+  /**
+   * The last sale that was done.
+   */
+  lastSale: Sale;
 
   /**
    * List of available motivational cheers.
@@ -80,7 +86,7 @@ export class SalesConfirmationComponent implements OnInit {
     'Grand!',
     'Top-notch!',
     'Impressive!',
-    'Terrific!',
+    'Terrific!'
   ];
 
   /**
@@ -95,6 +101,7 @@ export class SalesConfirmationComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
+    this.lastSale = this.data.sale;
     this.cheer = this.getRandomCheer();
     setTimeout(() => this.loading = false, 200);
   }
@@ -104,12 +111,12 @@ export class SalesConfirmationComponent implements OnInit {
    */
   undoSale() {
     this.loading = true;
-    setTimeout(() => {
+    this.saleService.delete(this.lastSale.id).then(() => {
       this.dialog.afterClosed().subscribe(() => {
         this.snackbar.open('Sale undone', null, <MdSnackBarConfig>{ duration: 2000 });
       });
       this.dialog.close();
-    }, 300);
+    });
   }
 
   /**
@@ -118,6 +125,7 @@ export class SalesConfirmationComponent implements OnInit {
   addSale() {
     this.loading = true;
     this.saleService.register(this.data.membership.teamMembers[0].id).then(sale => {
+      this.lastSale = sale;
       setTimeout(() => {
         this.data.sale = sale;
         this.data.count++;

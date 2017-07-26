@@ -1,6 +1,6 @@
 <div class="vmo-component vmo-component--important">
   <vmo-toolbar title="{{ membership?.user.name }}" mode="back">
-    <button md-icon-button routerLink="edit">
+    <button md-icon-button routerLink="edit" *ngIf="canEdit">
       <md-icon>edit</md-icon>
     </button>
   </vmo-toolbar>
@@ -23,7 +23,7 @@
           </div>
           <div class="inner-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
             <span class="mdc-typography--display1">{{ membership?.user?.name }}</span>
-            <span class="mdc-typography--body1 u-weak">{{ membership?.user?.isAdmin ? 'Administrator' : 'Seller' }}</span>
+            <span class="mdc-typography--body1 u-weak">{{ role }}</span>
             <button md-raised-button
                     color="accent"
                     routerLink="../../../../../messages/new"
@@ -36,9 +36,9 @@
               <md-list-item>
                 <span class="mdc-typography--headline u-weak">About</span>
               </md-list-item>
-              <md-list-item>
+              <md-list-item *ngIf="team">
                 <md-icon md-list-icon class="list-icon">group</md-icon>
-                <span class="mdc-typography--subheading2">{{ team?.name }}</span>
+                <span class="mdc-typography--subheading2 u-clickable" [routerLink]="'/projects/' + membership?.projectId + '/teams/' + team?.id">{{ team?.name }}</span>
               </md-list-item>
               <md-list-item>
                 <md-icon md-list-icon class="list-icon">email</md-icon>

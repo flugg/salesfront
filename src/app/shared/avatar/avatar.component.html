@@ -1,4 +1,4 @@
-<div class="avatar-wrapper">
+<div class="avatar-wrapper" [routerLink]="'/projects/' + membership?.projectId + '/users/members/' + membership?.id">
   <img *ngIf="user?.avatarPath" class="u-avatar u-clickable" src="{{ basePath + user?.avatarPath }}">
   <div *ngIf="! user?.avatarPath" class="u-avatar u-default-avatar u-clickable" fxLayoutAlign="center center">
     <md-icon>face</md-icon>

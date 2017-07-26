@@ -10,18 +10,26 @@
           <div class="u-vertical-spacing">
             <div fxLayout="row" fxLayoutGap="16px">
               <md-input-container color="accent">
-                <input #firstNameInput mdInput placeholder="First Name" value="{{ user?.firstName }}" autofocus required>
+                <input #firstNameInput mdInput placeholder="First Name" value="{{ member?.user.firstName }}" required>
               </md-input-container>
               <md-input-container color="accent">
-                <input #lastNameInput mdInput placeholder="Last Name" value="{{ user?.lastName }}" autofocus required>
+                <input #lastNameInput mdInput placeholder="Last Name" value="{{ member?.user.lastName }}" required>
               </md-input-container>
             </div>
             <md-input-container color="accent">
-              <input #emailInput mdInput placeholder="Email" type="email" value="{{ user?.email }}" autofocus required>
+              <input #emailInput mdInput placeholder="Email" type="email" value="{{ member?.user.email }}" required>
             </md-input-container>
             <md-input-container color="accent">
-              <input #phoneInput mdInput placeholder="Phone Number" type="tel" value="{{ user?.phoneNumber}}" autofocus>
+              <input #phoneInput mdInput placeholder="Phone Number" type="tel" value="{{ member?.user.phoneNumber}}">
             </md-input-container>
+            <md-input-container color="accent">
+              <input #dateInput="ngModel" mdInput name="date" [mdDatepicker]="picker" placeholder="Birthdate" [(ngModel)]="date">
+              <button mdSuffix [mdDatepickerToggle]="picker" type="button"></button>
+              <md-error *ngIf="dateInput.errors?.required && (dateInput.dirty || dateInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <md-datepicker #picker></md-datepicker>
             <button md-raised-button color="accent">Save</button>
           </div>
         </md-card>

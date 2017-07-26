@@ -45,6 +45,16 @@ export class MembershipService {
    * Fetches a single membership by id.
    */
   find(id: string): Observable<Membership> {
-    return this.api.get(`memberships/${id}`, {include: 'user'}).map(response => response.data);
+    return this.api.get(`memberships/${id}`, {include: ['user', 'teamMembers']}).map(response => response.data);
+  }
+
+  /**
+   * Creates a new membership.
+   */
+  create(inviteId: string, projectId: string, userId: string) {
+    return this.api.post(`projects/${projectId}/memberships`, {
+      invite: inviteId,
+      user: userId
+    }).then(response => response.data);
   }
 }

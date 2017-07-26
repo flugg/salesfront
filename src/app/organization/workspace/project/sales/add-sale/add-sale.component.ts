@@ -13,9 +13,12 @@ import { MembershipListService } from './membership-list.service';
 import { ActiveUserService } from '../../../../active-user.service';
 import { Membership } from '../../../../shared/membership.model';
 import { User } from '../../../../shared/user.model';
+import { TeamListService } from './team-list.service';
+import { Team } from '../../shared/team.model';
+import { TeamMember } from '../../../../shared/team-member.model';
 
 @Component({
-  providers: [MembershipListService],
+  providers: [MembershipListService, TeamListService],
   templateUrl: 'add-sale.component.html',
   styleUrls: ['add-sale.component.scss']
 })
@@ -52,19 +55,19 @@ export class AddSaleComponent implements OnInit, OnDestroy {
   user: User;
 
   /**
-   * The id of the selected member to add sale for.
-   */
-  selectedMembership: string;
-
-  /**
    * The id of the selected team to add sale for.
    */
   selectedTeam: string;
 
   /**
-   * The list of memberships.
+   * The id of the selected team member to add sale for.
    */
-  memberships: Membership[];
+  selectedTeamMember: string;
+
+  /**
+   * A list of teams.
+   */
+  teams: Team[];
 
   /**
    * List of observable subscriptions.
@@ -76,7 +79,7 @@ export class AddSaleComponent implements OnInit, OnDestroy {
    */
   constructor(private router: Router,
               private snackBar: MdSnackBar,
-              private membershipList: MembershipListService,
+              private teamList: TeamListService,
               private activeUser: ActiveUserService,
               private activeMembership: ActiveMembershipService,
               private saleService: SaleService) {}
@@ -88,13 +91,11 @@ export class AddSaleComponent implements OnInit, OnDestroy {
     this.date = new Date();
     this.subscriptions.push(Observable.combineLatest(
       this.activeUser.user,
-      this.membershipList.members
+      this.teamList.teams
     ).subscribe(data => {
-      [this.user, this.memberships] = data;
-      this.memberships = this.memberships.filter(membership => membership.teamMembers.length);
-      const member = this.memberships.find(membership => membership.userId === this.user.id);
-      this.selectedMembership = member ? member.id : this.memberships[0].id;
-      this.updateTeams();
+      [this.user, this.teams] = data;
+      this.selectedTeam = this.teams[0].id;
+      this.updateSelectedMember();
       this.loading = false;
     }));
   }
@@ -111,11 +112,11 @@ export class AddSaleComponent implements OnInit, OnDestroy {
    */
   submit(quantity: number, date: Date, time: string) {
     const promises = [];
-    const datetime = moment(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${time}`, 'YYYY-MM-DD HH:mm');
+    const datetime = moment(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${time}`, 'YYYY-MM-DD HH:mm');
 
     this.activeMembership.membership.first().subscribe(membership => {
       for (let i = 0; i < quantity; i++) {
-        promises.push(this.saleService.register(this.selectedTeam, datetime));
+        promises.push(this.saleService.register(this.selectedTeamMember, datetime));
       }
 
       Promise.all(promises).then(() => {
@@ -129,25 +130,18 @@ export class AddSaleComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Gets team members from the given membership id.
+   * Gets a list of members for the currently selected team.
    */
-  getTeamMembers(membershipId: string) {
-    if (! this.memberships || ! membershipId) {
-      return;
+  getMembers() {
+    if (this.teams) {
+      return this.teams.find(team => team.id === this.selectedTeam).members;
     }
-
-    const membership = this.memberships.find(member => member.id === membershipId);
-    return membership.teamMembers ? membership.teamMembers : null;
   }
 
   /**
-   * Updates the teams select.
+   * Updates the selected team member.
    */
-  updateTeams() {
-    const members = this.getTeamMembers(this.selectedMembership);
-
-    if (members) {
-      this.selectedTeam = members[0].id
-    }
+  updateSelectedMember() {
+    this.selectedTeamMember = this.getMembers()[0].id;
   }
 }

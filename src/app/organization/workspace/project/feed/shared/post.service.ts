@@ -30,7 +30,7 @@ export class PostService {
   /**
    * Publishes a new post.
    */
-  publish(projectId: string, body: string) {
-    return this.api.post(`projects/${projectId}/posts`, { body }).then(response => response.data);
+  publish(membershipId: string, body: string) {
+    return this.api.post(`memberships/${membershipId}/posts`, { body }).then(response => response.data);
   }
 }

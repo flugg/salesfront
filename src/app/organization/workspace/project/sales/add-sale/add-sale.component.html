@@ -18,16 +18,16 @@
           <div class="u-vertical-spacing">
             <div fxLayout="row" fxLayoutGap="16px">
               <div fxFlex="50">
-                <md-select placeholder="User" color="accent" [(ngModel)]="selectedMembership" (change)="updateTeams()" name="userInput" required>
-                  <md-option *ngFor="let membership of memberships" [value]="membership.id">
-                    {{ membership.user.name }}
+                <md-select placeholder="Team" color="accent" [(ngModel)]="selectedTeam" (change)="updateSelectedMember()" name="teamInput" required>
+                  <md-option *ngFor="let team of teams" [value]="team.id">
+                    {{ team.name }}
                   </md-option>
                 </md-select>
               </div>
               <div fxFlex="50">
-                <md-select placeholder="Team" color="accent" [(ngModel)]="selectedTeam" name="teamInput" required>
-                  <md-option *ngFor="let teamMember of getTeamMembers(selectedMembership)" [value]="teamMember.id">
-                    {{ teamMember.team.name }}
+                <md-select placeholder="User" color="accent" [(ngModel)]="selectedTeamMember" name="userInput" required>
+                  <md-option *ngFor="let member of getMembers()" [value]="member.id">
+                    {{ member.membership?.user.name }}
                   </md-option>
                 </md-select>
               </div>

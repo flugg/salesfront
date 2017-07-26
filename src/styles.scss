@@ -183,6 +183,7 @@ snack-bar-container {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  outline: none;
 }
 
 .u-avatar--big {
@@ -292,6 +293,25 @@ snack-bar-container {
 .vmo-group-icon {
   background: #e2e2e2;
   color: rgba(black, 0.87);
+  outline: 0;
+  cursor: pointer;
+}
+
+.u-overflow-visible {
+  overflow: visible !important;
+}
+
+.clickable-bar .leaderboard-bar {
+  transition: box-shadow 0.2s;
+}
+
+.clickable-bar:hover .leaderboard-bar {
+  @include mat-elevation(5);
+}
+
+.clickable-bar:active .leaderboard-bar {
+  transition: box-shadow 0.1s;
+  @include mat-elevation(1);
 }
 
 .vmo-fixed-input {

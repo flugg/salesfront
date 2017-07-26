@@ -40,7 +40,8 @@ export class SalesListService extends ObservableResourceList implements OnDestro
       });
 
       this.sockets.listenForProject(project.id, {
-        'sale_registered': sale => this.addSale(sale)
+        'sale_registered': sale => this.addSale(sale),
+        'sale_deleted': sale => this.removeSale(sale),
       }, this);
     });
   }
@@ -58,6 +59,14 @@ export class SalesListService extends ObservableResourceList implements OnDestro
    */
   private addSale(sale: Sale) {
     this.snapshot.push(sale);
+    this.updateFromSnapshot();
+  }
+
+  /**
+   * Removes a sale from the list.
+   */
+  private removeSale(sale: Sale) {
+    this.snapshot = this.snapshot.filter(item => item.id !== sale.id);
     this.updateFromSnapshot();
   }
 }

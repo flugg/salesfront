@@ -1,5 +1,5 @@
 import { Comment } from './comment.model';
-import { User } from '../../../../shared/user.model';
+import { Membership } from '../../../../shared/membership.model';
 
 export interface Post {
   id: string,
@@ -7,5 +7,5 @@ export interface Post {
   publishedAt: string;
   userId: string;
   comments?: Comment[];
-  user?: User;
+  membership?: Membership;
 }

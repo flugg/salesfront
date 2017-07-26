@@ -70,7 +70,7 @@
       Add sale
     </button>
   </md-toolbar>
-  <div class="vmo-component vmo-component--salesbar">
+  <div class="vmo-component" [class.vmo-component--salesbar]="membership?.activeSession">
     <router-outlet></router-outlet>
   </div>
 </md-sidenav-container>

@@ -18,7 +18,7 @@ export class TeamService {
    * Fetches a list of teams in a project.
    */
   getAll(projectId: string): Observable<Team[]> {
-    return this.api.get(`projects/${projectId}/teams`).map(response => response.data);
+    return this.api.get(`projects/${projectId}/teams`, {include: 'members.membership.user'}).map(response => response.data);
   }
 
   /**
