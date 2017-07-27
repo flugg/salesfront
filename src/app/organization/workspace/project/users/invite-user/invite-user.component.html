@@ -56,9 +56,14 @@
                 This field must be minimum 8 characters
               </md-error>
             </md-input-container>
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-              <button md-raised-button color="accent" [disabled]="firstNameInput.errors?.required || lastNameInput.errors?.required || emailInput.errors?.required || passwordInput.errors?.required || passwordInput.errors?.minlength">Register</button>
-              <md-checkbox name="keepInviting" [(ngModel)]="inviteMore">Keep inviting</md-checkbox>
+            <div class="u-vertical-spacing">
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+                <button md-raised-button
+                        color="accent"
+                        [disabled]="firstNameInput.errors?.required || lastNameInput.errors?.required || emailInput.errors?.required || passwordInput.errors?.required || passwordInput.errors?.minlength">Register
+                </button>
+                <md-checkbox name="keepInviting" [(ngModel)]="inviteMore">Keep inviting</md-checkbox>
+              </div>
             </div>
           </div>
         </md-card>

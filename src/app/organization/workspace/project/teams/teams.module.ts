@@ -8,6 +8,10 @@ import { TeamListComponent } from './team-list/team-list.component';
 import { TeamProfileComponent } from './team-profile/team-profile.component';
 import { LeaderListComponent } from './team-profile/leader-list/leader-list.component';
 import { MemberListComponent } from './team-profile/member-list/member-list.component';
+import { EditMembersComponent } from './edit-members/edit-members.component';
+import { AddMemberComponent } from './add-member/add-member.component';
+import { FilteredMembershipsPipe } from './add-member/filtered-memberships.pipe';
+import { EditTeamComponent } from './edit-team/edit-team.component';
 
 @NgModule({
   imports: [
@@ -19,8 +23,12 @@ import { MemberListComponent } from './team-profile/member-list/member-list.comp
     CreateTeamComponent,
     TeamListComponent,
     TeamProfileComponent,
+    EditTeamComponent,
     LeaderListComponent,
-    MemberListComponent
+    MemberListComponent,
+    EditMembersComponent,
+    AddMemberComponent,
+    FilteredMembershipsPipe
   ]
 })
 export class TeamsModule {}

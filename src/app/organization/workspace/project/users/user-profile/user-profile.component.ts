@@ -6,8 +6,6 @@ import { TeamService } from '../../shared/team.service';
 import { Team } from '../../shared/team.model';
 import { MembershipService } from '../../../../shared/membership.service';
 import { Membership } from '../../../../shared/membership.model';
-import { ActiveUserService } from '../../../../active-user.service';
-import { User } from '../../../../shared/user.model';
 import { ActiveMembershipService } from '../../../active-membership.service';
 
 @Component({
@@ -109,7 +107,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Gets the role of the user.
+   * Check if user can edit member.
    */
   private checkIfCanEdit(): boolean {
     if (this.activeMember.user.isAdmin) {

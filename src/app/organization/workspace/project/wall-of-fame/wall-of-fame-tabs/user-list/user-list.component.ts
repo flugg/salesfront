@@ -48,8 +48,6 @@ export class UserListComponent implements OnInit, OnDestroy {
       this.topDailySellersList.sellers
     ).subscribe(data => {
       [this.user, this.topDailySellers] = data;
-      console.log('this.topDailySellers');
-      console.log(this.topDailySellers);
       this.loading = false;
     }));
   }

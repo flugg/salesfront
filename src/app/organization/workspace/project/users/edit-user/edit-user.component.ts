@@ -65,7 +65,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
    * Submits the form.
    */
   submit(firstName: string, lastName: string, email: string, phoneNumber: string): void {
-    console.log(moment(this.date).format('YYYY-MM-DD'));
     this.userService.update(this.member.userId, { firstName, lastName, email, phoneNumber, birthdate: moment(this.date).format('YYYY-MM-DD') }).then(() => {
       this.router.navigate(['..'], { relativeTo: this.route });
     });

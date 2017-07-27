@@ -24,7 +24,7 @@ export class MembershipService {
    * Fetches a list of memberships in a project.
    */
   getForProject(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`projects/${projectId}/memberships`, cursor, limit);
+    return this.api.paginate(`projects/${projectId}/memberships`, cursor, limit, {include: 'teamMembers'});
   }
 
   /**

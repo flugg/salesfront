@@ -6,6 +6,9 @@ import { CreateTeamComponent } from './create-team/create-team.component';
 import { TeamProfileComponent } from './team-profile/team-profile.component';
 import { MemberListComponent } from './team-profile/member-list/member-list.component';
 import { LeaderListComponent } from './team-profile/leader-list/leader-list.component';
+import { EditMembersComponent } from './edit-members/edit-members.component';
+import { AddMemberComponent } from './add-member/add-member.component';
+import { EditTeamComponent } from './edit-team/edit-team.component';
 
 const routes: Routes = [
   {
@@ -26,6 +29,20 @@ const routes: Routes = [
             pathMatch: 'full'
           },
           {
+            path: 'edit',
+            component: EditTeamComponent
+          },
+          {
+            path: 'update-members',
+            component: EditMembersComponent,
+            children: [
+              {
+                path: 'add',
+                component: AddMemberComponent
+              }
+            ]
+          },
+          {
             path: 'members',
             component: MemberListComponent
           },
@@ -43,4 +60,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TeamsRoutingModule {}
+export class TeamsRoutingModule {
+}

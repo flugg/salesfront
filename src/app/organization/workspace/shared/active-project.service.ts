@@ -66,8 +66,8 @@ export class ActiveProjectService extends ObservableResource implements OnDestro
    * Resolves a project id from url or storage.
    */
   private resolveProjectId() {
-    if (this.route.snapshot.params.project) {
-      return this.route.snapshot.params.project;
+    if (this.route.snapshot.params['project']) {
+      return this.route.snapshot.params['project'];
     }
 
     return this.getFromStorage();

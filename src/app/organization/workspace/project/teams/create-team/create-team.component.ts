@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import 'rxjs/add/operator/first';
 
 import { ActiveProjectService } from '../../../shared/active-project.service';
@@ -44,7 +44,7 @@ export class CreateTeamComponent implements OnInit {
     this.activeProject.project.first().subscribe(project => {
       this.teamService.create(project.id, name).then(team => {
         this.router.navigate(['projects', project.id, 'teams', team.id]);
-        this.snackBar.open('Team created', null, { duration: 2000 });
+        this.snackBar.open('Team created', null, <MdSnackBarConfig>{ duration: 2000 });
       });
     });
   }

@@ -24,6 +24,10 @@ const routes: Routes = [
         component: MemberListComponent,
         children: [
           {
+            path: 'register',
+            component: InviteUserComponent
+          },
+          {
             path: ':member',
             component: UserProfileComponent,
             children: [
@@ -41,13 +45,7 @@ const routes: Routes = [
       },
       {
         path: 'invites',
-        component: InviteListComponent,
-        children: [
-          {
-            path: 'send',
-            component: InviteUserComponent
-          }
-        ]
+        component: InviteListComponent
       }
     ]
   }
@@ -57,4 +55,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class UsersRoutingModule {}
+export class UsersRoutingModule {
+}

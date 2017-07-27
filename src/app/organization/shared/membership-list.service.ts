@@ -49,7 +49,6 @@ export class MembershipListService extends ObservableResourceList implements OnD
    * Adds an active session to a membership.
    */
   private setActiveSession(session: Session) {
-    console.log(1);
     const membership = this.snapshot.find(item => item.id === session.membershipId);
     membership.activeSession = session;
     this.updateFromSnapshot();
@@ -59,7 +58,6 @@ export class MembershipListService extends ObservableResourceList implements OnD
    * Removes an active session from a membership.
    */
   private removeActiveSession(session: Session) {
-    console.log(2);
     const membership = this.snapshot.find(item => item.id === session.membershipId);
     membership.activeSession = null;
     this.updateFromSnapshot();

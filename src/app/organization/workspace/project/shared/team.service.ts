@@ -41,4 +41,11 @@ export class TeamService {
   create(projectId: string, name): Promise<Team> {
     return this.api.post(`projects/${projectId}/teams`, {name}).then(response => response.data);
   }
+
+  /**
+   * Updates the given team.
+   */
+  update(teamId: string, attributes: any) {
+    return this.api.put(`teams/${teamId}`, attributes).then(response => response.data);
+  }
 }

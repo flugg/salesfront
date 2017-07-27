@@ -67,9 +67,6 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     const participation = conversation.participations.find(item => item.userId === this.user.id);
 
     if (!participation) {
-      console.log('hmm');
-      console.log(conversation);
-      console.log(conversation.participations);
       return false;
     }
 
