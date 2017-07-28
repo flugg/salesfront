@@ -2,13 +2,15 @@
   <vmo-toolbar title="" mode="close"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="true">
-    <div class="container">
-      <md-card fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="16px">
-        <div class="mdc-typography--display1">Upload Avatar</div>
-        <p class="mdc-typography--body1 u-weak">Choose one of your many pretty pictures to present yourself.</p>
-        <img-cropper [image]="data" [settings]="cropperSettings"></img-cropper>
-        <button md-raised-button color="accent" (click)="upload(data)">Save</button>
-      </md-card>
+    <div class="vmo-scrollable-area">
+      <div class="container">
+        <md-card fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="16px">
+          <div class="mdc-typography--display1">Upload Avatar</div>
+          <p class="mdc-typography--body1 u-weak">Choose one of your many pretty pictures to present yourself.</p>
+          <img-cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+          <button md-raised-button color="accent" (click)="upload(data)">Save</button>
+        </md-card>
+      </div>
     </div>
   </vmo-progress-spinner>
 </div>
