@@ -10,11 +10,19 @@
       <div class="container">
         <md-card>
           <div class="card-header" fxFill>
-            <img *ngIf="membership?.user.avatarPath"
+            <img *ngIf="membership?.user.avatarPath && canEdit"
+                 class="u-avatar"
+                 src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ membership?.user.avatarPath }}">
+            <div *ngIf="! membership?.user.avatarPath && ! canEdit"
+                 class="u-avatar u-default-avatar u-center"
+                 fxLayoutAlign="center center">
+              <md-icon class="big-face">face</md-icon>
+            </div>
+            <img *ngIf="membership?.user.avatarPath && canEdit"
                  class="u-avatar u-clickable"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ membership?.user.avatarPath }}"
                  routerLink="upload-avatar">
-            <div *ngIf="! membership?.user.avatarPath"
+            <div *ngIf="! membership?.user.avatarPath && canEdit"
                  class="u-avatar u-default-avatar u-clickable u-center"
                  fxLayoutAlign="center center"
                  routerLink="upload-avatar">
