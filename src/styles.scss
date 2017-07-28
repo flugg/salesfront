@@ -489,3 +489,13 @@ snack-bar-container {
     width: auto;
   }
 }
+
+.vmo-cropper {
+  display: none;
+}
+
+.vmo-cropper--filled {
+  display: block;
+  margin-top: 12px;
+  background: white;
+}

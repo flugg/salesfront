@@ -1,14 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/combineLatest';
 
 import { TeamService } from '../../shared/team.service';
 import { Team } from '../../shared/team.model';
 import { MembershipService } from '../../../../shared/membership.service';
 import { Membership } from '../../../../shared/membership.model';
 import { ActiveMembershipService } from '../../../active-membership.service';
+import { SelectedMembershipService } from './selected-membership.service';
 
 @Component({
+  providers: [SelectedMembershipService],
   templateUrl: 'user-profile.component.html',
   styleUrls: ['user-profile.component.scss']
 })
@@ -52,34 +56,32 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   /**
    * Constructs the component.
    */
-  constructor(private route: ActivatedRoute,
-              private activeMembership: ActiveMembershipService,
-              private membershipService: MembershipService,
+  constructor(private activeMembership: ActiveMembershipService,
+              private selectedMembership: SelectedMembershipService,
               private teamService: TeamService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.activeMembership.membership.subscribe(member => {
-      this.activeMember = member;
-      this.subscriptions.push(this.membershipService.find(this.route.snapshot.params['member']).subscribe(membership => {
-        if (membership.teamMembers && membership.teamMembers.length) {
-          this.subscriptions.push(this.teamService.find(membership.teamMembers[0].teamId).subscribe(team => {
-            this.membership = membership;
-            this.team = team;
-            this.role = this.getRole();
-            this.canEdit = this.checkIfCanEdit();
-            this.loading = false;
-          }));
-        } else {
-          this.membership = membership;
+    this.subscriptions.push(Observable.combineLatest(
+      this.selectedMembership.membership,
+      this.activeMembership.membership
+    ).subscribe(data => {
+      [this.membership, this.activeMember] = data;
+      if (this.membership.teamMembers && this.membership.teamMembers.length) {
+        this.subscriptions.push(this.teamService.find(this.membership.teamMembers[0].teamId).subscribe(team => {
+          this.team = team;
           this.role = this.getRole();
           this.canEdit = this.checkIfCanEdit();
           this.loading = false;
-        }
-      }));
-    });
+        }));
+      } else {
+        this.role = this.getRole();
+        this.canEdit = this.checkIfCanEdit();
+        this.loading = false;
+      }
+    }));
   }
 
   /**

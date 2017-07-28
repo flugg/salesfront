@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CropperSettings } from 'ng2-img-cropper';
+import { CropperDrawSettings, CropperSettings } from 'ng2-img-cropper';
 import { AvatarService } from '../shared/avatar.service';
-import { ActiveUserService } from '../../../../active-user.service';
-import { User } from '../../../../shared/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SelectedMembershipService } from '../user-profile/selected-membership.service';
+import { Membership } from '../../../../shared/membership.model';
 
 @Component({
   templateUrl: 'upload-avatar.component.html',
@@ -15,31 +15,42 @@ export class UploadAvatarComponent implements OnInit {
   cropperSettings: CropperSettings;
 
   /**
-   * The currently logged in user.
+   * The selected membership.
    */
-  user: User;
+  membership: Membership;
 
   /**
    * Constructs the component.
    */
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private activeUser: ActiveUserService,
+              private selectedMembership: SelectedMembershipService,
               private avatarService: AvatarService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.activeUser.user.subscribe(user => this.user = user);
+    this.selectedMembership.membership.subscribe(membership => {
+      this.membership = membership;
+    });
 
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 100;
-    this.cropperSettings.height = 100;
-    this.cropperSettings.croppedWidth = 100;
-    this.cropperSettings.croppedHeight = 100;
-    this.cropperSettings.canvasWidth = 400;
-    this.cropperSettings.canvasHeight = 300;
+    this.cropperSettings.width = 150;
+    this.cropperSettings.height = 150;
+    this.cropperSettings.croppedWidth = 150;
+    this.cropperSettings.croppedHeight = 150;
+    this.cropperSettings.canvasWidth = 300;
+    this.cropperSettings.canvasHeight = 400;
+    this.cropperSettings.cropperClass = 'vmo-cropper';
+    this.cropperSettings.croppingClass = 'vmo-cropper--filled';
+    this.cropperSettings.cropperDrawSettings = <CropperDrawSettings>{
+      strokeWidth: 2,
+      strokeColor: '#2979ff',
+      dragIconStrokeWidth: 0,
+      dragIconStrokeColor: '#2979ff',
+      dragIconFillColor: '#2979ff'
+    };
 
     this.data = {};
   }
@@ -48,7 +59,7 @@ export class UploadAvatarComponent implements OnInit {
    * Uploads the avatar.
    */
   upload(data: any) {
-    this.avatarService.upload(this.user.id, data.image).then(() => {
+    this.avatarService.upload(this.membership.userId, data.image).then(() => {
       this.router.navigate(['..'], { relativeTo: this.route });
     });
   }

@@ -13,6 +13,7 @@ import { InviteService } from './shared/invite.service';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { AvatarService } from './shared/avatar.service';
+import { SelectedMembershipService } from './user-profile/selected-membership.service';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { AvatarService } from './shared/avatar.service';
   ],
   providers: [
     InviteService,
-    AvatarService
+    AvatarService,
+    SelectedMembershipService
   ]
 })
 export class UsersModule {}
