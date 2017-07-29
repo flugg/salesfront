@@ -499,3 +499,14 @@ snack-bar-container {
   margin-top: 12px;
   background: white;
 }
+
+.u-icon-highlight {
+  color: #2979ff !important;
+}
+
+.u-avatar-colored {
+  background: #FFAB00 !important;
+  color: white !important;
+  border: 2px solid white;
+  @include mat-elevation(4);
+}

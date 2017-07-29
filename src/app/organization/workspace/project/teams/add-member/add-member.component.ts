@@ -70,8 +70,8 @@ export class AddMemberComponent implements OnInit, OnDestroy {
    * Adds a member to the selected team.
    */
   addMember(membership: Membership) {
-    this.teamMemberService.add(membership, this.team).then(() => {
-      this.snackBar.open(membership.user.name + ' added to team', null, <MdSnackBarConfig>{ duration: 2000 });
+    this.teamMemberService.add(membership, this.team.id).then(() => {
+      this.snackBar.open(membership.user.name + ' added to team', null, <MdSnackBarConfig>{ duration: 3000 });
     });
   }
 }

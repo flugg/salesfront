@@ -37,8 +37,9 @@ export class MemberListService extends ObservableResourceList implements OnDestr
 
     this.activeProject.project.first().subscribe(project => {
       this.sockets.listenForProject(project.id, {
-        'team_member_added': member => this.updateTeamMember(member),
-        'team_member_removed': member => this.updateTeamMember(member)
+        'team_member_added': member => this.add([member]),
+        'team_member_updated': member => this.updateTeamMember(member),
+        'team_member_removed': member => this.removeTeamMember(member)
       }, this);
     });
   }
@@ -55,11 +56,18 @@ export class MemberListService extends ObservableResourceList implements OnDestr
    * Updates a team member in the list.
    */
   private updateTeamMember(member: TeamMember) {
-    this.snapshot = this.snapshot.filter(item => item.id !== member.id);
-
     if (!member.leftAt) {
-      this.snapshot.push(member);
+      this.snapshot = this.snapshot.map(item => item.id === member.id ? member : item);
+
+      this.updateFromSnapshot();
     }
+  }
+
+  /**
+   * Removes a team member from the list.
+   */
+  private removeTeamMember(member: TeamMember) {
+    this.snapshot = this.snapshot.filter(item => item.id !== member.id);
 
     this.updateFromSnapshot();
   }

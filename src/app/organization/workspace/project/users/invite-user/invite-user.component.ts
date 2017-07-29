@@ -13,6 +13,11 @@ import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 export class InviteUserComponent implements OnInit {
 
   /**
+   * The admin flag checkbox.
+   */
+  isAdmin: boolean;
+
+  /**
    * The first name input value.
    */
   firstName: string;
@@ -69,9 +74,10 @@ export class InviteUserComponent implements OnInit {
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,
-          password: this.password
+          password: this.password,
+          isAdmin: this.isAdmin
         }).then(user => {
-          this.membershipService.create(invite.id, invite.projectId, user.id).then(member => {
+          this.membershipService.create(invite.id, user.id).then(member => {
             if (! this.inviteMore) {
               this.router.navigate(['projects', member.projectId, 'users', 'members', member.id]);
             }

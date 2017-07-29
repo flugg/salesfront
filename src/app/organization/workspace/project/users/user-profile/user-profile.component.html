@@ -10,20 +10,20 @@
       <div class="container">
         <md-card>
           <div class="card-header" fxFill>
-            <img *ngIf="membership?.user.avatarPath && canEdit"
-                 class="u-avatar"
+            <img *ngIf="membership?.user.avatarPath && ! canEdit"
+                 class="u-avatar huge"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ membership?.user.avatarPath }}">
             <div *ngIf="! membership?.user.avatarPath && ! canEdit"
-                 class="u-avatar u-default-avatar u-center"
+                 class="u-avatar u-default-avatar u-center huge"
                  fxLayoutAlign="center center">
               <md-icon class="big-face">face</md-icon>
             </div>
             <img *ngIf="membership?.user.avatarPath && canEdit"
-                 class="u-avatar u-clickable"
+                 class="u-avatar u-clickable huge"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ membership?.user.avatarPath }}"
                  routerLink="upload-avatar">
             <div *ngIf="! membership?.user.avatarPath && canEdit"
-                 class="u-avatar u-default-avatar u-clickable u-center"
+                 class="u-avatar u-default-avatar u-clickable u-center huge"
                  fxLayoutAlign="center center"
                  routerLink="upload-avatar">
               <md-icon class="big-face">face</md-icon>
@@ -68,7 +68,22 @@
               <md-list-item>
                 <span class="mdc-typography--headline u-weak">Achievements</span>
               </md-list-item>
+              <md-list-item *ngIf="! topDailySellers?.length">
+                <span class="u-weak">This user has no achievements.</span>
+              </md-list-item>
             </md-list>
+            <div *ngIf="topDailySellers?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing">
+              <div *ngFor="let seller of topDailySellers" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px">
+                <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored"
+                     fxLayoutAlign="center center">
+                  <span class="mdc-typography--headline strong">{{ seller.value }}</span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center center">
+                  <strong class="mdc-typography--body2 wall-of-fame-name u-ellipsis">Top Daily</strong>
+                  <span class="mdc-typography--body1 u-weak">{{ seller.soldAt | amDateFormat: 'DD-MM-YYYY' }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </md-card>
       </div>

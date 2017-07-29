@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { TopDailySeller } from '../../shared/top-daily-seller.model';
 import { ActiveProjectService } from '../../../../shared/active-project.service';
 import { ObservableResourceList } from '../../../../../../core/sockets/observable-resource-list';
-import { TopDailySellerService } from '../../shared/top-daily-seller.service';
+import { TopDailySellerService } from '../../../../shared/top-daily-seller.service';
 
 @Injectable()
 export class TopDailySellersListService extends ObservableResourceList implements OnDestroy {

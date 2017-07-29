@@ -25,16 +25,23 @@ export class TeamMemberService {
   /**
    * Adds a member to a team.
    */
-  add(membership: Membership, team: Team): Promise<TeamMember> {
-    return this.api.post(`teams/${team.id}/members`, {
+  add(membership: Membership, teamId: string): Promise<TeamMember> {
+    return this.api.post(`teams/${teamId}/members`, {
       membership: membership.id
     });
+  }
+
+  /**
+   * Updates a member in a team.
+   */
+  update(teamMember: TeamMember, attributes: any): Promise<TeamMember> {
+    return this.api.put(`team-members/${teamMember.id}`, attributes).then(response => response.data);
   }
 
   /**
    * Removes a member from a team.
    */
   remove(teamMember: TeamMember): Promise<TeamMember> {
-    return this.api.delete(`team-members/${teamMember.id}`);
+    return this.api.delete(`team-members/${teamMember.id}`).then(response => response.data);
   }
 }

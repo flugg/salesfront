@@ -7,6 +7,7 @@ import { SalesConfirmationComponent } from './sales-confirmation/sales-confirmat
 import { WorkspaceSharedModule } from './shared/workspace-shared.module';
 import { ActiveProjectService } from './shared/active-project.service';
 import { ClockInConfirmationComponent } from './clock-in-confirmation/clock-in-confirmation.component';
+import { TopDailySellerService } from './shared/top-daily-seller.service';
 
 @NgModule({
   imports: [
@@ -24,7 +25,9 @@ import { ClockInConfirmationComponent } from './clock-in-confirmation/clock-in-c
     ClockInConfirmationComponent
   ],
   providers: [
-    ActiveProjectService
+    ActiveProjectService,
+    TopDailySellerService
   ]
 })
-export class WorkspaceModule {}
+export class WorkspaceModule {
+}

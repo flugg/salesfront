@@ -8,6 +8,7 @@ import { ActiveUserService } from '../../../../active-user.service';
 import { TeamMemberService } from '../../../../shared/team-member.service';
 import { TeamMember } from '../../../../shared/team-member.model';
 import { MemberListService } from '../shared/member-list.service';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 @Component({
   templateUrl: 'edit-members.component.html'
@@ -38,6 +39,7 @@ export class EditMembersComponent implements OnInit, OnDestroy {
    * Constructs the component.
    */
   constructor(private activeUser: ActiveUserService,
+              private snackBar: MdSnackBar,
               private memberList: MemberListService,
               private teamMemberService: TeamMemberService) {}
 
@@ -65,6 +67,21 @@ export class EditMembersComponent implements OnInit, OnDestroy {
    * Removes a member from the selected team.
    */
   removeMember(member: TeamMember) {
-    this.teamMemberService.remove(member);
+    this.teamMemberService.remove(member).then(() => {
+      this.snackBar.open(member.membership.user.name + ' removed', 'Undo', <MdSnackBarConfig>{ duration: 5000 }).onAction().subscribe(() => {
+        this.teamMemberService.add(member.membership, member.teamId).then(() => {
+          this.snackBar.open(member.membership.user.name + ' added to team', null, <MdSnackBarConfig>{ duration: 2000 });
+        });
+      });
+    });
+  }
+
+  /**
+   * Toggles team leadership for the given member.
+   */
+  toggleLeadership(member: TeamMember) {
+    this.teamMemberService.update(member, {
+      isLeader: !member.isLeader
+    });
   }
 }

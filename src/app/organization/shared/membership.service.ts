@@ -51,10 +51,9 @@ export class MembershipService {
   /**
    * Creates a new membership.
    */
-  create(inviteId: string, projectId: string, userId: string) {
-    return this.api.post(`projects/${projectId}/memberships`, {
-      invite: inviteId,
-      user: userId
+  create(inviteId: string, userId: string) {
+    return this.api.post(`users/${userId}/memberships`, {
+      invite: inviteId
     }).then(response => response.data);
   }
 }

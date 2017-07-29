@@ -14,6 +14,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { AvatarService } from './shared/avatar.service';
 import { SelectedMembershipService } from './user-profile/selected-membership.service';
+import { TopDailySellersListService } from './user-profile/top-daily-sellers-list.service';
 
 @NgModule({
   imports: [
@@ -34,7 +35,9 @@ import { SelectedMembershipService } from './user-profile/selected-membership.se
   providers: [
     InviteService,
     AvatarService,
-    SelectedMembershipService
+    SelectedMembershipService,
+    TopDailySellersListService
   ]
 })
-export class UsersModule {}
+export class UsersModule {
+}

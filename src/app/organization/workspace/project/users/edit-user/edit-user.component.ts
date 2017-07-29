@@ -14,6 +14,11 @@ import { Membership } from '../../../../shared/membership.model';
 export class EditUserComponent implements OnInit, OnDestroy {
 
   /**
+   * The admin flag checkbox.
+   */
+  isAdmin: boolean;
+
+  /**
    * Indicates if the component is currently loading.
    */
   loading = true;
@@ -50,6 +55,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       if (this.member.user.birthdate) {
         this.date = new Date(this.member.user.birthdate);
       }
+      this.isAdmin = this.member.user.isAdmin;
       this.loading = false;
     }));
   }
@@ -65,7 +71,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
    * Submits the form.
    */
   submit(firstName: string, lastName: string, email: string, phoneNumber: string): void {
-    this.userService.update(this.member.userId, { firstName, lastName, email, phoneNumber, birthdate: moment(this.date).format('YYYY-MM-DD') }).then(() => {
+    this.userService.update(this.member.userId, { firstName, lastName, email, phoneNumber, birthdate: moment(this.date).format('YYYY-MM-DD'), isAdmin: this.isAdmin }).then(() => {
       this.router.navigate(['..'], { relativeTo: this.route });
     });
   }
