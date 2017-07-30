@@ -7,6 +7,7 @@ import { SalesListComponent } from './sales-list/sales-list.component';
 import { SaleComponent } from './sale/sale.component';
 import { AddSaleComponent } from './add-sale/add-sale.component';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
+import { salesListPipe } from './sales-list/sales-list.pipe';
 
 @NgModule({
   entryComponents: [DeleteConfirmationComponent],
@@ -19,7 +20,8 @@ import { DeleteConfirmationComponent } from './delete-confirmation/delete-confir
     SalesListComponent,
     SaleComponent,
     AddSaleComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    salesListPipe
   ]
 })
 export class SalesModule {}

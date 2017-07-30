@@ -23,7 +23,7 @@
     </div>-->
     <div class="vmo-scrollable-area">
       <md-list class="vmo-list">
-        <md-list-item *ngFor="let sale of sales">
+        <md-list-item *ngFor="let sale of sales | salesList">
           <vmo-avatar md-list-avatar [membership]="sale.membership" [user]="sale.membership.user"></vmo-avatar>
           <div md-line>
             <strong class="u-clickable"
