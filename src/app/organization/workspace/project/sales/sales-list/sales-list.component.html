@@ -34,7 +34,7 @@
           </div>
           <div md-line class="u-weak">{{ sale.soldAt | amDateFormat:'DD-MM-YYYY hh:mm' }}</div>
           <div class="u-fill"></div>
-          <button md-icon-button (click)='removeSale(sale)'>
+          <button md-icon-button (click)='removeSale(sale)' *ngIf="canRemove(sale)">
             <md-icon mdTooltip="Delete" mdTooltipPosition="before" class="u-weak">delete</md-icon>
           </button>
         </md-list-item>
