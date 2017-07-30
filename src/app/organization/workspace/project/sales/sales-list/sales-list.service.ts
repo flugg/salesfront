@@ -28,6 +28,11 @@ export class SalesListService extends ObservableResourceList implements OnDestro
         this.pagination(this.salesService.get(project.id, limit, this.cursor))
             .subscribe(sales => this.add(sales));
       });
+
+      this.sockets.listenForProject(project.id, {
+        'sale_registered': sale => this.addSale(sale),
+        'sale_deleted': sale => this.removeSale(sale),
+      }, this);
     });
   }
 
@@ -37,5 +42,21 @@ export class SalesListService extends ObservableResourceList implements OnDestro
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();
+  }
+
+  /**
+   * Adds a sale to the list.
+   */
+  private addSale(sale: Sale) {
+    this.snapshot.push(sale);
+    this.updateFromSnapshot();
+  }
+
+  /**
+   * Removes a sale from the list.
+   */
+  private removeSale(sale: Sale) {
+    this.snapshot = this.snapshot.filter(item => item.id !== sale.id);
+    this.updateFromSnapshot();
   }
 }

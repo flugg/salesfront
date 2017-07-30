@@ -19,7 +19,7 @@ export class SaleService {
    * Fetches a list of sales for a project.
    */
   get(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`projects/${projectId}/sales`, cursor, limit);
+    return this.api.paginate(`projects/${projectId}/sales`, cursor, limit, {include: 'membership.user,team'});
   }
 
   /**

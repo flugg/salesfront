@@ -6,8 +6,10 @@ import { SalesRoutingModule } from './sales-routing.module';
 import { SalesListComponent } from './sales-list/sales-list.component';
 import { SaleComponent } from './sale/sale.component';
 import { AddSaleComponent } from './add-sale/add-sale.component';
+import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 
 @NgModule({
+  entryComponents: [DeleteConfirmationComponent],
   imports: [
     SharedModule,
     WorkspaceSharedModule,
@@ -16,7 +18,8 @@ import { AddSaleComponent } from './add-sale/add-sale.component';
   declarations: [
     SalesListComponent,
     SaleComponent,
-    AddSaleComponent
+    AddSaleComponent,
+    DeleteConfirmationComponent
   ]
 })
 export class SalesModule {}

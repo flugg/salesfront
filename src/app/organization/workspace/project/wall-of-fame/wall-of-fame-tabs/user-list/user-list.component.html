@@ -10,7 +10,7 @@
         <span class="mdc-typography--headline">No daily top sellers yet</span>
         <span class="u-weak">Next one will be picked tomorrow.</span>
       </div>
-      <div *ngIf="topDailySellers?.length" class="wall-of-fame-item" fxLayout="row" fxLayoutGap="24px">
+      <div *ngIf="topDailySellers?.length" class="u-horizontal-scrolling wall-of-fame-item" fxLayout="row" fxLayoutGap="24px">
         <div *ngFor="let seller of topDailySellers" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px">
           <img *ngIf="seller.membership.user.avatarPath"
                class="u-avatar u-avatar--big u-clickable"

@@ -510,3 +510,11 @@ snack-bar-container {
   border: 2px solid white;
   @include mat-elevation(4);
 }
+
+.mat-dialog-actions {
+  padding-top: 24px !important;
+}
+
+.u-horizontal-scrolling {
+  overflow-x: auto;
+}

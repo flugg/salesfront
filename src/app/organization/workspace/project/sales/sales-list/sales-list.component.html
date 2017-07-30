@@ -6,36 +6,42 @@
   </vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="! loading">
-   <!-- <md-table #table [dataSource]="dataSource">
+    <!-- <md-table #table [dataSource]="dataSource">
 
-      <ng-container cdkColumnDef="id">
-        <md-header-cell *cdkHeaderCellDef>ID</md-header-cell>
-        <md-cell *cdkCellDef="let row"> {{row.id}}</md-cell>
-      </ng-container>
+       <ng-container cdkColumnDef="id">
+         <md-header-cell *cdkHeaderCellDef>ID</md-header-cell>
+         <md-cell *cdkCellDef="let row"> {{row.id}}</md-cell>
+       </ng-container>
 
-      <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
-      <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
-    </md-table>-->
-    <div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
-      <span class="mdc-typography--headline">Sorry, this page isn't done yet.</span>
+       <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+       <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+     </md-table>-->
+    <!--<div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <span class="mdc-typography&#45;&#45;headline">Sorry, this page isn't done yet.</span>
       <span class="u-weak">However, feel free to add a sale using the button above or below. Also, enjoy the fresh air.</span>
       <button md-raised-button color="accent" routerLink="add" class="u-push-button">Add a sale</button>
+    </div>-->
+    <div class="vmo-scrollable-area">
+      <md-list class="vmo-list">
+        <md-list-item *ngFor="let sale of sales">
+          <vmo-avatar md-list-avatar [membership]="sale.membership" [user]="sale.membership.user"></vmo-avatar>
+          <div md-line>
+            <strong class="u-clickable"
+                    [routerLink]="'/projects/' + sale.membership.projectId + '/users/members/' + sale.membershipId">{{ sale.membership.user.name }}</strong>
+            <span>in</span>
+            <strong class="u-clickable"
+                    [routerLink]="'/projects/' + sale.membership.projectId + '/teams/' + sale.teamId">{{ sale.team.name }}</strong>
+          </div>
+          <div md-line class="u-weak">{{ sale.soldAt | amDateFormat:'DD-MM-YYYY hh:mm' }}</div>
+          <div class="u-fill"></div>
+          <button md-icon-button (click)='removeSale(sale)'>
+            <md-icon mdTooltip="Delete" mdTooltipPosition="before" class="u-weak">delete</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+
+      <vmo-load-more-button [paginator]="salesList"></vmo-load-more-button>
     </div>
-    <!-- <div class="vmo-scrollable-area">
-       <md-list class="vmo-list u-container">
-         <md-list-item
-                 class="u-clickable">
-           <md-checkbox [(ngModel)]="selectAll"></md-checkbox>
-         </md-list-item>
-
-         <md-list-item *ngFor="let sale of sales">
-
-           <md-checkbox [checked]="selectAll"></md-checkbox>
-         </md-list-item>
-       </md-list>
-
-       <vmo-load-more-button [paginator]="salesList"></vmo-load-more-button>
-     </div>-->
   </vmo-progress-spinner>
 </div>
 

@@ -5,12 +5,12 @@ import { TeamMember } from '../../shared/team-member.model';
 
 export interface Sale {
   id: string;
-  createdAt: string;
+  soldAt: string;
   membershipId: string;
   membership?: Membership;
   teamId: string;
   team?: Team;
-  teamMemberIdId: string;
+  teamMemberId: string;
   teamMember: TeamMember;
   registererId: string;
   registerer?: User;
