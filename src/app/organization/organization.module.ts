@@ -10,6 +10,7 @@ import { UserService } from './shared/user.service';
 import { MembershipService } from './shared/membership.service';
 import { TeamMemberService } from './shared/team-member.service';
 import { SessionService } from './shared/session.service';
+import { UnreadConversationService } from './shared/unread-conversation.service';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { SessionService } from './shared/session.service';
     UserService,
     MembershipService,
     TeamMemberService,
-    SessionService
+    SessionService,
+    UnreadConversationService
   ]
 })
 export class OrganizationModule {}

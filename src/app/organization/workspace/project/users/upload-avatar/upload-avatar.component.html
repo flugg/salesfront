@@ -7,6 +7,10 @@
         <md-card fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="16px">
           <div class="mdc-typography--display1">Upload Avatar</div>
           <p class="mdc-typography--body1 u-weak">Choose one of your many pretty pictures to present yourself.</p>
+          <div class="file-upload">
+            <span class="text">upload</span>
+            <input id="custom-input" type="file" (change)="fileChangeListener($event)">
+          </div>
           <img-cropper [image]="data" [settings]="cropperSettings"></img-cropper>
           <button md-raised-button color="accent" (click)="upload(data)">Save</button>
         </md-card>

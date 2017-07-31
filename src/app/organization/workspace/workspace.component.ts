@@ -22,12 +22,15 @@ import { Membership } from '../shared/membership.model';
 import { Sale } from './shared/sale.model';
 import { ClockInConfirmationComponent } from './clock-in-confirmation/clock-in-confirmation.component';
 import { SessionService } from '../shared/session.service';
+import { UnreadConversationListService } from './shared/unread-conversation-list.service';
+import { Conversation } from './messaging/shared/conversation.model';
 
 @Component({
   providers: [
     ActiveSidebarService,
     ActiveMembershipService,
-    SalesTodayListService
+    SalesTodayListService,
+    UnreadConversationListService
   ],
   templateUrl: 'workspace.component.html',
   styleUrls: ['workspace.component.scss'],
@@ -74,6 +77,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   sales: Sale[];
 
   /**
+   * A list of unread conversations.
+   */
+  unreadConversations: Conversation[];
+
+  /**
    * List of navigation links.
    */
   links = [
@@ -110,7 +118,8 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
               private activeProject: ActiveProjectService,
               private activeMembership: ActiveMembershipService,
               private salesToday: SalesTodayListService,
-              private sessionService: SessionService) {}
+              private sessionService: SessionService,
+              private unreadConversationList: UnreadConversationListService) {}
 
   /**
    * Initializes the component.
@@ -121,9 +130,10 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
         this.activeUser.user,
         this.activeProject.project,
         this.activeMembership.membership,
-        this.salesToday.sales
+        this.salesToday.sales,
+        this.unreadConversationList.conversations
       ).subscribe(data => {
-        [this.user, this.project, this.membership, this.sales] = data;
+        [this.user, this.project, this.membership, this.sales, this.unreadConversations] = data;
 
         this.loading = false;
       }),

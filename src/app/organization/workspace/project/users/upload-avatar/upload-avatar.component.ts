@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CropperDrawSettings, CropperSettings } from 'ng2-img-cropper';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CropperDrawSettings, CropperSettings, ImageCropperComponent } from 'ng2-img-cropper';
 import { AvatarService } from '../shared/avatar.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectedMembershipService } from '../user-profile/selected-membership.service';
@@ -13,6 +13,7 @@ export class UploadAvatarComponent implements OnInit {
 
   data: any;
   cropperSettings: CropperSettings;
+  @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
 
   /**
    * The selected membership.
@@ -44,6 +45,7 @@ export class UploadAvatarComponent implements OnInit {
     this.cropperSettings.canvasHeight = 400;
     this.cropperSettings.cropperClass = 'vmo-cropper';
     this.cropperSettings.croppingClass = 'vmo-cropper--filled';
+    this.cropperSettings.noFileInput = true;
     this.cropperSettings.cropperDrawSettings = <CropperDrawSettings>{
       strokeWidth: 2,
       strokeColor: '#2979ff',
@@ -63,4 +65,18 @@ export class UploadAvatarComponent implements OnInit {
       this.router.navigate(['..'], { relativeTo: this.route });
     });
   }
+
+  fileChangeListener($event) {
+    const image = new Image();
+    const file = $event.target.files[0];
+    const myReader = new FileReader();
+    const that = this;
+    myReader.onloadend = function (loadEvent:any) {
+      image.src = loadEvent.target.result;
+      that.cropper.setImage(image);
+    };
+
+    myReader.readAsDataURL(file);
+  }
+
 }

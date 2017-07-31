@@ -3,6 +3,7 @@
     <div *ngIf="! loading" [@fadeInOut]="true" fxFill>
       <md-toolbar>
         <button md-icon-button routerLink="/messages" routerLinkActive="active-link">
+          <div class="notify-indicator" *ngIf="unreadConversations?.length"></div>
           <md-icon>email</md-icon>
         </button>
         <button md-icon-button routerLink="/notifications" routerLinkActive="active-link">

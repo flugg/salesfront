@@ -11,7 +11,7 @@
         <md-list-item md-ripple
                       *ngFor="let conversation of conversations | filteredConversations"
                       [routerLink]="conversation.id"
-                      [class.highlight]="hasUnreadMessages(conversation)"
+                      [class.u-highlight]="hasUnreadMessages(conversation)"
                       class="u-clickable">
 
           <vmo-avatar md-list-avatar [user]="conversation.participations[0].user"></vmo-avatar>

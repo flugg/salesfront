@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 

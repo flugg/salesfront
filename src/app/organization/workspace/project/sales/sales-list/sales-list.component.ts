@@ -90,6 +90,10 @@ export class SalesListComponent implements OnInit, OnDestroy {
       return true;
     }
 
+    if (sale.userId === this.membership.userId) {
+      return true;
+    }
+
     for (const teamMember of this.membership.teamMembers) {
       if (teamMember.teamId === sale.teamId && teamMember.isLeader) {
         return true;

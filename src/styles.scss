@@ -149,7 +149,10 @@ snack-bar-container {
 
 .u-highlight {
   color: black;
-  font-weight: 600 !important;
+
+  &, * {
+    font-weight: 600 !important;
+  }
 }
 
 .u-nowrap {
@@ -517,4 +520,15 @@ snack-bar-container {
 
 .u-horizontal-scrolling {
   overflow-x: auto;
+}
+
+.notify-indicator {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  right: 3px;
+  top: 6px;
+  background: #448AFF;
+  border: 1px solid white;
+  border-radius: 50%;
 }
