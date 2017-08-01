@@ -16,11 +16,11 @@
        <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
        <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
      </md-table>-->
-    <!--<div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
-      <span class="mdc-typography&#45;&#45;headline">Sorry, this page isn't done yet.</span>
-      <span class="u-weak">However, feel free to add a sale using the button above or below. Also, enjoy the fresh air.</span>
+    <div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <span class="mdc-typography--headline">No sales added yet.</span>
+      <span class="u-weak">Add a sale to get started.</span>
       <button md-raised-button color="accent" routerLink="add" class="u-push-button">Add a sale</button>
-    </div>-->
+    </div>
     <div class="vmo-scrollable-area">
       <md-list class="vmo-list">
         <md-list-item *ngFor="let sale of sales | salesList">
