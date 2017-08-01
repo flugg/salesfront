@@ -16,12 +16,12 @@
        <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
        <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
      </md-table>-->
-    <div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+    <div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px" *ngIf="! sales?.length">
       <span class="mdc-typography--headline">No sales added yet.</span>
       <span class="u-weak">Add a sale to get started.</span>
       <button md-raised-button color="accent" routerLink="add" class="u-push-button">Add a sale</button>
     </div>
-    <div class="vmo-scrollable-area">
+    <div class="vmo-scrollable-area" *ngIf="! sales?.length">
       <md-list class="vmo-list">
         <md-list-item *ngFor="let sale of sales | salesList">
           <vmo-avatar md-list-avatar [membership]="sale.membership" [user]="sale.membership.user"></vmo-avatar>
