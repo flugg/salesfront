@@ -78,5 +78,4 @@ export class UploadAvatarComponent implements OnInit {
 
     myReader.readAsDataURL(file);
   }
-
 }
