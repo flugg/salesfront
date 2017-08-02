@@ -49,7 +49,7 @@ export class MemberListService extends ObservableResourceList implements OnDestr
 
   private isMemberOfTeam(membership: Membership, teamId: string): boolean {
     for (const teamMember of membership.teamMembers) {
-      if (teamMember.teamId === teamId) {
+      if (teamMember.teamId === teamId && ! teamMember.leftAt) {
         return true;
       }
     }
