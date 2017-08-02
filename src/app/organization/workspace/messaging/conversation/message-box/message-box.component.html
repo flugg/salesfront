@@ -3,7 +3,7 @@
      [class.vmo-message--own]="own">
 
   <div [fxLayout]="own ? 'row-reverse' : 'row'">
-    <vmo-avatar [user]="message.user"></vmo-avatar>
+    <vmo-avatar [user]="message.user" [class.u-gap-left]="own"></vmo-avatar>
     <md-card>
       <md-card-content class="mdc-typography--body1">
         {{ message.body }}
