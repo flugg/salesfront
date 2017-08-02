@@ -8,7 +8,7 @@ import { UserListComponent } from './wall-of-fame-tabs/user-list/user-list.compo
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'teams',
+    redirectTo: 'users',
     pathMatch: 'full'
   },
   {
