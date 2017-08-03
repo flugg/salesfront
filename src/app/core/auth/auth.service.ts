@@ -15,7 +15,7 @@ export class AuthService {
   /**
    * Attempts to authenticate the user by the given credentials.
    */
-  attempt(email: string, password: string): Observable<boolean> {
+  attempt(email: string, password: string): Observable<any> {
     const authenticated = new Subject();
 
     this.tokenService.grant(email, password).subscribe(token => {

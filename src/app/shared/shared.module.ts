@@ -8,6 +8,7 @@ import { MomentModule } from 'angular2-moment';
 import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { ExcludePipe } from './exclude.pipe';
+import { Nl2BrPipe } from './nl2br.pipe';
 import { AvatarComponent } from './avatar/avatar.component';
 import { RouterModule } from '@angular/router';
 
@@ -49,13 +50,15 @@ import { RouterModule } from '@angular/router';
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
     AvatarComponent,
-    ExcludePipe
+    ExcludePipe,
+    Nl2BrPipe
   ],
   declarations: [
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
     AvatarComponent,
-    ExcludePipe
+    ExcludePipe,
+    Nl2BrPipe
   ]
 })
 export class SharedModule {}

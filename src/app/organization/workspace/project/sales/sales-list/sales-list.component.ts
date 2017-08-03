@@ -86,7 +86,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
    * Indicates if you can remove a sale.
    */
   canRemove(sale) {
-    if (sale.membership.user.isAdmin) {
+    if (this.membership.user.isAdmin) {
       return true;
     }
 

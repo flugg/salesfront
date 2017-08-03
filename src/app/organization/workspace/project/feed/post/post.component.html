@@ -10,9 +10,7 @@
       </md-card-subtitle>
     </md-card-header>
     <md-card-content>
-      <p class="mdc-typography--body1">
-        {{ post.body }}
-      </p>
+      <p class="mdc-typography--body1" [innerHtml]="post.body | nl2br"></p>
     </md-card-content>
   </md-card>
   <md-card class="comments u-no-elevation" *ngIf="post.comments.length">
@@ -27,9 +25,7 @@
             {{ comment.postedAt | amTimeAgo }}
           </span>
         </div>
-        <span md-line class="mdc-typography--body1 comment-body">
-          {{ comment.body }}
-        </span>
+        <span md-line class="mdc-typography--body1 comment-body" [innerHtml]="comment.body | nl2br"></span>
       </md-list-item>
     </md-list>
   </md-card>
