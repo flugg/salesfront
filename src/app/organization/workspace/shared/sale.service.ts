@@ -33,6 +33,13 @@ export class SaleService {
   }
 
   /**
+   * Fetches a list of sales for a project.
+   */
+  getAll(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
+    return this.api.paginate(`projects/${projectId}/sales2`, cursor, limit, {include: 'membership.user,team'});
+  }
+
+  /**
    * Fetches a list of sales for a team-profile.
    */
   getForTeam(teamId: string, limit: number, cursor?: string): Observable<PaginationResponse> {

@@ -25,7 +25,7 @@ export class SalesListService extends ObservableResourceList implements OnDestro
 
     this.activeProject.project.first().subscribe(project => {
       this.paginator.subscribe(limit => {
-        this.pagination(this.salesService.get(project.id, limit, this.cursor))
+        this.pagination(this.salesService.getAll(project.id, limit, this.cursor))
             .subscribe(sales => this.add(sales));
       });
 
