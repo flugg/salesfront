@@ -37,7 +37,7 @@ export class AddSaleComponent implements OnInit, OnDestroy {
   /**
    * The time input value.
    */
-  time = '12:00';
+  time: string;
 
   /**
    * Indicates if the component is currently loading.
@@ -95,6 +95,7 @@ export class AddSaleComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
       [this.user, this.teams] = data;
       this.selectedTeam = this.teams[0].id;
+      this.time = moment().format('HH:mm');
       this.updateSelectedMember();
       this.loading = false;
     }));
