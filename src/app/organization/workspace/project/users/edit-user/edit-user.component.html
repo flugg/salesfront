@@ -37,7 +37,7 @@
                 </md-error>
               </md-input-container>
               <md-datepicker #picker></md-datepicker>
-              <div class="u-vertical-spacing">
+              <div class="u-vertical-spacing" *ngIf="activeUser?.isAdmin">
                 <md-slide-toggle name="isAdmin" [(ngModel)]="isAdmin">Administrator</md-slide-toggle>
               </div>
               <div class="u-vertical-spacing">

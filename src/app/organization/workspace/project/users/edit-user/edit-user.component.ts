@@ -6,6 +6,8 @@ import * as moment from 'moment';
 import { UserService } from '../../../../shared/user.service';
 import { MembershipService } from '../../../../shared/membership.service';
 import { Membership } from '../../../../shared/membership.model';
+import { ActiveUserService } from '../../../../active-user.service';
+import { User } from '../../../../shared/user.model';
 
 @Component({
   templateUrl: 'edit-user.component.html',
@@ -29,6 +31,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
   member: Membership;
 
   /**
+   * The active user.
+   */
+  activeUser: User;
+
+  /**
    * The date input value.
    */
   date: Date;
@@ -44,19 +51,24 @@ export class EditUserComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private userService: UserService,
+              private activeUserService: ActiveUserService,
               private membershipService: MembershipService) {}
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.subscriptions.push(this.membershipService.find(this.route.snapshot.parent.params['member']).subscribe(member => {
-      this.member = member;
-      if (this.member.user.birthdate) {
-        this.date = new Date(this.member.user.birthdate);
-      }
-      this.isAdmin = this.member.user.isAdmin;
-      this.loading = false;
+
+    this.subscriptions.push(this.activeUserService.user.subscribe(user => {
+      this.subscriptions.push(this.membershipService.find(this.route.snapshot.parent.params['member']).subscribe(member => {
+        this.member = member;
+        this.activeUser = user;
+        if (this.member.user.birthdate) {
+          this.date = new Date(this.member.user.birthdate);
+        }
+        this.isAdmin = this.member.user.isAdmin;
+        this.loading = false;
+      }));
     }));
   }
 
