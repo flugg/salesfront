@@ -5,7 +5,6 @@ import 'rxjs/add/observable/combineLatest';
 
 import { PostService } from '../shared/post.service';
 import { CommentService } from '../shared/comment.service';
-import { ActiveProjectService } from '../../../shared/active-project.service';
 import { ActiveUserService } from '../../../../active-user.service';
 import { PostListService } from './post-list.service';
 import { Membership } from '../../../../shared/membership.model';
@@ -24,6 +23,11 @@ export class PostListComponent implements OnInit, OnDestroy {
    * Indicates if the component is currently loading.
    */
   loading = true;
+
+  /**
+   * Indicates if the text area is shown.
+   */
+  showTextArea = false;
 
   /**
    * The active membership.
@@ -90,6 +94,23 @@ export class PostListComponent implements OnInit, OnDestroy {
   postComment(post: Post, body: string) {
     if (body) {
       this.commentService.post(post.id, body);
+    }
+  }
+
+  /**
+   * Displays the text area to publish a post.
+   */
+  displayTextArea(input) {
+    this.showTextArea = true;
+    setTimeout(() => input.focus(), 10);
+  }
+
+  /**
+   * Hides the text area to publish a post.
+   */
+  hideTextArea(input) {
+    if (! input.value) {
+      this.showTextArea = false;
     }
   }
 }
