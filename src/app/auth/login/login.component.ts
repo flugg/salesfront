@@ -16,8 +16,8 @@ export class LoginComponent {
               private snackbar: MdSnackBar,
               private auth: AuthService) {}
 
-  submit() {
-    this.auth.attempt(this.email, this.password).subscribe(() => {
+  submit(email, password) {
+    this.auth.attempt(email, password).subscribe(() => {
       this.router.navigate(['/']);
     }, () => this.snackbar.open('Invalid credentials given', null, <MdSnackBarConfig>{ duration: 3000 }));
   }

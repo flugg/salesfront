@@ -21,6 +21,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   @Input() project: Project;
   @Input() membership: Member;
 
+  loading = true;
   unreadConversations: Conversation[];
 
   private subscriptions: Subscription[] = [];
@@ -32,6 +33,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.unreadConversationListService.conversations.subscribe(conversations => {
       this.unreadConversations = conversations;
+      this.loading = false;
     });
   }
 

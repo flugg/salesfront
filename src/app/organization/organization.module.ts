@@ -4,7 +4,6 @@ import { SharedModule } from '../shared/shared.module';
 import { OrganizationRoutingModule } from './organization-routing.module';
 import { OrganizationComponent } from './organization.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
-import { ProjectListComponent } from './project-list/project-list.component';
 
 @NgModule({
   imports: [
@@ -13,8 +12,7 @@ import { ProjectListComponent } from './project-list/project-list.component';
   ],
   declarations: [
     OrganizationComponent,
-    CreateProjectComponent,
-    ProjectListComponent
+    CreateProjectComponent
   ]
 })
 export class OrganizationModule {}

@@ -39,7 +39,7 @@
               </md-error>
             </md-input-container>
             <button md-raised-button
-                    (click)="submit(email, password)"
+                    (click)="submit(emailInput.value, passwordInput.value)"
                     color="accent"
                     type="submit"
                     [disabled]="emailInput.errors?.required || passwordInput.errors?.required">Log In
