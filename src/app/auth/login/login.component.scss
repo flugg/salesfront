@@ -1,18 +1,28 @@
 .login-container {
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: none;
 
-  @media (max-width: 960px) {
-    background: white;
+  @media (min-height: 480px) {
+    height: 100%;
   }
+}
+
+.login-spacing {
+  padding: 24px;
+
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
+}
+
+.login-logo {
+  padding-bottom: 24px;
 }
 
 .mat-card {
   max-width: 400px;
-  width: 100%;
 }
 
 .mat-raised-button {
@@ -21,10 +31,4 @@
 
 .mat-input-container {
   width: 100%;
-}
-
-.login-card {
-  @media (max-width: 960px) {
-    box-shadow: none !important;
-  }
 }

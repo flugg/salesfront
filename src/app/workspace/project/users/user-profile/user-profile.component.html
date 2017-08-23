@@ -1,0 +1,94 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="{{ member?.user.name }}" mode="back">
+    <button md-icon-button routerLink="edit" *ngIf="canEdit">
+      <md-icon>edit</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <div class="container">
+        <md-card>
+          <div class="card-header" fxFill>
+            <img *ngIf="member?.user.avatarPath && ! canEdit"
+                 class="u-avatar huge"
+                 src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ member?.user.avatarPath }}">
+            <div *ngIf="! member?.user.avatarPath && ! canEdit"
+                 class="u-avatar u-default-avatar u-center huge"
+                 fxLayoutAlign="center center">
+              <md-icon class="big-face">face</md-icon>
+            </div>
+            <img *ngIf="member?.user.avatarPath && canEdit"
+                 class="u-avatar u-clickable huge"
+                 src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ member?.user.avatarPath }}"
+                 routerLink="upload-avatar">
+            <div *ngIf="! member?.user.avatarPath && canEdit"
+                 class="u-avatar u-default-avatar u-clickable u-center huge"
+                 fxLayoutAlign="center center"
+                 routerLink="upload-avatar">
+              <md-icon class="big-face">face</md-icon>
+            </div>
+          </div>
+          <div class="inner-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+            <span class="mdc-typography--display1 strong">{{ member?.user.name }}</span>
+            <span class="mdc-typography--body1 u-weak">{{ role }}</span>
+            <button md-raised-button
+                    color="accent"
+                    routerLink="../../../../../messages/new"
+                    class="u-push-button">Send message
+            </button>
+          </div>
+          <md-divider></md-divider>
+          <div class="inner-spacing inner-spacing--push">
+            <md-list fxFill>
+              <md-list-item>
+                <span class="mdc-typography--headline strong">About</span>
+              </md-list-item>
+              <md-list-item *ngIf="team">
+                <md-icon md-list-icon class="list-icon">group</md-icon>
+                <span class="mdc-typography--subheading2 u-clickable" [routerLink]="'../../teams/' + team?.id">{{ team?.name }}</span>
+              </md-list-item>
+              <md-list-item>
+                <md-icon md-list-icon class="list-icon">email</md-icon>
+                <span class="mdc-typography--subheading2">{{ member?.user.email }}</span>
+              </md-list-item>
+              <md-list-item *ngIf="member?.user.phoneNumber">
+                <md-icon md-list-icon class="list-icon">phone</md-icon>
+                <span class="mdc-typography--subheading2">{{ member?.user.phoneNumber }}</span>
+              </md-list-item>
+              <md-list-item *ngIf="member?.user.birthdate">
+                <md-icon md-list-icon class="list-icon">cake</md-icon>
+                <span class="mdc-typography--subheading2">{{ member?.user.birthdate | amDateFormat: 'DD-MM-YYYY' }}</span>
+              </md-list-item>
+            </md-list>
+          </div>
+          <md-divider></md-divider>
+          <div class="inner-spacing inner-spacing--push">
+            <md-list fxFill>
+              <md-list-item>
+                <span class="mdc-typography--headline strong">Achievements</span>
+              </md-list-item>
+              <md-list-item *ngIf="! dailyAwards?.length">
+                <span class="u-weak">This user has no achievements.</span>
+              </md-list-item>
+            </md-list>
+            <div *ngIf="dailyAwards?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing">
+              <div *ngFor="let award of dailyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px">
+                <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored"
+                     fxLayoutAlign="center center">
+                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center center">
+                  <strong class="mdc-typography--body2 wall-of-fame-name u-ellipsis">Top Daily</strong>
+                  <span class="mdc-typography--body1 u-weak">{{ award.day | amDateFormat: 'DD-MM-YYYY' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </md-card>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

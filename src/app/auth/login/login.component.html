@@ -1,31 +1,52 @@
-<div class="login-container u-container">
-  <md-card class="login-card">
-    <div fxLayoutAlign="center center" class="login-logo u-vertical-spacing">
-      <img src="/assets/vendumo-logo.png" width="120">
+<div class="fancy-background-container">
+  <div class="fancy-background"></div>
+</div>
+<div class="vmo-scrollable-area">
+  <div class="login-container">
+    <div class="login-spacing">
+      <md-card class="login-card">
+        <div fxLayoutAlign="center center" class="login-logo">
+          <img src="/assets/vendumo-logo.png" width="80">
+        </div>
+        <div class="mdc-typography--display1 strong">Welcome!</div>
+        <p class="mdc-typography--body1 u-weak">Log in to access your account.</p>
+        <div class="u-vertical-spacing">
+          <form novalidate>
+            <md-input-container dividerColor="accent">
+              <input #emailInput="ngModel"
+                     name="email"
+                     mdInput
+                     required
+                     placeholder="Email"
+                     type="email"
+                     required
+                     [(ngModel)]="email">
+              <md-error *ngIf="emailInput.errors?.required && (emailInput.dirty || emailInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <md-input-container dividerColor="accent">
+              <input #passwordInput="ngModel"
+                     name="password"
+                     mdInput
+                     required
+                     placeholder="Password"
+                     type="password"
+                     required
+                     [(ngModel)]="password">
+              <md-error *ngIf="passwordInput.errors?.required && (passwordInput.dirty || passwordInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <button md-raised-button
+                    (click)="submit(email, password)"
+                    color="accent"
+                    type="submit"
+                    [disabled]="emailInput.errors?.required || passwordInput.errors?.required">Log In
+            </button>
+          </form>
+        </div>
+      </md-card>
     </div>
-    <span class="mdc-typography--display1">Log in</span>
-    <p class="mdc-typography--body1 u-weak">Welcome to Vendumo! Log in to your account below.</p>
-    <div class="u-vertical-spacing">
-      <form novalidate>
-        <md-input-container dividerColor="accent">
-          <input #emailInput="ngModel" name="email" mdInput required placeholder="Email" type="email" required [(ngModel)]="email">
-          <md-error *ngIf="emailInput.errors?.required && (emailInput.dirty || emailInput.touched)">
-            This field is required
-          </md-error>
-        </md-input-container>
-        <md-input-container dividerColor="accent">
-          <input #passwordInput="ngModel" name="password" mdInput required placeholder="Password" type="password" required [(ngModel)]="password">
-          <md-error *ngIf="passwordInput.errors?.required && (passwordInput.dirty || passwordInput.touched)">
-            This field is required
-          </md-error>
-        </md-input-container>
-        <button md-raised-button
-                (click)="submit(email, password)"
-                color="accent"
-                type="submit"
-                [disabled]="emailInput.errors?.required || passwordInput.errors?.required">Log In
-        </button>
-      </form>
-    </div>
-  </md-card>
+  </div>
 </div>

@@ -1,0 +1,7 @@
+<router-outlet></router-outlet>
+
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <div *ngIf="! user?.memberships.length" fxLayoutAlign="center center" fxFill>
+    Your account is not member of an organization.
+  </div>
+</vmo-progress-spinner>

@@ -3,15 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/auth/auth-guard.service';
 import { NoAuthGuard } from './core/auth/no-auth-guard.service';
+import { OrganizationListComponent } from './organization-list/organization-list.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: '/projects',
-    pathMatch: 'full'
-  },
-  {
-    path: '',
+    path: 'login',
     canActivate: [NoAuthGuard],
     canActivateChild: [NoAuthGuard],
     loadChildren: 'app/auth/auth.module#AuthModule'
@@ -20,7 +16,13 @@ export const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    loadChildren: 'app/organization/organization.module#OrganizationModule'
+    component: OrganizationListComponent,
+    children: [
+      {
+        path: ':organization',
+        loadChildren: 'app/organization/organization.module#OrganizationModule'
+      }
+    ]
   },
   {
     path: '',
@@ -31,9 +33,7 @@ export const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [
-    AuthGuard,
-    NoAuthGuard
-  ]
+  providers: [AuthGuard, NoAuthGuard]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

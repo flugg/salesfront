@@ -1,0 +1,40 @@
+<md-card [@fadeInOut]="true" class="container-card">
+  <md-card class="post-card u-no-elevation">
+    <md-card-header>
+      <vmo-avatar md-card-avatar [membership]="post.member"></vmo-avatar>
+      <md-card-title class="mdc-typography--subheading1 u-clickable" [routerLink]="'/projects/' + post.projectId + '/users/members/' + post.memberId">
+        {{ post.member.user.name }}
+      </md-card-title>
+      <md-card-subtitle class="mdc-typography--caption">
+        {{ post.publishedAt | amTimeAgo }}
+      </md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <p class="mdc-typography--body1" [innerHtml]="post.body | nl2br"></p>
+    </md-card-content>
+  </md-card>
+  <md-card class="comments u-no-elevation" *ngIf="post.comments.length">
+    <md-list>
+      <md-list-item *ngFor="let comment of post.comments">
+        <vmo-avatar md-list-avatar [membership]="comment.member" fxFlexAlign="start"></vmo-avatar>
+        <div md-line fxLayoutGap="6px">
+          <span class="mdc-typography--body2 u-clickable" [routerLink]="'/projects/' + post.projectId + '/users/members/' + post.memberId">
+            {{ comment.member.user.name }}
+          </span>
+          <span class="mdc-typography--caption u-weak">
+            {{ comment.postedAt | amTimeAgo }}
+          </span>
+        </div>
+        <span md-line class="mdc-typography--body1 comment-body" [innerHtml]="comment.body | nl2br"></span>
+      </md-list-item>
+    </md-list>
+  </md-card>
+  <md-card class="comment-input u-no-elevation">
+    <form (submit)="onSubmit(input.value); input.value = ''; $event.preventDefault()" fxLayoutAlign="stretch center">
+      <vmo-avatar md-list-avatar [membership]="member"></vmo-avatar>
+      <md-input-container class="vmo-fixed-input">
+        <input #input mdInput name="comment" placeholder="Post comment...">
+      </md-input-container>
+    </form>
+  </md-card>
+</md-card>

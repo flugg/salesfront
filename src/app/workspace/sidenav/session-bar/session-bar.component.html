@@ -1,0 +1,9 @@
+<md-toolbar class="clock-in-bar">
+  <button md-fab *ngIf="! membership?.activeSession && teamMembers?.length" [@slideUpDown]="true" (click)="clockIn()">
+    <md-icon>timer</md-icon>
+  </button>
+  <div class="mdc-typography--subheading1 u-weak" *ngIf="membership?.activeSession" [@slideUpDown]="true">{{ membership?.activeSession.teamMember?.team.name }}</div>
+  <button md-mini-fab color="primary" *ngIf="membership?.activeSession" [@slideUpDown]="true" (click)="clockOut()">
+    <md-icon>timer</md-icon>
+  </button>
+</md-toolbar>

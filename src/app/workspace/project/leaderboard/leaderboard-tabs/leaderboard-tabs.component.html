@@ -1,0 +1,24 @@
+<div class="vmo-component vmo-component--tabs">
+  <vmo-toolbar title="Leaderboard" mode="menu" tabs="true">
+    <button md-icon-button (click)="datepicker.toggle()">
+      <md-icon>date_range</md-icon>
+    </button>
+    <nav md-tab-nav-bar toolbar-tabs>
+      <a md-tab-link routerLink="teams"
+         routerLinkActive #teamsLink="routerLinkActive"
+         [active]="teamsLink.isActive"
+         [class.is-active]="teamsLink.isActive">
+        Teams
+      </a>
+      <a md-tab-link routerLink="users"
+         routerLinkActive #usersLink="routerLinkActive"
+         [active]="usersLink.isActive"
+         [class.is-active]="usersLink.isActive">
+        Users
+      </a>
+    </nav>
+  </vmo-toolbar>
+  <vmo-datepicker></vmo-datepicker>
+
+  <router-outlet></router-outlet>
+</div>

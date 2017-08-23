@@ -21,8 +21,8 @@ const routes: Routes = [
         ]
       },
       {
-        path: '',
-        loadChildren: 'app/organization/workspace/workspace.module#WorkspaceModule'
+        path: 'app',
+        loadChildren: 'app/workspace/workspace.module#WorkspaceModule'
       }
     ]
   }

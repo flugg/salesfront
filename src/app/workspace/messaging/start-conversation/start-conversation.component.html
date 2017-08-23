@@ -1,0 +1,33 @@
+<div class="vmo-component">
+  <vmo-toolbar title="New Conversation" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area vmo-scrollable-area--withInput">
+      <md-card *ngIf="participants.length > 0" class="u-spacing-bottom-small">
+        <div #chips class="chips-container">
+          <md-chip-list selectable="false">
+            <md-chip *ngFor="let participant of participants" (click)="removeParticipant(participant)">
+              {{ participant.user.name }}
+            </md-chip>
+          </md-chip-list>
+        </div>
+      </md-card>
+      <md-list class="vmo-list u-clickable">
+        <md-list-item md-ripple
+                      *ngFor="let member of members | exclude:participants | exclude:membership"
+                      (click)="addParticipant(member)">
+          <vmo-avatar md-list-avatar [membership]="member"></vmo-avatar>
+          <h4 md-line class="mdc-typography--subheading1">
+            {{ member.user.name }}
+          </h4>
+        </md-list-item>
+      </md-list>
+      <vmo-load-more-button [paginator]="memberListService"></vmo-load-more-button>
+    </div>
+  </vmo-progress-spinner>
+
+  <vmo-bottom-input (send)="start($event)"
+                    [disabledInput]="false"
+                    [disabledButton]="participants.length === 0">
+  </vmo-bottom-input>
+</div>

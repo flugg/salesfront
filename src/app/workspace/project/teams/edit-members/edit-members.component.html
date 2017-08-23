@@ -1,0 +1,35 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="Update Members" mode="back">
+    <button md-icon-button routerLink="add">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <md-list class="vmo-list">
+        <md-list-item *ngFor="let member of members">
+          <vmo-avatar md-list-avatar [membership]="member.member"></vmo-avatar>
+          <h4 md-line>
+            {{ member.member.user.name }}
+          </h4>
+          <span class="u-fill"></span>
+          <md-icon *ngIf="member.member.userId === user.id && ! user.isAdmin"
+                   class="u-weak u-horizontal-spacing"
+                   [class.u-icon-highlight]="member.isLeader">verified_user
+          </md-icon>
+          <md-icon *ngIf="member.member.userId !== user.id || user.isAdmin"
+                   class="u-weak u-horizontal-spacing u-clickable"
+                   [class.u-icon-highlight]="member.isLeader"
+                   (click)="toggleLeadership(member)">verified_user
+          </md-icon>
+          <button md-icon-button (click)='removeMember(member)'>
+            <md-icon>remove_circle_outline</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+    </div>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,4 @@
+<md-list-item md-ripple *ngIf="! loading" [routerLink]="['/', project.organizationId, 'app', project.id, link]" routerLinkActive="active">
+  <md-icon md-list-icon>{{ icon }}</md-icon>
+  <a md-line class="mdc-typography--body1">{{ title }}</a>
+</md-list-item>

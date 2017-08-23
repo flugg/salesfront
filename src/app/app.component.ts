@@ -6,9 +6,5 @@ import { ScreenService } from './core/screen.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-
-  /**
-   * Constructs the component.
-   */
   constructor(private screen: ScreenService) {}
 }

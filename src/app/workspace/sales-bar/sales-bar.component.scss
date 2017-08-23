@@ -1,0 +1,23 @@
+.mat-toolbar {
+  position: fixed;
+  bottom: 0;
+  background: #2979ff;
+  color: white;
+  min-height: 56px !important;
+
+  /deep/ .mat-toolbar-row {
+    height: 56px !important;
+  }
+}
+
+.mat-raised-button {
+  background: #2962ff;
+
+  &[disabled] {
+    color: rgba(white, 0.5);
+  }
+}
+
+.u-weak {
+  color: rgba(white, 0.7);
+}

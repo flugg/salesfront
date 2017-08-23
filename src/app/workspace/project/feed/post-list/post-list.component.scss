@@ -1,0 +1,37 @@
+form {
+  width: 100%;
+}
+
+.post-input {
+  margin-bottom: 12px;
+  padding-top: 10px;
+  padding-bottom: 12px;
+  display: flex;
+  align-items: center;
+
+  &:not(:first-child) {
+    margin-top: 24px;
+  }
+
+  @media (min-width: 960px) {
+    margin-bottom: 16px;
+  }
+}
+
+.post-input--centered {
+  width: 80%;
+  max-width: 600px;
+}
+
+.mat-input-container {
+  padding: 0;
+}
+
+.container {
+  padding-top: 12px;
+
+  @media (min-width: 960px) {
+    max-width: 960px;
+    padding: 24px 24px 8px;
+  }
+}

@@ -1,0 +1,17 @@
+h2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:not(:first-child) {
+    padding: 0 16px;
+  }
+
+  &:first-child {
+    padding: 0 6px;
+  }
+}
+
+.hide-children {
+  opacity: 0;
+}

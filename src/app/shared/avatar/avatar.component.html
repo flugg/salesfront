@@ -1,7 +1,14 @@
-<div class="avatar-wrapper" [routerLink]="'/projects/' + membership?.projectId + '/users/members/' + membership?.id">
-  <img *ngIf="user?.avatarPath" class="u-avatar u-clickable" src="{{ basePath + user?.avatarPath }}">
-  <div *ngIf="! user?.avatarPath" class="u-avatar u-default-avatar u-clickable" fxLayoutAlign="center center">
+<div *ngIf="! loading"
+     class="avatar-wrapper"
+     [routerLink]="['/', membership?.organizationId, 'app', project?.id, 'users', 'members', membership?.id]">
+  <img *ngIf="membership.user?.avatarPath"
+       class="u-avatar u-clickable"
+       src="{{ basePath + membership.user?.avatarPath }}">
+  <div *ngIf="! membership.user?.avatarPath"
+       class="u-avatar u-default-avatar u-clickable"
+       fxLayoutAlign="center center">
     <md-icon>face</md-icon>
   </div>
-  <div *ngIf="sessionIndicator && membership?.activeSession" class="session-indicator"></div>
+  <div *ngIf="sessionIndicator && isClockedIn()" class="session-indicator"></div>
 </div>
+

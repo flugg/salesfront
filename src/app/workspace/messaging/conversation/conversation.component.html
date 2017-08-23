@@ -1,0 +1,48 @@
+<div class="vmo-component">
+  <vmo-toolbar [title]="conversation?.participations | filteredParticipations:membership | conversationTitle"
+               mode="back">
+    <button md-icon-button *ngIf="conversation?.group && ! (isLocked | async)" routerLink="participants">
+      <md-icon>group</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div fxLayout="column"
+         fxLayoutAlign="end"
+         class="vmo-conversation"
+         [class.vmo-conversation--locked]="isLocked | async">
+
+      <div #window fxLayout="column-reverse" class="vmo-conversation-window">
+        <div *ngIf="isLocked | async"
+             fxFlexAlign="center"
+             class="mdc-typography--body1 u-relative u-vertical-spacing-big u-weak">
+          You are no longer in this conversation.
+        </div>
+
+        <div *ngFor="let message of messages">
+          <div *ngIf="shouldDisplayTimestamp(message)"
+               fxLayoutAlign="center"
+               class="mdc-typography--caption u-relative u-vertical-spacing-big u-weak">
+            {{ message.sentAt | amDateFormat:'lll' }}
+          </div>
+
+          <div *ngIf="shouldDisplayName(message)"
+               class="mdc-typography--caption u-relative u-weak vmo-message-name">
+            {{ message.member.user.name }}
+          </div>
+
+          <vmo-message-box [message]="message" [own]="isPostedByUser(message)"></vmo-message-box>
+        </div>
+
+        <vmo-load-more-button [paginator]="messageListService"></vmo-load-more-button>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+
+  <vmo-bottom-input (send)="sendMessage($event)"
+                    [disabledInput]="isLocked | async"
+                    [disabledButton]="isLocked | async">
+  </vmo-bottom-input>
+</div>
+
+<router-outlet></router-outlet>

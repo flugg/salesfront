@@ -11,6 +11,7 @@ import { ExcludePipe } from './exclude.pipe';
 import { Nl2BrPipe } from './nl2br.pipe';
 import { AvatarComponent } from './avatar/avatar.component';
 import { RouterModule } from '@angular/router';
+import { CountoModule } from 'angular2-counto';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { RouterModule } from '@angular/router';
     ProgressSpinnerComponent,
     AvatarComponent,
     ExcludePipe,
-    Nl2BrPipe
+    Nl2BrPipe,
+    CountoModule
   ],
   declarations: [
     LoadMoreButtonComponent,

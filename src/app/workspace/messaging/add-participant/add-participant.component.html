@@ -1,0 +1,22 @@
+<div class="vmo-component">
+  <vmo-toolbar title="Add Participant" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <md-list class="vmo-list" *ngIf="(members | filteredMembers:conversation)?.length">
+        <md-list-item *ngFor="let member of members | filteredMembers:conversation">
+          <vmo-avatar md-list-avatar [membership]="member"></vmo-avatar>
+          <h4 md-line>
+            {{ member.user.name }}
+          </h4>
+          <span class="u-fill"></span>
+          <button md-icon-button (click)="addParticipant(member)">
+            <md-icon>add</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+
+      <vmo-load-more-button [paginator]="memberListService"></vmo-load-more-button>
+    </div>
+  </vmo-progress-spinner>
+</div>

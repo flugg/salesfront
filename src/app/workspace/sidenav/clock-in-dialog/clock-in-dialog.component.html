@@ -1,0 +1,22 @@
+<span class="mdc-typography--display1 strong">Clock In</span>
+<p class="mdc-typography--body1 u-weak">By clocking in to work, you can add sales and your work time will be tracked.</p>
+<div class="u-vertical-spacing">
+  <md-select placeholder="Team" color="accent" [(ngModel)]="selectedTeamMember" name="userInput" required>
+    <md-option *ngFor="let teamMember of data.teamMembers" [value]="teamMember.id">
+      {{ teamMember.team.name }}
+    </md-option>
+  </md-select>
+</div>
+<div *ngIf="autoClockOut"fxLayout="row" fxLayoutGap="16px">
+  <md-input-container color="accent">
+    <input mdInput #timeInput="ngModel" [(ngModel)]="clockOutTime" name="time" placeholder="Time" type="time">
+    <md-error *ngIf="timeInput.errors?.required && (timeInput.dirty || timeInput.touched)">This field is required</md-error>
+  </md-input-container>
+</div>
+<div class="u-vertical-spacing">
+  <md-checkbox [(ngModel)]="autoClockOut" name="clockOut">Clock out automatically</md-checkbox>
+</div>
+<div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+  <button md-raised-button (click)="clockIn()" color="accent">Clock In</button>
+  <button md-button (click)="closeDialog()">Cancel</button>
+</div>

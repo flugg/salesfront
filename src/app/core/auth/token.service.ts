@@ -3,47 +3,34 @@ import { Http } from '@angular/http';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 
+import { environment } from './../../../environments/environment';
+import { StorageService } from '../storage.service';
+
 @Injectable()
 export class TokenService {
+  constructor(private http: Http,
+              private storage: StorageService) {}
 
-  /**
-   * Constructs the service.
-   */
-  constructor(private http: Http) {}
-
-  /**
-   * Checks if the token exists and is not expired.
-   */
   isValid(): boolean {
-    return this.get() != null && tokenNotExpired('token');
+    const token = this.get();
+
+    return token != null && tokenNotExpired('token', token);
   }
 
-  /**
-   * Retrieves a token from storage.
-   */
   get(): string | null {
-    return localStorage.getItem('token');
+    return this.storage.get('token');
   }
 
-  /**
-   * Sets the given token in storage.
-   */
   set(token: string): void {
-    localStorage.setItem('token', token);
+    this.storage.set('token', token);
   }
 
-  /**
-   * Unsets the given token from storage.
-   */
   unset(): void {
-    localStorage.removeItem('token');
+    this.storage.remove('token');
   }
 
-  /**
-   * Grants a token from the given credentials.
-   */
   grant(email: string, password: string): Observable<string> {
-    return this.http.post('http://api.vendumo.com/tokens', { email, password })
+    return this.http.post(environment.apiUrl + '/tokens', { email, password })
       .map(response => response.json().token);
   }
 }

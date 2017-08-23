@@ -1,13 +1,15 @@
-<vmo-progress-spinner [hasLoaded]="! loading">
+<div class="fancy-background"></div>
+
+<vmo-progress-spinner [hasLoaded]="! loading" class="u-relative">
   <div fxLayoutAlign="center center" fxFill class="u-horizontal-spacing">
     <div fxLayout="column" fxLayoutGap="24px">
       <div fxLayout="column" fxLayoutGap="8px">
         <span class="mdc-typography--display1">Switch Communication</span>
-        <span class="mdc-typography--subheading1 u-weak">Choose a project from the list below to get started.</span>
+        <span class="mdc-typography--subheading1 u-weak">Choose a project to get started.</span>
       </div>
-      <md-list *ngIf="memberships?.length" class="vmo-list vmo-list--small">
+      <md-list *ngIf="organization.projects?.length" class="vmo-list vmo-list--small">
         <md-list-item md-ripple
-                      *ngFor="let membership of memberships"
+                      *ngFor="let project of projects"
                       [routerLink]="membership.projectId"
                       class="u-clickable">
 
@@ -22,9 +24,9 @@
         </span>
         </md-list-item>
       </md-list>
-      <!--<div fxLayoutAlign="center">-->
-        <!--<button md-fab><md-icon>add</md-icon></button>-->
-      <!--</div>-->
+      <!--<div fxLayoutAlign="center">
+        <button md-raised-button color="accent">Create Project</button>
+      </div>-->
     </div>
     <div *ngIf="! memberships?.length"
          class="u-stretch"

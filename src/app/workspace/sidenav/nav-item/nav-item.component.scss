@@ -1,0 +1,26 @@
+.mat-icon {
+  color: white;
+  opacity: 0.5;
+}
+
+a {
+  color: white;
+}
+
+.mat-list-item {
+  &:hover {
+    background: rgba(black, 0.12) !important;
+  }
+
+  &.active {
+    background: rgba(black, 0.2) !important;
+
+    .mat-icon {
+      opacity: 1;
+    }
+
+    a {
+      font-weight: 500 !important;
+    }
+  }
+}

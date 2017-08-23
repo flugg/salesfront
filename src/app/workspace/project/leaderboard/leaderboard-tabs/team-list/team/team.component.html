@@ -1,0 +1,35 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="Leaderboard" mode="close">
+    <button md-icon-button (click)="datepicker.toggle()">
+      <md-icon>date_range</md-icon>
+    </button>
+  </vmo-toolbar>
+  <vmo-datepicker></vmo-datepicker>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <div class="vmo-container --fillOnMobile" [class.u-push-down]="datepicker.visible">
+        <md-card>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <span class="mdc-typography--headline strong">{{ team?.name }}</span>
+            <div class="u-fill"></div>
+            <span *ngIf="! countComplete"
+                  class="mdc-typography--headline strong"
+                  counto
+                  [step]="50"
+                  [duration]="0.6"
+                  [countFrom]="0"
+                  [countTo]="total"
+                  (countoChange)="current = $event"
+                  (countoEnd)="countComplete = true">{{ current | number: '1.0-0' }}</span>
+            <span *ngIf="countComplete" class="mdc-typography--headline strong">{{ total }}</span>
+          </div>
+          <md-divider></md-divider>
+          <vmo-leaderboard [items]="members" type="users"></vmo-leaderboard>
+        </md-card>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+
+  <router-outlet></router-outlet>
+</div>

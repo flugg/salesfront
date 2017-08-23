@@ -1,0 +1,44 @@
+:host {
+  position: relative;
+
+  .vmo-message {
+    padding-bottom: 16px;
+    margin-right: 40px;
+
+    &--own {
+      margin-right: 0;
+      margin-left: 40px;
+      .mat-card {
+        background: #2979ff;
+        color: white;
+      }
+
+      @media (max-width: 960px) {
+        img {
+          display: none;
+        }
+        .mat-card {
+          margin-right: 0 !important;
+        }
+      }
+    }
+
+    .mat-card {
+      padding: 10px 16px;
+      margin: 0 16px;
+    }
+  }
+}
+
+.hide-on-mobile {
+  @media (max-width: 960px) {
+    display: none;
+  }
+}
+
+.mat-card-content {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}

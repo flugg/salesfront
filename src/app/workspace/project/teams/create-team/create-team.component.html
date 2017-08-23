@@ -1,0 +1,23 @@
+<div class="vmo-component">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <form novalidate (submit)="submit(name); $event.preventDefault()">
+      <div class="container">
+        <md-card>
+          <span class="mdc-typography--display1 strong">Create Team</span>
+          <p class="mdc-typography--body1 u-weak">Teams help organize users in a project. Give your new team a suiting name!</p>
+          <md-input-container color="accent">
+            <input #nameInput="ngModel" mdInput name="name" placeholder="Team Name" required autofocus [(ngModel)]="name">
+            <md-error *ngIf="nameInput.errors?.required && (nameInput.dirty || nameInput.touched)">
+              This field is required
+            </md-error>
+          </md-input-container>
+          <div class="u-vertical-spacing">
+            <button md-raised-button color="accent" [disabled]="nameInput.errors?.required">Create</button>
+          </div>
+        </md-card>
+      </div>
+    </form>
+  </vmo-progress-spinner>
+</div>
