@@ -8,7 +8,7 @@ import { SelectedMembershipService } from './selected-membership.service';
 import { WeeklyAward } from '../../../../core/models/weekly-award.model';
 
 @Injectable()
-export class WeeklywardListService extends ObservableResourceList implements OnDestroy {
+export class WeeklyAwardListService extends ObservableResourceList implements OnDestroy {
   readonly awards: Observable<WeeklyAward[]> = this.subject.asObservable();
 
   constructor(private selectedMembership: SelectedMembershipService,
