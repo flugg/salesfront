@@ -41,7 +41,10 @@ export abstract class ObservableResourceList implements OnDestroy {
   }
 
   protected add(resources: any[]): void {
-    this.snapshot.push(...resources);
+    this.snapshot.push(...resources.filter(resource => {
+      return ! this.snapshot.find(item => item.id === resource.id);
+    }));
+
     this.updateFromSnapshot();
   }
 
