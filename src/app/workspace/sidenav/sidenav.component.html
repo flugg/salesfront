@@ -12,7 +12,7 @@
       <md-icon>exit_to_app</md-icon>
     </button>
   </md-toolbar>
-  <div class="vmo-scrollable-area">
+  <div class="vmo-scrollable-area inside-sidenav">
     <md-list>
       <md-list-item md-ripple [routerLink]="['/', membership?.organizationId, 'app', project?.id, 'users', 'members', membership?.id]" class="u-clickable">
         <vmo-avatar md-list-avatar [membership]="membership" [sessionIndicator]="false"></vmo-avatar>

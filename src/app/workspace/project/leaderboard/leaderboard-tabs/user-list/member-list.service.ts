@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
 
 import { ObservableResourceList } from '../../../../../core/observable-resource-list';
@@ -24,7 +25,7 @@ export class MemberListService extends ObservableResourceList implements OnDestr
     super();
 
     this.activeProject.project.first().subscribe(project => {
-      this.datepicker.range.subscribe(range => {
+      this.datepicker.range.distinctUntilChanged().subscribe(range => {
         const [after, before] = range;
         this.leaderboardService.members(project.id, moment(after).startOf('day'), moment(before).endOf('day')).subscribe(members => {
           this.set(members.map(member => {

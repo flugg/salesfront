@@ -1,6 +1,6 @@
 <vmo-progress-spinner [hasLoaded]="! loading">
   <div class="vmo-scrollable-area">
-    <div class="vmo-container --fillOnMobile" [class.u-push-down]="datepicker.visible">
+    <div class="vmo-container --fillOnMobile" [class.u-push-down]="datepicker.visible" *ngIf="! loading">
       <md-card>
         <div fxLayout="row" fxLayoutAlign="center center">
           <span class="mdc-typography--headline strong">Total</span>

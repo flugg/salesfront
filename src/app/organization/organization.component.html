@@ -1,10 +1,11 @@
-<div class="fancy-background"></div>
-
+<div class="fancy-background-container">
+  <div class="fancy-background"></div>
+</div>
 <vmo-progress-spinner [hasLoaded]="! loading" class="u-relative">
   <div fxLayoutAlign="center center" fxFill class="u-horizontal-spacing">
     <div fxLayout="column" fxLayoutGap="24px" class="list-wrapper">
       <div fxLayout="column" fxLayoutGap="8px">
-        <span class="mdc-typography--display1 strong">Switch Communication</span>
+        <span class="mdc-typography--display1 strong u-push-down-on-mobile">Switch Communication</span>
         <span class="mdc-typography--subheading1 u-weak">Choose a project to get started.</span>
       </div>
       <md-list *ngIf="projects?.length" class="vmo-list vmo-list--small">

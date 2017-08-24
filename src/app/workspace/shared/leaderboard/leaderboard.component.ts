@@ -18,11 +18,13 @@ export class LeaderboardComponent implements OnInit {
   @Input() type = 'users';
 
   loading = true;
+  count = 10;
   countComplete = [];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.count = Math.min(this.count, this.items.length);
     setTimeout(() => this.loading = false, 1);
   }
 
@@ -38,5 +40,9 @@ export class LeaderboardComponent implements OnInit {
     }
 
     return '';
+  }
+
+  loadAll(): void {
+    this.count = this.items.length;
   }
 }

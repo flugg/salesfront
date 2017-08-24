@@ -299,6 +299,10 @@ snack-bar-container {
   &--withInput {
     height: calc(100% - 64px);
   }
+
+  .mat-sidenav-opened  &:not(.inside-sidenav) {
+    overflow-y: hidden;
+  }
 }
 
 .vmo-list {
@@ -487,6 +491,7 @@ snack-bar-container {
   width: 0%;
   background: #2979ff;
   transition: width 0.4s ease-in-out;
+  position: relative;
 }
 
 .leaderboard-title {
@@ -655,6 +660,7 @@ snack-bar-container {
   &.--fillOnMobile {
     @media (max-width: 600px) {
       padding: 0;
+      margin-bottom: 12px;
     }
   }
 }
@@ -688,5 +694,11 @@ snack-bar-container {
 
   &.--grid {
     margin-bottom: 48px;
+  }
+}
+
+.u-push-down-on-mobile {
+  @media (max-width: 600px) {
+    margin-top: 24px;
   }
 }
