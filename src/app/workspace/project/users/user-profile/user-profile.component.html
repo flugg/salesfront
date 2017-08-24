@@ -68,8 +68,8 @@
               <md-list-item>
                 <span class="mdc-typography--headline strong">Awards</span>
               </md-list-item>
-              <md-list-item *ngIf="! dailyAwards?.length">
-                <span class="u-weak">This user has no achievements.</span>
+              <md-list-item *ngIf="! dailyAwards?.length && ! weeklyAwards?.length">
+                <span class="u-weak">This user has no awards.</span>
               </md-list-item>
             </md-list>
             <div *ngIf="weeklyAwards?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing u-horizontal-scrolling">
