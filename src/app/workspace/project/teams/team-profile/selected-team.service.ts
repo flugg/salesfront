@@ -20,7 +20,6 @@ export class SelectedTeamService extends ObservableResource implements OnDestroy
     this.teamService.find(this.route.snapshot.params['team']).subscribe(team => {
       this.set(team);
 
-      console.log(team);
       this.sockets.listenForProject(team.projectId, {
         'team_updated': updatedTeam => this.updateTeam(updatedTeam)
       }, this);

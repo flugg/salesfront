@@ -52,7 +52,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.messageListService.messages
     ).subscribe(data => {
       [this.membership, this.conversation, this.messages] = data;
-      console.log(this.membership.id);
       this.isLocked.next(this.conversationService.isLocked(this.conversation, this.membership));
       this.loading = false;
       hasLoaded.next();

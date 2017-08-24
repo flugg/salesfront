@@ -32,8 +32,6 @@ export class UserListComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
       [this.project, this.members] = data;
       this.total = this.calculateTotal(this.members);
-      console.log('loaded');
-      console.log(this.members);
       this.loading = false;
     }));
   }

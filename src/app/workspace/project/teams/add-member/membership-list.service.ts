@@ -44,10 +44,7 @@ export class MembershipListService extends ObservableResourceList implements OnD
   }
 
   private updateTeamMember(member: TeamMember) {
-    console.log('update');
-    console.log(member);
     const membership = this.snapshot.find(item => item.id === member.memberId);
-    console.log(membership);
     if (!membership) {
       return;
     }

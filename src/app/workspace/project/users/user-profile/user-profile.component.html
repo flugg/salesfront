@@ -66,15 +66,27 @@
           <div class="inner-spacing inner-spacing--push">
             <md-list fxFill>
               <md-list-item>
-                <span class="mdc-typography--headline strong">Achievements</span>
+                <span class="mdc-typography--headline strong">Awards</span>
               </md-list-item>
               <md-list-item *ngIf="! dailyAwards?.length">
                 <span class="u-weak">This user has no achievements.</span>
               </md-list-item>
             </md-list>
-            <div *ngIf="dailyAwards?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing">
+            <div *ngIf="weeklyAwards?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing u-horizontal-scrolling">
+              <div *ngFor="let award of weeklyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px" class="award-item">
+                <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored silver"
+                     fxLayoutAlign="center center">
+                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center center">
+                  <strong class="mdc-typography--body2 wall-of-fame-name u-ellipsis">Top Weekly</strong>
+                  <span class="mdc-typography--body1 u-weak">Week {{ award.week }}</span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="dailyAwards?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing u-horizontal-scrolling">
               <div *ngFor="let award of dailyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px">
-                <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored"
+                <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored bronze"
                      fxLayoutAlign="center center">
                   <span class="mdc-typography--headline strong">{{ award.value }}</span>
                 </div>

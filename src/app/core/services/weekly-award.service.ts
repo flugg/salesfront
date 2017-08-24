@@ -12,8 +12,8 @@ export class WeeklyAwardService {
     return this.api.paginate(`projects/${projectId}/weekly-awards`, cursor, limit, {include: 'awardable.user'});
   }
 
-  getForMembership(membershipId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`memberships/${membershipId}/weekly-awards`, cursor, limit, {include: 'member.user'});
+  getForMember(memberId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
+    return this.api.paginate(`members/${memberId}/weekly-awards`, cursor, limit, { include: 'awardable.user' });
   }
 
   teams(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {

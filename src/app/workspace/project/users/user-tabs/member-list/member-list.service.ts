@@ -48,7 +48,6 @@ export class MemberListService extends ObservableResourceList implements OnDestr
   }
 
   private updateUser(user: User) {
-    console.log(user);
     this.snapshot.find(item => item.userId === user.id).user = user;
     this.updateFromSnapshot();
   }

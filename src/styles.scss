@@ -587,10 +587,18 @@ snack-bar-container {
 }
 
 .u-avatar-colored {
-  background: #FFAB00 !important;
+  background: #FFC107 !important;
   color: white !important;
   border: 2px solid white;
   @include mat-elevation(4);
+
+  &.silver {
+    background: #9E9E9E !important;
+  }
+
+  &.bronze {
+    background: #b98578 !important;
+  }
 }
 
 .mat-dialog-actions {

@@ -26,8 +26,6 @@ export class MemberListService extends ObservableResourceList implements OnDestr
           .map(members => {
             return members.filter(member => !member.leftAt);
           }).subscribe(members => {
-            console.log('members');
-            console.log(members);
             this.add(members);
         });
       });
