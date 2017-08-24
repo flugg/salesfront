@@ -39,7 +39,7 @@
             </button>
           </div>
           <md-divider></md-divider>
-          <div class="inner-spacing inner-spacing--push">
+          <div class="inner-spacing inner-spacing--push remove-padding-top">
             <md-list fxFill>
               <md-list-item>
                 <span class="mdc-typography--headline strong">About</span>
@@ -63,7 +63,7 @@
             </md-list>
           </div>
           <md-divider></md-divider>
-          <div class="inner-spacing inner-spacing--push">
+          <div class="inner-spacing inner-spacing--push remove-padding-top">
             <md-list fxFill>
               <md-list-item>
                 <span class="mdc-typography--headline strong">Awards</span>
@@ -85,7 +85,7 @@
               </div>
             </div>
             <div *ngIf="dailyAwards?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing u-horizontal-scrolling">
-              <div *ngFor="let award of dailyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px">
+              <div *ngFor="let award of dailyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px" class="award-item">
                 <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored bronze"
                      fxLayoutAlign="center center">
                   <span class="mdc-typography--headline strong">{{ award.value }}</span>

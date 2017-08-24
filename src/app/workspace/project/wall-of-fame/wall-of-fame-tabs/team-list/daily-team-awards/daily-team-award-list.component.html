@@ -11,7 +11,7 @@
           <md-divider></md-divider>
           <span *ngIf="!dailyAwards?.length"
                 class="u-weak">No daily top sellers calculated yet. Check back tomorrow!</span>
-          <div *ngIf="dailyAwards?.length" fxLayout fxLayoutWrap class="wall-of-fame-grid">
+          <div *ngIf="dailyAwards?.length" fxLayout fxLayoutWrap fxLayoutALign="center" class="wall-of-fame-grid">
             <div *ngFor="let award of dailyAwards"
                  class="wall-of-fame-item --grid">
               <div fxLayout="column"
