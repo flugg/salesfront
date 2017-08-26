@@ -9,6 +9,7 @@ import { SaleAddedDialogComponent } from '../sale-added-dialog/sale-added-dialog
   styleUrls: ['add-sale-dialog.component.scss']
 })
 export class AddSaleDialogComponent implements OnInit {
+  value: number;
   pending = false;
 
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
