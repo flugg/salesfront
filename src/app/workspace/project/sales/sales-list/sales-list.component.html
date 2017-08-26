@@ -16,8 +16,8 @@
        <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
        <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
      </md-table>-->
-    <div class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px" *ngIf="! sales?.length">
-      <span class="mdc-typography--headline">No sales added yet.</span>
+    <div class="u-stretch u-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px" *ngIf="! sales?.length">
+      <span class="mdc-typography--headline strong">No sales added yet.</span>
       <span class="u-weak">Add a sale to get started.</span>
       <button md-raised-button color="accent" routerLink="add" class="u-push-button">Add a sale</button>
     </div>

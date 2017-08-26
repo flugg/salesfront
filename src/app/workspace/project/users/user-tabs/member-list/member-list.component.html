@@ -13,8 +13,8 @@
 
     <vmo-load-more-button [paginator]="memberListService"></vmo-load-more-button>
 
-    <div *ngIf="! members?.length" class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
-      <span class="mdc-typography--headline">Project has no members.</span>
+    <div *ngIf="! members?.length" class="u-stretch u-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <span class="mdc-typography--headline strong">Project has no members.</span>
       <span class="u-weak">Send an invite to give someone access to the project.</span>
       <button md-raised-button color="accent" routerLink="../invites/send" class="u-push-button">Send an invite</button>
     </div>

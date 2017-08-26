@@ -1,6 +1,6 @@
 <vmo-progress-spinner [hasLoaded]="! loading">
   <div class="vmo-scrollable-area">
-    <md-list class="vmo-list">
+    <md-list class="vmo-list" *ngIf="members?.length">
       <md-list-item md-ripple
                     *ngFor="let member of members"
                     routerLink="../../../users/members/{{ member.member.id }}"
@@ -13,6 +13,12 @@
     </md-list>
 
     <vmo-load-more-button [paginator]="memberListService"></vmo-load-more-button>
+
+    <div *ngIf="! members?.length" class="u-stretch u-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <span class="mdc-typography--headline strong">Team has no members.</span>
+      <span class="u-weak">Add a member to the team to kick the team off.</span>
+      <button md-raised-button color="accent" routerLink="../update-members/add" class="u-push-button">Add member</button>
+    </div>
   </div>
 </vmo-progress-spinner>
 

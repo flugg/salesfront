@@ -13,6 +13,8 @@ import { CreateProjectComponent } from './create-project/create-project.componen
   declarations: [
     OrganizationComponent,
     CreateProjectComponent
-  ]
+  ],
+  entryComponents: [
+    CreateProjectComponent]
 })
 export class OrganizationModule {}

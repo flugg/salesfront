@@ -7,6 +7,8 @@ import { ActiveMembershipService } from './active-membership.service';
 import { ProjectListService } from './project2-list.service';
 import { Member } from '../core/models/member.model';
 import { Project } from '../core/models/project.model';
+import { MdDialog, MdDialogConfig } from '@angular/material';
+import { CreateProjectComponent } from './create-project/create-project.component';
 
 @Component({
   templateUrl: 'organization.component.html',
@@ -20,11 +22,11 @@ export class OrganizationComponent implements OnInit {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private activeMembershipService: ActiveMembershipService,
+  constructor(private dialog: MdDialog,
+              private activeMembershipService: ActiveMembershipService,
               private projectListService: ProjectListService) {}
 
   ngOnInit(): void {
-
     this.subscriptions.push(Observable.combineLatest(
       this.activeMembershipService.membership,
       this.projectListService.projects
@@ -32,5 +34,14 @@ export class OrganizationComponent implements OnInit {
       [this.membership, this.projects] = data;
       this.loading = false;
     }));
+  }
+
+  openCreateProjectDialog(): void {
+    this.dialog.open(CreateProjectComponent, <MdDialogConfig>{
+      panelClass: 'create-project-dialog',
+      data: {
+        organizationId: this.membership.organizationId
+      }
+    });
   }
 }

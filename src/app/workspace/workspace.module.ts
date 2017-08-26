@@ -7,8 +7,9 @@ import { WorkspaceSharedModule } from './shared/workspace-shared.module';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { NavItemComponent } from './sidenav/nav-item/nav-item.component';
 import { SessionBarComponent } from './sidenav/session-bar/session-bar.component';
-import { ClockInDialogComponent } from './sidenav/clock-in-dialog/clock-in-dialog.component';
+import { AddSaleDialogComponent } from './sales-bar/add-sale-dialog/add-sale-dialog.component';
 import { SaleAddedDialogComponent } from './sales-bar/sale-added-dialog/sale-added-dialog.component';
+import { ClockInDialogComponent } from './sidenav/clock-in-dialog/clock-in-dialog.component';
 import { SalesBarComponent } from './sales-bar/sales-bar.component';
 import { ActiveProjectService } from './active-project.service';
 
@@ -23,11 +24,13 @@ import { ActiveProjectService } from './active-project.service';
     SidenavComponent,
     NavItemComponent,
     SessionBarComponent,
-    ClockInDialogComponent,
     SalesBarComponent,
+    AddSaleDialogComponent,
+    ClockInDialogComponent,
     SaleAddedDialogComponent
   ],
   entryComponents: [
+    AddSaleDialogComponent,
     SaleAddedDialogComponent,
     ClockInDialogComponent
   ],

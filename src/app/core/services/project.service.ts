@@ -18,7 +18,7 @@ export class ProjectService {
     return this.api.get(`projects/${id}`).map(response => response.data);
   }
 
-  create(organizationId: string): Promise<Project> {
-    return this.api.post(`organizations/${organizationId}/projects`, {}).then(response => response.data);
+  create(organizationId: string, attributes: any): Promise<Project> {
+    return this.api.post(`organizations/${organizationId}/projects`, attributes).then(response => response.data);
   }
 }

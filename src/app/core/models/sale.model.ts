@@ -7,6 +7,7 @@ export interface Sale {
   id: string;
   soldAt: string;
   registeredAt: string;
+  value: number;
   memberId: string;
   teamId: string;
   projectId: string;

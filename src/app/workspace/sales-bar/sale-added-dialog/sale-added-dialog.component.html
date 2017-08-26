@@ -14,7 +14,7 @@
       <button md-raised-button (click)="dialog.close()" class="strong-button">Close</button>
       <div fxLayout="row">
         <button md-button (click)="undoSale()" [disabled]="loading">Undo</button>
-        <button md-button (click)="addSale()" [disabled]="loading">Add another</button>
+        <button md-button (click)="addSale()" [disabled]="loading" *ngIf="data.project.type === 'count'">Add another</button>
       </div>
     </div>
   </div>

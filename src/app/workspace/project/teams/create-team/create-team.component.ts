@@ -26,7 +26,7 @@ export class CreateTeamComponent implements OnInit {
 
   submit(name) {
     this.activeProject.project.first().subscribe(project => {
-      this.teamService.create(project.id, name).then(team => {
+      this.teamService.create(project.id, name).then(() => {
         this.router.navigate(['..'], { relativeTo: this.route });
         this.snackBar.open('Team created', null, <MdSnackBarConfig>{ duration: 2000 });
       });

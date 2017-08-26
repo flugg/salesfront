@@ -71,12 +71,28 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
   }
 
   private addSale(sale: Sale) {
-    this.snapshot.find(item => item.id === sale.teamId).value += 1;
+    const membership = this.snapshot.find(item => item.id === sale.teamId);
+
+    if (membership) {
+      if (sale.value) {
+        membership.value += sale.value;
+      } else {
+        membership.value += 1;
+      }
+    }
+
     this.updateFromSnapshot();
   }
 
   private removeSale(sale: Sale) {
-    this.snapshot.find(item => item.id === sale.teamId).value -= 1;
+    const membership = this.snapshot.find(item => item.id === sale.teamId);
+
+    if (sale.value) {
+      membership.value -= sale.value;
+    } else {
+      membership.value -= 1;
+    }
+
     this.updateFromSnapshot();
   }
 }

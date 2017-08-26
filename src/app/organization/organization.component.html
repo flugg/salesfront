@@ -2,7 +2,7 @@
   <div class="fancy-background"></div>
 </div>
 <vmo-progress-spinner [hasLoaded]="! loading" class="u-relative">
-  <div fxLayoutAlign="center center" fxFill class="u-horizontal-spacing">
+  <div fxLayoutAlign="center center" fxFill class="u-horizontal-spacing vmo-scrollable-area">
     <div fxLayout="column" fxLayoutGap="24px" class="list-wrapper">
       <div fxLayout="column" fxLayoutGap="8px">
         <span class="mdc-typography--display1 strong u-push-down-on-mobile">Switch Communication</span>
@@ -23,7 +23,7 @@
             {{ project.teamCount }} teams
           </span>
           <div class="u-fill"></div>
-          <span class="mdc-typography--headline strong u-horizontal-spacing">{{ project.value }}</span>
+          <span class="mdc-typography--headline strong u-horizontal-spacing">{{ project.value | value:project }}</span>
         </md-list-item>
       </md-list>
       <!--<div fxLayoutAlign="center">
@@ -39,6 +39,9 @@
       <span class="u-weak">Looks like you haven't created any projects.</span>
       <button md-raised-button color="accent" routerLink="new" class="u-push-button">Create a project</button>
     </div>
+    <button *ngIf="membership.user.isAdmin" md-fab mdTooltip="Create new project" mdTooltipPosition="left" (click)="openCreateProjectDialog()" class="fab-button">
+      <md-icon>add</md-icon>
+    </button>
   </div>
 </vmo-progress-spinner>
 

@@ -1,6 +1,6 @@
-<md-toolbar *ngIf="membership?.activeSession" [@slideUpDown]="true" class="sales-bar">
+<md-toolbar *ngIf="!loading && membership?.activeSession" [@slideUpDown]="true" class="sales-bar">
   <span class="mdc-typography--subheading1 u-weak">Sales today: </span>
-  <strong class="mdc-typography--subheading1 sales-amount">{{ valueToday }}</strong>
+  <strong class="mdc-typography--subheading1 sales-amount">{{ valueToday | value:project }}</strong>
   <span class="u-fill"></span>
   <button md-raised-button (click)="addSale()" [disabled]="pending">Add sale</button>
 </md-toolbar>

@@ -26,11 +26,7 @@ export class ClockInDialogComponent implements OnInit {
 
   clockIn() {
     this.sessionService.clockIn(this.selectedTeamMember).then(() => {
-      this.closeDialog();
+      this.dialog.close();
     });
-  }
-
-  closeDialog() {
-    this.dialog.close();
   }
 }

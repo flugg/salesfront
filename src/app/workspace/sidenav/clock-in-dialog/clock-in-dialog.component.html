@@ -16,7 +16,7 @@
 <div class="u-vertical-spacing">
   <md-checkbox [(ngModel)]="autoClockOut" name="clockOut">Clock out automatically</md-checkbox>
 </div>
-<div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+<div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+  <button md-button (click)="dialog.close()">Cancel</button>
   <button md-raised-button (click)="clockIn()" color="accent">Clock In</button>
-  <button md-button (click)="closeDialog()">Cancel</button>
 </div>

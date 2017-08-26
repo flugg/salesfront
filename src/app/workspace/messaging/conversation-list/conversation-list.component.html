@@ -36,9 +36,9 @@
 
       <vmo-load-more-button [paginator]="conversationListService"></vmo-load-more-button>
 
-      <div *ngIf="! (conversations | filteredConversations)?.length" class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
-        <span class="mdc-typography--headline">No conversations, yet.</span>
-        <span class="u-weak">Send a message to communicate with your fellow project members.</span>
+      <div *ngIf="! (conversations | filteredConversations)?.length" class="u-stretch u-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+        <span class="mdc-typography--headline strong">No conversations, yet.</span>
+        <span class="u-weak u-text-center">Send a message to communicate with your fellow project members.</span>
         <button md-raised-button color="accent" routerLink="new" class="u-push-button">Start a conversation</button>
       </div>
     </div>

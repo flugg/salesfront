@@ -7,6 +7,8 @@ import { ObservableResource } from '../../core/observable-resource';
 import { SocketApiService } from '../../core/socket-api.service';
 import { SaleService } from '../../core/services/sale.service';
 import { ActiveMembershipService } from '../../organization/active-membership.service';
+import { ActiveProjectService } from '../active-project.service';
+import { Sale } from '../../core/models/sale.model';
 
 @Injectable()
 export class SalesTodayService extends ObservableResource implements OnDestroy {
@@ -19,12 +21,14 @@ export class SalesTodayService extends ObservableResource implements OnDestroy {
 
     this.activeMembershipService.membership.first().subscribe(membership => {
       this.saleService.getForMember(membership.id, moment().startOf('day'), moment().endOf('day')).subscribe(sales => {
-        this.set(sales.length);
+        this.set(sales.reduce((value, item) => {
+          return item.value ? value + item.value : value + 1;
+        }, 0));
       });
 
       this.sockets.listenForUser(membership.userId, {
-        'sale_registered': sale => this.addSale(),
-        'sale_deleted': sale => this.removeSale()
+        'sale_registered': sale => this.addSale(sale),
+        'sale_deleted': sale => this.removeSale(sale)
       }, this);
     });
   }
@@ -34,13 +38,23 @@ export class SalesTodayService extends ObservableResource implements OnDestroy {
     super.ngOnDestroy();
   }
 
-  private addSale() {
-    this.snapshot = this.snapshot + 1;
+  private addSale(sale: Sale) {
+    if (sale.value) {
+      this.snapshot = this.snapshot + sale.value;
+    } else {
+      this.snapshot = this.snapshot + 1;
+    }
+
     this.updateFromSnapshot();
   }
 
-  private removeSale() {
-    this.snapshot = this.snapshot - 1;
+  private removeSale(sale: Sale) {
+    if (sale.value) {
+      this.snapshot = this.snapshot - sale.value;
+    } else {
+      this.snapshot = this.snapshot - 1;
+    }
+
     this.updateFromSnapshot();
   }
 }

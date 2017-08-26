@@ -25,6 +25,7 @@ export class ProjectListService extends ObservableResourceList implements OnDest
       });
 
       this.sockets.listenForOrganization(membership.organizationId, {
+        'project_created': project => this.addProject(project),
         'sale_registered': sale => this.addSale(sale),
         'sale_deleted': sale => this.removeSale(sale)
       }, this);
@@ -34,6 +35,11 @@ export class ProjectListService extends ObservableResourceList implements OnDest
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();
+  }
+
+  private addProject(project: Project) {
+    this.snapshot.push(project);
+    this.updateFromSnapshot();
   }
 
   private addSale(sale: Sale) {

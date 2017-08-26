@@ -1,0 +1,12 @@
+<span class="mdc-typography--display1 strong">Add Sale</span>
+<p class="mdc-typography--body1 u-weak">Register a sale in the clocked in team.</p>
+<md-input-container color="accent">
+  <input mdInput #valueInput="ngModel" [(ngModel)]="value" name="value" type="number" required>
+  <span mdPrefix *ngIf="data.project.notationBefore">{{ data.project.notation }}</span>
+  <span mdSuffix *ngIf="! data.project.notationBefore">{{ data.project.notation }}</span>
+  <md-error *ngIf="valueInput.errors?.required && (valueInput.dirty || valueInput.touched)">This field is required</md-error>
+</md-input-container>
+<div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+  <button md-button (click)="dialog.close()">Cancel</button>
+  <button md-raised-button (click)="addSale(value)" [disabled]="(pending || valueInput.errors?.required && (valueInput.dirty || valueInput.touched))" color="accent">Add Sale</button>
+</div>

@@ -26,8 +26,8 @@
 
       <vmo-load-more-button [paginator]="teamList"></vmo-load-more-button>
 
-      <div *ngIf="! teams?.length" class="u-stretch" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
-        <span class="mdc-typography--headline">No teams, yet.</span>
+      <div *ngIf="! teams?.length" class="u-stretch u-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+        <span class="mdc-typography--headline strong">No teams, yet.</span>
         <span class="u-weak">Looks like you haven't created any teams.</span>
         <button md-raised-button color="accent" routerLink="new" class="u-push-button">Create a team</button>
       </div>

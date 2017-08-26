@@ -75,13 +75,27 @@ export class MemberListService extends ObservableResourceList implements OnDestr
 
   private addSale(sale: Sale) {
     const membership = this.snapshot.find(item => item.id === sale.memberId);
-    membership.value += 1;
+
+    if (membership) {
+      if (sale.value) {
+        membership.value += sale.value;
+      } else {
+        membership.value += 1;
+      }
+    }
+
     this.updateFromSnapshot();
   }
 
   private removeSale(sale: Sale) {
     const membership = this.snapshot.find(item => item.id === sale.memberId);
-    membership.value -= 1;
+
+    if (sale.value) {
+      membership.value -= sale.value;
+    } else {
+      membership.value -= 1;
+    }
+
     this.updateFromSnapshot();
   }
 

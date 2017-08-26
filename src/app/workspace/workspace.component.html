@@ -3,7 +3,7 @@
     <md-sidenav #sidenav>
       <vmo-sidenav *ngIf="! loading" [membership]="activeMembership" [project]="activeProject"></vmo-sidenav>
     </md-sidenav>
-    <vmo-sales-bar [membership]="activeMembership"></vmo-sales-bar>
+    <vmo-sales-bar [membership]="activeMembership" [project]="activeProject"></vmo-sales-bar>
     <div class="vmo-component" [class.vmo-component--salesbar]="activeMembership?.activeSession">
       <router-outlet></router-outlet>
     </div>

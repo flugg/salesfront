@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { MD_DIALOG_DATA, MdDialogRef, MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialog, MdDialogRef, MdSnackBar, MdSnackBarConfig } from '@angular/material';
+
 import { Sale } from '../../../core/models/sale.model';
 import { SalesBarComponent } from '../sales-bar.component';
 import { SaleService } from '../../../core/services/sale.service';
@@ -74,6 +75,7 @@ export class SaleAddedDialogComponent implements OnInit {
 
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
               public dialog: MdDialogRef<SalesBarComponent>,
+              private dialogService: MdDialog,
               private snackbar: MdSnackBar,
               private saleService: SaleService) {}
 
@@ -95,15 +97,18 @@ export class SaleAddedDialogComponent implements OnInit {
 
   addSale() {
     this.loading = true;
-    this.saleService.register(this.data.membership.activeSession.teamMemberId).then(sale => {
-      this.previousSale = sale;
-      setTimeout(() => {
-        this.data.sale = sale;
-        this.data.count++;
-        this.cheer = this.getRandomCheer();
-        this.loading = false;
-      }, 100);
-    });
+
+    if (this.data.project.type === 'count') {
+      this.saleService.register(this.data.membership.activeSession.teamMemberId).then(sale => {
+        this.previousSale = sale;
+        setTimeout(() => {
+          this.data.sale = sale;
+          this.data.count++;
+          this.cheer = this.getRandomCheer();
+          this.loading = false;
+        }, 100);
+      });
+    }
   }
 
   private getRandomCheer(): string {

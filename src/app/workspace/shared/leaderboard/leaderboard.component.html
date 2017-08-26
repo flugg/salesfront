@@ -26,7 +26,7 @@
               [countTo]="item.value"
               (countoChange)="item.currentValue = $event"
               (countoEnd)="countComplete[item.id] = true">{{ item.currentValue | number:'1.0-0' }}</span>
-        <span *ngIf="countComplete[item.id]" class="mdc-typography--body1 strong">{{ item.value }}</span>
+        <span *ngIf="countComplete[item.id]" class="mdc-typography--body1 strong">{{ item.value | value:project }}</span>
       </div>
       <div class="leaderboard-bar">
         <div *ngIf="! loading" fxFill class="bar-wrapper">

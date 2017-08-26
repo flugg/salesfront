@@ -207,6 +207,10 @@ snack-bar-container {
 
 .u-vertical-spacing-big {
   padding: 24px 0;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
 }
 
 .u-avatar {
@@ -247,6 +251,42 @@ snack-bar-container {
 .vmo-toolbar {
   position: fixed;
   top: 0;
+
+  &.pink {
+    background-color: #e91e63 !important;
+  }
+
+  &.purple {
+    background-color: #9c27b0 !important;
+  }
+
+  &.blue {
+    background-color: #3f51b5 !important;
+  }
+
+  &.light-blue {
+    background-color: #2196f3 !important;
+  }
+
+  &.teal {
+    background-color: #009688 !important;
+  }
+
+  &.green {
+    background-color: #4caf50 !important;
+  }
+
+  &.lime {
+    background-color: #cddc39 !important;
+  }
+
+  &.yellow {
+    background-color: #ffc107 !important;
+  }
+
+  &.orange {
+    background-color: #ff5722 !important;
+  }
 }
 
 .vmo-component-simple {
@@ -527,6 +567,10 @@ snack-bar-container {
   }
 }
 
+.u-spacing-top {
+  padding-top: 16px;
+}
+
 .u-push-down {
   margin-bottom: 84px;
 }
@@ -542,6 +586,10 @@ snack-bar-container {
 
 .u-center {
   margin: 0 auto;
+}
+
+.u-text-center {
+  text-align: center;
 }
 
 .big-face {
@@ -653,6 +701,10 @@ snack-bar-container {
   text-transform: uppercase;
 }
 
+.u-spacing {
+  padding: 24px;
+}
+
 .vmo-container {
   max-width: 960px;
   padding: 12px;
@@ -708,5 +760,24 @@ snack-bar-container {
 .u-push-down-on-mobile {
   @media (max-width: 600px) {
     margin-top: 24px;
+  }
+}
+
+.mat-dialog-container {
+  margin: 0 auto;
+}
+
+.create-project-dialog .mat-dialog-container {
+  width: 480px;
+  padding: 0;
+
+  @media (max-width: 960px) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    max-width: 100%;
   }
 }

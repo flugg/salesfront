@@ -44,6 +44,13 @@ export class SaleService {
     }).then(response => response.data);
   }
 
+  registerWithValue(teamMemberId: string, value: number, date?: Moment): Promise<Sale> {
+    return this.api.post(`team-members/${teamMemberId}/sales`, !date ? {value: value} : {
+      value: value,
+      soldAt: date.toISOString() || moment().toISOString()
+    }).then(response => response.data);
+  }
+
   delete(saleId: string): Promise<Sale> {
     return this.api.delete(`sales/${saleId}`).then(response => response.data);
   }

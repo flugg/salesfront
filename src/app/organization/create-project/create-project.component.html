@@ -1,32 +1,55 @@
-<div class="vmo-component">
-  <md-toolbar color="primary" class="vmo-toolbar">
-    <button md-icon-button [routerLink]="'../'" type="button">
-      <md-icon>close</md-icon>
-    </button>
-    <h2 class="mdc-typography--title toolbar-heading">
-      Create Project
-    </h2>
-    <span class="u-fill"></span>
-    <button md-icon-button (click)="submit">
-      <md-icon>check</md-icon>
-    </button>
-  </md-toolbar>
-
-  <div class="container">
-    <md-input-container>
-      <input mdInput placeholder="Project Name">
-    </md-input-container>
-
-    <md-button-toggle-group>
-      <md-button-toggle value="count">
-        <md-icon>plus_one</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="value">
-        <md-icon>attach_money</md-icon>
-      </md-button-toggle>
-      <md-button-toggle value="product">
-        <md-icon>shopping_basket</md-icon>
-      </md-button-toggle>
-    </md-button-toggle-group>
+<div>
+  <div class="top-header {{ color }}">
+    <span class="mdc-typography--display1 strong">Create Project</span>
+    <p class="mdc-typography--body1 u-weak">Create a project to organize your organization.</p>
   </div>
+  <form novalidate (submit)="submit(); $event.preventDefault()" class="u-spacing-top vmo-scrollable-area form">
+    <md-input-container color="accent">
+      <input #nameInput="ngModel" mdInput name="projectName" placeholder="Project Name" required [(ngModel)]="name">
+      <md-error *ngIf="nameInput.errors?.required && (nameInput.dirty || nameInput.touched)">
+        This field is required
+      </md-error>
+    </md-input-container>
+    <div class="u-spacing-top">
+      <div class="mdc-typography--caption u-weak">Project color:</div>
+      <md-radio-group class="radio-color" name="color" [(ngModel)]="color">
+        <md-radio-button value="pink" class="radio-pink"></md-radio-button>
+        <md-radio-button value="purple" class="radio-purple"></md-radio-button>
+        <md-radio-button value="blue" class="radio-blue"></md-radio-button>
+        <md-radio-button value="light-blue" class="radio-light-blue"></md-radio-button>
+        <md-radio-button value="teal" class="radio-teal"></md-radio-button>
+        <md-radio-button value="green" class="radio-green"></md-radio-button>
+        <md-radio-button value="lime" class="radio-lime"></md-radio-button>
+        <md-radio-button value="yellow" class="radio-yellow"></md-radio-button>
+        <md-radio-button value="orange" class="radio-orange"></md-radio-button>
+      </md-radio-group>
+    </div>
+    <div class="u-spacing-top">
+      <div class="mdc-typography--caption u-weak">Sales type:</div>
+      <md-radio-group name="type" class="radio-type" [(ngModel)]="projectType">
+        <md-radio-button value="count">
+          Count based
+        </md-radio-button>
+        <md-radio-button value="value">
+          Value based
+        </md-radio-button>
+      </md-radio-group>
+    </div>
+    <div class="u-vertical-spacing" *ngIf="projectType === 'value'">
+      <div class="u-vertical-top">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+          <div class="equal-width mdc-typography--headline strong u-text-center">{{ 1234 | number: '1.' + (withDecimals ? 2 : 0) }}</div>
+          <md-input-container color="accent" class="u-vertical-spacing equal-width" [fxFlexOrder]="notationBefore ? -1 : 1">
+            <input #notationInput="ngModel" mdInput name="notation" [(ngModel)]="notation" class="u-text-center big-input strong">
+          </md-input-container>
+        </div>
+        <md-checkbox [(ngModel)]="notationBefore" name="addMore">Before value</md-checkbox>
+        <md-checkbox [(ngModel)]="withDecimals" name="addMore" class="u-horizontal-spacing">With decimals</md-checkbox>
+      </div>
+    </div>
+    <div class="u-vertical-spacing-big" fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-md="start center" fxLayoutGap="16px">
+      <button md-button type="button" (click)="dialog.close()">Cancel</button>
+      <button md-raised-button color="accent" [disabled]="nameInput.errors?.required" fxFlexOrder.lt-md="-1">Create</button>
+    </div>
+  </form>
 </div>
