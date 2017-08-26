@@ -39,7 +39,7 @@
       <span class="u-weak">Looks like you haven't created any projects.</span>
       <button md-raised-button color="accent" routerLink="new" class="u-push-button">Create a project</button>
     </div>
-    <button *ngIf="membership.user.isAdmin" md-fab mdTooltip="Create new project" mdTooltipPosition="left" (click)="openCreateProjectDialog()" class="fab-button">
+    <button *ngIf="membership?.user.isAdmin" md-fab mdTooltip="Create new project" mdTooltipPosition="left" (click)="openCreateProjectDialog()" class="fab-button">
       <md-icon>add</md-icon>
     </button>
   </div>
