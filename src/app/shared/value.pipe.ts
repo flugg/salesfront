@@ -15,7 +15,7 @@ export class ValuePipe implements PipeTransform {
       return value;
     }
 
-    const formattedValue = this.decimalPipe.transform(value + '', '1.0-' + project.decimals);
+    const formattedValue = this.decimalPipe.transform(value + '', '1.' + project.decimals + '-' + project.decimals);
 
     return project.notationBefore ? project.notation + ' ' + formattedValue : formattedValue + ' ' + project.notation;
   }
