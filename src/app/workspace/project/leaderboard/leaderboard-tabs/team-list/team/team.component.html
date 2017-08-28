@@ -25,7 +25,7 @@
             <span *ngIf="countComplete" class="mdc-typography--headline strong">{{ total | value:project }}</span>
           </div>
           <md-divider></md-divider>
-          <vmo-leaderboard [items]="members" type="users"></vmo-leaderboard>
+          <vmo-leaderboard [project]="project" [items]="members" type="users"></vmo-leaderboard>
         </md-card>
       </div>
     </div>
