@@ -1,0 +1,28 @@
+.mat-fab {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+
+  @media (max-width: 960px) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hover-overlay {
+  position: relative;
+}
+
+.hover-overlay:hover .mat-fab {
+  opacity: 1;
+  pointer-events: auto;
+}

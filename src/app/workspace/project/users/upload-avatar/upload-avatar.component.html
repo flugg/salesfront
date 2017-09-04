@@ -8,7 +8,7 @@
           <div class="mdc-typography--display1">Upload Avatar</div>
           <p class="mdc-typography--body1 u-weak">Choose one of your many pretty pictures to present yourself.</p>
           <div class="file-upload">
-            <input id="custom-input" type="file" (change)="fileChangeListener($event)">
+            <input id="custom-input" type="file" accept="image/*" (change)="fileChangeListener($event)">
           </div>
           <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
           <button md-raised-button color="accent" (click)="upload(data)">Save</button>

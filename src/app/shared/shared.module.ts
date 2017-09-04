@@ -13,6 +13,7 @@ import { AvatarComponent } from './avatar/avatar.component';
 import { ExcludePipe } from './exclude.pipe';
 import { Nl2BrPipe } from './nl2br.pipe';
 import { ValuePipe } from './value.pipe';
+import { ProjectIconComponent } from './project-icon/project-icon.component';
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import { ValuePipe } from './value.pipe';
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
     AvatarComponent,
+    ProjectIconComponent,
     ExcludePipe,
     Nl2BrPipe,
     ValuePipe,
@@ -63,6 +65,7 @@ import { ValuePipe } from './value.pipe';
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
     AvatarComponent,
+    ProjectIconComponent,
     ExcludePipe,
     Nl2BrPipe,
     ValuePipe

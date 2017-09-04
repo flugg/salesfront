@@ -22,7 +22,7 @@
                 </div>
                 <img *ngIf="award.awardable.user.avatarPath"
                      class="u-avatar u-avatar--big u-clickable"
-                     [routerLink]="'../../users/members/' + award.awardable.id"
+                     [routerLink]="'../../../users/members/' + award.awardable.id"
                      src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
                 <div *ngIf="! award.awardable.user.avatarPath"
                      class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"

@@ -640,6 +640,10 @@ snack-bar-container {
   border: 2px solid white;
   @include mat-elevation(4);
 
+  &.gold {
+    background: #FFC107 !important;
+  }
+
   &.silver {
     background: #9E9E9E !important;
   }
@@ -780,4 +784,8 @@ snack-bar-container {
     width: auto;
     max-width: 100%;
   }
+}
+
+.profile-picture-dialog .mat-dialog-container {
+  padding: 0;
 }

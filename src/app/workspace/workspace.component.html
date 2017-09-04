@@ -4,7 +4,7 @@
       <vmo-sidenav *ngIf="! loading" [membership]="activeMembership" [project]="activeProject"></vmo-sidenav>
     </md-sidenav>
     <vmo-sales-bar [membership]="activeMembership" [project]="activeProject"></vmo-sales-bar>
-    <div class="vmo-component" [class.vmo-component--salesbar]="activeMembership?.activeSession">
+    <div class="vmo-component" [class.vmo-component--salesbar]="activeMembership?.activeSession?.teamMember.team.projectId === activeProject?.id">
       <router-outlet></router-outlet>
     </div>
   </md-sidenav-container>

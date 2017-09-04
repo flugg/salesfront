@@ -47,7 +47,8 @@
           <button *ngIf="! weeklyTeamAwardListService.isComplete()"
                   md-button
                   color="accent"
-                  class="pushed-right">View all
+                  class="pushed-right">
+            View all
           </button>
         </div>
         <md-divider></md-divider>
@@ -60,7 +61,7 @@
                fxLayoutGap="12px"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--caption u-weak">{{ award.week }}</span>
+              <span class="mdc-typography--caption u-weak">Week {{ award.week }}</span>
             </div>
             <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
                  fxLayoutAlign="center center"

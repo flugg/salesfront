@@ -10,6 +10,7 @@ import { Member } from '../../core/models/member.model';
 import { AddSaleDialogComponent } from './add-sale-dialog/add-sale-dialog.component';
 import { ActiveProjectService } from '../active-project.service';
 import { Project } from '../../core/models/project.model';
+import { Session } from '../../core/models/session.model';
 
 @Component({
   selector: 'vmo-sales-bar',
@@ -25,6 +26,7 @@ export class SalesBarComponent implements OnInit {
   loading = true;
   pending = false;
   valueToday: number;
+  session: Session;
 
   constructor(private dialog: MdDialog,
               private saleService: SaleService,

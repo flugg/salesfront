@@ -24,7 +24,7 @@
     <hr>
     <md-list>
       <md-list-item md-ripple routerLink=".." class="u-clickable">
-        <div md-list-avatar fxLayoutAlign="center center" class="vmo-project-icon">TP</div>
+        <vmo-project-icon md-list-avatar [project]="project"></vmo-project-icon>
         <span md-line class="mdc-typography--body2">{{ project?.name }}</span>
         <span class="u-fill"></span>
         <md-icon>chevron_right</md-icon>

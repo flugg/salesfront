@@ -10,18 +10,10 @@
       <div class="container">
         <md-card>
           <div class="card-header" fxFill>
-            <img *ngIf="member?.user.avatarPath && ! canEdit"
-                 class="u-avatar huge"
-                 src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ member?.user.avatarPath }}">
-            <div *ngIf="! member?.user.avatarPath && ! canEdit"
-                 class="u-avatar u-default-avatar u-center huge"
-                 fxLayoutAlign="center center">
-              <md-icon class="big-face">face</md-icon>
-            </div>
             <img *ngIf="member?.user.avatarPath && canEdit"
                  class="u-avatar u-clickable huge"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ member?.user.avatarPath }}"
-                 routerLink="upload-avatar">
+                 (click)="openProfilePicture()">
             <div *ngIf="! member?.user.avatarPath && canEdit"
                  class="u-avatar u-default-avatar u-clickable u-center huge"
                  fxLayoutAlign="center center"
@@ -72,6 +64,18 @@
                 <span class="u-weak">This user has no awards.</span>
               </md-list-item>
             </md-list>
+            <div *ngIf="monthlyAwards?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing u-horizontal-scrolling">
+              <div *ngFor="let award of monthlyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px" class="award-item">
+                <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored gold"
+                     fxLayoutAlign="center center">
+                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center center">
+                  <strong class="mdc-typography--body2 wall-of-fame-name u-ellipsis">Top Monthly</strong>
+                  <span class="mdc-typography--body1 u-weak">Week {{ award.month | amDateFormat: 'MMMM' }}</span>
+                </div>
+              </div>
+            </div>
             <div *ngIf="weeklyAwards?.length" fxLayout="row" fxLayoutGap="24px" class="u-vertical-spacing u-horizontal-scrolling">
               <div *ngFor="let award of weeklyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px" class="award-item">
                 <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored silver"

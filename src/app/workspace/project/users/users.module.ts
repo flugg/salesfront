@@ -11,6 +11,7 @@ import { MemberListComponent } from './user-tabs/member-list/member-list.compone
 import { InviteUserComponent } from './invite-user/invite-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
+import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,11 @@ import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
     MemberListComponent,
     InviteUserComponent,
     EditUserComponent,
-    UploadAvatarComponent
+    UploadAvatarComponent,
+    ProfilePictureComponent
+  ],
+  entryComponents: [
+    ProfilePictureComponent
   ]
 })
 export class UsersModule {
