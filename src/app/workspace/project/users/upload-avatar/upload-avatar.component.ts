@@ -5,6 +5,7 @@ import { CropperDrawSettings, CropperSettings, ImageCropperComponent } from 'ng2
 import { AvatarService } from '../../../../core/services/avatar.service';
 import { SelectedMembershipService } from '../user-profile/selected-membership.service';
 import { Member } from '../../../../core/models/member.model';
+import { ScreenService } from '../../../../core/screen.service';
 
 @Component({
   templateUrl: 'upload-avatar.component.html',
@@ -19,6 +20,7 @@ export class UploadAvatarComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
+              private screen: ScreenService,
               private selectedMembership: SelectedMembershipService,
               private avatarService: AvatarService) {}
 
@@ -42,13 +44,26 @@ export class UploadAvatarComponent implements OnInit {
     this.cropperSettings.croppingClass = 'vmo-cropper--filled';
     this.cropperSettings.cropperDrawSettings = <CropperDrawSettings>{
       strokeWidth: 2,
-      strokeColor: '#2979ff',
+      strokeColor: '#ddd',
       dragIconStrokeWidth: 0,
-      dragIconStrokeColor: '#2979ff',
-      dragIconFillColor: '#2979ff'
+      dragIconStrokeColor: '#ddd',
+      dragIconFillColor: '#ddd'
     };
 
     this.data = {};
+
+    this.screen.asObservable().subscribe(breakpoint => {
+      if (breakpoint === 'xs') {
+        this.cropperSettings.canvasWidth = 320;
+        this.cropperSettings.canvasHeight = 320;
+      } else if (breakpoint === 'sm') {
+        this.cropperSettings.canvasWidth = 500;
+        this.cropperSettings.canvasHeight = 500;
+      } else {
+        this.cropperSettings.canvasWidth = 640;
+        this.cropperSettings.canvasHeight = 640;
+      }
+    });
   }
 
   upload(data: any) {
