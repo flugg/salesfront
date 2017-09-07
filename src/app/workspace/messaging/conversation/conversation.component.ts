@@ -78,6 +78,20 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.messageService.send(this.conversation.id, message);
   }
 
+  isMemberRemoved(): boolean {
+    if (!this.conversation || this.conversation.group) {
+      return false;
+    }
+
+    for (const participation of this.conversation.participations) {
+      if (participation.member.deletedAt) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   isPostedByUser(message: Message): boolean {
     return message.memberId === this.membership.id;
   }

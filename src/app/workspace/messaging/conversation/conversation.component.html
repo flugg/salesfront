@@ -10,9 +10,14 @@
     <div fxLayout="column"
          fxLayoutAlign="end"
          class="vmo-conversation"
-         [class.vmo-conversation--locked]="isLocked | async">
+         [class.vmo-conversation--locked]="(isLocked | async) || isMemberRemoved()">
 
       <div #window fxLayout="column-reverse" class="vmo-conversation-window">
+        <div *ngIf="isMemberRemoved()"
+             fxFlexAlign="center"
+             class="mdc-typography--body1 u-relative u-vertical-spacing-big u-weak">
+          This member is deactivated.
+        </div>
         <div *ngIf="isLocked | async"
              fxFlexAlign="center"
              class="mdc-typography--body1 u-relative u-vertical-spacing-big u-weak">
@@ -40,8 +45,8 @@
   </vmo-progress-spinner>
 
   <vmo-bottom-input (send)="sendMessage($event)"
-                    [disabledInput]="isLocked | async"
-                    [disabledButton]="isLocked | async">
+                    [disabledInput]="(isLocked | async) || isMemberRemoved()"
+                    [disabledButton]="(isLocked | async) || isMemberRemoved()">
   </vmo-bottom-input>
 </div>
 

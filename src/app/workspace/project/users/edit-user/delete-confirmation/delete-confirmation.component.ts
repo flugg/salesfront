@@ -34,7 +34,7 @@ export class DeleteConfirmationComponent implements OnInit {
   }
 
   private notifyAboutRemoval(member: Member) {
-    this.snackBar.open('Member deactivate', 'Activate', <MdSnackBarConfig>{ duration: 4000 }).onAction().subscribe(() => {
+    this.snackBar.open('Member deactivated', 'Reactivate', <MdSnackBarConfig>{ duration: 4000 }).onAction().subscribe(() => {
       this.memberService.recover(member.id).then(() => {
         this.snackBar.open('Member reactivated', null, <MdSnackBarConfig>{ duration: 2000 });
       });
