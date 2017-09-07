@@ -9,6 +9,7 @@ import { Member } from '../core/models/member.model';
 import { Project } from '../core/models/project.model';
 import { MdDialog, MdDialogConfig } from '@angular/material';
 import { CreateProjectComponent } from './create-project/create-project.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   templateUrl: 'organization.component.html',
@@ -22,7 +23,9 @@ export class OrganizationComponent implements OnInit {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private dialog: MdDialog,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private dialog: MdDialog,
               private activeMembershipService: ActiveMembershipService,
               private projectListService: ProjectListService) {}
 
@@ -32,6 +35,11 @@ export class OrganizationComponent implements OnInit {
       this.projectListService.projects
     ).subscribe(data => {
       [this.membership, this.projects] = data;
+
+      if (this.membership.deletedAt) {
+        this.router.navigate(['..'], { relativeTo: this.route });
+      }
+
       this.loading = false;
     }));
   }

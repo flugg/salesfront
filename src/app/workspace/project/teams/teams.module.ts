@@ -11,6 +11,7 @@ import { EditMembersComponent } from './edit-members/edit-members.component';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { FilteredMembershipsPipe } from './add-member/filtered-memberships.pipe';
 import { EditTeamComponent } from './edit-team/edit-team.component';
+import { DeleteConfirmationComponent } from './edit-team/delete-confirmation/delete-confirmation.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,11 @@ import { EditTeamComponent } from './edit-team/edit-team.component';
     MemberListComponent,
     EditMembersComponent,
     AddMemberComponent,
-    FilteredMembershipsPipe
+    FilteredMembershipsPipe,
+    DeleteConfirmationComponent
+  ],
+  entryComponents: [
+    DeleteConfirmationComponent
   ]
 })
 export class TeamsModule {}

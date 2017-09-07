@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MdDialog, MdDialogConfig } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MdDialog, MdDialogConfig, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
@@ -14,9 +14,13 @@ import { MonthlyAwardListService } from './monthly-award-list.service';
 import { ActiveMembershipService } from '../../../../organization/active-membership.service';
 import { DailyAward } from '../../../../core/models/daily-award.model';
 import { Member } from '../../../../core/models/member.model';
+import { Project } from '../../../../core/models/project.model';
 import { Team } from '../../../../core/models/team.model';
 import { WeeklyAward } from '../../../../core/models/weekly-award.model';
 import { MonthlyAward } from '../../../../core/models/monthly-award.model';
+import { SendMessageDialogComponent } from './send-message-dialog/send-message-dialog.component';
+import { ActiveProjectService } from '../../../active-project.service';
+import { MemberService } from '../../../../core/services/member.service';
 
 @Component({
   providers: [SelectedMembershipService, DailyAwardListService, WeeklyAwardListService, MonthlyAwardListService],
@@ -26,6 +30,7 @@ import { MonthlyAward } from '../../../../core/models/monthly-award.model';
 export class UserProfileComponent implements OnInit, OnDestroy {
   loading = true;
   activeMember: Member;
+  project: Project;
   member: Member;
   team: Team;
   dailyAwards: DailyAward[];
@@ -36,36 +41,36 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private dialog: MdDialog,
+              private snackBar: MdSnackBar,
+              private memberService: MemberService,
               private selectedMembershipService: SelectedMembershipService,
+              private activeProjectService: ActiveProjectService,
               private activeMembershipService: ActiveMembershipService,
               private dailyAwardListService: DailyAwardListService,
               private weeklyAwardListService: WeeklyAwardListService,
-              private monthlyAwardListService: MonthlyAwardListService,
-              private teamService: TeamService) {}
+              private monthlyAwardListService: MonthlyAwardListService) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
       this.selectedMembershipService.membership,
+      this.activeProjectService.project,
       this.activeMembershipService.membership,
       this.dailyAwardListService.awards,
       this.weeklyAwardListService.awards,
-      this.monthlyAwardListService.awards,
+      this.monthlyAwardListService.awards
     ).subscribe(data => {
-      [this.member, this.activeMember, this.dailyAwards, this.weeklyAwards, this.monthlyAwards] = data;
-      if (this.member.teamMembers && this.member.teamMembers.length) {
-        this.subscriptions.push(this.teamService.find(this.member.teamMembers[0].teamId).subscribe(team => {
-          this.team = team;
-          this.role = this.getRole();
-          this.canEdit = this.checkIfCanEdit();
-          this.loading = false;
-        }));
-      } else {
-        this.role = this.getRole();
-        this.canEdit = this.checkIfCanEdit();
-        this.loading = false;
+      [this.member, this.project, this.activeMember, this.dailyAwards, this.weeklyAwards, this.monthlyAwards] = data;
+
+      if (this.member.deletedAt && ! this.activeMember.user.isAdmin) {
+        this.router.navigate(['..'], { relativeTo: this.route });
       }
+
+      this.role = this.getRole();
+      this.canEdit = this.checkIfCanEdit();
+      this.loading = false;
     }));
   }
 
@@ -94,6 +99,23 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         imagePath: this.member.user.avatarPath,
         route: this.route
       }
+    });
+  }
+
+  sendMessage() {
+    this.dialog.open(SendMessageDialogComponent, <MdDialogConfig>{
+      width: '400px',
+      data: {
+        organizationId: this.member.organizationId,
+        participants: [this.member]
+
+      }
+    });
+  }
+
+  recoverMember() {
+    this.memberService.recover(this.member.id).then(() => {
+        this.snackBar.open('Member reactivated', null, <MdSnackBarConfig>{ duration: 2000 });
     });
   }
 

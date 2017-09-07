@@ -26,6 +26,8 @@ export class MemberListService extends ObservableResourceList implements OnDestr
 
       this.sockets.listenForOrganization(membership.organizationId, {
         'user_updated': user => this.updateUser(user),
+        'member_updated': member => this.setMembership(member),
+        'member_removed': member => this.setMembership(member),
         'clocked_in': session => this.setActiveSession(session),
         'clocked_out': session => this.removeActiveSession(session)
       }, this);
@@ -35,6 +37,14 @@ export class MemberListService extends ObservableResourceList implements OnDestr
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();
+  }
+
+  private setMembership(membership: Member) {
+    this.snapshot = this.snapshot.map(item => {
+      return item.id === membership.id ? membership : item;
+    });
+
+    this.updateFromSnapshot();
   }
 
   private setActiveSession(session: Session) {

@@ -3,9 +3,11 @@
      [routerLink]="['/', membership?.organizationId, 'app', project?.id, 'users', 'members', membership?.id]">
   <img *ngIf="membership.user?.avatarPath"
        class="u-avatar u-clickable"
+       [class.u-faded]="membership?.deletedAt"
        src="{{ basePath + membership.user?.avatarPath }}">
   <div *ngIf="! membership.user?.avatarPath"
        class="u-avatar u-default-avatar u-clickable"
+       [class.u-faded]="membership?.deletedAt"
        fxLayoutAlign="center center">
     <md-icon>face</md-icon>
   </div>

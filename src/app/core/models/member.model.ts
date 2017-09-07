@@ -11,6 +11,7 @@ export interface Member {
   inviteId: string;
   value?: number;
   position?: number;
+  deletedAt?: string;
   user?: User;
   organization?: Organization;
   invite?: Invite;

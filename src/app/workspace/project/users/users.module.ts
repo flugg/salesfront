@@ -12,6 +12,8 @@ import { InviteUserComponent } from './invite-user/invite-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { ProfilePictureComponent } from './profile-picture/profile-picture.component';
+import { DeleteConfirmationComponent } from './edit-user/delete-confirmation/delete-confirmation.component';
+import { SendMessageDialogComponent } from './user-profile/send-message-dialog/send-message-dialog.component';
 
 @NgModule({
   imports: [
@@ -28,10 +30,14 @@ import { ProfilePictureComponent } from './profile-picture/profile-picture.compo
     InviteUserComponent,
     EditUserComponent,
     UploadAvatarComponent,
-    ProfilePictureComponent
+    ProfilePictureComponent,
+    DeleteConfirmationComponent,
+    SendMessageDialogComponent
   ],
   entryComponents: [
-    ProfilePictureComponent
+    ProfilePictureComponent,
+    DeleteConfirmationComponent,
+    SendMessageDialogComponent
   ]
 })
 export class UsersModule {

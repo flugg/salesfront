@@ -8,7 +8,7 @@
                [mdDatepicker]="afterPicker"
                [ngModel]="after"
                (ngModelChange)="update($event, before)">
-        <button mdSuffix [mdDatepickerToggle]="afterPicker" type="button"></button>
+        <md-datepicker-toggle mdSuffix [for]="afterPicker"></md-datepicker-toggle>
       </md-input-container>
       <md-datepicker #afterPicker [touchUi]="mobile"></md-datepicker>
     </div>
@@ -20,7 +20,7 @@
                [mdDatepicker]="beforePicker"
                [ngModel]="before"
                (ngModelChange)="update(after, $event)">
-        <button mdSuffix [mdDatepickerToggle]="beforePicker" type="button"></button>
+        <md-datepicker-toggle mdSuffix [for]="beforePicker"></md-datepicker-toggle>
       </md-input-container>
       <md-datepicker #beforePicker [touchUi]="mobile"></md-datepicker>
     </div>

@@ -38,7 +38,7 @@
               <div fxFlex="50">
                 <md-input-container color="accent">
                   <input #dateInput="ngModel" mdInput name="date" [mdDatepicker]="picker" placeholder="Date" [(ngModel)]="date" required>
-                  <button mdSuffix [mdDatepickerToggle]="picker" type="button"></button>
+                  <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
                   <md-error *ngIf="dateInput.errors?.required && (dateInput.dirty || dateInput.touched)">
                     This field is required
                   </md-error>

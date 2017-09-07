@@ -13,7 +13,7 @@ export class SaleService {
   constructor(private api: RestApiService) {}
 
   get(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`projects/${projectId}/sales`, cursor, limit, {include: 'member.user,team'});
+    return this.api.paginate(`projects/${projectId}/sales`, cursor, limit, { include: 'member.user,team' });
   }
 
   getForProject(projectId: string, after?: Moment, before?: Moment): Observable<Sale[]> {
@@ -24,7 +24,7 @@ export class SaleService {
   }
 
   getAll(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`projects/${projectId}/sales2`, cursor, limit, {include: 'member.user,team'});
+    return this.api.paginate(`projects/${projectId}/sales2`, cursor, limit, { include: 'member.user,team' });
   }
 
   getForTeam(teamId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
@@ -45,7 +45,7 @@ export class SaleService {
   }
 
   registerWithValue(teamMemberId: string, value: number, date?: Moment): Promise<Sale> {
-    return this.api.post(`team-members/${teamMemberId}/sales`, !date ? {value: value} : {
+    return this.api.post(`team-members/${teamMemberId}/sales`, !date ? { value: value } : {
       value: value,
       soldAt: date.toISOString() || moment().toISOString()
     }).then(response => response.data);
@@ -53,5 +53,9 @@ export class SaleService {
 
   delete(saleId: string): Promise<Sale> {
     return this.api.delete(`sales/${saleId}`).then(response => response.data);
+  }
+
+  deleteForMember(memberId: string): Promise<Sale> {
+    return this.api.delete(`members/${memberId}/sales`).then(response => response.data);
   }
 }

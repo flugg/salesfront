@@ -7,7 +7,7 @@
             (submit)="submit(nameInput.value); $event.preventDefault()">
         <div class="container">
           <md-card>
-            <span class="mdc-typography--display1">Update Team</span>
+            <span class="mdc-typography--display1 strong">Update Team</span>
             <p class="mdc-typography--body1 u-weak">Changed your mind? Update the name of your team!</p>
             <md-input-container color="accent">
               <input #nameInput="ngModel"
@@ -20,8 +20,9 @@
                 This field is required
               </md-error>
             </md-input-container>
-            <div class="u-vertical-spacing">
+            <div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
               <button md-raised-button color="accent">Save</button>
+              <button md-button color="warn" type="button" (click)="removeTeam()">Delete team</button>
             </div>
           </md-card>
         </div>

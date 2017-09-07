@@ -115,6 +115,14 @@ snack-bar-container {
   }
 }
 
+.u-elevated-small {
+  @include mat-elevation(2);
+}
+
+.u-elevated {
+  @include mat-elevation(4);
+}
+
 .mat-toolbar {
   position: relative;
   z-index: 2;
@@ -637,7 +645,7 @@ snack-bar-container {
 .u-avatar-colored {
   background: #FFC107 !important;
   color: white !important;
-  border: 2px solid white;
+  border: 3px solid white;
   @include mat-elevation(4);
 
   &.gold {
@@ -788,4 +796,16 @@ snack-bar-container {
 
 .profile-picture-dialog .mat-dialog-container {
   padding: 0;
+}
+
+.mat-ink-bar {
+  background: white !important;
+}
+
+.mat-tab-nav-bar.mat-primary .mat-tab-link:focus {
+  background: transparent;
+}
+
+.u-faded {
+  opacity: 0.5;
 }

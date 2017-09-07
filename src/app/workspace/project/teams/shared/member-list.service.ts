@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
 
 import { ObservableResourceList } from '../../../../core/observable-resource-list';
 import { SocketApiService } from '../../../../core/socket-api.service';
@@ -22,11 +23,10 @@ export class MemberListService extends ObservableResourceList implements OnDestr
 
     this.selectedTeam.team.first().subscribe(team => {
       this.paginator.subscribe(limit => {
-        this.pagination(this.teamMemberService.get(team.id, limit, this.cursor))
-          .map(members => {
-            return members.filter(member => !member.leftAt);
-          }).subscribe(members => {
-            this.add(members);
+        this.pagination(this.teamMemberService.get(team.id, limit, this.cursor)).map(members => {
+          return members.filter(member => !member.leftAt && !member.member.deletedAt);
+        }).subscribe(members => {
+          this.add(members);
         });
       });
     });

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { MdSidenav, MdSidenavToggleResult } from '@angular/material';
+import { MdDrawerToggleResult, MdSidenav } from '@angular/material';
 
 import { ScreenService } from '../core/screen.service';
 
@@ -18,11 +18,11 @@ export class SidenavService {
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => this.close());
   }
 
-  open(): Promise<MdSidenavToggleResult> {
+  open(): Promise<MdDrawerToggleResult> {
     return this.sidenav.open();
   }
 
-  close(): Promise<MdSidenavToggleResult> | void {
+  close(): Promise<MdDrawerToggleResult> | void {
     if (this.sidenav.mode !== 'side') {
       return this.sidenav.close();
     }

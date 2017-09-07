@@ -54,7 +54,7 @@ export class RestApiService {
 
     return this.http.put(`${environment.apiUrl}/${path}`, body, options)
       .toPromise()
-      .then(() => body)
+      .then(response => response.json())
       .catch(this.handleError);
   }
 

@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Team } from '../../../../core/models/team.model';
 import { SelectedTeamService } from '../team-profile/selected-team.service';
 import { TeamService } from '../../../../core/services/team.service';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MdDialog, MdDialogConfig, MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 
 @Component({
   templateUrl: 'edit-team.component.html',
@@ -21,6 +22,7 @@ export class EditTeamComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private snackBar: MdSnackBar,
+              private dialog: MdDialog,
               private selectedTeam: SelectedTeamService,
               private teamService: TeamService) {}
 
@@ -40,6 +42,14 @@ export class EditTeamComponent implements OnInit, OnDestroy {
     this.teamService.update(this.team.id, { name }).then(() => {
       this.router.navigate(['..'], { relativeTo: this.route });
       this.snackBar.open('Team updated', null, <MdSnackBarConfig>{ duration: 2000 });
+    });
+  }
+
+  removeTeam() {
+    this.dialog.open(DeleteConfirmationComponent, <MdDialogConfig>{
+      data: {
+        team: this.team
+      }
     });
   }
 }

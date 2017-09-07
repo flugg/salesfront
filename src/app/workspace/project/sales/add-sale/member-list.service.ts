@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
 
 import { ObservableResourceList } from '../../../../core/observable-resource-list';
 import { MemberService } from '../../../../core/services/member.service';
@@ -16,7 +17,9 @@ export class MemberListService extends ObservableResourceList implements OnDestr
     super();
 
     this.activeMemberService.membership.first().subscribe(member => {
-      this.memberService.list(member.organizationId).subscribe(members => {
+      this.memberService.list(member.organizationId).map(members => {
+        return members.filter(item => ! item.deletedAt);
+      }).subscribe(members => {
         if (member.user.isAdmin || this.isTeamLeader(member)) {
           this.set(members);
         } else {

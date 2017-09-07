@@ -1,4 +1,4 @@
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/typings/collections';
 import { Observable } from 'rxjs/Observable';
 
 import { Sale } from '../../../../core/models/sale.model';

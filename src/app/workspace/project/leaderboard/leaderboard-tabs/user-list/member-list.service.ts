@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
 
 import { ObservableResourceList } from '../../../../../core/observable-resource-list';
 import { SocketApiService } from '../../../../../core/socket-api.service';
@@ -27,7 +28,9 @@ export class MemberListService extends ObservableResourceList implements OnDestr
     this.activeProject.project.first().subscribe(project => {
       this.datepicker.range.distinctUntilChanged().subscribe(range => {
         const [after, before] = range;
-        this.leaderboardService.members(project.id, moment(after).startOf('day'), moment(before).endOf('day')).subscribe(members => {
+        this.leaderboardService.members(project.id, moment(after).startOf('day'), moment(before).endOf('day')).map(members => {
+          return members.filter(member => member.value || ! member.deletedAt);
+        }).subscribe(members => {
           this.set(members.map(member => {
             member.position = this.calculatePosition(members, member);
             return member;

@@ -18,18 +18,28 @@ export class SelectedMembershipService extends ObservableResource implements OnD
               private memberService: MemberService) {
     super();
 
-    this.memberService.find(this.route.snapshot.params['member']).subscribe(member => {
-      this.set(member);
+    this.route.params.subscribe(params => {
+      this.memberService.find(params['member']).subscribe(member => {
+        this.set(member);
 
-      this.sockets.listenForOrganization(member.organizationId, {
-        'user_updated': user => this.updateUser(user)
-      }, this);
+        this.sockets.listenForOrganization(member.organizationId, {
+          'user_updated': user => this.updateUser(user),
+          'member_updated': membership => this.updateMembership(membership),
+          'member_removed': membership => this.updateMembership(membership)
+        }, this);
+      });
     });
   }
 
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();
+  }
+
+  private updateMembership(membership: Member) {
+    if (membership.id === this.route.snapshot.params['member']) {
+      this.set(membership);
+    }
   }
 
   private updateUser(user: User) {

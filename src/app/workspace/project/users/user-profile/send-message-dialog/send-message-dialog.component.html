@@ -1,0 +1,9 @@
+<div class="mdc-typography--headline strong u-spacing-bottom">Send message</div>
+<md-input-container color="accent">
+  <input mdInput #messageInput="ngModel" [(ngModel)]="message" name="message" placeholder="Message">
+  <md-error *ngIf="messageInput.errors?.required && (messageInput.dirty || messageInput.touched)">This field is required</md-error>
+</md-input-container>
+<div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+  <button md-button (click)="dialog.close()">Cancel</button>
+  <button md-raised-button (click)="sendMessage()" [disabled]="pending" color="accent">Send</button>
+</div>

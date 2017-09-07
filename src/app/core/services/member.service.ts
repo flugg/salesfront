@@ -19,12 +19,20 @@ export class MemberService {
   }
 
   find(id: string): Observable<Member> {
-    return this.api.get(`members/${id}`, { include: 'teamMembers' }).map(response => response.data);
+    return this.api.get(`members/${id}`, { include: 'teamMembers.team.project' }).map(response => response.data);
   }
 
   create(inviteId: string, userId: string) {
     return this.api.post(`users/${userId}/memberships`, {
       invite: inviteId
     }).then(response => response.data);
+  }
+
+  delete(memberId: string, deleteSales: boolean) {
+    return this.api.delete(`members/${memberId}`, { deleteSales }).then(response => response.data);
+  }
+
+  recover(memberId: string) {
+    return this.api.put(`members/${memberId}`).then(response => response.data);
   }
 }

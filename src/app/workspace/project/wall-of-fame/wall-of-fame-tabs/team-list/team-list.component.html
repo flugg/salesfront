@@ -25,7 +25,7 @@
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ formatDay(award.day) }}</span>
             </div>
-            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
+            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../teams/' + award.awardable.id">
               <md-icon class="medium-face">group</md-icon>
@@ -63,7 +63,7 @@
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">Week {{ award.week }}</span>
             </div>
-            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
+            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../teams/' + award.awardable.id">
               <md-icon class="medium-face">group</md-icon>
@@ -100,7 +100,7 @@
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ award.month | amDateFormat: 'MMMM' }}</span>
             </div>
-            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
+            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../teams/' + award.awardable.id">
               <md-icon class="medium-face">group</md-icon>
@@ -138,7 +138,7 @@
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ award.year }}</span>
             </div>
-            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
+            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../teams/' + award.awardable.id">
               <md-icon class="medium-face">group</md-icon>

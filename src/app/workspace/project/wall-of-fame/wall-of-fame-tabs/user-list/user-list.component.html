@@ -21,16 +21,17 @@
                fxLayout="column"
                fxLayoutAlign="center center"
                fxLayoutGap="12px"
+               [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ formatDay(award.day) }}</span>
             </div>
             <img *ngIf="award.awardable.user.avatarPath"
-                 class="u-avatar u-avatar--big u-clickable"
+                 class="u-avatar u-avatar--big u-clickable u-elevated"
                  [routerLink]="'../../users/members/' + award.awardable.id"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
             <div *ngIf="! award.awardable.user.avatarPath"
-                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
+                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../users/members/' + award.awardable.id">
               <md-icon class="medium-face">face</md-icon>
@@ -65,16 +66,17 @@
                fxLayout="column"
                fxLayoutAlign="center center"
                fxLayoutGap="12px"
+               [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">Week {{ award.week }}</span>
             </div>
             <img *ngIf="award.awardable.user.avatarPath"
-                 class="u-avatar u-avatar--big u-clickable"
+                 class="u-avatar u-avatar--big u-clickable u-elevated"
                  [routerLink]="'../../users/members/' + award.awardable.id"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
             <div *ngIf="! award.awardable.user.avatarPath"
-                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
+                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../users/members/' + award.awardable.id">
               <md-icon class="medium-face">face</md-icon>
@@ -109,16 +111,17 @@
                fxLayout="column"
                fxLayoutAlign="center center"
                fxLayoutGap="12px"
+               [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ award.month | amDateFormat: 'MMMM' }}</span>
             </div>
             <img *ngIf="award.awardable.user.avatarPath"
-                 class="u-avatar u-avatar--big u-clickable"
+                 class="u-avatar u-avatar--big u-clickable u-elevated"
                  [routerLink]="'../../users/members/' + award.awardable.id"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
             <div *ngIf="! award.awardable.user.avatarPath"
-                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
+                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../users/members/' + award.awardable.id">
               <md-icon class="medium-face">face</md-icon>
@@ -154,16 +157,17 @@
                fxLayout="column"
                fxLayoutAlign="center center"
                fxLayoutGap="12px"
+               [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ award.year }}</span>
             </div>
             <img *ngIf="award.awardable.user.avatarPath"
-                 class="u-avatar u-avatar--big u-clickable"
+                 class="u-avatar u-avatar--big u-clickable u-elevated"
                  [routerLink]="'../../users/members/' + award.awardable.id"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
             <div *ngIf="! award.awardable.user.avatarPath"
-                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable"
+                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../users/members/' + award.awardable.id">
               <md-icon class="medium-face">face</md-icon>

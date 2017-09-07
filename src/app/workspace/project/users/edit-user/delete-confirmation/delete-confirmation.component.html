@@ -1,0 +1,6 @@
+<div class="mdc-typography--headline strong u-spacing-bottom">Deactivate user</div>
+<md-checkbox name="deleteSales" [(ngModel)]="deleteSales">Delete sales</md-checkbox>
+<div class="u-vertical-spacing-big" fxLayout="row" fxLayoutGap="12px">
+  <button md-button md-dialog-close>Cancel</button>
+  <button md-raised-button (click)="removeUser()" color="warn">Deactivate</button>
+</div>

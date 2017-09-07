@@ -26,6 +26,7 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
 
       this.sockets.listenForUser(activeUser.id, {
         'user_updated': user => this.set(user),
+        'member_removed': membership => this.removeMembership(membership),
         'clocked_in': session => this.setActiveSession(session),
         'clocked_out': session => this.removeActiveSession(session)
       }, this);
@@ -35,6 +36,11 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();
+  }
+
+  private removeMembership(membership: Member) {
+    this.snapshot.memberships = this.snapshot.memberships.filter(item => item.id === membership.id);
+    this.updateFromSnapshot();
   }
 
   private setActiveSession(session: Session) {

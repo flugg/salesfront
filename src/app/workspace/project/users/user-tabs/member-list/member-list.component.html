@@ -7,7 +7,7 @@
                     class="u-clickable">
 
         <vmo-avatar md-list-avatar [membership]="member"></vmo-avatar>
-        <h4 md-line class="mdc-typography--subheading1">{{ member.user.name }}</h4>
+        <h4 md-line class="mdc-typography--subheading1" [class.u-faded]="member.deletedAt">{{ member.user.name }}</h4>
       </md-list-item>
     </md-list>
 

@@ -18,6 +18,7 @@
         </div>
         <md-divider></md-divider>
         <vmo-leaderboard [project]="project" [items]="teams" type="teams"></vmo-leaderboard>
+        <span *ngIf="! teams?.length" class="u-weak">No teams in project.</span>
       </md-card>
     </div>
   </div>

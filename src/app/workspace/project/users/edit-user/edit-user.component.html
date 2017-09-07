@@ -7,8 +7,8 @@
             (submit)="submit(firstNameInput.value, lastNameInput.value, emailInput.value, phoneInput.value, passwordInput.value); $event.preventDefault()">
         <div class="container">
           <md-card>
-            <span class="mdc-typography--display1 strong">Update Profile</span>
-            <p class="mdc-typography--body1 u-weak">Teams help organize users in a project. Give your new team a suiting name!</p>
+            <span class="mdc-typography--display1 strong">Update User</span>
+            <p class="mdc-typography--body1 u-weak">Update the selected user below.</p>
             <div class="u-vertical-spacing">
               <md-input-container color="accent">
                 <input #emailInput mdInput placeholder="Email" type="email" value="{{ member?.user.email }}" required>
@@ -34,7 +34,7 @@
                        [mdDatepicker]="picker"
                        placeholder="Birthdate"
                        [(ngModel)]="date">
-                <button mdSuffix [mdDatepickerToggle]="picker" type="button"></button>
+                <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
                 <md-error *ngIf="dateInput.errors?.required && (dateInput.dirty || dateInput.touched)">
                   This field is required
                 </md-error>
@@ -43,8 +43,9 @@
               <div class="u-vertical-spacing" *ngIf="activeUser?.isAdmin">
                 <md-slide-toggle name="isAdmin" [(ngModel)]="isAdmin">Administrator</md-slide-toggle>
               </div>
-              <div class="u-vertical-spacing">
+              <div class="u-vertical-spacing" fxLayout="row" fxLayoutGap="12px">
                 <button md-raised-button color="accent">Save</button>
+                <button md-button color="warn" type="button" (click)="removeUser()">Deactivate</button>
               </div>
             </div>
           </md-card>
