@@ -1,14 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
+import { Observable } from 'rxjs/Observable';
+import { Conversation } from '../../../core/models/conversation.model';
+import { Message } from '../../../core/models/message.model';
+import { Participation } from '../../../core/models/participation.model';
 
 import { ObservableResourceList } from '../../../core/observable-resource-list';
-import { SocketApiService } from '../../../core/socket-api.service';
 import { ConversationService } from '../../../core/services/conversation.service';
+import { SocketApiService } from '../../../core/socket-api.service';
 import { ActiveMembershipService } from '../../../organization/active-membership.service';
-import { Conversation } from '../../../core/models/conversation.model';
-import { Participation } from '../../../core/models/participation.model';
-import { Message } from '../../../core/models/message.model';
 
 @Injectable()
 export class ConversationListService extends ObservableResourceList implements OnDestroy {
@@ -47,9 +47,12 @@ export class ConversationListService extends ObservableResourceList implements O
 
   private setLastMessage(message: Message) {
     const conversation = this.snapshot.find(item => item.id === message.conversationId);
-    conversation.lastMessage = message;
-    conversation.lastMessageId = message.id;
-    this.moveToFront(conversation);
+
+    if (conversation) {
+      conversation.lastMessage = message;
+      conversation.lastMessageId = message.id;
+      this.moveToFront(conversation);
+    }
   }
 
   private moveToFront(conversation: Conversation) {
@@ -59,16 +62,23 @@ export class ConversationListService extends ObservableResourceList implements O
   }
 
   private addParticipant(participation: Participation) {
-    this.snapshot.find(item => item.id === participation.conversationId).participations.push(participation);
-    this.updateFromSnapshot();
+    const conversation = this.snapshot.find(item => item.id === participation.conversationId);
+
+    if (conversation) {
+      conversation.participations.push(participation);
+      this.updateFromSnapshot();
+    }
   }
 
   private setParticipant(participation: Participation) {
-    const conversaton = this.snapshot.find(item => item.id === participation.conversationId);
-    conversaton.participations = conversaton.participations.map(relation => {
-      return relation.id === participation.id ? participation : relation;
-    });
+    const conversation = this.snapshot.find(item => item.id === participation.conversationId);
 
-    this.updateFromSnapshot();
+    if (conversation) {
+      conversation.participations = conversation.participations.map(relation => {
+        return relation.id === participation.id ? participation : relation;
+      });
+
+      this.updateFromSnapshot();
+    }
   }
 }

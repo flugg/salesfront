@@ -1,13 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-import { ObservableResourceList } from '../../../../../core/observable-resource-list';
-import { SocketApiService } from '../../../../../core/socket-api.service';
-import { MemberService } from '../../../../../core/services/member.service';
-import { ActiveMembershipService } from '../../../../../organization/active-membership.service';
 import { Member } from '../../../../../core/models/member.model';
 import { Session } from '../../../../../core/models/session.model';
 import { User } from '../../../../../core/models/user.model';
+
+import { ObservableResourceList } from '../../../../../core/observable-resource-list';
+import { MemberService } from '../../../../../core/services/member.service';
+import { SocketApiService } from '../../../../../core/socket-api.service';
+import { ActiveMembershipService } from '../../../../../organization/active-membership.service';
 
 @Injectable()
 export class MemberListService extends ObservableResourceList implements OnDestroy {
@@ -48,17 +48,29 @@ export class MemberListService extends ObservableResourceList implements OnDestr
   }
 
   private setActiveSession(session: Session) {
-    this.snapshot.find(item => item.id === session.memberId).activeSession = session;
-    this.updateFromSnapshot();
+    const member = this.snapshot.find(item => item.id === session.memberId);
+
+    if (member) {
+      member.activeSession = session;
+      this.updateFromSnapshot();
+    }
   }
 
   private removeActiveSession(session: Session) {
-    this.snapshot.find(item => item.id === session.memberId).activeSession = null;
-    this.updateFromSnapshot();
+    const member = this.snapshot.find(item => item.id === session.memberId);
+
+    if (member) {
+      member.activeSession = null;
+      this.updateFromSnapshot();
+    }
   }
 
   private updateUser(user: User) {
-    this.snapshot.find(item => item.userId === user.id).user = user;
-    this.updateFromSnapshot();
+    const member = this.snapshot.find(item => item.userId === user.id);
+
+    if (member) {
+      member.user = user;
+      this.updateFromSnapshot();
+    }
   }
 }

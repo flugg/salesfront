@@ -1,17 +1,17 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
+import { Observable } from 'rxjs/Observable';
+import { Sale } from '../../../../../core/models/sale.model';
+import { Team } from '../../../../../core/models/team.model';
 
 import { ObservableResourceList } from '../../../../../core/observable-resource-list';
-import { SocketApiService } from '../../../../../core/socket-api.service';
 import { LeaderboardService } from '../../../../../core/services/leaderboard.service';
-import { DatepickerService } from '../../shared/datepicker/datepicker.service';
+import { SocketApiService } from '../../../../../core/socket-api.service';
 import { ActiveProjectService } from '../../../../active-project.service';
-import { Team } from '../../../../../core/models/team.model';
-import { Sale } from '../../../../../core/models/sale.model';
+import { DatepickerService } from '../../shared/datepicker/datepicker.service';
 
 @Injectable()
 export class TeamListService extends ObservableResourceList implements OnDestroy {
@@ -79,20 +79,20 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
       } else {
         membership.value += 1;
       }
+      this.updateFromSnapshot();
     }
-
-    this.updateFromSnapshot();
   }
 
   private removeSale(sale: Sale) {
     const membership = this.snapshot.find(item => item.id === sale.teamId);
 
-    if (sale.value) {
-      membership.value -= sale.value;
-    } else {
-      membership.value -= 1;
+    if (membership) {
+      if (sale.value) {
+        membership.value -= sale.value;
+      } else {
+        membership.value -= 1;
+      }
+      this.updateFromSnapshot();
     }
-
-    this.updateFromSnapshot();
   }
 }

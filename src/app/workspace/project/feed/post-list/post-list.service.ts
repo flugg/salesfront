@@ -1,13 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
-
-import { ObservableResourceList } from '../../../../core/observable-resource-list';
-import { SocketApiService } from '../../../../core/socket-api.service';
-import { ActiveProjectService } from '../../../active-project.service';
-import { PostService } from '../../../../core/services/post.service';
+import { Observable } from 'rxjs/Observable';
 import { Post } from '../../../../core/models/post.model';
 import { Session } from '../../../../core/models/session.model';
+
+import { ObservableResourceList } from '../../../../core/observable-resource-list';
+import { PostService } from '../../../../core/services/post.service';
+import { SocketApiService } from '../../../../core/socket-api.service';
+import { ActiveProjectService } from '../../../active-project.service';
 
 @Injectable()
 export class PostListService extends ObservableResourceList implements OnDestroy {
@@ -44,8 +44,12 @@ export class PostListService extends ObservableResourceList implements OnDestroy
   }
 
   private addComment(comment: any) {
-    this.snapshot.find(post => post.id === comment.postId)['comments'].push(comment);
-    this.updateFromSnapshot();
+    const post = this.snapshot.find(post => post.id === comment.postId);
+
+    if (post) {
+      post.comments.push(comment);
+      this.updateFromSnapshot();
+    }
   }
 
   private setActiveSession(session: Session) {

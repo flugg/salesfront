@@ -1,14 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
+import { Observable } from 'rxjs/Observable';
+import { Member } from '../../../../core/models/member.model';
+import { Session } from '../../../../core/models/session.model';
+import { TeamMember } from '../../../../core/models/team-member.model';
 
 import { ObservableResourceList } from '../../../../core/observable-resource-list';
+import { MemberService } from '../../../../core/services/member.service';
 import { SocketApiService } from '../../../../core/socket-api.service';
 import { ActiveMembershipService } from '../../../../organization/active-membership.service';
-import { TeamMember } from '../../../../core/models/team-member.model';
-import { Member } from '../../../../core/models/member.model';
-import { MemberService } from '../../../../core/services/member.service';
-import { Session } from '../../../../core/models/session.model';
 import { ActiveProjectService } from '../../../active-project.service';
 
 @Injectable()
@@ -45,26 +45,33 @@ export class MembershipListService extends ObservableResourceList implements OnD
 
   private updateTeamMember(member: TeamMember) {
     const membership = this.snapshot.find(item => item.id === member.memberId);
-    if (!membership) {
-      return;
+
+    if (membership) {
+      membership.teamMembers = membership.teamMembers.filter(item => item.id !== member.id);
+
+      if (!member.leftAt) {
+        membership.teamMembers.push(member);
+      }
+
+      this.updateFromSnapshot();
     }
-
-    membership.teamMembers = membership.teamMembers.filter(item => item.id !== member.id);
-
-    if (!member.leftAt) {
-      membership.teamMembers.push(member);
-    }
-
-    this.updateFromSnapshot();
   }
 
   private setActiveSession(session: Session) {
-    this.snapshot.find(item => item.id === session.memberId).activeSession = session;
-    this.updateFromSnapshot();
+    const membership = this.snapshot.find(item => item.id === session.memberId);
+
+    if (membership) {
+      membership.activeSession = session;
+      this.updateFromSnapshot();
+    }
   }
 
   private removeActiveSession(session: Session) {
-    this.snapshot.find(item => item.id === session.memberId).activeSession = null;
-    this.updateFromSnapshot();
+    const membership = this.snapshot.find(item => item.id === session.memberId);
+
+    if (membership) {
+      membership.activeSession = null;
+      this.updateFromSnapshot();
+    }
   }
 }

@@ -44,7 +44,6 @@ export class UnreadConversationListService extends ObservableResourceList implem
 
     if (!conversation) {
       this.snapshot.push(message.conversation);
-
       this.updateFromSnapshot();
     }
   }

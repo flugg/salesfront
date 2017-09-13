@@ -1,19 +1,19 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
-
-import { ObservableResourceList } from '../../../../../core/observable-resource-list';
-import { SocketApiService } from '../../../../../core/socket-api.service';
-import { LeaderboardService } from '../../../../../core/services/leaderboard.service';
-import { DatepickerService } from '../../shared/datepicker/datepicker.service';
-import { ActiveProjectService } from '../../../../active-project.service';
-import { Session } from '../../../../../core/models/session.model';
+import { Observable } from 'rxjs/Observable';
 import { Member } from '../../../../../core/models/member.model';
 import { Sale } from '../../../../../core/models/sale.model';
+import { Session } from '../../../../../core/models/session.model';
+
+import { ObservableResourceList } from '../../../../../core/observable-resource-list';
+import { LeaderboardService } from '../../../../../core/services/leaderboard.service';
+import { SocketApiService } from '../../../../../core/socket-api.service';
+import { ActiveProjectService } from '../../../../active-project.service';
+import { DatepickerService } from '../../shared/datepicker/datepicker.service';
 
 @Injectable()
 export class MemberListService extends ObservableResourceList implements OnDestroy {
@@ -29,7 +29,7 @@ export class MemberListService extends ObservableResourceList implements OnDestr
       this.datepicker.range.distinctUntilChanged().subscribe(range => {
         const [after, before] = range;
         this.leaderboardService.members(project.id, moment(after).startOf('day'), moment(before).endOf('day')).map(members => {
-          return members.filter(member => member.value || ! member.deletedAt);
+          return members.filter(member => member.value || !member.deletedAt);
         }).subscribe(members => {
           this.set(members.map(member => {
             member.position = this.calculatePosition(members, member);
@@ -85,30 +85,40 @@ export class MemberListService extends ObservableResourceList implements OnDestr
       } else {
         membership.value += 1;
       }
-    }
 
-    this.updateFromSnapshot();
+      this.updateFromSnapshot();
+    }
   }
 
   private removeSale(sale: Sale) {
     const membership = this.snapshot.find(item => item.id === sale.memberId);
 
-    if (sale.value) {
-      membership.value -= sale.value;
-    } else {
-      membership.value -= 1;
-    }
+    if (membership) {
+      if (sale.value) {
+        membership.value -= sale.value;
+      } else {
+        membership.value -= 1;
+      }
 
-    this.updateFromSnapshot();
+      this.updateFromSnapshot();
+    }
   }
 
   private setActiveSession(session: Session) {
-    this.snapshot.find(item => item.id === session.memberId).activeSession = session;
-    this.updateFromSnapshot();
+    const membership = this.snapshot.find(item => item.id === session.memberId);
+
+    if (membership) {
+      membership.activeSession = session;
+      this.updateFromSnapshot();
+    }
   }
 
   private removeActiveSession(session: Session) {
-    this.snapshot.find(item => item.id === session.memberId).activeSession = null;
-    this.updateFromSnapshot();
+    const membership = this.snapshot.find(item => item.id === session.memberId);
+
+    if (membership) {
+      membership.activeSession = null;
+      this.updateFromSnapshot();
+    }
   }
 }

@@ -43,12 +43,18 @@ export class ProjectListService extends ObservableResourceList implements OnDest
   }
 
   private addSale(sale: Sale) {
-    this.snapshot.find(item => item.id === sale.projectId).value += 1;
-    this.updateFromSnapshot();
+    const project = this.snapshot.find(item => item.id === sale.projectId);
+    if (project) {
+      project.value += 1;
+      this.updateFromSnapshot();
+    }
   }
 
   private removeSale(sale: Sale) {
-    this.snapshot.find(item => item.id === sale.projectId).value -= 1;
-    this.updateFromSnapshot();
+    const project = this.snapshot.find(item => item.id === sale.projectId);
+    if (project) {
+      project.value -= 1;
+      this.updateFromSnapshot();
+    }
   }
 }

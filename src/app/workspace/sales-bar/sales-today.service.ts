@@ -1,15 +1,16 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import * as moment from 'moment';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
-import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
+import { Project } from '../../core/models/project.model';
+import { Sale } from '../../core/models/sale.model';
 
 import { ObservableResource } from '../../core/observable-resource';
-import { SocketApiService } from '../../core/socket-api.service';
 import { SaleService } from '../../core/services/sale.service';
-import { ActiveProjectService } from '../active-project.service';
+import { SocketApiService } from '../../core/socket-api.service';
 import { ActiveMembershipService } from '../../organization/active-membership.service';
-import { Sale } from '../../core/models/sale.model';
+import { ActiveProjectService } from '../active-project.service';
 
 @Injectable()
 export class SalesTodayService extends ObservableResource implements OnDestroy {
@@ -32,8 +33,8 @@ export class SalesTodayService extends ObservableResource implements OnDestroy {
         });
 
         this.sockets.listenForUser(membership.userId, {
-          'sale_registered': sale => this.addSale(sale),
-          'sale_deleted': sale => this.removeSale(sale)
+          'sale_registered': sale => this.addSale(sale, project),
+          'sale_deleted': sale => this.removeSale(sale, project)
         }, this);
       });
     });
@@ -44,23 +45,25 @@ export class SalesTodayService extends ObservableResource implements OnDestroy {
     super.ngOnDestroy();
   }
 
-  private addSale(sale: Sale) {
-    if (sale.value) {
-      this.snapshot = this.snapshot + sale.value;
-    } else {
-      this.snapshot = this.snapshot + 1;
+  private addSale(sale: Sale, project: Project) {
+    if (sale.projectId === project.id) {
+      if (sale.value) {
+        this.snapshot = this.snapshot + sale.value;
+      } else {
+        this.snapshot = this.snapshot + 1;
+      }
+      this.updateFromSnapshot();
     }
-
-    this.updateFromSnapshot();
   }
 
-  private removeSale(sale: Sale) {
-    if (sale.value) {
-      this.snapshot = this.snapshot - sale.value;
-    } else {
-      this.snapshot = this.snapshot - 1;
+  private removeSale(sale: Sale, project: Project) {
+    if (sale.projectId === project.id) {
+      if (sale.value) {
+        this.snapshot = this.snapshot - sale.value;
+      } else {
+        this.snapshot = this.snapshot - 1;
+      }
+      this.updateFromSnapshot();
     }
-
-    this.updateFromSnapshot();
   }
 }

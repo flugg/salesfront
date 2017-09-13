@@ -1,12 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-import { SocketApiService } from '../core/socket-api.service';
+import { Member } from '../core/models/member.model';
+import { Session } from '../core/models/session.model';
+import { User } from '../core/models/user.model';
 import { ObservableResource } from '../core/observable-resource';
 import { UserService } from '../core/services/user.service';
-import { User } from '../core/models/user.model';
-import { Session } from '../core/models/session.model';
-import { Member } from '../core/models/member.model';
+
+import { SocketApiService } from '../core/socket-api.service';
 
 @Injectable()
 export class ActiveUserService extends ObservableResource implements OnDestroy {
@@ -45,15 +45,19 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
 
   private setActiveSession(session: Session) {
     const membership = this.snapshot.memberships.find(item => item.id === session.memberId);
-    membership.activeSession = session;
-    this.setTeamOnSession(membership);
-    this.updateFromSnapshot();
+    if (membership) {
+      membership.activeSession = session;
+      this.setTeamOnSession(membership);
+      this.updateFromSnapshot();
+    }
   }
 
   private removeActiveSession(session: Session) {
     const membership = this.snapshot.memberships.find(item => item.id === session.memberId);
-    membership.activeSession = null;
-    this.updateFromSnapshot();
+    if (membership) {
+      membership.activeSession = null;
+      this.updateFromSnapshot();
+    }
   }
 
   private setTeamOnSession(membership: Member) {
