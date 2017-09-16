@@ -4,9 +4,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'settings-tabs.component.html'
 })
 export class SettingsTabsComponent implements OnInit {
-  loading = false;
+  loading = true;
 
   ngOnInit(): void {
-    this.loading = true;
+    this.loading = false;
   }
 }
