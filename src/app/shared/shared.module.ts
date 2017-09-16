@@ -14,6 +14,7 @@ import { ExcludePipe } from './exclude.pipe';
 import { Nl2BrPipe } from './nl2br.pipe';
 import { ValuePipe } from './value.pipe';
 import { ProjectIconComponent } from './project-icon/project-icon.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import { ProjectIconComponent } from './project-icon/project-icon.component';
     ExcludePipe,
     Nl2BrPipe,
     ValuePipe,
-    CountoModule
+    CountoModule,
+    SignaturePadModule
   ],
   declarations: [
     LoadMoreButtonComponent,

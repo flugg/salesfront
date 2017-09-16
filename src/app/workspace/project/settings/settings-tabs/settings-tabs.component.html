@@ -1,20 +1,16 @@
-<div class="vmo-component vmo-component--tabs">
-  <vmo-toolbar title="Settings" mode="menu" tabs="true">
-    <nav md-tab-nav-bar toolbar-tabs>
-      <a md-tab-link routerLink="project"
-         routerLinkActive #projectLink="routerLinkActive"
-         [active]="projectLink.isActive"
-         [class.is-active]="projectLink.isActive">
-        Project
-      </a>
-      <a md-tab-link routerLink="organization"
-         routerLinkActive #organizationLink="routerLinkActive"
-         [active]="organizationLink.isActive"
-         [class.is-active]="organizationLink.isActive">
-        Organization
-      </a>
-    </nav>
-  </vmo-toolbar>
+<div class="vmo-component">
+  <vmo-toolbar title="Settings" mode="menu"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+
+    <md-list class="vmo-list">
+      <md-list-item md-ripple class="u-clickable" [routerLink]="'contracts'">
+        <md-icon md-list-icon class="u-weak">content_paste</md-icon>
+        <h4 md-line class="mdc-typography--subheading1">Contracts</h4>
+      </md-list-item>
+    </md-list>
+
+  </vmo-progress-spinner>
 
   <router-outlet></router-outlet>
 </div>

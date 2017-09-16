@@ -1,5 +1,8 @@
 <div class="vmo-component">
   <vmo-toolbar title="Sales" mode="menu">
+    <button md-icon-button (click)="downloadContracts()">
+      <md-icon>file_download</md-icon>
+    </button>
     <button md-icon-button routerLink="add">
       <md-icon>add</md-icon>
     </button>
@@ -27,13 +30,16 @@
           <vmo-avatar md-list-avatar [membership]="sale.member"></vmo-avatar>
           <div md-line [class.u-faded]="sale.member.deletedAt">
             <strong class="u-clickable"
-                    [routerLink]="'/projects/' + sale.projectId + '/users/members/' + sale.memberId">{{ sale.member.user.name }}</strong>
+                    [routerLink]="'../users/members/' + sale.memberId">{{ sale.member.user.name }}</strong>
             <span>in</span>
             <strong class="u-clickable"
-                    [routerLink]="'/projects/' + sale.projectId + '/teams/' + sale.teamId">{{ sale.team.name }}</strong>
+                    [routerLink]="'../teams/' + sale.teamId">{{ sale.team.name }}</strong>
           </div>
           <div md-line class="u-weak" [class.u-faded]="sale.member.deletedAt">{{ sale.soldAt | amDateFormat:'DD-MM-YYYY HH:mm' }}</div>
           <div class="u-fill"></div>
+          <button md-icon-button (click)='openContract(sale.contract)' *ngIf="sale.contract">
+            <md-icon mdTooltip="View Contract" mdTooltipPosition="before" class="u-weak">content_paste</md-icon>
+          </button>
           <button md-icon-button (click)='removeSale(sale)' *ngIf="canRemove(sale)">
             <md-icon mdTooltip="Delete" mdTooltipPosition="before" class="u-weak">delete</md-icon>
           </button>

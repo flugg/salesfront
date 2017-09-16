@@ -10,6 +10,8 @@ import { SaleDataSource } from './sale-data-source';
 import { ActiveMembershipService } from '../../../../organization/active-membership.service';
 import { Member } from '../../../../core/models/member.model';
 import { Sale } from '../../../../core/models/sale.model';
+import { Contract } from '../../../../core/models/contract.model';
+import { ViewContractDialogComponent } from '../view-contract-dialog/view-contract-dialog.component';
 
 @Component({
   providers: [SalesListService],
@@ -48,6 +50,18 @@ export class SalesListComponent implements OnInit, OnDestroy {
         sale: sale
       }
     });
+  }
+
+  openContract(contract: Contract) {
+    this.dialog.open(ViewContractDialogComponent, <MdDialogConfig>{
+      data: {
+        contract: contract
+      }
+    });
+  }
+
+  downloadContracts() {
+    //
   }
 
   canRemove(sale) {

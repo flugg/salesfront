@@ -553,6 +553,12 @@ angular2-moment@^1.4.0:
   dependencies:
     moment "^2.16.0"
 
+angular2-signaturepad:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/angular2-signaturepad/-/angular2-signaturepad-2.6.1.tgz#967b9978abab973accf8c2dd37c2a92eb79d4757"
+  dependencies:
+    signature_pad "2.2.0"
+
 ansi-align@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-1.1.0.tgz#2f0c1658829739add5ebb15e6b0c6e3423f016ba"
@@ -5207,6 +5213,10 @@ shebang-regex@^1.0.0:
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
+
+signature_pad@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/signature_pad/-/signature_pad-2.2.0.tgz#03d3d398b77868163cce8f2a02744c741ab0976e"
 
 silent-error@^1.0.0:
   version "1.1.0"

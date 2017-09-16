@@ -17,7 +17,7 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
     super();
 
     this.userService.find('me', [
-      'memberships.organization',
+      'memberships.organization.contractTemplates',
       'memberships.teamMembers.team',
       'memberships.activeSession'
     ]).subscribe(activeUser => {

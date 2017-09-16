@@ -1,0 +1,23 @@
+<div class="mdc-typography--headline strong u-ellipsis">{{ data.project.contractTemplate.name }}</div>
+<p class="mdc-typography--body1 u-weak">Please fill out the contract below.</p>
+<div class="u-max-height-dialog vmo-scrollable-area">
+  <md-input-container color="accent" *ngFor="let field of fields">
+    <input mdInput [placeholder]="field.name" [(ngModel)]="field.value" name="value">
+  </md-input-container>
+  <div *ngIf="data.project.contractTemplate.signature" class="u-vertical-spacing u-relative">
+    <div class="mdc-typography--caption u-weak u-spacing-bottom-small">Signature:</div>
+    <signature-pad (onEndEvent)="drawComplete()"
+                   class="signature-pad"></signature-pad>
+    <button md-icon-button (click)="clearSignature()" type="button" class="clear-button">
+      <md-icon>replay</md-icon>
+    </button>
+  </div>
+</div>
+<div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+  <button md-button (click)="dialog.close()">Cancel</button>
+  <button md-raised-button
+          (click)="register()"
+          [disabled]="pending || (data.project.contractTemplate.signature && !signature.length)"
+          color="accent">Register
+  </button>
+</div>

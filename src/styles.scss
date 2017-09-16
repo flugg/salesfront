@@ -246,6 +246,10 @@ snack-bar-container {
   margin-top: 16px !important;
 }
 
+.u-spacing-top-small {
+  margin-top: 8px !important;
+}
+
 .u-no-elevation {
   box-shadow: none !important;
 }
@@ -579,8 +583,16 @@ snack-bar-container {
   padding-top: 16px;
 }
 
+.u-spacing-top-big {
+  padding-top: 32px;
+}
+
 .u-push-down {
   margin-bottom: 84px;
+}
+
+.no-padding-top {
+  padding-top: 0 !important;
 }
 
 .u-container {
@@ -615,6 +627,20 @@ snack-bar-container {
 .sales-dialog .mat-dialog-container {
   background: #2979ff;
   padding: 24px !important;
+  width: 600px;
+
+  @media (max-width: 960px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+    width: auto;
+  }
+}
+
+.contract-dialog .mat-dialog-container {
   width: 600px;
 
   @media (max-width: 960px) {
@@ -736,6 +762,10 @@ snack-bar-container {
       margin-bottom: 12px;
     }
   }
+
+  &.--small {
+    max-width: 740px;
+  }
 }
 
 .mat-divider {
@@ -809,4 +839,22 @@ snack-bar-container {
 
 .u-faded {
   opacity: 0.5;
+}
+
+.u-small-input {
+  max-width: calc(100% - 48px);
+}
+
+.u-max-height-dialog {
+  @media (min-width: 960px) {
+    max-height: 580px;
+
+    @media (max-height: 800px) {
+      max-height: 400px;
+    }
+  }
+}
+
+signature-pad canvas {
+  background: rgba(black, 0.05);
 }

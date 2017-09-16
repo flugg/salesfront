@@ -38,6 +38,7 @@
       <vmo-nav-item title="Sales" icon="attach_money" link="sales" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Teams" icon="group" link="teams" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Users" icon="person" link="users" [project]="project"></vmo-nav-item>
+      <vmo-nav-item *ngIf="membership.user.isAdmin" title="Settings" icon="settings" link="settings" [project]="project"></vmo-nav-item>
     </md-nav-list>
   </div>
   <vmo-session-bar [project]="project" [membership]="membership"></vmo-session-bar>

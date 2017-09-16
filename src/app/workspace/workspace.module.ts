@@ -12,6 +12,7 @@ import { SaleAddedDialogComponent } from './sales-bar/sale-added-dialog/sale-add
 import { ClockInDialogComponent } from './sidenav/clock-in-dialog/clock-in-dialog.component';
 import { SalesBarComponent } from './sales-bar/sales-bar.component';
 import { ActiveProjectService } from './active-project.service';
+import { ContractDialogComponent } from './sales-bar/contract-dialog/contract-dialog.component';
 
 @NgModule({
   imports: [
@@ -26,13 +27,15 @@ import { ActiveProjectService } from './active-project.service';
     SessionBarComponent,
     SalesBarComponent,
     AddSaleDialogComponent,
+    SaleAddedDialogComponent,
     ClockInDialogComponent,
-    SaleAddedDialogComponent
+    ContractDialogComponent
   ],
   entryComponents: [
     AddSaleDialogComponent,
     SaleAddedDialogComponent,
-    ClockInDialogComponent
+    ClockInDialogComponent,
+    ContractDialogComponent
   ],
   providers: [
     ActiveProjectService

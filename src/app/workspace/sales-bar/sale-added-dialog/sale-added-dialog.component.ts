@@ -1,10 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, Inject, OnInit, EventEmitter } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialog, MdDialogRef, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 import { Sale } from '../../../core/models/sale.model';
-import { SalesBarComponent } from '../sales-bar.component';
 import { SaleService } from '../../../core/services/sale.service';
+import { SalesBarComponent } from '../sales-bar.component';
 
 @Component({
   templateUrl: 'sale-added-dialog.component.html',
@@ -73,6 +73,9 @@ export class SaleAddedDialogComponent implements OnInit {
     'Terrific!'
   ];
 
+  onRegisterNewSale = new EventEmitter();
+  onRegisterNewContract = new EventEmitter();
+
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
               public dialog: MdDialogRef<SalesBarComponent>,
               private dialogService: MdDialog,
@@ -98,7 +101,13 @@ export class SaleAddedDialogComponent implements OnInit {
   addSale() {
     this.loading = true;
 
-    if (this.data.project.type === 'count') {
+    if (this.data.project.contractTemplate) {
+      this.dialog.close();
+      this.onRegisterNewContract.emit();
+    } else if (this.data.project.type !== 'count') {
+      this.dialog.close();
+      this.onRegisterNewSale.emit();
+    } else {
       this.saleService.register(this.data.membership.activeSession.teamMemberId).then(sale => {
         this.previousSale = sale;
         setTimeout(() => {

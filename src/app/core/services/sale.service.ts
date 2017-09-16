@@ -51,6 +51,30 @@ export class SaleService {
     }).then(response => response.data);
   }
 
+  registerWithContract(teamMemberId: string, contract: any, signature?: string, date?: Moment): Promise<Sale> {
+    return this.api.post(`team-members/${teamMemberId}/sales`, !date ? {
+      contract,
+      signature: signature
+    } : {
+      soldAt: date.toISOString() || moment().toISOString(),
+      contract: contract,
+      signature: signature
+    }).then(response => response.data);
+  }
+
+  registerWithValueAndContract(teamMemberId: string, contract: any, value: number, signature?: string, date?: Moment): Promise<Sale> {
+    return this.api.post(`team-members/${teamMemberId}/sales`, !date ? {
+      value: value,
+      contract: contract,
+      signature: signature
+    } : {
+      value: value,
+      contract: contract,
+      signature: signature,
+      soldAt: date.toISOString() || moment().toISOString()
+    }).then(response => response.data);
+  }
+
   delete(saleId: string): Promise<Sale> {
     return this.api.delete(`sales/${saleId}`).then(response => response.data);
   }

@@ -49,9 +49,11 @@ export class AddSaleComponent implements OnInit, OnDestroy {
       this.teamList.teams
     ).subscribe(data => {
       [this.user, this.teams] = data;
-      this.selectedTeam = this.teams[0].id;
+      if (this.teams.length) {
+        this.selectedTeam = this.teams[0].id;
+        this.updateSelectedMember();
+      }
       this.time = moment().format('HH:mm');
-      this.updateSelectedMember();
       this.loading = false;
     }));
   }
@@ -82,7 +84,7 @@ export class AddSaleComponent implements OnInit, OnDestroy {
   }
 
   getMembers() {
-    if (this.teams) {
+    if (this.teams && this.teams.find(team => team.id === this.selectedTeam)) {
       return this.teams.find(team => team.id === this.selectedTeam).members;
     }
   }

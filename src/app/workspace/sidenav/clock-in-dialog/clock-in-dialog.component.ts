@@ -25,7 +25,7 @@ export class ClockInDialogComponent implements OnInit {
   }
 
   clockIn() {
-    this.sessionService.clockIn(this.selectedTeamMember).then(() => {
+    this.sessionService.clockIn(this.selectedTeamMember, this.autoClockOut ? moment(this.clockOutTime, 'HH:mm') : null).then(() => {
       this.dialog.close();
     });
   }

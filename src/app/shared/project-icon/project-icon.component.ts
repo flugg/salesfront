@@ -21,6 +21,6 @@ export class ProjectIconComponent implements OnInit, OnChanges {
   }
 
   private getAbbreviation(): string {
-    return this.project.name.match(/\b\w/g).join('').slice(0, 3);
+    return this.project.name.match(/(?:^|\s)\w/g).map(item => item.trim()).join('').slice(0, 3);
   }
 }

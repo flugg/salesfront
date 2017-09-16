@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter } from '@angular/core';
+import { MD_DIALOG_DATA, MdDialog, MdDialogRef } from '@angular/material';
+
 import { SaleService } from '../../../core/services/sale.service';
-import { MD_DIALOG_DATA, MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
 import { SalesBarComponent } from '../sales-bar.component';
-import { SaleAddedDialogComponent } from '../sale-added-dialog/sale-added-dialog.component';
 
 @Component({
   templateUrl: 'add-sale-dialog.component.html',
@@ -11,6 +11,8 @@ import { SaleAddedDialogComponent } from '../sale-added-dialog/sale-added-dialog
 export class AddSaleDialogComponent implements OnInit {
   value: number;
   pending = false;
+
+  onRegister = new EventEmitter();
 
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
               public dialog: MdDialogRef<SalesBarComponent>,
@@ -21,20 +23,10 @@ export class AddSaleDialogComponent implements OnInit {
     //
   }
 
-  addSale(value: number): void {
+  register(value: number): void {
     this.pending = true;
-    this.saleService.registerWithValue(this.data.membership.activeSession.teamMemberId, value).then(sale => {
-      this.dialog.close();
-      this.dialogService.open(SaleAddedDialogComponent, <MdDialogConfig>{
-        panelClass: 'sales-dialog',
-        data: {
-          sale: sale,
-          count: this.data.count,
-          membership: this.data.membership,
-          project: this.data.project
-        }
-      });
-      this.pending = false;
-    });
+
+    this.dialog.close();
+    this.onRegister.emit({ value });
   }
 }

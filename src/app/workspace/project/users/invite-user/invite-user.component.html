@@ -3,7 +3,7 @@
 
   <vmo-progress-spinner [hasLoaded]="! loading">
     <div class="vmo-scrollable-area">
-      <form novalidate (submit)="submit(); $event.preventDefault()">
+      <form #form novalidate (submit)="submit(form); $event.preventDefault()">
         <div class="container">
           <!--<md-card>
             <span class="mdc-typography&#45;&#45;display1">Invite User</span>
@@ -87,7 +87,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
                   <button md-raised-button
                           color="accent"
-                          [disabled]="firstNameInput.errors?.required || lastNameInput.errors?.required || emailInput.errors?.required || passwordInput.errors?.required || passwordInput.errors?.minlength">Register
+                          [disabled]="firstNameInput.errors?.required || lastNameInput.errors?.required || emailInput.errors?.required || passwordInput.errors?.required || passwordInput.errors?.minlength || pending">Register
                   </button>
                   <md-checkbox name="keepInviting" [(ngModel)]="inviteMore">Keep inviting</md-checkbox>
                 </div>

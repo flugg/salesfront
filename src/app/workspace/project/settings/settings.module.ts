@@ -6,6 +6,9 @@ import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsTabsComponent } from './settings-tabs/settings-tabs.component';
 import { ProjectSettingsComponent } from './settings-tabs/project-settings/project-settings.component';
 import { OrganizationSettingsComponent } from './settings-tabs/organization-settings/organization-settings.component';
+import { TemplateListComponent } from './settings-tabs/contracts/template-list.component';
+import { CreateTemplateComponent } from './settings-tabs/contracts/create-template/create-template.component';
+import { EditTemplateComponent } from './settings-tabs/contracts/edit-template/edit-template.component';
 
 @NgModule({
   imports: [
@@ -16,7 +19,10 @@ import { OrganizationSettingsComponent } from './settings-tabs/organization-sett
   declarations: [
     SettingsTabsComponent,
     ProjectSettingsComponent,
-    OrganizationSettingsComponent
+    OrganizationSettingsComponent,
+    TemplateListComponent,
+    CreateTemplateComponent,
+    EditTemplateComponent
   ]
 })
 export class SettingsModule {}

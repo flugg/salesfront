@@ -9,7 +9,7 @@ import { PaginationResponse } from './pagination-response';
 export abstract class ObservableResourceList implements OnDestroy {
   protected snapshot: any[] = [];
   protected subject: ReplaySubject<any[]> = new ReplaySubject(1);
-  protected limit = 15;
+  protected limit = 25;
   protected cursor: string | null;
   protected paginator: BehaviorSubject<number> = new BehaviorSubject(this.limit);
 

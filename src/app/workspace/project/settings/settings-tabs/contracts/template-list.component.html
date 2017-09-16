@@ -1,0 +1,33 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="Contracts" mode="back">
+    <button md-icon-button routerLink="new">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+
+      <md-list *ngIf="templates?.length" class="vmo-list">
+        <md-list-item md-ripple class="u-clickable" *ngFor="let template of templates" [routerLink]="template.id">
+          <md-icon md-list-icon class="u-weak">content_paste</md-icon>
+          <h4 md-line class="mdc-typography--subheading1">{{ template.name }}</h4>
+        </md-list-item>
+      </md-list>
+
+      <div *ngIf="! templates?.length"
+           class="u-stretch u-spacing"
+           fxLayout="column"
+           fxLayoutAlign="center center"
+           fxLayoutGap="16px">
+        <span class="mdc-typography--headline strong">No contracts, yet.</span>
+        <span class="u-weak">Looks like you haven't created any contracts.</span>
+        <button md-raised-button color="accent" routerLink="new" class="u-push-button">Create a contract</button>
+      </div>
+
+    </div>
+  </vmo-progress-spinner>
+
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,55 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <form novalidate (submit)="submit(name); $event.preventDefault()">
+        <div class="vmo-container --small">
+          <md-card>
+            <span class="mdc-typography--display1 strong">Update Contract</span>
+            <p class="mdc-typography--body1 u-weak">Update the selected contract template.</p>
+            <md-input-container color="accent">
+              <input #nameInput="ngModel"
+                     mdInput
+                     name="name"
+                     placeholder="Contract Name"
+                     required
+                     [(ngModel)]="name">
+              <md-error *ngIf="nameInput.errors?.required && (nameInput.dirty || nameInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <md-divider></md-divider>
+            <div fxLayout="row">
+              <span class="mdc-typography--headline strong">Fields</span>
+              <div class="u-fill"></div>
+              <button md-button color="accent" (click)="addField()" type="button">Add Field</button>
+            </div>
+            <div class="u-spacing-top-small">
+              <div *ngFor="let field of fields; let i = index" fxLayout="row">
+                <md-input-container color="accent" [class.u-small-input]="fields.length > 1">
+                  <input mdInput
+                         [name]="'field-' + i"
+                         placeholder="Field {{ i + 1 }} Name"
+                         [(ngModel)]="fields[i].name">
+                </md-input-container>
+                <div class="u-fill"></div>
+                <div fxLayoutAlign="center center" *ngIf="fields.length > 1">
+                  <button md-icon-button (click)="removeField(i)" type="button">
+                    <md-icon>remove_circle_outline</md-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="u-vertical-spacing">
+              <md-checkbox [(ngModel)]="signature" name="signature">Signature field</md-checkbox>
+            </div>
+            <div class="u-vertical-spacing">
+              <button md-raised-button color="accent" [disabled]="nameInput.errors?.required || ! getFieldNames().length">Save</button>
+            </div>
+          </md-card>
+        </div>
+      </form>
+    </div>
+  </vmo-progress-spinner>
+</div>

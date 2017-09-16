@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
-import { RestApiService } from '../rest-api.service';
-import { Team } from '../models/team.model';
-import { User } from '../models/user.model';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+
 import { Member } from '../models/member.model';
+import { Team } from '../models/team.model';
+import { RestApiService } from '../rest-api.service';
 
 @Injectable()
 export class LeaderboardService {

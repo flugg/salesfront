@@ -7,7 +7,7 @@
         <md-card>
           <span class="mdc-typography--display1 strong">Add Sale</span>
           <p class="mdc-typography--body1 u-weak">Register sales for yourself or someone you manage.</p>
-          <div class="u-vertical-spacing">
+          <div class="u-spacing-top">
             <md-input-container color="accent">
               <input #quantityInput="ngModel" name="quantity" mdInput placeholder="Quantity" type="number" [(ngModel)]="quantity" required>
               <md-error *ngIf="quantityInput.errors?.required && (quantityInput.dirty || quantityInput.touched)">

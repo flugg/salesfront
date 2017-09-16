@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
-import { OrganizationComponent } from '../organization.component';
 import { ProjectService } from '../../core/services/project.service';
+import { OrganizationComponent } from '../organization.component';
 
 @Component({
   templateUrl: 'create-project.component.html',
-  styleUrls: ['create-project.component.scss'],
+  styleUrls: ['create-project.component.scss']
 })
 export class CreateProjectComponent implements OnInit {
   loading = true;
@@ -16,6 +16,8 @@ export class CreateProjectComponent implements OnInit {
   notation = '$';
   notationBefore = true;
   withDecimals = true;
+  withContract = false;
+  selectedContract: string;
 
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
               public dialog: MdDialogRef<OrganizationComponent>,
@@ -45,7 +47,11 @@ export class CreateProjectComponent implements OnInit {
       });
     }
 
-    this.projectService.create(this.data.organizationId, attributes).then(() => {
+    if (this.withContract) {
+      attributes = Object.assign(attributes, {contract: this.selectedContract});
+    }
+
+    this.projectService.create(this.data.organization.id, attributes).then(() => {
       this.dialog.close();
       this.snackBar.open('Project created', null, <MdSnackBarConfig>{ duration: 2000 });
     });

@@ -48,7 +48,7 @@ export class OrganizationComponent implements OnInit {
     this.dialog.open(CreateProjectComponent, <MdDialogConfig>{
       panelClass: 'create-project-dialog',
       data: {
-        organizationId: this.membership.organizationId
+        organization: this.membership.organization
       }
     });
   }

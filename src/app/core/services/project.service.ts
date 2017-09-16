@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
-import { RestApiService } from '../rest-api.service';
-import { PaginationResponse } from '../pagination-response';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+
 import { Project } from '../models/project.model';
+import { PaginationResponse } from '../pagination-response';
+import { RestApiService } from '../rest-api.service';
 
 @Injectable()
 export class ProjectService {
@@ -15,7 +16,7 @@ export class ProjectService {
   }
 
   find(id: string): Observable<Project> {
-    return this.api.get(`projects/${id}`).map(response => response.data);
+    return this.api.get(`projects/${id}`, { include: 'contractTemplate.fields' }).map(response => response.data);
   }
 
   create(organizationId: string, attributes: any): Promise<Project> {

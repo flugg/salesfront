@@ -1,0 +1,11 @@
+<div class="mdc-typography--headline strong u-spacing-bottom">{{ data.contract.template.name }}</div>
+<md-dialog-content class="mdc-typography--subheading1 u-spacing-top-small" *ngFor="let field of contractFields">
+  <span>{{ field.name }}:</span>
+  <span class="strong">{{ field.value }}</span>
+</md-dialog-content>
+<div class="u-spacing-top" *ngIf="data.contract.signature">
+  <img [src]="data.contract.signature" alt="Signature">
+</div>
+<div class="u-spacing-top">
+  <button md-button md-dialog-close>Close</button>
+</div>

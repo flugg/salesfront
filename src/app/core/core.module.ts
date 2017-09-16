@@ -32,6 +32,9 @@ import { UserService } from './services/user.service';
 import { StorageService } from './storage.service';
 import { WeeklyAwardService } from './services/weekly-award.service';
 import { YearlyAwardService } from './services/yearly-award.service';
+import { ContractService } from './services/contract.service';
+import { ContractFieldService } from './services/contract-field.service';
+import { ContractTemplateService } from './services/contract-template.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions, tokenService: TokenService) {
   return new AuthHttp(new AuthConfig({ tokenName: 'token', tokenGetter: () => tokenService.get() }), http, options);
@@ -54,6 +57,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, toke
     AvatarService,
     CommentService,
     ConversationService,
+    ContractService,
+    ContractFieldService,
+    ContractTemplateService,
     DailyAwardService,
     InviteService,
     LeaderboardService,

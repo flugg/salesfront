@@ -8,9 +8,13 @@ import { SaleComponent } from './sale/sale.component';
 import { AddSaleComponent } from './add-sale/add-sale.component';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 import { salesListPipe } from './sales-list/sales-list.pipe';
+import { ViewContractDialogComponent } from './view-contract-dialog/view-contract-dialog.component';
 
 @NgModule({
-  entryComponents: [DeleteConfirmationComponent],
+  entryComponents: [
+    DeleteConfirmationComponent,
+    ViewContractDialogComponent
+  ],
   imports: [
     SharedModule,
     WorkspaceSharedModule,
@@ -21,6 +25,7 @@ import { salesListPipe } from './sales-list/sales-list.pipe';
     SaleComponent,
     AddSaleComponent,
     DeleteConfirmationComponent,
+    ViewContractDialogComponent,
     salesListPipe
   ]
 })

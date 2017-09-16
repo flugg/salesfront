@@ -1,12 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-import { ObservableResourceList } from '../../../../core/observable-resource-list';
-import { SocketApiService } from '../../../../core/socket-api.service';
-import { ActiveProjectService } from '../../../active-project.service';
-import { SaleService } from '../../../../core/services/sale.service';
+import { Contract } from '../../../../core/models/contract.model';
 import { Sale } from '../../../../core/models/sale.model';
 import { Session } from '../../../../core/models/session.model';
+
+import { ObservableResourceList } from '../../../../core/observable-resource-list';
+import { SaleService } from '../../../../core/services/sale.service';
+import { SocketApiService } from '../../../../core/socket-api.service';
+import { ActiveProjectService } from '../../../active-project.service';
 
 @Injectable()
 export class SalesListService extends ObservableResourceList implements OnDestroy {
@@ -26,6 +27,7 @@ export class SalesListService extends ObservableResourceList implements OnDestro
       this.sockets.listenForProject(project.id, {
         'sale_registered': sale => this.addSale(sale),
         'sale_deleted': sale => this.removeSale(sale),
+        'contract_registered': contract => this.addContract(contract),
         'clocked_in': session => this.setActiveSession(session),
         'clocked_out': session => this.removeActiveSession(session)
       }, this);
@@ -63,12 +65,25 @@ export class SalesListService extends ObservableResourceList implements OnDestro
   }
 
   private addSale(sale: Sale) {
+    console.log(sale);
     this.snapshot.push(sale);
     this.updateFromSnapshot();
   }
 
   private removeSale(sale: Sale) {
     this.snapshot = this.snapshot.filter(item => item.id !== sale.id);
+    this.updateFromSnapshot();
+  }
+
+  private addContract(contract: Contract) {
+    this.snapshot = this.snapshot.map(item => {
+      if (item.id === contract.saleId) {
+        return { ...item, contract: contract };
+      }
+
+      return item;
+    });
+
     this.updateFromSnapshot();
   }
 

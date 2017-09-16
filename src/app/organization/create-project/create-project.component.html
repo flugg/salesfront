@@ -47,6 +47,14 @@
         <md-checkbox [(ngModel)]="withDecimals" name="addMore" class="u-horizontal-spacing">With decimals</md-checkbox>
       </div>
     </div>
+    <div class="u-spacing-top-big" *ngIf="data.organization.contractTemplates.length" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
+      <md-checkbox [(ngModel)]="withContract" name="withContract">Sales contract</md-checkbox>
+      <md-select placeholder="Contract" color="accent" [(ngModel)]="selectedContract" name="contractInput" class="no-padding-top" *ngIf="withContract">
+        <md-option *ngFor="let template of data.organization.contractTemplates" [value]="template.id">
+          {{ template.name }}
+        </md-option>
+      </md-select>
+    </div>
     <div class="u-vertical-spacing-big" fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-md="start center" fxLayoutGap="16px">
       <button md-button type="button" (click)="dialog.close()">Cancel</button>
       <button md-raised-button color="accent" [disabled]="nameInput.errors?.required" fxFlexOrder.lt-md="-1">Create</button>
