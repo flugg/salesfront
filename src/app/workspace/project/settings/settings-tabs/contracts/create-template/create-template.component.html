@@ -3,7 +3,7 @@
 
   <vmo-progress-spinner [hasLoaded]="! loading">
     <div class="vmo-scrollable-area">
-      <form novalidate (submit)="submit(name); $event.preventDefault()">
+      <form novalidate (submit)="submit(); $event.preventDefault()">
         <div class="vmo-container --small">
           <md-card>
             <span class="mdc-typography--display1 strong">Create Contract</span>
