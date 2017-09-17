@@ -12,6 +12,7 @@ import { Member } from '../../../../core/models/member.model';
 import { Sale } from '../../../../core/models/sale.model';
 import { Contract } from '../../../../core/models/contract.model';
 import { ViewContractDialogComponent } from '../view-contract-dialog/view-contract-dialog.component';
+import { DownloadContractDialogComponent } from '../download-contracts-dialog/download-contract-dialog.component';
 
 @Component({
   providers: [SalesListService],
@@ -61,7 +62,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
   }
 
   downloadContracts() {
-    //
+    this.dialog.open(DownloadContractDialogComponent, <MdDialogConfig>{});
   }
 
   canRemove(sale) {

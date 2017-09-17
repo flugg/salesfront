@@ -9,11 +9,13 @@ import { AddSaleComponent } from './add-sale/add-sale.component';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 import { salesListPipe } from './sales-list/sales-list.pipe';
 import { ViewContractDialogComponent } from './view-contract-dialog/view-contract-dialog.component';
+import { DownloadContractDialogComponent } from './download-contracts-dialog/download-contract-dialog.component';
 
 @NgModule({
   entryComponents: [
     DeleteConfirmationComponent,
-    ViewContractDialogComponent
+    ViewContractDialogComponent,
+    DownloadContractDialogComponent
   ],
   imports: [
     SharedModule,
@@ -26,6 +28,7 @@ import { ViewContractDialogComponent } from './view-contract-dialog/view-contrac
     AddSaleComponent,
     DeleteConfirmationComponent,
     ViewContractDialogComponent,
+    DownloadContractDialogComponent,
     salesListPipe
   ]
 })

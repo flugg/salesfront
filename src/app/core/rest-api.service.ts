@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Headers, RequestOptions, URLSearchParams, ResponseContentType } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/catch';
 
-import { TokenService } from './auth/token.service';
 import { environment } from '../../environments/environment';
+import { TokenService } from './auth/token.service';
 
 @Injectable()
 export class RestApiService {
@@ -19,6 +20,17 @@ export class RestApiService {
 
     return this.http.get(`${environment.apiUrl}/${path}`, options)
       .map(response => response.json())
+      .catch(this.handleError);
+  }
+
+  blob(path: string, parameters?: any) {
+    const options = this.buildOptions().merge({
+      search: this.parseParameters(parameters),
+      responseType: ResponseContentType.Blob
+    });
+
+    return this.http.get(`${environment.apiUrl}/${path}`, options)
+      .map(response => response.blob())
       .catch(this.handleError);
   }
 
