@@ -30,7 +30,7 @@ export class RestApiService {
     });
 
     return this.http.get(`${environment.apiUrl}/${path}`, options)
-      .map(response => response.blob())
+      .map(response => new Blob([response.blob()], { type: 'application/csv' }))
       .catch(this.handleError);
   }
 

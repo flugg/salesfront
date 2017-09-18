@@ -14,6 +14,12 @@ export class DownloadContractDialogComponent implements OnInit {
   after: Date;
   before: Date;
   mobile: boolean;
+  selectedFileType: string = 'xls';
+  fileTypes: any[] = [
+    { type: 'xls', label: 'Excel (xls)' },
+    { type: 'xlsx', label: 'Excel (xlsx)' },
+    { type: 'csv', label: 'CSV (csv)' }
+  ];
 
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
               public dialog: MdDialogRef<WorkspaceComponent>,
@@ -30,6 +36,9 @@ export class DownloadContractDialogComponent implements OnInit {
   }
 
   download() {
-    this.reportService.download(moment(this.after), moment(this.before)).subscribe(blob => saveFileAs(blob, 'lol'));
+    this.reportService.download(this.data.project.id, moment(this.after), moment(this.before), this.selectedFileType).subscribe(blob => {
+      saveFileAs(blob, `${this.data.project.name}-${moment(this.after).format('YYYYMMDD')}-${moment(this.before).format('YYYYMMDD')}.${this.selectedFileType}`);
+      this.dialog.close();
+    });
   }
 }

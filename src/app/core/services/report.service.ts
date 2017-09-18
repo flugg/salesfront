@@ -10,7 +10,11 @@ import { RestApiService } from '../rest-api.service';
 export class ReportService {
   constructor(private api: RestApiService) {}
 
-  download(after: Moment, before: Moment): Observable<Blob> {
-    return this.api.blob(`reports`, { after, before });
+  download(projectId: string, after: Moment, before: Moment, filetype: string): Observable<Blob> {
+    return this.api.blob(`projects/${projectId}/reports`, {
+      after: after.toISOString(),
+      before: before.toISOString(),
+      filetype: filetype
+    });
   }
 }

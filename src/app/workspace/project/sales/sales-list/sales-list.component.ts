@@ -13,6 +13,8 @@ import { Sale } from '../../../../core/models/sale.model';
 import { Contract } from '../../../../core/models/contract.model';
 import { ViewContractDialogComponent } from '../view-contract-dialog/view-contract-dialog.component';
 import { DownloadContractDialogComponent } from '../download-contracts-dialog/download-contract-dialog.component';
+import { ActiveProjectService } from '../../../active-project.service';
+import { Project } from '../../../../core/models/project.model';
 
 @Component({
   providers: [SalesListService],
@@ -22,6 +24,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
   loading = true;
   sales: Sale[];
   membership: Member;
+  project: Project;
   dataSource: SaleDataSource | null;
   displayedColumns = ['id'];
 
@@ -29,14 +32,16 @@ export class SalesListComponent implements OnInit, OnDestroy {
 
   constructor(public salesListService: SalesListService,
               private activeMembershipService: ActiveMembershipService,
+              private activeProjectService: ActiveProjectService,
               private dialog: MdDialog) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
       this.salesListService.sales,
-      this.activeMembershipService.membership
+      this.activeMembershipService.membership,
+      this.activeProjectService.project
     ).subscribe(data => {
-      [this.sales, this.membership] = data;
+      [this.sales, this.membership, this.project] = data;
       this.loading = false;
     }));
   }
@@ -62,7 +67,11 @@ export class SalesListComponent implements OnInit, OnDestroy {
   }
 
   downloadContracts() {
-    this.dialog.open(DownloadContractDialogComponent, <MdDialogConfig>{});
+    this.dialog.open(DownloadContractDialogComponent, <MdDialogConfig>{
+      data: {
+        project: this.project
+      }
+    });
   }
 
   canRemove(sale) {

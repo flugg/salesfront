@@ -1,22 +1,30 @@
 <div class="mdc-typography--headline strong u-spacing-bottom">Download report</div>
-<md-input-container color="accent">
-  <input #afterDateInput
-         mdInput
-         placeholder="From"
-         [mdDatepicker]="afterPicker"
-         [ngModel]="after">
-  <md-datepicker-toggle mdSuffix [for]="afterPicker"></md-datepicker-toggle>
-</md-input-container>
-<md-datepicker #afterPicker [touchUi]="mobile"></md-datepicker>
-<md-input-container color="accent">
-  <input #beforeDateInput
-         mdInput
-         placeholder="To"
-         [mdDatepicker]="beforePicker"
-         [ngModel]="before">
-  <md-datepicker-toggle mdSuffix [for]="beforePicker"></md-datepicker-toggle>
-</md-input-container>
-<md-datepicker #beforePicker [touchUi]="mobile"></md-datepicker>
+<div class="u-max-width-input">
+  <md-input-container color="accent">
+    <input #afterDateInput
+           mdInput
+           placeholder="From"
+           [mdDatepicker]="afterPicker"
+           [ngModel]="after">
+    <md-datepicker-toggle mdSuffix [for]="afterPicker"></md-datepicker-toggle>
+  </md-input-container>
+  <md-datepicker #afterPicker [touchUi]="mobile"></md-datepicker>
+  <md-input-container color="accent">
+    <input #beforeDateInput
+           mdInput
+           placeholder="To"
+           [mdDatepicker]="beforePicker"
+           [ngModel]="before">
+    <md-datepicker-toggle mdSuffix [for]="beforePicker"></md-datepicker-toggle>
+  </md-input-container>
+  <md-datepicker #beforePicker [touchUi]="mobile"></md-datepicker>
+  <md-divider></md-divider>
+  <md-select placeholder="Filetype" color="accent" [(ngModel)]="selectedFileType" name="fileTypeInput" required fxFlexFill>
+    <md-option *ngFor="let fileType of fileTypes" [value]="fileType.type">
+      {{ fileType.label }}
+    </md-option>
+  </md-select>
+</div>
 <div class="u-vertical-spacing-big" fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="end">
   <button md-button md-dialog-close>Cancel</button>
   <button md-raised-button (click)="download()" color="accent">Download</button>
