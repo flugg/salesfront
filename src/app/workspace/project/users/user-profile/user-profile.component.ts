@@ -1,26 +1,26 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MdDialog, MdDialogConfig, MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/combineLatest';
 
-import { ProfilePictureComponent } from '../profile-picture/profile-picture.component';
-import { TeamService } from '../../../../core/services/team.service';
-import { SelectedMembershipService } from './selected-membership.service';
-import { DailyAwardListService } from './daily-award-list.service';
-import { WeeklyAwardListService } from './weekly-award-list.service';
-import { MonthlyAwardListService } from './monthly-award-list.service';
-import { ActiveMembershipService } from '../../../../organization/active-membership.service';
 import { DailyAward } from '../../../../core/models/daily-award.model';
 import { Member } from '../../../../core/models/member.model';
+import { MonthlyAward } from '../../../../core/models/monthly-award.model';
 import { Project } from '../../../../core/models/project.model';
 import { Team } from '../../../../core/models/team.model';
 import { WeeklyAward } from '../../../../core/models/weekly-award.model';
-import { MonthlyAward } from '../../../../core/models/monthly-award.model';
-import { SendMessageDialogComponent } from './send-message-dialog/send-message-dialog.component';
-import { ActiveProjectService } from '../../../active-project.service';
 import { MemberService } from '../../../../core/services/member.service';
+import { ActiveMembershipService } from '../../../../organization/active-membership.service';
+import { ActiveProjectService } from '../../../active-project.service';
+import { ProfilePictureComponent } from '../profile-picture/profile-picture.component';
+import { DailyAwardListService } from './daily-award-list.service';
+import { MonthlyAwardListService } from './monthly-award-list.service';
+import { SelectedMembershipService } from './selected-membership.service';
+import { SendMessageDialogComponent } from './send-message-dialog/send-message-dialog.component';
+import { WeeklyAwardListService } from './weekly-award-list.service';
 
 @Component({
   providers: [SelectedMembershipService, DailyAwardListService, WeeklyAwardListService, MonthlyAwardListService],
@@ -64,7 +64,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
       [this.member, this.project, this.activeMember, this.dailyAwards, this.weeklyAwards, this.monthlyAwards] = data;
 
-      if (this.member.deletedAt && ! this.activeMember.user.isAdmin) {
+      if (this.member.deletedAt && !this.activeMember.user.isAdmin) {
         this.router.navigate(['..'], { relativeTo: this.route });
       }
 
@@ -115,7 +115,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   recoverMember() {
     this.memberService.recover(this.member.id).then(() => {
-        this.snackBar.open('Member reactivated', null, <MdSnackBarConfig>{ duration: 2000 });
+      this.snackBar.open('Member reactivated', null, <MdSnackBarConfig>{ duration: 2000 });
     });
   }
 

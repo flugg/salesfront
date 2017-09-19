@@ -23,7 +23,8 @@
           </span>
 
           <span md-line
-                class="mdc-typography--body1 u-weak"
+                class="mdc-typography--body1"
+                [class.u-weak]="hasUnreadMessages(conversation)"
                 [class.u-faded]="!conversation.group && conversation.participations[0].member.deletedAt">
             <span *ngIf="conversation.lastMessage.memberId === membership.id">You: </span>
             {{ conversation.lastMessage?.body }}

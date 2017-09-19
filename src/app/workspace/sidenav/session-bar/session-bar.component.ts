@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { MdDialog, MdDialogConfig, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 import { slideUpDown } from '../../../core/animations/slide-up-down';
@@ -14,7 +14,7 @@ import { TeamMember } from '../../../core/models/team-member.model';
   styleUrls: ['session-bar.component.scss'],
   animations: [slideUpDown()]
 })
-export class SessionBarComponent implements OnInit {
+export class SessionBarComponent implements OnChanges {
   @Input() project: Member;
   @Input() membership: Member;
 
@@ -25,7 +25,7 @@ export class SessionBarComponent implements OnInit {
               private sessionService: SessionService,
               private sidenav: SidenavService) {}
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.teamMembers = this.membership.teamMembers.filter(teamMember => {
       return teamMember.team.projectId === this.project.id;
     });

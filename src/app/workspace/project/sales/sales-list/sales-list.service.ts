@@ -65,7 +65,6 @@ export class SalesListService extends ObservableResourceList implements OnDestro
   }
 
   private addSale(sale: Sale) {
-    console.log(sale);
     this.snapshot.push(sale);
     this.updateFromSnapshot();
   }

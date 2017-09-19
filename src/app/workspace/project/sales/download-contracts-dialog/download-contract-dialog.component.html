@@ -27,5 +27,5 @@
 </div>
 <div class="u-vertical-spacing-big" fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="end">
   <button md-button md-dialog-close>Cancel</button>
-  <button md-raised-button (click)="download()" color="accent">Download</button>
+  <button md-raised-button (click)="download()" [disabled]="pending" color="accent">Download</button>
 </div>

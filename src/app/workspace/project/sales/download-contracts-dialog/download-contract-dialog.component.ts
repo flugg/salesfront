@@ -11,14 +11,16 @@ import { WorkspaceComponent } from '../../../workspace.component';
   templateUrl: 'download-contract-dialog.component.html'
 })
 export class DownloadContractDialogComponent implements OnInit {
+  pending = false;
   after: Date;
   before: Date;
   mobile: boolean;
-  selectedFileType: string = 'xls';
+  selectedFileType = 'xls';
   fileTypes: any[] = [
     { type: 'xls', label: 'Excel (xls)' },
     { type: 'xlsx', label: 'Excel (xlsx)' },
-    { type: 'csv', label: 'CSV (csv)' }
+    { type: 'csv', label: 'CSV (csv)' },
+    { type: 'pdf', label: 'PDF (pdf)' },
   ];
 
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
@@ -36,6 +38,7 @@ export class DownloadContractDialogComponent implements OnInit {
   }
 
   download() {
+    this.pending = true;
     this.reportService.download(this.data.project.id, moment(this.after), moment(this.before), this.selectedFileType).subscribe(blob => {
       saveFileAs(blob, `${this.data.project.name}-${moment(this.after).format('YYYYMMDD')}-${moment(this.before).format('YYYYMMDD')}.${this.selectedFileType}`);
       this.dialog.close();

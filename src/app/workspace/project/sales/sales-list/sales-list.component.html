@@ -37,7 +37,7 @@
           </div>
           <div md-line class="u-weak" [class.u-faded]="sale.member.deletedAt">{{ sale.soldAt | amDateFormat:'DD-MM-YYYY HH:mm' }}</div>
           <div class="u-fill"></div>
-          <button md-icon-button (click)='openContract(sale.contract)' *ngIf="sale.contract">
+          <button md-icon-button (click)='openContract(sale.contract)' *ngIf="sale.contract?.length">
             <md-icon mdTooltip="View Contract" mdTooltipPosition="before" class="u-weak">content_paste</md-icon>
           </button>
           <button md-icon-button (click)='removeSale(sale)' *ngIf="canRemove(sale)">

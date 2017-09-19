@@ -1,19 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
+import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/first';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/first';
-import 'rxjs/add/operator/combineLatest';
-import * as moment from 'moment';
+import { Team } from '../../../../core/models/team.model';
+import { User } from '../../../../core/models/user.model';
 
 import { SaleService } from '../../../../core/services/sale.service';
 import { ActiveUserService } from '../../../../organization-list/active-user.service';
 import { ActiveProjectService } from '../../../active-project.service';
 import { MemberListService } from './member-list.service';
 import { TeamListService } from './team-list.service';
-import { User } from '../../../../core/models/user.model';
-import { Team } from '../../../../core/models/team.model';
 
 @Component({
   providers: [MemberListService, TeamListService],
@@ -49,10 +49,14 @@ export class AddSaleComponent implements OnInit, OnDestroy {
       this.teamList.teams
     ).subscribe(data => {
       [this.user, this.teams] = data;
+
+      this.teams = this.teams.filter(team => team.members.filter(member => !member.leftAt && !member.member.deletedAt).length > 0);
+
       if (this.teams.length) {
         this.selectedTeam = this.teams[0].id;
         this.updateSelectedMember();
       }
+
       this.time = moment().format('HH:mm');
       this.loading = false;
     }));

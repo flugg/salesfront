@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Member } from '../core/models/member.model';
 import { Session } from '../core/models/session.model';
+import { TeamMember } from '../core/models/team-member.model';
 import { User } from '../core/models/user.model';
 import { ObservableResource } from '../core/observable-resource';
 import { UserService } from '../core/services/user.service';
@@ -18,7 +19,7 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
 
     this.userService.find('me', [
       'memberships.organization.contractTemplates',
-      'memberships.teamMembers.team',
+      'memberships.teamMembers.team.project',
       'memberships.activeSession'
     ]).subscribe(activeUser => {
       activeUser.memberships.forEach(membership => this.setTeamOnSession(membership));
@@ -27,6 +28,9 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
       this.sockets.listenForUser(activeUser.id, {
         'user_updated': user => this.set(user),
         'member_removed': membership => this.removeMembership(membership),
+        'member_updated': membership => this.updateMembership(membership),
+        'team_member_added': teamMember => this.addTeamMember(teamMember),
+        'team_member_removed': teamMember => this.removeTeamMember(teamMember),
         'clocked_in': session => this.setActiveSession(session),
         'clocked_out': session => this.removeActiveSession(session)
       }, this);
@@ -39,7 +43,32 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
   }
 
   private removeMembership(membership: Member) {
-    this.snapshot.memberships = this.snapshot.memberships.filter(item => item.id === membership.id);
+    this.snapshot.memberships = this.snapshot.memberships.filter(item => item.id !== membership.id);
+    this.updateFromSnapshot();
+  }
+
+  private updateMembership(membership: Member) {
+    this.snapshot.memberships = this.snapshot.memberships.map(item => item.id === membership.id ? membership : item);
+    this.updateFromSnapshot();
+  }
+
+  private addTeamMember(teamMember: TeamMember) {
+    this.snapshot.memberships = this.snapshot.memberships.map(membership => {
+      if (membership.id !== teamMember.memberId) {
+        return membership;
+      }
+      return { ...membership, teamMembers: [...membership.teamMembers, teamMember] };
+    });
+    this.updateFromSnapshot();
+  }
+
+  private removeTeamMember(teamMember: TeamMember) {
+    this.snapshot.memberships = this.snapshot.memberships.map(membership => {
+      if (membership.id !== teamMember.memberId) {
+        return membership;
+      }
+      return { ...membership, teamMembers: membership.teamMembers.filter(item => item.id !== teamMember.id) };
+    });
     this.updateFromSnapshot();
   }
 

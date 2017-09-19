@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { Member } from '../models/member.model';
+import { PaginationResponse } from '../pagination-response';
 
 import { RestApiService } from '../rest-api.service';
-import { PaginationResponse } from '../pagination-response';
-import { Member } from '../models/member.model';
 
 @Injectable()
 export class MemberService {
@@ -24,15 +24,16 @@ export class MemberService {
 
   create(inviteId: string, userId: string) {
     return this.api.post(`users/${userId}/memberships`, {
-      invite: inviteId
+      invite: inviteId,
+      include: 'teamMembers.team.project'
     }).then(response => response.data);
   }
 
   delete(memberId: string, deleteSales: boolean) {
-    return this.api.delete(`members/${memberId}`, { deleteSales }).then(response => response.data);
+    return this.api.delete(`members/${memberId}`, { include: 'teamMembers.team.project', deleteSales }).then(response => response.data);
   }
 
   recover(memberId: string) {
-    return this.api.put(`members/${memberId}`).then(response => response.data);
+    return this.api.put(`members/${memberId}`, { include: 'teamMembers.team.project' }).then(response => response.data);
   }
 }

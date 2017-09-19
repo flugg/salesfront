@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/first';
 
 import { ObservableResource } from '../core/observable-resource';
 import { ActiveUserService } from '../organization-list/active-user.service';
@@ -19,7 +18,7 @@ export class ActiveMembershipService extends ObservableResource implements OnDes
     this.activeUserService.user.map(user => user.memberships.find(membership => {
       membership.user = user;
       return membership.organizationId === this.route.snapshot.params['organization'];
-    })).first().subscribe(membership => this.set(membership));
+    })).subscribe(membership => this.set(membership));
   }
 
   ngOnDestroy(): void {
