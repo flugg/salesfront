@@ -28,12 +28,12 @@
             </div>
             <img *ngIf="award.awardable.user.avatarPath"
                  class="u-avatar u-avatar--big u-clickable u-elevated"
-                 [routerLink]="'../../users/members/' + award.awardable.id"
+                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
             <div *ngIf="! award.awardable.user.avatarPath"
                  class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
-                 [routerLink]="'../../users/members/' + award.awardable.id">
+                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
               <md-icon class="medium-face">face</md-icon>
             </div>
             <div fxLayout="column" fxLayoutAlign="center center">
@@ -73,12 +73,12 @@
             </div>
             <img *ngIf="award.awardable.user.avatarPath"
                  class="u-avatar u-avatar--big u-clickable u-elevated"
-                 [routerLink]="'../../users/members/' + award.awardable.id"
+                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
             <div *ngIf="! award.awardable.user.avatarPath"
                  class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
-                 [routerLink]="'../../users/members/' + award.awardable.id">
+                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
               <md-icon class="medium-face">face</md-icon>
             </div>
             <div fxLayout="column" fxLayoutAlign="center center">
@@ -118,12 +118,12 @@
             </div>
             <img *ngIf="award.awardable.user.avatarPath"
                  class="u-avatar u-avatar--big u-clickable u-elevated"
-                 [routerLink]="'../../users/members/' + award.awardable.id"
+                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
             <div *ngIf="! award.awardable.user.avatarPath"
                  class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
-                 [routerLink]="'../../users/members/' + award.awardable.id">
+                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
               <md-icon class="medium-face">face</md-icon>
             </div>
             <div fxLayout="column" fxLayoutAlign="center center">
@@ -164,12 +164,12 @@
             </div>
             <img *ngIf="award.awardable.user.avatarPath"
                  class="u-avatar u-avatar--big u-clickable u-elevated"
-                 [routerLink]="'../../users/members/' + award.awardable.id"
+                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
                  src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
             <div *ngIf="! award.awardable.user.avatarPath"
                  class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
-                 [routerLink]="'../../users/members/' + award.awardable.id">
+                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
               <md-icon class="medium-face">face</md-icon>
             </div>
             <div fxLayout="column" fxLayoutAlign="center center">
