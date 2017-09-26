@@ -1,16 +1,17 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MdSidenav } from '@angular/material';
+
+import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/combineLatest';
 
-import { SidenavService } from './sidenav.service';
-import { ActiveUserService } from '../organization-list/active-user.service';
-import { ActiveMembershipService } from '../organization/active-membership.service';
-import { ActiveProjectService } from './active-project.service';
+import { Member } from '../core/models/member.model';
 import { Project } from '../core/models/project.model';
 import { User } from '../core/models/user.model';
-import { Member } from '../core/models/member.model';
+import { ActiveUserService } from '../organization-list/active-user.service';
+import { ActiveMembershipService } from '../organization/active-membership.service';
+import { ActiveProjectService } from '../organization/active-project.service';
+import { SidenavService } from './sidenav.service';
 
 @Component({
   templateUrl: 'workspace.component.html',
@@ -26,14 +27,11 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   @ViewChild('sidenav') private sidenav: MdSidenav;
 
-  constructor(private sidenavService: SidenavService,
-              private activeUserService: ActiveUserService,
+  constructor(private activeUserService: ActiveUserService,
               private activeMembershipService: ActiveMembershipService,
               private activeProjectService: ActiveProjectService) {}
 
   ngOnInit() {
-    this.sidenavService.set(this.sidenav);
-
     this.subscriptions.push(Observable.combineLatest(
       this.activeUserService.user,
       this.activeMembershipService.membership,
@@ -46,5 +44,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.activeProjectService.unsetFromStorage();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

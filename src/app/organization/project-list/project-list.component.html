@@ -1,0 +1,64 @@
+<div class="vmo-component">
+  <vmo-toolbar title="Projects" mode="menu">
+    <button md-icon-button (click)="openCreateProjectDialog()" *ngIf="! loading">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading" class="u-relative">
+    <vmo-empty-state [when]="! projects?.length && ! loading"
+                     [title]="'No projects, yet.'"
+                     [description]="'Add a project to get started.'">
+      <button md-raised-button color="accent" (click)="openCreateProjectDialog()" class="u-push-button">Create Project</button>
+    </vmo-empty-state>
+    <div class="vmo-scrollable-area">
+      <div class="vmo-container --full">
+        <md-grid-list [cols]="columns" [gutterSize]="gutter" rowHeight="288">
+          <md-grid-tile *ngFor="let project of projects" class="animation-item">
+            <div fxFill>
+              <md-card class="u-relative">
+                <div class="card-section u-spacing u-clickable" [routerLink]="['projects', project.id, 'leaderboard']">
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <span class="mdc-typography--headline strong">
+                      {{ project.name }}
+                    </span>
+                    <div class="u-fill"></div>
+                    <span *ngIf="! countComplete"
+                          class="mdc-typography--headline strong"
+                          counto
+                          [step]="50"
+                          [duration]="0.6"
+                          [countFrom]="0"
+                          [countTo]="project.value"
+                          (countoChange)="current = $event"
+                          (countoEnd)="countComplete = true">{{ current | value:project }}</span>
+                    <span *ngIf="countComplete" class="mdc-typography--headline strong">{{ project.value | value:project }}</span>
+                  </div>
+                  <md-divider class="compact-divider"></md-divider>
+                  <vmo-leaderboard [project]="project" [items]="project.teams" [avatar]="false" type="teams"></vmo-leaderboard>
+                  <div fxLayout
+                       fxLayoutAlign="center"
+                       *ngIf="! project.teams.length">
+                    <span class="mdc-typography--body1 u-weak" fxFlexAlign="center center">Project is empty.</span>
+                  </div>
+                </div>
+                <md-toolbar color="primary"
+                            class="vmo-toolbar u-elevated-tiny {{ project.color }}"
+                            [class.hide-children]="loading">
+                  <md-icon class="u-light-weak">group</md-icon>
+                  <span class="mdc-typography--title strong u-horizontal-spacing-small">{{ project.teamCount }}</span>
+                  <md-icon class="u-light-weak u-left-spacing">person</md-icon>
+                  <span class="mdc-typography--title strong u-horizontal-spacing-small">{{ project.userCount }}</span>
+                  <span class="u-fill"></span>
+                  <button md-icon-button type="button" [routerLink]="['projects', project.id]">
+                    <md-icon>arrow_forward</md-icon>
+                  </button>
+                </md-toolbar>
+              </md-card>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+</div>

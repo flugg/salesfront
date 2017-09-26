@@ -1,0 +1,157 @@
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <div class="vmo-scrollable-area">
+    <div class="vmo-container">
+      <md-card class="u-spacing-between">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span class="mdc-typography--headline strong">
+            Daily Top
+          </span>
+          <div class="u-fill"></div>
+          <button *ngIf="! dailyTeamAwardListService.isComplete()"
+                  md-button
+                  color="accent"
+                  class="pushed-right"
+                  routerLink="daily">View all</button>
+        </div>
+        <md-divider></md-divider>
+        <span *ngIf="!dailyAwards?.length"
+              class="mdc-typography--body1 u-weak">No daily top teams calculated yet. Check back tomorrow!</span>
+        <div *ngIf="dailyAwards?.length" class="u-horizontal-scrolling" fxLayout="row" fxLayoutGap="24px">
+          <div *ngFor="let award of dailyAwards"
+               fxLayout="column"
+               fxLayoutAlign="center center"
+               fxLayoutGap="12px"
+               class="wall-of-fame-item">
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <span class="mdc-typography--caption u-weak">{{ formatDay(award.day) }}</span>
+            </div>
+            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
+                 fxLayoutAlign="center center"
+                 [routerLink]="'../../teams/' + award.awardable.id">
+              <md-icon class="medium-face">group</md-icon>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <span class="mdc-typography--headline strong">{{ award.value }}</span>
+              <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">{{ award.awardable.name }}</div>
+            </div>
+          </div>
+        </div>
+      </md-card>
+
+      <md-card class="u-spacing-between">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span class="mdc-typography--headline strong">
+            Weekly Top
+          </span>
+          <div class="u-fill"></div>
+          <button *ngIf="! weeklyTeamAwardListService.isComplete()"
+                  md-button
+                  color="accent"
+                  class="pushed-right">
+            View all
+          </button>
+        </div>
+        <md-divider></md-divider>
+        <span *ngIf="!weeklyAwards?.length"
+              class="mdc-typography--body1 u-weak">No weekly top teams calculated yet. Check back next week!</span>
+        <div *ngIf="weeklyAwards?.length" class="u-horizontal-scrolling" fxLayout="row" fxLayoutGap="24px">
+          <div *ngFor="let award of weeklyAwards"
+               fxLayout="column"
+               fxLayoutAlign="center center"
+               fxLayoutGap="12px"
+               class="wall-of-fame-item">
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <span class="mdc-typography--caption u-weak">Week {{ award.week }}</span>
+            </div>
+            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
+                 fxLayoutAlign="center center"
+                 [routerLink]="'../../teams/' + award.awardable.id">
+              <md-icon class="medium-face">group</md-icon>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <span class="mdc-typography--headline strong">{{ award.value }}</span>
+              <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">{{ award.awardable.name }}</div>
+            </div>
+          </div>
+        </div>
+      </md-card>
+
+      <md-card class="u-spacing-between">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span class="mdc-typography--headline strong">
+            Monthly Top
+          </span>
+          <div class="u-fill"></div>
+          <button *ngIf="! monthlyTeamAwardListService.isComplete()"
+                  md-button
+                  color="accent"
+                  class="pushed-right">View all
+          </button>
+        </div>
+        <md-divider></md-divider>
+        <span *ngIf="!monthlyAwards?.length"
+              class="mdc-typography--body1 u-weak">No monthly top teams calculated yet. Check back next month!</span>
+        <div *ngIf="monthlyAwards?.length" class="u-horizontal-scrolling" fxLayout="row" fxLayoutGap="24px">
+          <div *ngFor="let award of monthlyAwards"
+               fxLayout="column"
+               fxLayoutAlign="center center"
+               fxLayoutGap="12px"
+               class="wall-of-fame-item">
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <span class="mdc-typography--caption u-weak">{{ award.month | amDateFormat: 'MMMM' }}</span>
+            </div>
+            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
+                 fxLayoutAlign="center center"
+                 [routerLink]="'../../teams/' + award.awardable.id">
+              <md-icon class="medium-face">group</md-icon>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <span class="mdc-typography--headline strong">{{ award.value }}</span>
+              <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">{{ award.awardable.name }}</div>
+            </div>
+          </div>
+        </div>
+      </md-card>
+
+      <md-card class="u-spacing-between">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span class="mdc-typography--headline strong">
+            Yearly Top
+          </span>
+          <div class="u-fill"></div>
+          <div class="u-fill"></div>
+          <button *ngIf="! yearlyTeamAwardListService.isComplete()"
+                  md-button
+                  color="accent"
+                  class="pushed-right">View all
+          </button>
+        </div>
+        <md-divider></md-divider>
+        <span *ngIf="!yearlyAwards?.length"
+              class="mdc-typography--body1 u-weak">No yearly top teams calculated yet. Check back next year!</span>
+        <div *ngIf="yearlyAwards?.length" class="u-horizontal-scrolling" fxLayout="row" fxLayoutGap="24px">
+          <div *ngFor="let award of yearlyAwards"
+               fxLayout="column"
+               fxLayoutAlign="center center"
+               fxLayoutGap="12px"
+               class="wall-of-fame-item">
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <span class="mdc-typography--caption u-weak">{{ award.year }}</span>
+            </div>
+            <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
+                 fxLayoutAlign="center center"
+                 [routerLink]="'../../teams/' + award.awardable.id">
+              <md-icon class="medium-face">group</md-icon>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <span class="mdc-typography--headline strong">{{ award.value }}</span>
+              <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">{{ award.awardable.name }}</div>
+            </div>
+          </div>
+        </div>
+      </md-card>
+    </div>
+  </div>
+</vmo-progress-spinner>
+
+<router-outlet></router-outlet>

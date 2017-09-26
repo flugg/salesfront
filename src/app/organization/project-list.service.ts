@@ -1,29 +1,103 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import * as moment from 'moment';
+import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
-
 import { Project } from '../core/models/project.model';
+import { Sale } from '../core/models/sale.model';
+import { Team } from '../core/models/team.model';
+
 import { ObservableResourceList } from '../core/observable-resource-list';
-import { ProjectService } from '../core/services/project.service';
+import { LeaderboardService } from '../core/services/leaderboard.service';
 import { SocketApiService } from '../core/socket-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActiveMembershipService } from './active-membership.service';
 
 @Injectable()
 export class ProjectListService extends ObservableResourceList implements OnDestroy {
   readonly projects: Observable<Project[]> = this.subject.asObservable();
 
-  constructor(private route: ActivatedRoute,
-              private sockets: SocketApiService,
-              private projectService: ProjectService) {
+  constructor(private sockets: SocketApiService,
+              private activeMembershipService: ActiveMembershipService,
+              private leaderboardService: LeaderboardService) {
     super();
 
-      this.paginator.subscribe(limit => {
-        this.pagination(this.projectService.list(this.route.snapshot.params['organization'], limit, this.cursor))
-          .subscribe(projects => this.add(projects));
+    this.activeMembershipService.membership.subscribe(membership => {
+      this.leaderboardService.projects(membership.organizationId, moment().startOf('day'), moment().endOf('day')).subscribe(projects => {
+        this.set(projects);
       });
+
+      this.sockets.listenForOrganization(membership.organizationId, {
+        'project_created': project => this.addProject(project),
+        'sale_registered': sale => this.addSale(sale),
+        'sale_deleted': sale => this.removeSale(sale)
+      }, this);
+    });
   }
 
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();
+  }
+
+  protected updateFromSnapshot() {
+    this.snapshot = this.sortProjects(this.snapshot.map(project => {
+      project.teams = this.sortTeams(project.teams.map(team => {
+        return { ...team, position: this.calculatePosition(project.teams, team) };
+      })).slice(0, 3);
+      return project;
+    }));
+
+    super.updateFromSnapshot();
+  }
+
+  protected sortProjects(projects: Project[]): Project[] {
+    return projects.sort((previous, current) => {
+      if (previous.value > current.value) {
+        return -1;
+      } else if (previous.value < current.value) {
+        return 1;
+      } else {
+        return current.teams.length > previous.teams.length ? 1 : -1;
+      }
+    });
+  }
+
+  protected sortTeams(teams: Team[]): Team[] {
+    return teams.sort((previous, current) => {
+      if (previous.value > current.value) {
+        return -1;
+      } else if (previous.value < current.value) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  private calculatePosition(teams: Team[], team: Team): number {
+    const index = teams.indexOf(team);
+    return teams.reduce((value, current) => {
+      return teams.indexOf(current) >= index || current.value === team.value ? value : value + 1;
+    }, 1);
+  }
+
+  private addProject(project: Project) {
+    this.snapshot.push(project);
+    this.updateFromSnapshot();
+  }
+
+  private addSale(sale: Sale) {
+    const project = this.snapshot.find(item => item.id === sale.projectId);
+    if (project) {
+      project.value += 1;
+      this.updateFromSnapshot();
+    }
+  }
+
+  private removeSale(sale: Sale) {
+    const project = this.snapshot.find(item => item.id === sale.projectId);
+    if (project) {
+      project.value -= 1;
+      this.updateFromSnapshot();
+    }
   }
 }

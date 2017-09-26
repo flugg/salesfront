@@ -1,0 +1,67 @@
+<div class="vmo-component">
+  <vmo-toolbar title="Feed" mode="menu"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <vmo-empty-state [when]="! posts?.length && ! loading"
+           [title]="'The feed is empty.'"
+           [description]="'No posts have been posted to the feed.'">
+        <md-card *ngIf="member?.user.isAdmin" class="post-input post-input--centered">
+          <div [hidden]="! showTextArea" fxFill>
+            <form (submit)="publishPost(centerInput.value); centerInput.value = ''; $event.preventDefault()">
+              <md-input-container class="vmo-fixed-input">
+                  <textarea #centerInput
+                            mdInput
+                            (blur)="hideTextArea(centerInput)"
+                            name="post"
+                            rows="4"
+                            placeholder="Write a post..."></textarea>
+              </md-input-container>
+              <div class="u-spacing-bottom-small">
+                <button md-raised-button color="accent">Publish</button>
+              </div>
+            </form>
+          </div>
+          <div *ngIf="! showTextArea" fxFill>
+            <md-input-container class="vmo-fixed-input">
+              <input mdInput (focus)="displayTextArea(centerInput)" placeholder="Write a post...">
+            </md-input-container>
+          </div>
+        </md-card>
+      </vmo-empty-state>
+      <div class="container">
+        <div *ngIf="posts?.length">
+          <md-card *ngIf="member?.user.isAdmin" class="post-input">
+            <div [hidden]="! showTextArea" fxFill>
+              <form (submit)="publishPost(input.value); input.value = ''; $event.preventDefault()">
+                <md-input-container class="vmo-fixed-input">
+                  <textarea #input
+                            mdInput
+                            (blur)="hideTextArea(input)"
+                            name="post"
+                            rows="4"
+                            placeholder="Write a post..."></textarea>
+                </md-input-container>
+                <div class="u-spacing-bottom-small">
+                  <button md-raised-button color="accent">Publish</button>
+                </div>
+              </form>
+            </div>
+            <div *ngIf="! showTextArea" fxFill>
+              <md-input-container class="vmo-fixed-input">
+                <input mdInput (focus)="displayTextArea(input)" placeholder="Write a post...">
+              </md-input-container>
+            </div>
+          </md-card>
+          <div *ngFor="let post of posts" class="u-vertical-spacing-small">
+            <vmo-post [post]="post" [member]="member" (commentPosted)="postComment(post, $event)"></vmo-post>
+          </div>
+        </div>
+
+        <vmo-load-more-button [paginator]="postListService"></vmo-load-more-button>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

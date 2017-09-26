@@ -1,0 +1,16 @@
+<div class="vmo-component">
+  <vmo-toolbar title="Notifications" mode="menu"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+
+    <vmo-empty-state [when]="! loading"
+                     [title]="'No notifications, yet.'"
+                     [description]="'You will be be notified when something interesting happens.'">
+    </vmo-empty-state>
+    <!-- // -->
+
+    <!-- <vmo-load-more-button [paginator]="notificationList"></vmo-load-more-button> -->
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

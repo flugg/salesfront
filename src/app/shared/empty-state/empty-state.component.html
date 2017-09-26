@@ -1,0 +1,7 @@
+<div *ngIf="when" [@popInOut]="true" class="u-stretch u-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+  <span *ngIf="!big" class="mdc-typography--headline strong">{{ title }}</span>
+  <span *ngIf="!big" class="mdc-typography--body1 u-weak u-text-center">{{ description }}</span>
+  <span *ngIf="big" class="mdc-typography--display2 strong">{{ title }}</span>
+  <span *ngIf="big" class="mdc-typography--subheading2 u-weak u-text-center">{{ description }}</span>
+  <ng-content></ng-content>
+</div>

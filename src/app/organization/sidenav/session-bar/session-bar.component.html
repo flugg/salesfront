@@ -1,0 +1,14 @@
+<md-toolbar class="clock-in-bar" *ngIf="project && teamMembers?.length" [@slideUpDown]="true" >
+  <button md-fab *ngIf="! membership?.activeSession && teamMembers?.length" [@popInOut]="true" (click)="clockIn()">
+    <md-icon>timer</md-icon>
+  </button>
+  <div class="mdc-typography--subheading1" *ngIf="membership?.activeSession" [@popInOut]="true">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+      <md-icon class="u-weak">timer</md-icon>
+      <span>{{ membership?.activeSession.teamMember?.team.name }}</span>
+    </div>
+  </div>
+  <button md-mini-fab color="primary" *ngIf="membership?.activeSession" [@popInOut]="true" (click)="clockOut()">
+    <md-icon>timer_off</md-icon>
+  </button>
+</md-toolbar>

@@ -115,6 +115,10 @@ snack-bar-container {
   }
 }
 
+.u-elevated-tiny {
+  @include mat-elevation(1);
+}
+
 .u-elevated-small {
   @include mat-elevation(2);
 }
@@ -166,6 +170,10 @@ snack-bar-container {
   color: rgba(black, 0.54);
 }
 
+.u-light-weak {
+  color: rgba(white, 0.7);
+}
+
 .u-highlight {
   color: black;
 
@@ -213,6 +221,15 @@ snack-bar-container {
   padding-right: 16px;
 }
 
+.u-left-spacing {
+  padding-left: 8px;
+}
+
+.u-horizontal-spacing-small {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 .u-vertical-spacing-big {
   padding: 24px 0;
 
@@ -248,6 +265,10 @@ snack-bar-container {
 
 .u-spacing-top-small {
   margin-top: 8px !important;
+}
+
+.u-spacing-top-medium {
+  margin-top: 16px !important;
 }
 
 .u-no-elevation {
@@ -765,6 +786,10 @@ snack-bar-container {
 
   &.--small {
     max-width: 740px;
+  }
+
+  &.--full {
+    max-width: 100%;
   }
 }
 

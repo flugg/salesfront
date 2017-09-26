@@ -1,0 +1,36 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="Leaderboard" mode="close">
+    <button md-icon-button (click)="datepicker.toggle()">
+      <md-icon>date_range</md-icon>
+    </button>
+  </vmo-toolbar>
+  <vmo-datepicker></vmo-datepicker>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <div class="vmo-container --fillOnMobile" [class.u-push-down]="datepicker.visible" *ngIf="! loading">
+        <md-card>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <span class="mdc-typography--headline strong">{{ team?.name }}</span>
+            <div class="u-fill"></div>
+            <span *ngIf="! countComplete"
+                  class="mdc-typography--headline strong"
+                  counto
+                  [step]="50"
+                  [duration]="0.6"
+                  [countFrom]="0"
+                  [countTo]="total"
+                  (countoChange)="current = $event"
+                  (countoEnd)="countComplete = true">{{ current | value:project }}</span>
+            <span *ngIf="countComplete" class="mdc-typography--headline strong">{{ total | value:project }}</span>
+          </div>
+          <md-divider></md-divider>
+          <vmo-leaderboard [project]="project" [items]="members" type="users"></vmo-leaderboard>
+          <span *ngIf="! members?.length" class="mdc-typography--body1 u-weak">No members in team.</span>
+        </md-card>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+
+  <router-outlet></router-outlet>
+</div>

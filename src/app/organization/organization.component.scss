@@ -8,3 +8,60 @@
   bottom: 24px;
   right: 24px;
 }
+
+.mat-sidenav {
+  color: white !important;
+  background: #253238 !important;
+  user-select: none;
+  width: calc(100% - 56px);
+
+  @media (min-width: 400px) {
+    width: 300px;
+  }
+
+  &.mat-sidenav-side {
+    max-width: 280px;
+  }
+
+  .mat-list-item.active-link {
+    color: white !important;
+    background: rgba(0, 0, 0, 0.12) !important;
+
+    a {
+      font-weight: 600 !important;
+    }
+  }
+
+  hr {
+    border: 0;
+    border-bottom: 1px solid rgba(white, 0.12);
+    margin: 0;
+  }
+
+  .mat-list {
+    padding-top: 0;
+  }
+  .text-weak {
+    color: rgba(white, 0.7);
+  }
+
+  .mat-icon-button {
+    color: white !important;
+  }
+
+  .mat-list-icon {
+    opacity: 0.5;
+  }
+
+  .mat-icon-button:not(:last-child) {
+    margin-right: 12px;
+  }
+
+  .mat-toolbar {
+    background: #36474f !important;
+  }
+
+  .mat-list-item {
+    color: white !important;
+  }
+}

@@ -1,44 +1,9 @@
-<div class="fancy-background-container">
-  <div class="fancy-background"></div>
-</div>
-<vmo-progress-spinner [hasLoaded]="! loading" class="u-relative">
-  <div fxLayout="column" fxLayoutAlign="center center" fxFill class="u-horizontal-spacing vmo-scrollable-area">
-    <div fxLayout="column" fxLayoutGap="24px" class="list-wrapper">
-      <div fxLayout="column" fxLayoutGap="8px">
-        <span class="mdc-typography--display1 strong u-push-down-on-mobile">{{ membership?.organization.name }}</span>
-        <span class="mdc-typography--subheading1 u-weak">Choose a project to get started.</span>
-      </div>
-      <md-list *ngIf="projects?.length" class="vmo-list vmo-list--small">
-        <md-list-item md-ripple
-                      *ngFor="let project of projects"
-                      [routerLink]="['app', project.id]"
-                      class="u-clickable">
-          <vmo-project-icon md-list-avatar [project]="project"></vmo-project-icon>
-          <h4 md-line class="mdc-typography--subheading1">
-            {{ project.name }}
-          </h4>
-          <span md-line class="mdc-typography--body1 u-weak">
-            {{ project.teamCount }} teams
-          </span>
-          <div class="u-fill"></div>
-          <span class="mdc-typography--headline strong u-horizontal-spacing">{{ project.value | value:project }}</span>
-        </md-list-item>
-      </md-list>
-      <!--<div fxLayoutAlign="center">
-        <button md-raised-button color="accent">Create Project</button>
-      </div>-->
-    </div>
-    <div *ngIf="! projects?.length"
-         class="u-stretch"
-         fxLayout="column"
-         fxLayoutAlign="center center"
-         fxLayoutGap="16px">
-      <button md-raised-button color="accent" (click)="openCreateProjectDialog()" class="u-push-button">Create a project</button>
-    </div>
-    <button *ngIf="membership?.user.isAdmin" md-fab mdTooltip="Create new project" mdTooltipPosition="left" (click)="openCreateProjectDialog()" class="fab-button">
-      <md-icon>add</md-icon>
-    </button>
+<md-sidenav-container>
+  <md-sidenav #sidenav>
+    <vmo-organization-sidenav *ngIf="! loading" [membership]="membership" [project]="project" [sidenav]="sidenav"></vmo-organization-sidenav>
+  </md-sidenav>
+  <vmo-sales-bar *ngIf="project" [membership]="membership" [project]="project"></vmo-sales-bar>
+  <div class="vmo-component" [class.vmo-component--salesbar]="project && membership?.activeSession?.teamMember.team.projectId === project?.id">
+    <router-outlet></router-outlet>
   </div>
-</vmo-progress-spinner>
-
-<router-outlet></router-outlet>
+</md-sidenav-container>

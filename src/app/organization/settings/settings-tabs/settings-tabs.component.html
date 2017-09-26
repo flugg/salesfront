@@ -1,0 +1,28 @@
+<div class="vmo-component">
+  <vmo-toolbar title="Settings" mode="menu"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+
+    <md-list class="vmo-list">
+      <md-list-item md-ripple class="u-clickable" [routerLink]="'organization'">
+        <md-icon md-list-icon class="u-weak">business</md-icon>
+        <h4 md-line class="mdc-typography--subheading1">Organization</h4>
+      </md-list-item>
+      <md-list-item md-ripple class="u-clickable" [routerLink]="'contracts'">
+        <md-icon md-list-icon class="u-weak">content_paste</md-icon>
+        <h4 md-line class="mdc-typography--subheading1">Contracts</h4>
+      </md-list-item>
+      <!--<md-list-item md-ripple class="u-clickable" [routerLink]="'billing'">
+        <md-icon md-list-icon class="u-weak">payment</md-icon>
+        <h4 md-line class="mdc-typography&#45;&#45;subheading1">Billing</h4>
+      </md-list-item>
+      <md-list-item md-ripple class="u-clickable" [routerLink]="'support'">
+        <md-icon md-list-icon class="u-weak">headset_mic</md-icon>
+        <h4 md-line class="mdc-typography&#45;&#45;subheading1">Support</h4>
+      </md-list-item>-->
+    </md-list>
+
+  </vmo-progress-spinner>
+
+  <router-outlet></router-outlet>
+</div>

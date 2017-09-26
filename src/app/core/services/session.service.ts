@@ -10,9 +10,6 @@ export class SessionService {
 
   clockIn(teamMemberId: string, clockOut?: Moment): Promise<Session> {
     if (clockOut != null) {
-      console.log(clockOut);
-      console.log(clockOut.toISOString());
-
       return this.api.post(`team-members/${teamMemberId}/sessions`, { clockOut: clockOut.toISOString() }).then(response => response.data);
     }
 

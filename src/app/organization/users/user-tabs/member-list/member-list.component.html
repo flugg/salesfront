@@ -1,0 +1,24 @@
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <div class="vmo-scrollable-area">
+    <md-list class="vmo-list">
+      <md-list-item md-ripple
+                    *ngFor="let member of members"
+                    [routerLink]="member.id"
+                    class="u-clickable">
+
+        <vmo-avatar md-list-avatar [membership]="member"></vmo-avatar>
+        <h4 md-line class="mdc-typography--subheading1" [class.u-faded]="member.deletedAt">{{ member.user.name }}</h4>
+      </md-list-item>
+    </md-list>
+
+    <vmo-load-more-button [paginator]="memberListService"></vmo-load-more-button>
+
+    <div *ngIf="! members?.length" class="u-stretch u-spacing" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <span class="mdc-typography--headline strong">Project has no members.</span>
+      <span class="mdc-typography--body1 u-weak">Send an invite to give someone access to the project.</span>
+      <button md-raised-button color="accent" routerLink="../invites/send" class="u-push-button">Send an invite</button>
+    </div>
+  </div>
+</vmo-progress-spinner>
+
+<router-outlet></router-outlet>

@@ -1,40 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { MdSidenav } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/combineLatest';
 
-import { ActiveMembershipService } from './active-membership.service';
-import { ProjectListService } from './project2-list.service';
 import { Member } from '../core/models/member.model';
 import { Project } from '../core/models/project.model';
-import { MdDialog, MdDialogConfig } from '@angular/material';
-import { CreateProjectComponent } from './create-project/create-project.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActiveMembershipService } from './active-membership.service';
+import { ActiveProjectService } from './active-project.service';
+import { SidenavService } from './sidenav.service';
 
 @Component({
   templateUrl: 'organization.component.html',
   styleUrls: ['organization.component.scss'],
-  providers: [ActiveMembershipService, ProjectListService]
+  providers: [ActiveMembershipService, SidenavService]
 })
-export class OrganizationComponent implements OnInit {
+export class OrganizationComponent implements OnInit, OnDestroy {
   loading = true;
   membership: Member;
-  projects: Project[];
+  project: Project;
 
   private subscriptions: Subscription[] = [];
 
+  @ViewChild('sidenav') private sidenav: MdSidenav;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private dialog: MdDialog,
+              private sidenavService: SidenavService,
               private activeMembershipService: ActiveMembershipService,
-              private projectListService: ProjectListService) {}
+              private activeProjectService: ActiveProjectService) {}
 
   ngOnInit(): void {
+    this.sidenavService.set(this.sidenav);
+
     this.subscriptions.push(Observable.combineLatest(
       this.activeMembershipService.membership,
-      this.projectListService.projects
+      this.activeProjectService.project
     ).subscribe(data => {
-      [this.membership, this.projects] = data;
+      [this.membership, this.project] = data;
 
       if (this.membership.deletedAt) {
         this.router.navigate(['..'], { relativeTo: this.route });
@@ -44,12 +49,7 @@ export class OrganizationComponent implements OnInit {
     }));
   }
 
-  openCreateProjectDialog(): void {
-    this.dialog.open(CreateProjectComponent, <MdDialogConfig>{
-      panelClass: 'create-project-dialog',
-      data: {
-        organization: this.membership.organization
-      }
-    });
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

@@ -13,11 +13,11 @@ export class ProjectIconComponent implements OnInit, OnChanges {
   abbreviation: string;
 
   ngOnInit(): void {
-    this.abbreviation = this.getAbbreviation();
+    // this.abbreviation = this.getAbbreviation();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.abbreviation = this.getAbbreviation();
+    // this.abbreviation = this.getAbbreviation();
   }
 
   private getAbbreviation(): string {

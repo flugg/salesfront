@@ -1,0 +1,42 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="" mode="back"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <form novalidate
+            (submit)="submit(); $event.preventDefault()">
+        <div class="vmo-container --small">
+          <md-card>
+            <span class="mdc-typography--display1 strong">Update Organization</span>
+            <p class="mdc-typography--body1 u-weak">You can tweak organization settings below.</p>
+            <md-input-container color="accent">
+              <input #nameInput="ngModel"
+                     mdInput
+                     name="name"
+                     placeholder="Organization Name"
+                     required
+                     [(ngModel)]="name">
+              <md-error *ngIf="nameInput.errors?.required && (nameInput.dirty || nameInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <md-input-container color="accent">
+              <input #slugInput="ngModel"
+                     mdInput
+                     name="slug"
+                     required
+                     [(ngModel)]="slug">
+              <span mdPrefix class="u-weak">vendumo.com/</span>
+              <md-error *ngIf="slugInput.errors?.required && (slugInput.dirty || slugInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+              <button md-raised-button color="accent">Save</button>
+            </div>
+          </md-card>
+        </div>
+      </form>
+    </div>
+  </vmo-progress-spinner>
+</div>

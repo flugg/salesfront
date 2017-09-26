@@ -1,5 +1,6 @@
 import { Organization } from './organization.model';
 import { ContractTemplate } from './contract-template.model';
+import { Team } from './team.model';
 
 export interface Project {
   id: string;
@@ -18,4 +19,5 @@ export interface Project {
   value?: number;
   organization?: Organization;
   contractTemplate?: ContractTemplate;
+  teams?: Team[];
 }

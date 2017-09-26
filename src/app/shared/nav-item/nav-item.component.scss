@@ -1,0 +1,45 @@
+:host {
+  outline: 0;
+}
+
+.mat-icon {
+  color: white;
+  opacity: 0.5;
+}
+
+a {
+  color: white;
+}
+
+.mat-list-item {
+  margin: 0 16px;
+  border-radius: 4px;
+
+  &:hover {
+    background: rgba(black, 0.12) !important;
+  }
+
+  &.active {
+    background: rgba(black, 0.2) !important;
+
+    .mat-icon {
+      opacity: 1;
+    }
+
+    a {
+      font-weight: 500 !important;
+    }
+  }
+}
+
+.notification-badge {
+  position: absolute;
+  right: 16px;
+  height: 24px;
+  line-height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: #f44336;
+  color: white;
+  text-align: center;
+}

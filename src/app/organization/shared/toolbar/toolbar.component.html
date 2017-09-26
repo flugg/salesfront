@@ -1,0 +1,22 @@
+<md-toolbar [color]="project ? 'primary' : 'none'"
+            class="vmo-toolbar"
+            [class.hide-children]="loading"
+            [ngClass]="project?.color">
+  <button md-icon-button *ngIf="state == 'menu'" (click)="sidebar.open()" type="button">
+    <md-icon>menu</md-icon>
+  </button>
+  <button md-icon-button *ngIf="state == 'back'" [routerLink]="'../'" type="button">
+    <md-icon>arrow_back</md-icon>
+  </button>
+  <button md-icon-button *ngIf="state == 'close'" [routerLink]="'../'" type="button">
+    <md-icon>close</md-icon>
+  </button>
+  <h2 class="mdc-typography--title" [class.toolbar-heading]="state != 'none'">
+    {{ title }}
+  </h2>
+  <span class="u-fill"></span>
+  <ng-content></ng-content>
+  <md-toolbar-row *ngIf="tabs" style="height: 48px">
+    <ng-content select="[toolbar-tabs]"></ng-content>
+  </md-toolbar-row>
+</md-toolbar>

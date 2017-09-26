@@ -1,0 +1,12 @@
+<md-list-item *ngIf="project && link" md-ripple [routerLink]="['/', project.organizationId, 'projects', project.id, link]" routerLinkActive="active">
+  <md-icon md-list-icon>{{ icon }}</md-icon>
+  <a md-line class="mdc-typography--body1">{{ title }}</a>
+  <div class="u-fill"></div>
+  <div class="notification-badge mdc-typography--caption strong" [@popInOut]="true" *ngIf="notifications">{{ notifications < 10 ? notifications : '9+' }}</div>
+</md-list-item>
+<md-list-item *ngIf="! project || ! link" md-ripple>
+  <md-icon md-list-icon>{{ icon }}</md-icon>
+  <a md-line class="mdc-typography--body1">{{ title }}</a>
+  <div class="u-fill"></div>
+  <div class="notification-badge mdc-typography--body1 strong" [@popInOut]="true" *ngIf="notifications">{{ notifications < 10 ? notifications : '9+' }}</div>
+</md-list-item>

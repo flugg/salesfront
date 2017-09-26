@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MdButtonModule, MdButtonToggleModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDatepickerModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdNativeDateModule, MdProgressSpinnerModule, MdRadioModule, MdSelectModule, MdSidenavModule, MdSlideToggleModule, MdSnackBarModule, MdTableModule, MdTabsModule, MdToolbarModule, MdTooltipModule } from '@angular/material';
+import { MdButtonModule, MdButtonToggleModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDatepickerModule, MdDialogModule, MdIconModule, MdInputModule, MdLineModule, MdListModule, MdNativeDateModule, MdProgressSpinnerModule, MdRadioModule, MdSelectModule, MdSidenavModule, MdSlideToggleModule, MdSnackBarModule, MdTableModule, MdTabsModule, MdToolbarModule, MdTooltipModule, MdGridListModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MomentModule } from 'angular2-moment';
 import { CountoModule } from 'angular2-counto';
@@ -15,6 +15,9 @@ import { Nl2BrPipe } from './nl2br.pipe';
 import { ValuePipe } from './value.pipe';
 import { ProjectIconComponent } from './project-icon/project-icon.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { NavItemComponent } from './nav-item/nav-item.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { EmptyStateComponent } from './empty-state/empty-state.component';
 
 @NgModule({
   imports: [
@@ -23,7 +26,9 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     RouterModule,
     MdButtonModule,
     MdProgressSpinnerModule,
-    MdIconModule
+    MdIconModule,
+    MdListModule,
+    CountoModule
   ],
   exports: [
     CommonModule,
@@ -52,6 +57,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     MdTableModule,
     MdButtonToggleModule,
     MdRadioModule,
+    MdGridListModule,
     MomentModule,
     LoadMoreButtonComponent,
     ProgressSpinnerComponent,
@@ -60,8 +66,11 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     ExcludePipe,
     Nl2BrPipe,
     ValuePipe,
+    NavItemComponent,
+    LeaderboardComponent,
     CountoModule,
-    SignaturePadModule
+    SignaturePadModule,
+    EmptyStateComponent
   ],
   declarations: [
     LoadMoreButtonComponent,
@@ -70,7 +79,10 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     ProjectIconComponent,
     ExcludePipe,
     Nl2BrPipe,
-    ValuePipe
+    ValuePipe,
+    NavItemComponent,
+    LeaderboardComponent,
+    EmptyStateComponent
   ],
   providers: [
     DecimalPipe

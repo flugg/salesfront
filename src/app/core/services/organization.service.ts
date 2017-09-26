@@ -16,4 +16,8 @@ export class OrganizationService {
   find(id: string): Observable<Organization> {
     return this.api.get(`organizations/${id}`, { include: 'projects,membership.teamMembers' }).map(response => response.data);
   }
+
+  update(id: string, attributes: any) {
+    return this.api.put(`organizations/${id}`, attributes, { include: 'projects,membership.teamMembers' }).then(response => response.data);
+  }
 }

@@ -1,44 +1,31 @@
 <div fxFill *ngIf="! loading" [@fadeInOut]="true" class="vmo-sidenav">
-  <md-toolbar>
-    <button md-icon-button [routerLink]="['/', project.organizationId, 'app', 'messages']" routerLinkActive="active-link">
-      <div class="notify-indicator" *ngIf="unreadConversations?.length"></div>
-      <md-icon>email</md-icon>
-    </button>
-    <button md-icon-button [routerLink]="['/', project.organizationId, 'app', 'notifications']" routerLinkActive="active-link">
-      <md-icon>notifications</md-icon>
-    </button>
-    <span class="u-fill"></span>
-    <button md-icon-button (click)="logout()">
-      <md-icon>exit_to_app</md-icon>
-    </button>
-  </md-toolbar>
-  <div class="vmo-scrollable-area inside-sidenav">
+  <div class="vmo-scrollable-area inside-sidenav" [class.--pushed-up]="teamMembers?.length">
+    <div fxLayoutAlign="center center" class="sidenav-logo-wrapper u-clickable" (click)="goBackToOrganization()">
+      <img src="https://forbrukervalget.no/images/forbrukervalget-logo.svg" class="sidenav-logo">
+    </div>
     <md-list>
-      <md-list-item md-ripple [routerLink]="['/', membership?.organizationId, 'app', project?.id, 'users', 'members', membership?.id]" class="u-clickable">
-        <vmo-avatar md-list-avatar [membership]="membership" [sessionIndicator]="false"></vmo-avatar>
-        <span md-line class="mdc-typography--body2">{{ membership?.user.name }}</span>
-        <span class="u-fill"></span>
-        <md-icon>chevron_right</md-icon>
+      <md-list-item md-ripple [routerLink]="['/', membership?.organizationId, 'projects', project?.id, 'feed']" class="u-clickable">
+        <vmo-project-icon md-list-avatar [project]="project" class="push-sides"></vmo-project-icon>
+        <span md-line class="mdc-typography--subheading2 strong">{{ project?.name }}</span>
       </md-list-item>
     </md-list>
-    <hr>
-    <md-list>
-      <md-list-item md-ripple routerLink=".." class="u-clickable">
-        <vmo-project-icon md-list-avatar [project]="project"></vmo-project-icon>
-        <span md-line class="mdc-typography--body2">{{ project?.name }}</span>
-        <span class="u-fill"></span>
-        <md-icon>chevron_right</md-icon>
-      </md-list-item>
-    </md-list>
-    <hr>
     <md-nav-list>
       <vmo-nav-item title="Feed" icon="forum" link="feed" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Leaderboard" icon="sort" link="leaderboard" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Wall of Fame" icon="star" link="wall-of-fame" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Sales" icon="attach_money" link="sales" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Teams" icon="group" link="teams" [project]="project"></vmo-nav-item>
-      <vmo-nav-item title="Users" icon="person" link="users" [project]="project"></vmo-nav-item>
-      <vmo-nav-item *ngIf="membership.user.isAdmin" title="Settings" icon="settings" link="settings" [project]="project"></vmo-nav-item>
+    </md-nav-list>
+    <md-list>
+      <md-list-item md-ripple [routerLink]="['/', membership?.organizationId, 'projects', project?.id, 'users', 'members', membership?.id]" class="u-clickable">
+        <vmo-avatar md-list-avatar [membership]="membership" [sessionIndicator]="false" class="push-sides"></vmo-avatar>
+        <span md-line class="mdc-typography--subheading2 strong">{{ membership?.user.name }}</span>
+      </md-list-item>
+    </md-list>
+    <md-nav-list>
+      <vmo-nav-item title="Messages" icon="mail" [routerLink]="['/', project.organizationId, 'messages']" routerLinkActive="active-link-parent"></vmo-nav-item>
+      <vmo-nav-item title="Notifications" icon="notifications" [routerLink]="['/', project.organizationId, 'notifications']" routerLinkActive="active-link-parent"></vmo-nav-item>
+      <vmo-nav-item title="Log Out" icon="exit_to_app" (click)="logout()"></vmo-nav-item>
     </md-nav-list>
   </div>
   <vmo-session-bar [project]="project" [membership]="membership"></vmo-session-bar>

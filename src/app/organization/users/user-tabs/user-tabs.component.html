@@ -1,0 +1,9 @@
+<div class="vmo-component">
+  <vmo-toolbar title="Users" mode="menu">
+    <button md-icon-button routerLink="register" *ngIf="! loading && user?.isAdmin">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <router-outlet></router-outlet>
+</div>
