@@ -23,6 +23,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   projects: Project[];
   columns = 3;
   gutter = 24;
+  current = 0;
+  countComplete = [];
 
   private subscriptions: Subscription[] = [];
 
@@ -64,5 +66,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  test(a): void {
+    console.log(a);
   }
 }

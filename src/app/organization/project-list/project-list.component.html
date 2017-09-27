@@ -23,23 +23,24 @@
                       {{ project.name }}
                     </span>
                     <div class="u-fill"></div>
-                    <span *ngIf="! countComplete"
+                    <span *ngIf="! countComplete[project.id]"
                           class="mdc-typography--headline strong"
                           counto
-                          [step]="50"
+                          [step]="100"
                           [duration]="0.6"
                           [countFrom]="0"
                           [countTo]="project.value"
-                          (countoChange)="current = $event"
-                          (countoEnd)="countComplete = true">{{ current | value:project }}</span>
-                    <span *ngIf="countComplete" class="mdc-typography--headline strong">{{ project.value | value:project }}</span>
+                          (countoChange)="project.currentValue = $event"
+                          (countoEnd)="countComplete[project.id] = true">{{ project.currentValue | value:project }}</span>
+                    <span *ngIf="countComplete[project.id]" class="mdc-typography--headline strong">{{ project.value | value:project }}</span>
                   </div>
                   <md-divider class="compact-divider"></md-divider>
                   <vmo-leaderboard [project]="project" [items]="project.teams | filteredTeams" [avatar]="false" type="teams"></vmo-leaderboard>
                   <div fxLayout
                        fxLayoutAlign="center"
-                       *ngIf="! project.teams.length">
-                    <span class="mdc-typography--body1 u-weak" fxFlexAlign="center center">Project is empty.</span>
+                       *ngIf="! project.teams.length"
+                       class="u-vertical-spacing-small">
+                    <div class="mdc-typography--body1 u-weak" fxFlexAlign="center center">Project is empty.</div>
                   </div>
                 </div>
                 <md-toolbar color="primary"

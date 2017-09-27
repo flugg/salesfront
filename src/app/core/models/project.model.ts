@@ -17,6 +17,7 @@ export interface Project {
   createdAt: string;
   updatedAt: string;
   value?: number;
+  currentValue?: number;
   organization?: Organization;
   contractTemplate?: ContractTemplate;
   teams?: Team[];
