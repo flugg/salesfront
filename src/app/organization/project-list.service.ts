@@ -88,7 +88,17 @@ export class ProjectListService extends ObservableResourceList implements OnDest
   private addSale(sale: Sale) {
     const project = this.snapshot.find(item => item.id === sale.projectId);
     if (project) {
-      project.value += 1;
+      project.value += project.type === 'count' ? 1 : sale.value;
+
+      project.teams = project.teams.map(team => {
+        if (team.id !== sale.teamId) {
+          return team;
+        }
+
+        team.value += project.type === 'count' ? 1 : sale.value;
+        return team;
+      });
+
       this.updateFromSnapshot();
     }
   }
@@ -96,7 +106,17 @@ export class ProjectListService extends ObservableResourceList implements OnDest
   private removeSale(sale: Sale) {
     const project = this.snapshot.find(item => item.id === sale.projectId);
     if (project) {
-      project.value -= 1;
+      project.value -= project.type === 'count' ? 1 : sale.value;
+
+      project.teams = project.teams.map(team => {
+        if (team.id !== sale.teamId) {
+          return team;
+        }
+
+        team.value -= project.type === 'count' ? 1 : sale.value;
+        return team;
+      });
+
       this.updateFromSnapshot();
     }
   }
