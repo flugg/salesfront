@@ -15,6 +15,7 @@ import { SalesBarComponent } from './sales-bar/sales-bar.component';
 import { AddSaleDialogComponent } from './sales-bar/add-sale-dialog/add-sale-dialog.component';
 import { ContractDialogComponent } from './sales-bar/contract-dialog/contract-dialog.component';
 import { SaleAddedDialogComponent } from './sales-bar/sale-added-dialog/sale-added-dialog.component';
+import { FilteredTeamsPipe } from './project-list/filtered-teams.pipe';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { SaleAddedDialogComponent } from './sales-bar/sale-added-dialog/sale-add
     SalesBarComponent,
     AddSaleDialogComponent,
     ContractDialogComponent,
-    SaleAddedDialogComponent
+    SaleAddedDialogComponent,
+    FilteredTeamsPipe
   ],
   entryComponents: [
     CreateProjectComponent,

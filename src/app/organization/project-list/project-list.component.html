@@ -35,7 +35,7 @@
                     <span *ngIf="countComplete" class="mdc-typography--headline strong">{{ project.value | value:project }}</span>
                   </div>
                   <md-divider class="compact-divider"></md-divider>
-                  <vmo-leaderboard [project]="project" [items]="project.teams" [avatar]="false" type="teams"></vmo-leaderboard>
+                  <vmo-leaderboard [project]="project" [items]="project.teams | filteredTeams" [avatar]="false" type="teams"></vmo-leaderboard>
                   <div fxLayout
                        fxLayoutAlign="center"
                        *ngIf="! project.teams.length">

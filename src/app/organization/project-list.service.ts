@@ -42,7 +42,7 @@ export class ProjectListService extends ObservableResourceList implements OnDest
     this.snapshot = this.sortProjects(this.snapshot.map(project => {
       project.teams = this.sortTeams(project.teams).map(team => {
         return { ...team, position: this.calculatePosition(project.teams, team) };
-      }).slice(0, 3);
+      });
       return project;
     }));
 
