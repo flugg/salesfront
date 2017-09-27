@@ -1,6 +1,6 @@
 <div class="vmo-component">
   <vmo-toolbar title="Projects" mode="menu">
-    <button md-icon-button (click)="openCreateProjectDialog()" *ngIf="! loading">
+    <button md-icon-button (click)="openCreateProjectDialog()" *ngIf="! loading && membership.user.isAdmin">
       <md-icon>add</md-icon>
     </button>
   </vmo-toolbar>
