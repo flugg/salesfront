@@ -19,19 +19,25 @@ export class ConversationListService extends ObservableResourceList implements O
               private conversationService: ConversationService) {
     super();
 
-    this.activeMembershipService.membership.subscribe(membership => {
-      this.paginator.subscribe(limit => {
-        this.pagination(this.conversationService.get(membership.organizationId, limit, this.cursor))
-          .subscribe(conversations => this.add(conversations));
-      });
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.cursor = null;
+      this.snapshot = [];
+      this.sockets.stopListening(this);
 
-      this.sockets.listenForUser(membership.userId, {
-        'conversation_started': (conversation) => this.addConversation(conversation),
-        'message_sent': (message) => this.setLastMessage(message),
-        'last_message_read': (participation) => this.setParticipant(participation),
-        'participant_added': (participation) => this.addParticipant(participation),
-        'participant_removed': (participation) => this.setParticipant(participation)
-      }, this);
+      this.activeMembershipService.membership.subscribe(membership => {
+        this.paginator.subscribe(limit => {
+          this.pagination(this.conversationService.get(membership.organizationId, limit, this.cursor))
+            .subscribe(conversations => this.add(conversations));
+        });
+
+        this.sockets.listenForUser(membership.userId, {
+          'conversation_started': (conversation) => this.addConversation(conversation),
+          'message_sent': (message) => this.setLastMessage(message),
+          'last_message_read': (participation) => this.setParticipant(participation),
+          'participant_added': (participation) => this.addParticipant(participation),
+          'participant_removed': (participation) => this.setParticipant(participation)
+        }, this);
+      });
     });
   }
 

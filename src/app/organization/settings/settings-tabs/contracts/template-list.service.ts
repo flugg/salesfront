@@ -17,16 +17,22 @@ export class TemplateListService extends ObservableResourceList implements OnDes
               private contractTemplateService: ContractTemplateService) {
     super();
 
-    this.activeMembershipService.membership.first().subscribe(membership => {
-      this.paginator.subscribe(limit => {
-        this.pagination(this.contractTemplateService.get(membership.organizationId, limit, this.cursor))
-          .subscribe(members => this.add(members));
-      });
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.cursor = null;
+      this.snapshot = [];
+      this.sockets.stopListening(this);
 
-      this.sockets.listenForOrganization(membership.organizationId, {
-        'contract_template_registered': template => this.addTemplate(template),
-        'contract_template_updated': template => this.updateTemplate(template)
-      }, this);
+      this.activeMembershipService.membership.first().subscribe(membership => {
+        this.paginator.subscribe(limit => {
+          this.pagination(this.contractTemplateService.get(membership.organizationId, limit, this.cursor))
+            .subscribe(members => this.add(members));
+        });
+
+        this.sockets.listenForOrganization(membership.organizationId, {
+          'contract_template_registered': template => this.addTemplate(template),
+          'contract_template_updated': template => this.updateTemplate(template)
+        }, this);
+      });
     });
   }
 

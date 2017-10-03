@@ -1,13 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 
+import { Conversation } from '../../core/models/conversation.model';
+import { Message } from '../../core/models/message.model';
+import { Participation } from '../../core/models/participation.model';
 import { ObservableResourceList } from '../../core/observable-resource-list';
+import { UnreadConversationService } from '../../core/services/unread-conversation.service';
 import { SocketApiService } from '../../core/socket-api.service';
 import { ActiveMembershipService } from '../../organization/active-membership.service';
-import { UnreadConversationService } from '../../core/services/unread-conversation.service';
-import { Conversation } from '../../core/models/conversation.model';
-import { Participation } from '../../core/models/participation.model';
-import { Message } from '../../core/models/message.model';
 
 @Injectable()
 export class UnreadConversationListService extends ObservableResourceList implements OnDestroy {
@@ -18,13 +19,17 @@ export class UnreadConversationListService extends ObservableResourceList implem
               private unreadConversationService: UnreadConversationService) {
     super();
 
-    this.activeMembershipService.membership.subscribe(membership => {
-      this.unreadConversationService.list(membership.organizationId).subscribe(conversations => this.set(conversations));
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.sockets.stopListening(this);
 
-      this.sockets.listenForUser(membership.userId, {
-        'last_message_read': participation => this.updateConversation(participation),
-        'message_sent': message => this.addConversation(message)
-      }, this);
+      this.activeMembershipService.membership.subscribe(membership => {
+        this.unreadConversationService.list(membership.organizationId).subscribe(conversations => this.set(conversations));
+
+        this.sockets.listenForUser(membership.userId, {
+          'last_message_read': participation => this.updateConversation(participation),
+          'message_sent': message => this.addConversation(message)
+        }, this);
+      });
     });
   }
 

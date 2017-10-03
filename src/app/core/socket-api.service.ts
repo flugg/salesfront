@@ -1,17 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef } from '@angular/core';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import * as Pusher from 'pusher-js';
 import * as Echo from 'laravel-echo';
+import * as Pusher from 'pusher-js';
 
-import { TokenService } from './auth/token.service';
+import 'rxjs/add/operator/filter';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import { environment } from '../../environments/environment';
+import { TokenService } from './auth/token.service';
 
 @Injectable()
 export class SocketApiService {
   private echo;
+  private connected = new BehaviorSubject<boolean | null>(null);
+  connects = this.connected.filter(connection => connection === true);
+  disconnects = this.connected.filter(connection => connection === false);
 
   constructor(private tokenService: TokenService,
-              private snackBar: MdSnackBar) {
+              private snackBar: MdSnackBar,
+              private applicationRef: ApplicationRef) {
     this.connect();
   }
 
@@ -55,6 +62,15 @@ export class SocketApiService {
     });
 
     this.listenForDisconnects();
+
+    this.getPusher().connection.bind('connected', () => {
+      if (this.connected.value === false) {
+        this.snackBar.dismiss();
+        this.snackBar.open('Reconnected', null, <MdSnackBarConfig>{ duration: 1500 });
+      }
+
+      this.connected.next(true);
+    });
   }
 
   private getPusher() {
@@ -73,20 +89,32 @@ export class SocketApiService {
 
   private listenForDisconnects() {
     this.getPusher().connection.bind('disconnected', () => this.handleDisconnect());
+    this.getPusher().connection.bind('unavailable', () => this.handleDisconnect());
+    this.getPusher().connection.bind('error', () => this.handleDisconnect());
   }
 
   private handleDisconnect() {
-    const snackBar = this.snackBar.open('Disconnected', 'Reconnect');
-    snackBar.onAction().subscribe(() => {
-      snackBar.dismiss();
-      this.echo.connector.connect();
-      this.snackBar.open('Reconnecting....');
-    });
+    if (this.connected.value !== false) {
+      this.connected.next(false);
 
-    this.getPusher().connection.bind('connected', () => {
-      this.snackBar.open('Connected', null, <MdSnackBarConfig>{ duration: 1500 });
-      this.getPusher().connection.unbind('connected');
-    });
+      const snackBar = this.snackBar.open('Disconnected', 'Reconnect');
+      this.applicationRef.tick();
+
+      this.connects.subscribe(() => {
+        snackBar.dismiss();
+        this.applicationRef.tick();
+      });
+
+      snackBar.onAction().subscribe(() => {
+        if (this.connected.value === true) {
+          return;
+        }
+
+        snackBar.dismiss();
+        this.applicationRef.tick();
+        this.echo.connector.connect();
+      });
+    }
   }
 }
 

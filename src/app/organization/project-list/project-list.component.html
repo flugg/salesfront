@@ -1,9 +1,13 @@
 <div class="vmo-component">
   <vmo-toolbar title="Projects" mode="menu">
-    <button md-icon-button (click)="openCreateProjectDialog()" *ngIf="! loading && membership.user.isAdmin">
+    <button md-icon-button *ngIf="! loading && membership.user.isAdmin" (click)="datepicker.toggle()">
+      <md-icon>date_range</md-icon>
+    </button>
+    <button md-icon-button (click)="openCreateProjectDialog()" *ngIf="! loading && membership.user.isAdmin" class="u-horizontal-spacing-small">
       <md-icon>add</md-icon>
     </button>
   </vmo-toolbar>
+  <vmo-datepicker></vmo-datepicker>
 
   <vmo-progress-spinner [hasLoaded]="! loading" class="u-relative">
     <vmo-empty-state [when]="! projects?.length && ! loading"
@@ -51,6 +55,9 @@
                   <md-icon class="u-light-weak u-left-spacing">person</md-icon>
                   <span class="mdc-typography--title strong u-horizontal-spacing-small">{{ project.userCount }}</span>
                   <span class="u-fill"></span>
+                  <button *ngIf="membership.user.isAdmin" md-icon-button type="button" (click)="openEditProjectDialog(project)" class="u-horizontal-spacing-small">
+                    <md-icon>settings</md-icon>
+                  </button>
                   <button md-icon-button type="button" [routerLink]="['projects', project.id]">
                     <md-icon>arrow_forward</md-icon>
                   </button>

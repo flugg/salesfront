@@ -9,8 +9,8 @@
     </div>
     <div md-line
          class="u-overflow-visible"
-         [class.u-clickable]="type === 'teams'"
-         [class.clickable-bar]="type === 'teams'"
+         [class.u-clickable]="type === 'teams' && avatar"
+         [class.clickable-bar]="type === 'teams' && avatar"
          [class.u-faded]="type === 'users' && item.deletedAt"
          (click)="onClickBar(item)">
       <div fxLayout="row" class="leaderboard-title">

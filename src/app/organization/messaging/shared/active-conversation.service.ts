@@ -18,13 +18,17 @@ export class ActiveConversationService extends ObservableResource implements OnD
               private conversationService: ConversationService) {
     super();
 
-    this.conversationService.find(this.route.snapshot.params['conversation']).subscribe(conversation => this.set(conversation));
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.sockets.stopListening(this);
 
-    this.sockets.listenForConversation(this.route.snapshot.params['conversation'], {
-      'message_sent': message => this.setLastMessage(message),
-      'participant_added': participation => this.addParticipant(participation),
-      'participant_removed': participation => this.setParticipant(participation)
-    }, this);
+      this.conversationService.find(this.route.snapshot.params['conversation']).subscribe(conversation => this.set(conversation));
+
+      this.sockets.listenForConversation(this.route.snapshot.params['conversation'], {
+        'message_sent': message => this.setLastMessage(message),
+        'participant_added': participation => this.addParticipant(participation),
+        'participant_removed': participation => this.setParticipant(participation)
+      }, this);
+    });
   }
 
   ngOnDestroy(): void {

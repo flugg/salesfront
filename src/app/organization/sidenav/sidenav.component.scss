@@ -138,6 +138,14 @@ button[md-fab] {
   }
 }
 
+.vmo-scrollable-area.--with-project {
+  height: calc(100% - 56px);
+}
+
+.mat-nav-list.--with-project {
+  margin-bottom: 42px;
+}
+
 .sidenav-logo-wrapper {
   padding: 24px 24px 16px;
 }

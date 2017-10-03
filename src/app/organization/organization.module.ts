@@ -16,6 +16,9 @@ import { AddSaleDialogComponent } from './sales-bar/add-sale-dialog/add-sale-dia
 import { ContractDialogComponent } from './sales-bar/contract-dialog/contract-dialog.component';
 import { SaleAddedDialogComponent } from './sales-bar/sale-added-dialog/sale-added-dialog.component';
 import { FilteredTeamsPipe } from './project-list/filtered-teams.pipe';
+import { CloseSidenavResolver } from './close-sidenav-resolver.service';
+import { SidenavService } from './sidenav.service';
+import { EditProjectComponent } from './edit-project/edit-project.component';
 
 @NgModule({
   imports: [
@@ -24,13 +27,16 @@ import { FilteredTeamsPipe } from './project-list/filtered-teams.pipe';
     OrganizationRoutingModule
   ],
   providers: [
+    SidenavService,
     ActiveProjectService,
-    UnsetProjectResolver
+    UnsetProjectResolver,
+    CloseSidenavResolver
   ],
   declarations: [
     OrganizationComponent,
     ProjectListComponent,
     CreateProjectComponent,
+    EditProjectComponent,
     SidenavComponent,
     ClockInDialogComponent,
     SessionBarComponent,
@@ -42,6 +48,7 @@ import { FilteredTeamsPipe } from './project-list/filtered-teams.pipe';
   ],
   entryComponents: [
     CreateProjectComponent,
+    EditProjectComponent,
     ClockInDialogComponent,
     AddSaleDialogComponent,
     ContractDialogComponent,

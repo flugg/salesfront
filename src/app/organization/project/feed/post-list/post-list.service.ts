@@ -19,18 +19,24 @@ export class PostListService extends ObservableResourceList implements OnDestroy
               private postService: PostService) {
     super();
 
-    this.activeProject.project.first().subscribe(project => {
-      this.paginator.subscribe(limit => {
-        this.pagination(this.postService.get(project.id, limit, this.cursor))
-          .subscribe(posts => this.add(posts));
-      });
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.cursor = null;
+      this.snapshot = [];
+      this.sockets.stopListening(this);
 
-      this.sockets.listenForProject(project.id, {
-        'post_published': (post) => this.addPost(post),
-        'comment_posted': (comment) => this.addComment(comment),
-        'clocked_in': session => this.setActiveSession(session),
-        'clocked_out': session => this.removeActiveSession(session)
-      }, this);
+      this.activeProject.project.first().subscribe(project => {
+        this.paginator.subscribe(limit => {
+          this.pagination(this.postService.get(project.id, limit, this.cursor))
+            .subscribe(posts => this.add(posts));
+        });
+
+        this.sockets.listenForProject(project.id, {
+          'post_published': (post) => this.addPost(post),
+          'comment_posted': (comment) => this.addComment(comment),
+          'clocked_in': session => this.setActiveSession(session),
+          'clocked_out': session => this.removeActiveSession(session)
+        }, this);
+      });
     });
   }
 

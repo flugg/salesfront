@@ -36,6 +36,7 @@ import { ContractService } from './services/contract.service';
 import { ContractFieldService } from './services/contract-field.service';
 import { ContractTemplateService } from './services/contract-template.service';
 import { ReportService } from './services/report.service';
+import { UrlService } from './url.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions, tokenService: TokenService) {
   return new AuthHttp(new AuthConfig({ tokenName: 'token', tokenGetter: () => tokenService.get() }), http, options);
@@ -79,7 +80,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, toke
     UnreadConversationService,
     UserService,
     WeeklyAwardService,
-    YearlyAwardService
+    YearlyAwardService,
+    UrlService
   ]
 })
 export class CoreModule {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MemberListService } from './user-list/member-list.service';
 import { TeamListService } from './team-list/team-list.service';
-import { DatepickerService } from '../shared/datepicker/datepicker.service';
+import { DatepickerService } from '../../../shared/datepicker/datepicker.service';
 
 @Component({
   providers: [MemberListService, TeamListService],

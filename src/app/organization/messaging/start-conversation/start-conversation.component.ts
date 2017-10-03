@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -30,7 +30,8 @@ export class StartConversationComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private activeMembershipService: ActiveMembershipService,
               private conversationService: ConversationService,
-              private messageService: MessageService) {}
+              private messageService: MessageService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
@@ -38,6 +39,7 @@ export class StartConversationComponent implements OnInit, OnDestroy {
       this.memberListService.members
     ).subscribe(data => {
       [this.membership, this.members] = data;
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     }));
   }

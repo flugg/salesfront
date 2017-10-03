@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
@@ -9,7 +9,7 @@ import { Member } from '../../../../../../core/models/member.model';
 import { Project } from '../../../../../../core/models/project.model';
 import { Team } from '../../../../../../core/models/team.model';
 import { ActiveProjectService } from '../../../../../active-project.service';
-import { DatepickerService } from '../../../shared/datepicker/datepicker.service';
+import { DatepickerService } from '../../../../../shared/datepicker/datepicker.service';
 import { MemberListService } from './member-list.service';
 import { SelectedTeamService } from './selected-team.service';
 
@@ -31,7 +31,8 @@ export class TeamComponent implements OnInit, OnDestroy {
   constructor(public datepicker: DatepickerService,
               private activeProjectService: ActiveProjectService,
               private selectedTeam: SelectedTeamService,
-              private memberListService: MemberListService) {}
+              private memberListService: MemberListService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
@@ -41,6 +42,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
       [this.project, this.team, this.members] = data;
       this.total = this.members.reduce((value, member) => value + member.value, 0);
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     }));
   }

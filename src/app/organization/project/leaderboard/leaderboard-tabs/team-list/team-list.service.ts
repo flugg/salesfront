@@ -11,7 +11,7 @@ import { ObservableResourceList } from '../../../../../core/observable-resource-
 import { LeaderboardService } from '../../../../../core/services/leaderboard.service';
 import { SocketApiService } from '../../../../../core/socket-api.service';
 import { ActiveProjectService } from '../../../../active-project.service';
-import { DatepickerService } from '../../shared/datepicker/datepicker.service';
+import { DatepickerService } from '../../../../shared/datepicker/datepicker.service';
 
 @Injectable()
 export class TeamListService extends ObservableResourceList implements OnDestroy {

@@ -5,7 +5,7 @@
   <button md-icon-button *ngIf="state == 'menu'" (click)="sidebar.open()" type="button">
     <md-icon>menu</md-icon>
   </button>
-  <button md-icon-button *ngIf="state == 'back'" [routerLink]="'../'" type="button">
+  <button md-icon-button *ngIf="state == 'back'" (click)="goBack()" type="button">
     <md-icon>arrow_back</md-icon>
   </button>
   <button md-icon-button *ngIf="state == 'close'" [routerLink]="'../'" type="button">

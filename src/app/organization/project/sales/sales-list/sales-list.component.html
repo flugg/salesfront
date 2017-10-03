@@ -28,7 +28,7 @@
       <md-list class="vmo-list">
         <md-list-item *ngFor="let sale of sales">
           <vmo-avatar md-list-avatar [membership]="sale.member"></vmo-avatar>
-          <div md-line [class.u-faded]="sale.member.deletedAt">
+          <div md-line [class.u-faded]="sale.member.deletedAt" class="mdc-typography--subheading1">
             <strong class="u-clickable"
                     [routerLink]="'../users/members/' + sale.memberId">{{ sale.member.user.name }}</strong>
             <span>in</span>

@@ -1,8 +1,10 @@
 import { OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+
 import 'rxjs/add/operator/do';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subscription } from 'rxjs/Subscription';
 
 import { PaginationResponse } from './pagination-response';
 
@@ -12,10 +14,15 @@ export abstract class ObservableResourceList implements OnDestroy {
   protected limit = 25;
   protected cursor: string | null;
   protected paginator: BehaviorSubject<number> = new BehaviorSubject(this.limit);
+  protected socketSubscription: Subscription;
 
   ngOnDestroy(): void {
     this.subject.unsubscribe();
     this.paginator.unsubscribe();
+
+    if (this.socketSubscription) {
+      this.socketSubscription.unsubscribe();
+    }
   }
 
   paginate(): void {
@@ -35,14 +42,14 @@ export abstract class ObservableResourceList implements OnDestroy {
   protected setCursor(cursor: string | null): void {
     this.cursor = cursor;
 
-    if (cursor == null && ! this.paginator.isStopped) {
+    if (cursor == null && !this.paginator.isStopped) {
       this.paginator.complete();
     }
   }
 
   protected add(resources: any[]): void {
     this.snapshot.push(...resources.filter(resource => {
-      return ! this.snapshot.find(item => item.id === resource.id);
+      return !this.snapshot.find(item => item.id === resource.id);
     }));
 
     this.updateFromSnapshot();

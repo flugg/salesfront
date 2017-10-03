@@ -6,7 +6,7 @@ import { OrganizationComponent } from '../organization.component';
 
 @Component({
   templateUrl: 'create-project.component.html',
-  styleUrls: ['create-project.component.scss']
+  styleUrls: ['create-project.component.scss'],
 })
 export class CreateProjectComponent implements OnInit {
   loading = true;

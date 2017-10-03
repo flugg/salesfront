@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   template: '<router-outlet></router-outlet>'
 })
-export class ProjectComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {
-  }
+export class ProjectComponent {
+  //
 }

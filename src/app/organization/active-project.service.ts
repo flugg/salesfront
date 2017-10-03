@@ -23,19 +23,23 @@ export class ActiveProjectService extends ObservableResource implements OnDestro
               private projectService: ProjectService) {
     super();
 
-    this.projectId.distinctUntilChanged().subscribe(id => {
-      if (id) {
-        this.projectService.find(id).subscribe(project => {
-          if (this.getFromStorage() === project.id) {
-            this.set(project);
-          }
-        });
-      } else {
-        this.set(null);
-      }
-    });
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.sockets.stopListening(this);
 
-    this.projectId.next(this.resolveProjectId());
+      this.projectId.distinctUntilChanged().subscribe(id => {
+        if (id) {
+          this.projectService.find(id).subscribe(project => {
+            if (this.getFromStorage() === project.id) {
+              this.set(project);
+            }
+          });
+        } else {
+          this.set(null);
+        }
+      });
+
+      this.projectId.next(this.resolveProjectId());
+    });
   }
 
   ngOnDestroy(): void {

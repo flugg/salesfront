@@ -23,20 +23,24 @@ export class SalesTodayService extends ObservableResource implements OnDestroy {
               private activeMembershipService: ActiveMembershipService) {
     super();
 
-    this.activeProjectService.project.first().subscribe(project => {
-      this.activeMembershipService.membership.first().subscribe(membership => {
-        this.saleService.getForMember(membership.id, moment().startOf('day'), moment().endOf('day')).map(sales => {
-          return sales.filter(sale => sale.projectId === project.id);
-        }).subscribe(sales => {
-          this.set(sales.reduce((value, item) => {
-            return item.value ? value + item.value : value + 1;
-          }, 0));
-        });
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.sockets.stopListening(this);
 
-        this.sockets.listenForUser(membership.userId, {
-          'sale_registered': sale => this.addSale(sale, project),
-          'sale_deleted': sale => this.removeSale(sale, project)
-        }, this);
+      this.activeProjectService.project.first().subscribe(project => {
+        this.activeMembershipService.membership.first().subscribe(membership => {
+          this.saleService.getForMember(membership.id, moment().startOf('day'), moment().endOf('day')).map(sales => {
+            return sales.filter(sale => sale.projectId === project.id);
+          }).subscribe(sales => {
+            this.set(sales.reduce((value, item) => {
+              return item.value ? value + item.value : value + 1;
+            }, 0));
+          });
+
+          this.sockets.listenForUser(membership.userId, {
+            'sale_registered': sale => this.addSale(sale, project),
+            'sale_deleted': sale => this.removeSale(sale, project)
+          }, this);
+        });
       });
     });
   }

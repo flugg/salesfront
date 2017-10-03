@@ -1,6 +1,5 @@
-<div class="mdc-typography--headline strong u-spacing-bottom">Delete sale</div>
-<md-dialog-content class="mdc-typography--subheading1">Are you sure?</md-dialog-content>
-<md-dialog-actions>
+<div class="mdc-typography--headline strong u-spacing-bottom">Delete sale?</div>
+<div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="end">
   <button md-button md-dialog-close>Cancel</button>
-  <button md-button (click)="removeSale()" color="warn">Delete</button>
-</md-dialog-actions>
+  <button md-raised-button (click)="removeSale()" color="warn">Delete</button>
+</div>

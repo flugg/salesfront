@@ -5,6 +5,7 @@ import { TeamListComponent } from './wall-of-fame-tabs/team-list/team-list.compo
 import { DailyAwardListComponent } from './wall-of-fame-tabs/user-list/daily-awards/daily-award-list.component';
 import { UserListComponent } from './wall-of-fame-tabs/user-list/user-list.component';
 import { WallOfFameTabsComponent } from './wall-of-fame-tabs/wall-of-fame-tabs.component';
+import { DailyTeamAwardListComponent } from './wall-of-fame-tabs/team-list/daily-team-awards/daily-team-award-list.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,13 @@ const routes: Routes = [
     children: [
       {
         path: 'teams',
-        component: TeamListComponent
+        component: TeamListComponent,
+        children: [
+          {
+            path: 'daily',
+            component: DailyTeamAwardListComponent
+          }
+        ]
       },
       {
         path: 'users',

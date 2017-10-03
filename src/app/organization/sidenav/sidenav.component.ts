@@ -12,6 +12,7 @@ import { Conversation } from '../../core/models/conversation.model';
 import { Member } from '../../core/models/member.model';
 import { UnreadConversationListService } from './unread-conversation-list.service';
 import { Project } from '../../core/models/project.model';
+import { UrlService } from '../../core/url.service';
 
 @Component({
   selector: 'vmo-organization-sidenav',
@@ -31,7 +32,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private auth: AuthService,
-              private unreadConversationListService: UnreadConversationListService) {}
+              private unreadConversationListService: UnreadConversationListService,
+              private urlService: UrlService) {}
 
   ngOnInit() {
     this.unreadConversationListService.conversations.subscribe(conversations => {
@@ -51,11 +53,16 @@ export class SidenavComponent implements OnInit, OnDestroy {
   goToOrganization() {
     if (this.sidenav.mode === 'over') {
       this.sidenav.onClose.first().subscribe(() => {
-        this.router.navigate([this.membership.organizationId])
+        this.router.navigate([this.membership.organizationId]);
       });
       this.sidenav.close();
     } else {
       this.router.navigate([this.membership.organizationId]);
     }
+  }
+
+  goToProfile() {
+    this.urlService.overwrite = true;
+    this.router.navigate(['/', this.membership.organizationId, 'users', this.membership.id]);
   }
 }

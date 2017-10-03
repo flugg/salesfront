@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +20,8 @@ export class TeamListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(public teamList: TeamListService,
-              private activeUser: ActiveUserService) {}
+              private activeUser: ActiveUserService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
@@ -28,6 +29,8 @@ export class TeamListComponent implements OnInit, OnDestroy {
       this.teamList.teams
     ).subscribe(data => {
       [this.user, this.teams] = data;
+      this.teams = this.teams.filter(team => team.deletedAt === null);
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     }));
   }

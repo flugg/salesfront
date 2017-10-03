@@ -1,10 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 
-import { ObservableResourceList } from '../../../core/observable-resource-list';
-import { SocketApiService } from '../../../core/socket-api.service';
-import { MemberService } from '../../../core/services/member.service';
 import { Member } from '../../../core/models/member.model';
+import { ObservableResourceList } from '../../../core/observable-resource-list';
+import { MemberService } from '../../../core/services/member.service';
+import { SocketApiService } from '../../../core/socket-api.service';
 import { ActiveMembershipService } from '../../active-membership.service';
 
 @Injectable()
@@ -16,9 +17,15 @@ export class MemberListService extends ObservableResourceList implements OnDestr
               private memberService: MemberService) {
     super();
 
-    this.activeMembershipService.membership.subscribe(membership => {
-      this.paginator.subscribe(limit => {
-        this.pagination(this.memberService.get(membership.organizationId, limit, this.cursor)).subscribe(users => this.add(users));
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.cursor = null;
+      this.snapshot = [];
+      this.sockets.stopListening(this);
+
+      this.activeMembershipService.membership.subscribe(membership => {
+        this.paginator.subscribe(limit => {
+          this.pagination(this.memberService.get(membership.organizationId, limit, this.cursor)).subscribe(users => this.add(users));
+        });
       });
     });
   }

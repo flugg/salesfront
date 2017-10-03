@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
@@ -41,7 +41,8 @@ export class ConversationComponent implements OnInit, OnDestroy {
               private activeConversationService: ActiveConversationService,
               private sockets: SocketApiService,
               private conversationService: ConversationService,
-              private messageService: MessageService) {}
+              private messageService: MessageService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     const hasLoaded = new Subject();
@@ -54,6 +55,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
       [this.membership, this.conversation, this.messages] = data;
       this.isLocked.next(this.conversationService.isLocked(this.conversation, this.membership));
       this.loading = false;
+      this.changeDetectorRef.detectChanges();
       hasLoaded.next();
     }));
 

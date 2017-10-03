@@ -19,15 +19,19 @@ export class SelectedMembershipService extends ObservableResource implements OnD
               private memberService: MemberService) {
     super();
 
-    this.route.params.subscribe(params => {
-      this.memberService.find(params['member']).subscribe(member => {
-        this.set(member);
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.sockets.stopListening(this);
 
-        this.sockets.listenForOrganization(member.organizationId, {
-          'user_updated': user => this.updateUser(user),
-          'member_updated': membership => this.updateMembership(membership),
-          'member_removed': membership => this.updateMembership(membership)
-        }, this);
+      this.route.params.subscribe(params => {
+        this.memberService.find(params['member']).subscribe(member => {
+          this.set(member);
+
+          this.sockets.listenForOrganization(member.organizationId, {
+            'user_updated': user => this.updateUser(user),
+            'member_updated': membership => this.updateMembership(membership),
+            'member_removed': membership => this.updateMembership(membership)
+          }, this);
+        });
       });
     });
   }

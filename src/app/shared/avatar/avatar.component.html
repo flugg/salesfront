@@ -10,6 +10,6 @@
        fxLayoutAlign="center center">
     <md-icon>face</md-icon>
   </div>
-  <div *ngIf="sessionIndicator && isClockedIn()" class="session-indicator"></div>
+  <div *ngIf="sessionIndicator && isClockedIn()" class="session-indicator" [@popInOut]="true"></div>
 </div>
 

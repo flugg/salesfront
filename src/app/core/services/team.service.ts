@@ -29,4 +29,8 @@ export class TeamService {
   update(teamId: string, attributes: any) {
     return this.api.put(`teams/${teamId}`, attributes).then(response => response.data);
   }
+
+  delete(teamId: string) {
+    return this.api.delete(`teams/${teamId}`).then(response => response.data);
+  }
 }

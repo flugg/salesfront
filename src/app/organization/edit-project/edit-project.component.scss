@@ -1,0 +1,169 @@
+.vmo-component {
+  background: white;
+}
+
+.mat-input-container {
+  width: 100%;
+}
+
+.container {
+  padding: 24px;
+}
+
+.radio-color {
+  .mat-radio-group {
+    display: block;
+    padding-top: 16px;
+  }
+
+  .mat-radio-button {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+.radio-type .mat-radio-button {
+  margin-top: 16px;
+  margin-right: 16px;
+}
+
+.radio-pink /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #e91e63 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #e91e63 !important;
+  }
+}
+
+.radio-purple /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #9c27b0 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #9c27b0 !important;
+  }
+}
+
+.radio-blue /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #3f51b5 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #3f51b5 !important;
+  }
+}
+
+.radio-light-blue /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #2196f3 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #2196f3 !important;
+  }
+}
+
+.radio-teal /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #009688 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #009688 !important;
+  }
+}
+
+.radio-green /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #4caf50 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #4caf50 !important;
+  }
+}
+
+.radio-lime /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #cddc39 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #cddc39 !important;
+  }
+}
+
+.radio-yellow /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #ffc107 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #ffc107 !important;
+  }
+}
+
+.radio-orange /deep/ {
+  .mat-radio-outer-circle {
+    border-color: #ff5722 !important;
+  }
+  .mat-radio-inner-circle {
+    background-color: #ff5722 !important;
+  }
+}
+
+.top-header {
+  color: white;
+  padding: 24px 24px 16px;
+  transition: background 0.2s;
+
+  .u-weak {
+    color: rgba(white, 0.7);
+  }
+
+  &.pink /deep/ {
+    background-color: #e91e63 !important;
+  }
+
+  &.purple /deep/ {
+    background-color: #9c27b0 !important;
+  }
+
+  &.blue /deep/ {
+    background-color: #3f51b5 !important;
+  }
+
+  &.light-blue /deep/ {
+    background-color: #2196f3 !important;
+  }
+
+  &.teal /deep/ {
+    background-color: #009688 !important;
+  }
+
+  &.green /deep/ {
+    background-color: #4caf50 !important;
+  }
+
+  &.lime /deep/ {
+    background-color: #cddc39 !important;
+  }
+
+  &.yellow /deep/ {
+    background-color: #ffc107 !important;
+  }
+
+  &.orange /deep/ {
+    background-color: #ff5722 !important;
+  }
+}
+
+.form {
+  display: block;
+  padding: 24px;
+}
+
+.equal-width {
+  width: 50%;
+}
+
+.big-input {
+  font-size: 24px !important;
+  height: auto;
+}

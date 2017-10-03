@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
@@ -22,7 +22,8 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
 
   constructor(public memberListService: MemberListService,
               private activeConversationService: ActiveConversationService,
-              private conversationService: ConversationService) {}
+              private conversationService: ConversationService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
@@ -30,6 +31,7 @@ export class AddParticipantComponent implements OnInit, OnDestroy {
       this.memberListService.members
     ).subscribe(data => {
       [this.conversation, this.members] = data;
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     }));
   }

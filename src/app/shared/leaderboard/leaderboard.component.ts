@@ -30,7 +30,7 @@ export class LeaderboardComponent implements OnInit {
   }
 
   onClickBar(item: Member | Team): void {
-    if (this.type === 'teams') {
+    if (this.type === 'teams' && this.avatar) {
       this.router.navigate([this.project.organizationId, 'projects', this.project.id, 'leaderboard', 'teams', item.id]);
     }
   }

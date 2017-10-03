@@ -198,6 +198,10 @@ snack-bar-container {
   padding-top: 16px;
   padding-bottom: 16px;
 
+  &:first-of-type {
+    padding-top: 0;
+  }
+
   &:last-of-type {
     padding-bottom: 0;
   }
@@ -643,6 +647,12 @@ snack-bar-container {
   font-size: 50px;
   height: 50px !important;
   width: 50px !important;
+
+  &.team-icon {
+    font-size: 40px;
+    height: 40px !important;
+    width: 40px !important;
+  }
 }
 
 .sales-dialog .mat-dialog-container {
@@ -790,6 +800,14 @@ snack-bar-container {
 
   &.--full {
     max-width: 100%;
+  }
+}
+
+.vmo-space-between:not(:last-child) {
+  margin-bottom: 12px;
+
+  @media (min-width: 600px) {
+    margin-bottom: 16px;
   }
 }
 

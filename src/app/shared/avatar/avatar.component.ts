@@ -1,12 +1,14 @@
 import { Component, Input } from '@angular/core';
 
+import { popInOut } from '../../core/animations/pop-in-out';
 import { Member } from '../../core/models/member.model';
 import { Project } from '../../core/models/project.model';
 
 @Component({
   selector: 'vmo-avatar',
   templateUrl: 'avatar.component.html',
-  styleUrls: ['avatar.component.scss']
+  styleUrls: ['avatar.component.scss'],
+  animations: [popInOut()]
 })
 export class AvatarComponent {
   @Input() membership: Member;

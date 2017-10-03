@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
@@ -19,13 +19,15 @@ export class OrganizationComponent implements OnInit {
               private route: ActivatedRoute,
               private snackBar: MdSnackBar,
               private activeMembershipService: ActiveMembershipService,
-              private organizationService: OrganizationService) {}
+              private organizationService: OrganizationService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.activeMembershipService.membership.subscribe(membership => {
       this.organization = membership.organization;
       this.name = this.organization.name;
       this.slug = this.organization.slug;
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     });
   }

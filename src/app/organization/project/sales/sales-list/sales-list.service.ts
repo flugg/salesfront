@@ -20,9 +20,14 @@ export class SalesListService extends ObservableResourceList implements OnDestro
     super();
 
     this.activeProject.project.first().subscribe(project => {
-      this.paginator.subscribe(limit => {
-        this.pagination(this.salesService.getAll(project.id, limit, this.cursor))
-          .subscribe(sales => this.add(sales));
+      this.socketSubscription = this.sockets.connects.subscribe(() => {
+        this.cursor = null;
+        this.snapshot = [];
+
+        this.paginator.subscribe(limit => {
+          this.pagination(this.salesService.getAll(project.id, limit, this.cursor))
+            .subscribe(sales => this.add(sales));
+        });
       });
 
       this.sockets.listenForProject(project.id, {
@@ -66,7 +71,11 @@ export class SalesListService extends ObservableResourceList implements OnDestro
   }
 
   private addSale(sale: Sale) {
-    this.snapshot.push(sale);
+    if (Array.isArray(sale.contract)) {
+      sale.contract = null;
+    }
+
+    this.snapshot = [...this.snapshot, sale];
     this.updateFromSnapshot();
   }
 

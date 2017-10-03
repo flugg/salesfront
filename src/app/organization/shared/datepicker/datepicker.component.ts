@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ScreenService } from '../../../core/screen.service';
 import { DatepickerService } from './datepicker.service';
-import { ScreenService } from '../../../../../core/screen.service';
 
 @Component({
   selector: 'vmo-datepicker',

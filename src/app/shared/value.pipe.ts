@@ -11,12 +11,14 @@ export class ValuePipe implements PipeTransform {
   constructor(public decimalPipe: DecimalPipe) {}
 
   transform(value: number, project: Project): number | string | null {
-    const formattedValue = this.decimalPipe.transform(value + '', '1.' + project.decimals + '-' + project.decimals);
+    if (project) {
+      const formattedValue = this.decimalPipe.transform(value + '', '1.' + project.decimals + '-' + project.decimals);
 
-    if (project.type === 'count') {
-      return formattedValue;
+      if (project.type === 'count') {
+        return formattedValue;
+      }
+
+      return project.notationBefore ? project.notation + ' ' + formattedValue : formattedValue + ' ' + project.notation;
     }
-
-    return project.notationBefore ? project.notation + ' ' + formattedValue : formattedValue + ' ' + project.notation;
   }
 }

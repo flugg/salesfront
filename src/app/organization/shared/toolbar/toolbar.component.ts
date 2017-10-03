@@ -1,9 +1,12 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 
 import { Project } from '../../../core/models/project.model';
 import { ScreenService } from '../../../core/screen.service';
+import { UrlService } from '../../../core/url.service';
 import { ActiveProjectService } from '../../active-project.service';
 import { SidenavService } from '../../sidenav.service';
 
@@ -24,6 +27,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(public sidebar: SidenavService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private urlService: UrlService,
+              private location: Location,
               private screen: ScreenService,
               private activeProjectService: ActiveProjectService) {}
 
@@ -48,5 +55,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  goBack(): void {
+    if (!this.urlService.previous || this.urlService.previous.url.includes(this.urlService.current.url)) {
+      this.router.navigate(['..'], { relativeTo: this.route });
+    } else {
+      this.location.back();
+    }
   }
 }

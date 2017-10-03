@@ -17,23 +17,27 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
               private sockets: SocketApiService) {
     super();
 
-    this.userService.find('me', [
-      'memberships.organization.contractTemplates',
-      'memberships.teamMembers.team.project',
-      'memberships.activeSession'
-    ]).subscribe(activeUser => {
-      activeUser.memberships.forEach(membership => this.setTeamOnSession(membership));
-      this.set(activeUser);
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.sockets.stopListening(this);
 
-      this.sockets.listenForUser(activeUser.id, {
-        'user_updated': user => this.set(user),
-        'member_removed': membership => this.removeMembership(membership),
-        'member_updated': membership => this.updateMembership(membership),
-        'team_member_added': teamMember => this.addTeamMember(teamMember),
-        'team_member_removed': teamMember => this.removeTeamMember(teamMember),
-        'clocked_in': session => this.setActiveSession(session),
-        'clocked_out': session => this.removeActiveSession(session)
-      }, this);
+      this.userService.find('me', [
+        'memberships.organization.contractTemplates',
+        'memberships.teamMembers.team.project',
+        'memberships.activeSession'
+      ]).subscribe(activeUser => {
+        activeUser.memberships.forEach(membership => this.setTeamOnSession(membership));
+        this.set(activeUser);
+
+        this.sockets.listenForUser(activeUser.id, {
+          'user_updated': user => this.set(user),
+          'member_removed': membership => this.removeMembership(membership),
+          'member_updated': membership => this.updateMembership(membership),
+          'team_member_added': teamMember => this.addTeamMember(teamMember),
+          'team_member_removed': teamMember => this.removeTeamMember(teamMember),
+          'clocked_in': session => this.setActiveSession(session),
+          'clocked_out': session => this.removeActiveSession(session)
+        }, this);
+      });
     });
   }
 

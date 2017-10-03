@@ -19,19 +19,25 @@ export class MemberListService extends ObservableResourceList implements OnDestr
               private memberService: MemberService) {
     super();
 
-    this.activeMembershipService.membership.first().subscribe(membership => {
-      this.paginator.subscribe(limit => {
-        this.pagination(this.memberService.get(membership.organizationId, limit, this.cursor))
-          .subscribe(members => this.add(members));
-      });
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.cursor = null;
+      this.snapshot = [];
+      this.sockets.stopListening(this);
 
-      this.sockets.listenForOrganization(membership.organizationId, {
-        'user_updated': user => this.updateUser(user),
-        'member_updated': member => this.setMembership(member),
-        'member_removed': member => this.setMembership(member),
-        'clocked_in': session => this.setActiveSession(session),
-        'clocked_out': session => this.removeActiveSession(session)
-      }, this);
+      this.activeMembershipService.membership.first().subscribe(membership => {
+        this.paginator.subscribe(limit => {
+          this.pagination(this.memberService.get(membership.organizationId, limit, this.cursor))
+            .subscribe(members => this.add(members));
+        });
+
+        this.sockets.listenForOrganization(membership.organizationId, {
+          'user_updated': user => this.updateUser(user),
+          'member_updated': member => this.setMembership(member),
+          'member_removed': member => this.setMembership(member),
+          'clocked_in': session => this.setActiveSession(session),
+          'clocked_out': session => this.removeActiveSession(session)
+        }, this);
+      });
     });
   }
 

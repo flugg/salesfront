@@ -15,6 +15,10 @@ export class ContractTemplateService {
     return this.api.paginate(`organizations/${organizationId}/contract-templates`, cursor, limit);
   }
 
+  list(organizationId: string): Observable<ContractTemplate[]> {
+    return this.api.get(`organizations/${organizationId}/contract-templates`).map(response => response.data);
+  }
+
   find(id: string): Observable<ContractTemplate> {
     return this.api.get(`contract-templates/${id}`).map(response => response.data);
   }

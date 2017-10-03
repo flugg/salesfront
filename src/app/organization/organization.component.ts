@@ -15,7 +15,7 @@ import { SidenavService } from './sidenav.service';
 @Component({
   templateUrl: 'organization.component.html',
   styleUrls: ['organization.component.scss'],
-  providers: [ActiveMembershipService, SidenavService]
+  providers: [ActiveMembershipService]
 })
 export class OrganizationComponent implements OnInit, OnDestroy {
   loading = true;

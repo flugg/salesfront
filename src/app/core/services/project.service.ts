@@ -22,4 +22,8 @@ export class ProjectService {
   create(organizationId: string, attributes: any): Promise<Project> {
     return this.api.post(`organizations/${organizationId}/projects`, attributes).then(response => response.data);
   }
+
+  update(projectId: string, attributes: any) {
+    return this.api.put(`projects/${projectId}`, attributes).then(response => response.data);;
+  }
 }

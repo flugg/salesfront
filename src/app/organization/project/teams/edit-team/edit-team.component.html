@@ -5,10 +5,9 @@
     <div class="vmo-scrollable-area">
       <form novalidate
             (submit)="submit(nameInput.value); $event.preventDefault()">
-        <div class="container">
+        <div class="vmo-container --small">
           <md-card>
-            <span class="mdc-typography--display1 strong">Update Team</span>
-            <p class="mdc-typography--body1 u-weak">Changed your mind? Update the name of your team!</p>
+            <div class="mdc-typography--display1 strong u-vertical-spacing">Update Team</div>
             <md-input-container color="accent">
               <input #nameInput="ngModel"
                      mdInput

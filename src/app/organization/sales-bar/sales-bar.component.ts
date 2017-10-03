@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MdDialog, MdDialogConfig } from '@angular/material';
 import 'rxjs/add/operator/first';
 
@@ -33,11 +33,13 @@ export class SalesBarComponent implements OnInit {
   constructor(private dialog: MdDialog,
               private saleService: SaleService,
               private activeProjectService: ActiveProjectService,
-              private salesTodayService: SalesTodayService) {}
+              private salesTodayService: SalesTodayService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.salesTodayService.value.subscribe(value => {
       this.valueToday = value;
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     });
   }

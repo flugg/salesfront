@@ -11,9 +11,11 @@ export interface Team {
   updatedAt: string;
   value?: number;
   currentValue?: number;
+  position?: number;
+  memberCount?: number;
+  deletedAt?: string;
   project?: Project;
   sales?: Sale[];
   members?: TeamMember[];
   users?: User[];
-  position?: number;
 }

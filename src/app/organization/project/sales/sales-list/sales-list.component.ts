@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MdDialog, MdDialogConfig } from '@angular/material';
 
 import 'rxjs/add/observable/combineLatest';
@@ -34,7 +34,8 @@ export class SalesListComponent implements OnInit, OnDestroy {
   constructor(public salesListService: SalesListService,
               private activeMembershipService: ActiveMembershipService,
               private activeProjectService: ActiveProjectService,
-              private dialog: MdDialog) {}
+              private dialog: MdDialog,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
@@ -43,6 +44,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
       this.activeProjectService.project
     ).subscribe(data => {
       [this.sales, this.membership, this.project] = data;
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     }));
   }

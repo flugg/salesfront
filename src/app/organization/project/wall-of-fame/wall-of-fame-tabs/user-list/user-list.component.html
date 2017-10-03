@@ -1,6 +1,6 @@
 <vmo-progress-spinner [hasLoaded]="! loading">
   <div class="vmo-scrollable-area">
-    <div class="vmo-container">
+    <div class="vmo-container --fillOnMobile">
       <md-card class="u-spacing-between">
         <div fxLayout="row" fxLayoutAlign="center center">
           <span class="mdc-typography--headline strong">
@@ -39,7 +39,7 @@
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--headline strong">{{ award.value }}</span>
               <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">
-                <span>{{ award.awardable.user.name }}</span>
+                <span>{{ award.awardable.user.firstName }}</span>
               </div>
             </div>
           </div>
@@ -52,11 +52,12 @@
             Weekly Top
           </span>
           <div class="u-fill"></div>
-          <button *ngIf="! weeklyAwardListService.isComplete()"
-                  md-button
-                  color="accent"
-                  class="pushed-right">View all
-          </button>
+          <!--<button *ngIf="! weeklyAwardListService.isComplete()"-->
+                  <!--md-button-->
+                  <!--color="accent"-->
+                  <!--class="pushed-right"-->
+                  <!--routerLink="weekly">View all-->
+          <!--</button>-->
         </div>
         <md-divider></md-divider>
         <span *ngIf="!weeklyAwards?.length"
@@ -84,7 +85,7 @@
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--headline strong">{{ award.value }}</span>
               <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">
-                <span>{{ award.awardable.user.name }}</span>
+                <span>{{ award.awardable.user.firstName }}</span>
               </div>
             </div>
           </div>
@@ -100,7 +101,8 @@
           <button *ngIf="! monthlyAwardListService.isComplete()"
                   md-button
                   color="accent"
-                  class="pushed-right">View all
+                  class="pushed-right"
+                  routerLink="monthly">View all
           </button>
         </div>
         <md-divider></md-divider>
@@ -129,7 +131,7 @@
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--headline strong">{{ award.value }}</span>
               <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">
-                <span>{{ award.awardable.user.name }}</span>
+                <span>{{ award.awardable.user.firstName }}</span>
               </div>
             </div>
           </div>
@@ -146,7 +148,8 @@
           <button *ngIf="! yearlyAwardListService.isComplete()"
                   md-button
                   color="accent"
-                  class="pushed-right">View all
+                  class="pushed-right"
+                  routerLink="yearly">View all
           </button>
         </div>
         <md-divider></md-divider>
@@ -175,7 +178,7 @@
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--headline strong">{{ award.value }}</span>
               <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">
-                <span>{{ award.awardable.user.name }}</span>
+                <span>{{ award.awardable.user.firstName }}</span>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 <div>
   <div class="top-header {{ color }}">
-    <span class="mdc-typography--display1 strong">Create Project</span>
-    <p class="mdc-typography--body1 u-weak">Create a project to organize your organization.</p>
+    <span class="mdc-typography--display1 strong">Edit Project</span>
+    <p class="mdc-typography--body1 u-weak">Use the inputs below to configure the project.</p>
   </div>
   <form novalidate (submit)="submit(); $event.preventDefault()" class="u-spacing-top vmo-scrollable-area form">
     <md-input-container color="accent">
@@ -24,40 +24,17 @@
         <md-radio-button value="orange" class="radio-orange"></md-radio-button>
       </md-radio-group>
     </div>
-    <div class="u-spacing-top">
-      <div class="mdc-typography--caption u-weak">Sales type:</div>
-      <md-radio-group name="type" class="radio-type" [(ngModel)]="projectType">
-        <md-radio-button value="count">
-          Count based
-        </md-radio-button>
-        <md-radio-button value="value">
-          Value based
-        </md-radio-button>
-      </md-radio-group>
-    </div>
-    <div class="u-vertical-spacing" *ngIf="projectType === 'value'">
-      <div class="u-vertical-top">
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
-          <div class="equal-width mdc-typography--headline strong u-text-center">{{ 1234 | number: '1.' + (withDecimals ? 2 : 0) }}</div>
-          <md-input-container color="accent" class="u-vertical-spacing equal-width" [fxFlexOrder]="notationBefore ? -1 : 1">
-            <input #notationInput="ngModel" mdInput name="notation" [(ngModel)]="notation" class="u-text-center big-input strong">
-          </md-input-container>
-        </div>
-        <md-checkbox [(ngModel)]="notationBefore" name="addMore">Before value</md-checkbox>
-        <md-checkbox [(ngModel)]="withDecimals" name="addMore" class="u-horizontal-spacing">With decimals</md-checkbox>
-      </div>
-    </div>
     <div class="u-spacing-top-big" *ngIf="data.templates.length" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
       <md-checkbox [(ngModel)]="withContract" name="withContract">Sales contract</md-checkbox>
       <md-select placeholder="Contract" color="accent" [(ngModel)]="selectedContract" name="contractInput" class="no-padding-top" *ngIf="withContract">
         <md-option *ngFor="let template of data.templates" [value]="template.id">
-          {{ template.name }}
+          {{ template?.name }}
         </md-option>
       </md-select>
     </div>
     <div class="u-vertical-spacing-big" fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-md="start center" fxLayoutGap="16px">
       <button md-button type="button" (click)="dialog.close()">Cancel</button>
-      <button md-raised-button color="accent" [disabled]="nameInput.errors?.required" fxFlexOrder.lt-md="-1">Create</button>
+      <button md-raised-button color="accent" [disabled]="nameInput.errors?.required" fxFlexOrder.lt-md="-1">Update</button>
     </div>
   </form>
 </div>

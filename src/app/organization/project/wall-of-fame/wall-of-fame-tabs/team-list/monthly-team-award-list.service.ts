@@ -12,7 +12,7 @@ import { ActiveProjectService } from '../../../../active-project.service';
 @Injectable()
 export class MonthlyTeamAwardListService extends ObservableResourceList implements OnDestroy {
   readonly awards: Observable<MonthlyAward[]> = this.subject.asObservable();
-  protected limit = 7;
+  protected limit = 6;
   protected paginator: BehaviorSubject<number> = new BehaviorSubject(this.limit);
 
   constructor(private activeProject: ActiveProjectService,

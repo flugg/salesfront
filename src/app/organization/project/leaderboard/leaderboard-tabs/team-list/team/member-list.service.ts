@@ -13,7 +13,7 @@ import { ObservableResourceList } from '../../../../../../core/observable-resour
 import { LeaderboardService } from '../../../../../../core/services/leaderboard.service';
 import { SocketApiService } from '../../../../../../core/socket-api.service';
 import { ActiveProjectService } from '../../../../../active-project.service';
-import { DatepickerService } from '../../../shared/datepicker/datepicker.service';
+import { DatepickerService } from '../../../../../shared/datepicker/datepicker.service';
 
 @Injectable()
 export class MemberListService extends ObservableResourceList implements OnDestroy {

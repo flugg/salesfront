@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { ContractTemplate } from '../../../../core/models/contract-template.model';
 import { TemplateListService } from './template-list.service';
@@ -12,11 +12,13 @@ export class TemplateListComponent implements OnInit {
   templates: ContractTemplate[] = [];
   name: string;
 
-  constructor(public templateListService: TemplateListService) {}
+  constructor(public templateListService: TemplateListService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.templateListService.templates.subscribe(templates => {
       this.templates = templates;
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     });
   }

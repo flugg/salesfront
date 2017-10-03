@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SaleService } from '../../core/services/sale.service';
 import { SharedModule } from '../../shared/shared.module';
+import { DatepickerComponent } from './datepicker/datepicker.component';
+import { DatepickerService } from './datepicker/datepicker.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
@@ -11,13 +12,15 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     RouterModule
   ],
   providers: [
-    SaleService
+    DatepickerService
   ],
   declarations: [
-    ToolbarComponent
+    ToolbarComponent,
+    DatepickerComponent
   ],
   exports: [
-    ToolbarComponent
+    ToolbarComponent,
+    DatepickerComponent
   ]
 })
 export class OrganizationSharedModule {}

@@ -22,7 +22,8 @@ export class SelectedTeamService extends ObservableResource implements OnDestroy
       this.set(team);
 
       this.sockets.listenForProject(team.projectId, {
-        'team_updated': updatedTeam => this.updateTeam(updatedTeam)
+        'team_updated': updatedTeam => this.updateTeam(updatedTeam),
+        'team_removed': removedTeam => this.updateTeam(removedTeam),
       }, this);
     });
   }

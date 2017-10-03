@@ -18,9 +18,13 @@ export class SelectedTemplateService extends ObservableResource implements OnDes
               private templateService: ContractTemplateService) {
     super();
 
-    this.route.params.subscribe(params => {
-      this.templateService.find(params['template']).subscribe(template => {
-        this.set(template);
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.sockets.stopListening(this);
+
+      this.route.params.subscribe(params => {
+        this.templateService.find(params['template']).subscribe(template => {
+          this.set(template);
+        });
       });
     });
   }

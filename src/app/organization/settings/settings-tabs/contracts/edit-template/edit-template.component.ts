@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -23,7 +23,8 @@ export class EditTemplateComponent implements OnInit {
               private route: ActivatedRoute,
               private snackBar: MdSnackBar,
               private contractTemplateService: ContractTemplateService,
-              private selectedTemplateService: SelectedTemplateService) {}
+              private selectedTemplateService: SelectedTemplateService,
+              private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.selectedTemplateService.template.subscribe(template => {
@@ -31,6 +32,7 @@ export class EditTemplateComponent implements OnInit {
       this.name = this.template.name;
       this.signature = this.template.signature;
       this.fields = [...this.template.fields];
+      this.changeDetectorRef.detectChanges();
       this.loading = false;
     });
   }

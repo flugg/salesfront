@@ -17,16 +17,23 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
               private teamService: TeamService) {
     super();
 
-    this.activeProject.project.first().subscribe(project => {
-      this.paginator.subscribe(limit => {
-        this.pagination(this.teamService.get(project.id, limit, this.cursor))
-          .subscribe(teams => this.add(teams));
-      });
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.cursor = null;
+      this.snapshot = [];
+      this.sockets.stopListening(this);
 
-      this.sockets.listenForProject(project.id, {
-        'team_created': team => this.addTeam(team),
-        'team_updated': team => this.updateTeam(team)
-      }, this);
+      this.activeProject.project.first().subscribe(project => {
+        this.paginator.subscribe(limit => {
+          this.pagination(this.teamService.get(project.id, limit, this.cursor))
+            .subscribe(teams => this.add(teams));
+        });
+
+        this.sockets.listenForProject(project.id, {
+          'team_created': team => this.addTeam(team),
+          'team_updated': team => this.updateTeam(team),
+          'team_removed': team => this.updateTeam(team)
+        }, this);
+      });
     });
   }
 

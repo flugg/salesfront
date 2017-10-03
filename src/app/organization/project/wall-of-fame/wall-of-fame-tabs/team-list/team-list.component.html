@@ -1,6 +1,6 @@
 <vmo-progress-spinner [hasLoaded]="! loading">
   <div class="vmo-scrollable-area">
-    <div class="vmo-container">
+    <div class="vmo-container --fillOnMobile">
       <md-card class="u-spacing-between">
         <div fxLayout="row" fxLayoutAlign="center center">
           <span class="mdc-typography--headline strong">
@@ -21,6 +21,7 @@
                fxLayout="column"
                fxLayoutAlign="center center"
                fxLayoutGap="12px"
+               [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ formatDay(award.day) }}</span>
@@ -28,7 +29,7 @@
             <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../teams/' + award.awardable.id">
-              <md-icon class="medium-face">group</md-icon>
+              <md-icon class="medium-face team-icon">group</md-icon>
             </div>
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--headline strong">{{ award.value }}</span>
@@ -44,12 +45,13 @@
             Weekly Top
           </span>
           <div class="u-fill"></div>
-          <button *ngIf="! weeklyTeamAwardListService.isComplete()"
-                  md-button
-                  color="accent"
-                  class="pushed-right">
-            View all
-          </button>
+          <!--<button *ngIf="! weeklyTeamAwardListService.isComplete()"-->
+                  <!--md-button-->
+                  <!--color="accent"-->
+                  <!--class="pushed-right"-->
+                  <!--routerLink="weekly">-->
+            <!--View all-->
+          <!--</button>-->
         </div>
         <md-divider></md-divider>
         <span *ngIf="!weeklyAwards?.length"
@@ -59,6 +61,7 @@
                fxLayout="column"
                fxLayoutAlign="center center"
                fxLayoutGap="12px"
+               [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">Week {{ award.week }}</span>
@@ -66,7 +69,7 @@
             <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../teams/' + award.awardable.id">
-              <md-icon class="medium-face">group</md-icon>
+              <md-icon class="medium-face team-icon">group</md-icon>
             </div>
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--headline strong">{{ award.value }}</span>
@@ -85,7 +88,8 @@
           <button *ngIf="! monthlyTeamAwardListService.isComplete()"
                   md-button
                   color="accent"
-                  class="pushed-right">View all
+                  class="pushed-right"
+                  routerLink="monthly">View all
           </button>
         </div>
         <md-divider></md-divider>
@@ -96,6 +100,7 @@
                fxLayout="column"
                fxLayoutAlign="center center"
                fxLayoutGap="12px"
+               [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ award.month | amDateFormat: 'MMMM' }}</span>
@@ -103,7 +108,7 @@
             <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../teams/' + award.awardable.id">
-              <md-icon class="medium-face">group</md-icon>
+              <md-icon class="medium-face team-icon">group</md-icon>
             </div>
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--headline strong">{{ award.value }}</span>
@@ -123,7 +128,8 @@
           <button *ngIf="! yearlyTeamAwardListService.isComplete()"
                   md-button
                   color="accent"
-                  class="pushed-right">View all
+                  class="pushed-right"
+                  routerLink="yearly">View all
           </button>
         </div>
         <md-divider></md-divider>
@@ -134,6 +140,7 @@
                fxLayout="column"
                fxLayoutAlign="center center"
                fxLayoutGap="12px"
+               [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--caption u-weak">{{ award.year }}</span>
@@ -141,7 +148,7 @@
             <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                  fxLayoutAlign="center center"
                  [routerLink]="'../../teams/' + award.awardable.id">
-              <md-icon class="medium-face">group</md-icon>
+              <md-icon class="medium-face team-icon">group</md-icon>
             </div>
             <div fxLayout="column" fxLayoutAlign="center center">
               <span class="mdc-typography--headline strong">{{ award.value }}</span>

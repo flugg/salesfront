@@ -42,7 +42,9 @@ export class EditTeamComponent implements OnInit, OnDestroy {
   submit(name: string): void {
     this.teamService.update(this.team.id, { name }).then(() => {
       this.router.navigate(['..'], { relativeTo: this.route });
-      this.snackBar.open('Team updated', null, <MdSnackBarConfig>{ duration: 2000 });
+      this.snackBar.open('Team updated', null, <MdSnackBarConfig>{ duration: 2000, data: {
+        team: this.team
+      } });
     });
   }
 

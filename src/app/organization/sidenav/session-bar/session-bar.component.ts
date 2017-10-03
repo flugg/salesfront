@@ -1,14 +1,16 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MdDialog, MdDialogConfig, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
+import 'rxjs/add/operator/first';
+
+import { popInOut } from '../../../core/animations/pop-in-out';
 import { slideUpDown } from '../../../core/animations/slide-up-down';
-import { ClockInDialogComponent } from '../clock-in-dialog/clock-in-dialog.component';
+import { Member } from '../../../core/models/member.model';
+import { Project } from '../../../core/models/project.model';
+import { TeamMember } from '../../../core/models/team-member.model';
 import { SessionService } from '../../../core/services/session.service';
 import { SidenavService } from '../../sidenav.service';
-import { Member } from '../../../core/models/member.model';
-import { TeamMember } from '../../../core/models/team-member.model';
-import { Project } from '../../../core/models/project.model';
-import { popInOut } from '../../../core/animations/pop-in-out';
+import { ClockInDialogComponent } from '../clock-in-dialog/clock-in-dialog.component';
 
 @Component({
   selector: 'vmo-session-bar',
@@ -28,16 +30,17 @@ export class SessionBarComponent implements OnChanges {
               private sidenav: SidenavService) {}
 
   ngOnChanges(): void {
-    this.teamMembers = ! this.project ? [] : this.membership.teamMembers.filter(teamMember => {
+    this.teamMembers = !this.project ? [] : this.membership.teamMembers.filter(teamMember => {
       return teamMember.team.projectId === this.project.id;
     });
   }
 
   clockIn() {
-    this.sidenav.close();
-    this.dialog.open(ClockInDialogComponent, <MdDialogConfig>{
-      width: '400px',
-      data: { teamMembers: this.teamMembers }
+    this.sidenav.closeIfOver().first().subscribe(() => {
+      this.dialog.open(ClockInDialogComponent, <MdDialogConfig>{
+        width: '400px',
+        data: { teamMembers: this.teamMembers }
+      });
     });
   }
 

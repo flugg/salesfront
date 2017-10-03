@@ -10,6 +10,7 @@ import { ObservableResourceList } from '../core/observable-resource-list';
 import { LeaderboardService } from '../core/services/leaderboard.service';
 import { SocketApiService } from '../core/socket-api.service';
 import { ActiveMembershipService } from './active-membership.service';
+import { DatepickerService } from './shared/datepicker/datepicker.service';
 
 @Injectable()
 export class ProjectListService extends ObservableResourceList implements OnDestroy {
@@ -17,19 +18,28 @@ export class ProjectListService extends ObservableResourceList implements OnDest
 
   constructor(private sockets: SocketApiService,
               private activeMembershipService: ActiveMembershipService,
-              private leaderboardService: LeaderboardService) {
+              private leaderboardService: LeaderboardService,
+              private datepicker: DatepickerService) {
     super();
 
-    this.activeMembershipService.membership.subscribe(membership => {
-      this.leaderboardService.projects(membership.organizationId, moment().startOf('day'), moment().endOf('day')).subscribe(projects => {
-        this.set(projects);
-      });
+    this.socketSubscription = this.sockets.connects.subscribe(() => {
+      this.sockets.stopListening(this);
 
-      this.sockets.listenForOrganization(membership.organizationId, {
-        'project_created': project => this.addProject(project),
-        'sale_registered': sale => this.addSale(sale),
-        'sale_deleted': sale => this.removeSale(sale)
-      }, this);
+      this.activeMembershipService.membership.subscribe(membership => {
+        this.datepicker.range.distinctUntilChanged().subscribe(range => {
+          const [after, before] = range;
+          this.leaderboardService.projects(membership.organizationId, moment(after).startOf('day'), moment(before).endOf('day')).subscribe(projects => {
+            this.set(projects);
+          });
+        });
+
+        this.sockets.listenForOrganization(membership.organizationId, {
+          'project_created': project => this.addProject(project),
+          'project_updated': project => this.updateProject(project),
+          'sale_registered': sale => this.addSale(sale),
+          'sale_deleted': sale => this.removeSale(sale)
+        }, this);
+      });
     });
   }
 
@@ -82,6 +92,11 @@ export class ProjectListService extends ObservableResourceList implements OnDest
 
   private addProject(project: Project) {
     this.snapshot.push(project);
+    this.updateFromSnapshot();
+  }
+
+  private updateProject(project: Project) {
+    this.snapshot = this.snapshot.map(item => item.id === project.id ? project : item);
     this.updateFromSnapshot();
   }
 

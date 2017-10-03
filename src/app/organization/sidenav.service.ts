@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
 import { MdDrawerToggleResult, MdSidenav } from '@angular/material';
+
+import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 import { ScreenService } from '../core/screen.service';
 
@@ -8,14 +11,12 @@ import { ScreenService } from '../core/screen.service';
 export class SidenavService {
   private sidenav: MdSidenav;
 
-  constructor(private router: Router,
-              private screen: ScreenService) {}
+  constructor(private screen: ScreenService) {}
 
   set(sidenav: MdSidenav) {
     this.sidenav = sidenav;
 
     this.screen.asObservable().subscribe(breakpoint => this.setMode(this.resolveMode(breakpoint)));
-    this.router.events.filter(event => event instanceof NavigationStart).subscribe(() => this.close());
   }
 
   open(): Promise<MdDrawerToggleResult> {
@@ -26,6 +27,21 @@ export class SidenavService {
     if (this.sidenav.mode !== 'side') {
       return this.sidenav.close();
     }
+  }
+
+  closeIfOver(): Observable<boolean> {
+    if (!this.sidenav || this.sidenav.mode !== 'over' || !this.sidenav.opened) {
+      return Observable.of(true);
+    }
+
+    const isClosed = new Subject<boolean>();
+    this.sidenav.onClose.first().subscribe(() => {
+      isClosed.next(true);
+    });
+
+    this.close();
+
+    return isClosed.asObservable();
   }
 
   private setMode(mode: 'over' | 'push' | 'side'): void {
