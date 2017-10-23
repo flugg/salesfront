@@ -24,12 +24,12 @@ export class MonthlyBudgetListComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(public monthlyBudgetListServie: MonthlyBudgetListService,
+  constructor(public monthlyBudgetListService: MonthlyBudgetListService,
               private screenService: ScreenService) {}
 
   ngOnInit(): void {
     this.subscriptions.push(Observable.combineLatest(
-      this.monthlyBudgetListServie.budgets
+      this.monthlyBudgetListService.budgets
     ).subscribe(data => {
       [this.budgets] = data;
       this.loading = false;
