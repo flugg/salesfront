@@ -10,6 +10,8 @@ export interface Team {
   createdAt: string;
   updatedAt: string;
   value?: number;
+  budget?: number;
+  enabled?: boolean;
   currentValue?: number;
   position?: number;
   memberCount?: number;

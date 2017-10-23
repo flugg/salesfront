@@ -11,21 +11,19 @@
                   md-button
                   color="accent"
                   class="pushed-right"
-                  routerLink="daily">View all</button>
+                  routerLink="daily">View all
+          </button>
         </div>
         <md-divider></md-divider>
         <span *ngIf="!dailyAwards?.length"
               class="mdc-typography--body1 u-weak">No daily top sellers calculated yet. Check back tomorrow!</span>
         <div *ngIf="dailyAwards?.length" class="u-horizontal-scrolling" fxLayout="row" fxLayoutGap="24px">
           <div *ngFor="let award of dailyAwards"
-               fxLayout="column"
-               fxLayoutAlign="center center"
-               fxLayoutGap="12px"
                [class.u-faded]="award.awardable.deletedAt"
-               class="wall-of-fame-item">
-            <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--caption u-weak">{{ formatDay(award.day) }}</span>
-            </div>
+               class="wall-of-fame-item"
+               fxLayout="column"
+               fxLayoutAlign="start center"
+               fxLayoutGap="12px">
             <img *ngIf="award.awardable.user.avatarPath"
                  class="u-avatar u-avatar--big u-clickable u-elevated"
                  [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
@@ -36,10 +34,14 @@
                  [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
               <md-icon class="medium-face">face</md-icon>
             </div>
-            <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--headline strong">{{ award.value }}</span>
-              <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">
-                <span>{{ award.awardable.user.firstName }}</span>
+            <div class="u-ellipsis u-text-center" style="width: 100%">
+              <div class="mdc-typography--caption u-weak u-text-center">{{ formatDay(award.day) }}</div>
+              <span class="mdc-typography--title wall-of-fame-name strong">
+                {{ award.awardable.user.firstName }}
+              </span>
+              <div class="mdc-typography--subheading strong u-text-center">
+                <md-icon class="u-weak u-push-right u-tad-down u-trophy-color --bronze">star</md-icon>
+                {{ award.value }}
               </div>
             </div>
           </div>
@@ -53,10 +55,10 @@
           </span>
           <div class="u-fill"></div>
           <!--<button *ngIf="! weeklyAwardListService.isComplete()"-->
-                  <!--md-button-->
-                  <!--color="accent"-->
-                  <!--class="pushed-right"-->
-                  <!--routerLink="weekly">View all-->
+          <!--md-button-->
+          <!--color="accent"-->
+          <!--class="pushed-right"-->
+          <!--routerLink="weekly">View all-->
           <!--</button>-->
         </div>
         <md-divider></md-divider>
@@ -69,9 +71,6 @@
                fxLayoutGap="12px"
                [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
-            <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--caption u-weak">Week {{ award.week }}</span>
-            </div>
             <img *ngIf="award.awardable.user.avatarPath"
                  class="u-avatar u-avatar--big u-clickable u-elevated"
                  [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
@@ -82,10 +81,14 @@
                  [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
               <md-icon class="medium-face">face</md-icon>
             </div>
-            <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--headline strong">{{ award.value }}</span>
-              <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">
-                <span>{{ award.awardable.user.firstName }}</span>
+            <div class="u-ellipsis u-text-center" style="width: 100%">
+              <div class="mdc-typography--caption u-weak u-text-center">Week {{ award.week }}</div>
+              <span class="mdc-typography--title wall-of-fame-name strong">
+                {{ award.awardable.user.firstName }}
+              </span>
+              <div class="mdc-typography--subheading strong u-text-center">
+                <md-icon class="u-weak u-push-right u-tad-down u-trophy-color --silver">star</md-icon>
+                {{ award.value }}
               </div>
             </div>
           </div>
@@ -115,9 +118,6 @@
                fxLayoutGap="12px"
                [class.u-faded]="award.awardable.deletedAt"
                class="wall-of-fame-item">
-            <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--caption u-weak">{{ award.month | amDateFormat: 'MMMM' }}</span>
-            </div>
             <img *ngIf="award.awardable.user.avatarPath"
                  class="u-avatar u-avatar--big u-clickable u-elevated"
                  [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
@@ -128,57 +128,14 @@
                  [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
               <md-icon class="medium-face">face</md-icon>
             </div>
-            <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--headline strong">{{ award.value }}</span>
-              <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">
-                <span>{{ award.awardable.user.firstName }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </md-card>
-
-      <md-card class="u-spacing-between">
-        <div fxLayout="row" fxLayoutAlign="center center">
-          <span class="mdc-typography--headline strong">
-            Yearly Top
-          </span>
-          <div class="u-fill"></div>
-          <div class="u-fill"></div>
-          <button *ngIf="! yearlyAwardListService.isComplete()"
-                  md-button
-                  color="accent"
-                  class="pushed-right"
-                  routerLink="yearly">View all
-          </button>
-        </div>
-        <md-divider></md-divider>
-        <span *ngIf="!yearlyAwards?.length"
-              class="mdc-typography--body1 u-weak">No yearly top sellers calculated yet. Check back next year!</span>
-        <div *ngIf="yearlyAwards?.length" class="u-horizontal-scrolling" fxLayout="row" fxLayoutGap="24px">
-          <div *ngFor="let award of yearlyAwards"
-               fxLayout="column"
-               fxLayoutAlign="center center"
-               fxLayoutGap="12px"
-               [class.u-faded]="award.awardable.deletedAt"
-               class="wall-of-fame-item">
-            <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--caption u-weak">{{ award.year }}</span>
-            </div>
-            <img *ngIf="award.awardable.user.avatarPath"
-                 class="u-avatar u-avatar--big u-clickable u-elevated"
-                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
-                 src="https://s3.eu-central-1.amazonaws.com/vendumo/{{ award.awardable.user.avatarPath }}">
-            <div *ngIf="! award.awardable.user.avatarPath"
-                 class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
-                 fxLayoutAlign="center center"
-                 [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
-              <md-icon class="medium-face">face</md-icon>
-            </div>
-            <div fxLayout="column" fxLayoutAlign="center center">
-              <span class="mdc-typography--headline strong">{{ award.value }}</span>
-              <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis">
-                <span>{{ award.awardable.user.firstName }}</span>
+            <div class="u-ellipsis u-text-center" style="width: 100%">
+              <div class="mdc-typography--caption u-weak u-text-center">{{ award.month | amDateFormat: 'MMMM' }}</div>
+              <span class="mdc-typography--title wall-of-fame-name strong">
+                {{ award.awardable.user.firstName }}
+              </span>
+              <div class="mdc-typography--subheading strong u-text-center">
+                <md-icon class="u-weak u-push-right u-tad-down u-trophy-color --gold">star</md-icon>
+                {{ award.value }}
               </div>
             </div>
           </div>

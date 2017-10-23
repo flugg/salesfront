@@ -1,0 +1,53 @@
+<div class="mdc-typography--headline strong">Distribute budget</div>
+<p class="mdc-typography--body1 u-weak u-spacing-bottom">Some of the budget has been distributed evenly, add the remaining points.</p>
+
+<div class="vmo-scrollable-area --fixedHeight --divided push-up-fixed-on-mobile">
+  <div *ngFor="let team of data.teams" class="u-spacing-bottom --without-last">
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" class="u-spacing-bottom">
+      <div fxFlex="10">
+        <md-slide-toggle [(ngModel)]="team.enabled" name="enableTeam" class="u-height-auto"></md-slide-toggle>
+      </div>
+      <div fxFlex="60">
+        <div class="mdc-typography--title strong">{{ team.name }}</div>
+      </div>
+      <div fxFlex="30">
+        <div class="mdc-typography--title strong" *ngIf="team.enabled">{{ calculatedTotalForTeam(team) }}</div>
+      </div>
+    </div>
+    <div *ngIf="team.enabled">
+      <div *ngFor="let member of team.members" class="u-spacing-bottom-small">
+        <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+          <div fxFlex="10" fxLayout="row" fxLayoutAlign="start center">
+            <md-slide-toggle [(ngModel)]="member.enabled" name="enable" class="u-height-auto"></md-slide-toggle>
+          </div>
+          <div fxFlex="60">
+            <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+              <vmo-avatar [project]="data.project" [membership]="member.member"></vmo-avatar>
+              <div class="mdc-typography--body2">{{ member.member.user.name }}</div>
+            </div>
+          </div>
+          <div fxFlex="30">
+            <md-input-container color="accent" *ngIf="member.enabled">
+              <input name="value" mdInput placeholder="Value" type="number" [(ngModel)]="member.value">
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="u-spacing-top-more fixed-bottom-on-mobile" fxLayout="row" fxLayoutAlign="center center">
+  <div>
+    <div class="mdc-typography--caption u-weak">Distributed</div>
+    <span class="mdc-typography--title strong">{{ calculatedTotal() }}</span>
+    <span class="mdc-typography--title u-weak" *ngIf="calculatedTotal() > data.value">(+{{ calculatedTotal() - data.value }})</span>
+    <span class="mdc-typography--title u-weak" *ngIf="calculatedTotal() < data.value">({{ calculatedTotal() - data.value }})</span>
+  </div>
+  <div class="u-fill"></div>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="12px">
+    <button md-button md-dialog-close>Cancel</button>
+    <button md-raised-button (click)="submit()" [disabled]="pending" color="accent">Save</button>
+  </div>
+</div>

@@ -60,8 +60,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   goBack(): void {
     if (!this.urlService.previous || this.urlService.previous.url.includes(this.urlService.current.url)) {
       this.router.navigate(['..'], { relativeTo: this.route });
+    } else if (this.stripLastSegment(this.urlService.previous.url) === this.stripLastSegment(this.urlService.current.url)) {
+      this.router.navigate(['..'], { relativeTo: this.route });
     } else {
       this.location.back();
     }
+  }
+
+  private stripLastSegment(url: string): string {
+    const segments = url.split('/');
+    segments.pop();
+
+    return segments.join('/');
   }
 }

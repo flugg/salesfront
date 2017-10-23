@@ -1,0 +1,24 @@
+<div class="vmo-component vmo-component--important vmo-component--tabs">
+  <vmo-toolbar title="Budget" mode="back" tabs="true">
+    <button md-icon-button routerLink="edit" *ngIf="membership?.user.isAdmin">
+      <md-icon>edit</md-icon>
+    </button>
+    <nav md-tab-nav-bar toolbar-tabs>
+      <a md-tab-link routerLink="members"
+         routerLinkActive #membersLink="routerLinkActive"
+         [active]="membersLink.isActive"
+         [class.is-active]="membersLink.isActive">
+        Members
+      </a>
+      <a md-tab-link routerLink="teams"
+         routerLinkActive #teamsLink="routerLinkActive"
+         [active]="teamsLink.isActive"
+         [class.is-active]="teamsLink.isActive">
+        Teams
+      </a>
+    </nav>
+  </vmo-toolbar>
+  <vmo-datepicker></vmo-datepicker>
+
+  <router-outlet></router-outlet>
+</div>

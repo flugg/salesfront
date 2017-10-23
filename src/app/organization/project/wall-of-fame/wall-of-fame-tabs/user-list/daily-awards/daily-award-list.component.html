@@ -17,9 +17,6 @@
                 <div fxLayout="column"
                      fxLayoutAlign="center center"
                      fxLayoutGap="12px">
-                  <div fxLayout="column" fxLayoutAlign="center center">
-                    <span class="mdc-typography--caption u-weak">{{ formatDay(award.day) }}</span>
-                  </div>
                   <img *ngIf="award.awardable.user.avatarPath"
                        class="u-avatar u-avatar--big u-clickable u-elevated"
                        [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]"
@@ -30,9 +27,15 @@
                        [routerLink]="['/', award.awardable.organizationId, 'users', award.awardable.id]">
                     <md-icon class="medium-face">face</md-icon>
                   </div>
-                  <div>
-                    <div class="mdc-typography--headline strong u-text-center">{{ award.value }}</div>
-                    <div class="mdc-typography--body1 u-ellipsis u-text-center">{{ award.awardable.user.firstName }}</div>
+                  <div class="u-ellipsis u-text-center" style="width: 100%">
+                    <div class="mdc-typography--caption u-weak u-text-center">{{ formatDay(award.day) }}</div>
+                    <span class="mdc-typography--title wall-of-fame-name strong">
+                      {{ award.awardable.user.firstName }}
+                    </span>
+                    <div class="mdc-typography--subheading strong u-text-center">
+                      <md-icon class="u-weak u-push-right u-tad-down u-trophy-color --bronze">star</md-icon>
+                      {{ award.value }}
+                    </div>
                   </div>
                 </div>
               </md-grid-tile>

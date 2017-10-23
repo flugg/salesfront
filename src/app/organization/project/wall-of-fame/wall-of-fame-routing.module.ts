@@ -10,7 +10,7 @@ import { DailyTeamAwardListComponent } from './wall-of-fame-tabs/team-list/daily
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'teams',
+    redirectTo: 'members',
     pathMatch: 'full'
   },
   {
@@ -28,7 +28,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'users',
+        path: 'members',
         component: UserListComponent,
         children: [
           {

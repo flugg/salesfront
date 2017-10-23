@@ -1,0 +1,67 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area" *ngIf="! loading">
+        <div class="vmo-container --small">
+          <md-card>
+            <span class="mdc-typography--display1 strong" *ngIf="type === 'daily'">Edit Daily Budget</span>
+            <span class="mdc-typography--display1 strong" *ngIf="type === 'monthly'">Edit Monthly Budget</span>
+            <span class="mdc-typography--display1 strong" *ngIf="type === 'custom'">Edit Budget: {{ budget.name }}</span>
+            <p class="mdc-typography--body1 u-weak u-spacing-bottom"
+                 *ngIf="type === 'daily'">
+              {{ formatDay(budget.day) }}
+            </p>
+            <p class="mdc-typography--body1 u-weak u-spacing-bottom"
+                 *ngIf="type === 'monthly'">
+              {{ budget.month | amDateFormat: 'MMMM' }}
+            </p>
+            <p class="mdc-typography--body1 u-weak u-spacing-bottom"
+                 *ngIf="type === 'custom' && ! isSameDay(budget)">
+              {{ budget.startsAt | amDateFormat:'Do MMM' }} - {{ budget.endsAt | amDateFormat:'Do MMM' }}
+            </p>
+            <p class="mdc-typography--body1 u-weak u-spacing-bottom"
+                 *ngIf="type === 'custom' && isSameDay(budget)">
+              {{ budget.startsAt | amDateFormat:'Do MMM' }}
+            </p>
+            <div *ngFor="let team of teams" class="u-spacing-bottom --without-last">
+              <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" class="u-spacing-bottom">
+                <div fxFlex="10">
+                  <md-slide-toggle [ngModel]="team.enabled" (ngModelChange)="teamChanged($event, team)" name="enableTeam" class="u-height-auto"></md-slide-toggle>
+                </div>
+                <div fxFlex="60">
+                  <div class="mdc-typography--title strong">{{ team.name }}</div>
+                </div>
+                <div fxFlex="30">
+                  <div class="mdc-typography--title strong" *ngIf="team.enabled">{{ calculatedTotalForTeam(team) }}</div>
+                </div>
+              </div>
+              <div *ngIf="team.enabled">
+                <div *ngFor="let member of team.members" class="u-spacing-bottom-small">
+                  <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+                    <div fxFlex="10" fxLayout="row" fxLayoutAlign="start center">
+                      <md-slide-toggle [(ngModel)]="member.enabled" name="enable" class="u-height-auto"></md-slide-toggle>
+                    </div>
+                    <div fxFlex="60">
+                      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+                        <vmo-avatar [project]="team.project" [membership]="member.member"></vmo-avatar>
+                        <div class="mdc-typography--body2">{{ member.member.user.name }}</div>
+                      </div>
+                    </div>
+                    <div fxFlex="30">
+                      <md-input-container color="accent" *ngIf="member.enabled">
+                        <input name="value" mdInput placeholder="Value" type="number" [(ngModel)]="member.value">
+                      </md-input-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+              <button md-raised-button color="accent" (click)="submit()">Save</button>
+            </div>
+          </md-card>
+        </div>
+    </div>
+  </vmo-progress-spinner>
+</div>

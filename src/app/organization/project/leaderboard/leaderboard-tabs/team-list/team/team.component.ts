@@ -14,8 +14,8 @@ import { MemberListService } from './member-list.service';
 import { SelectedTeamService } from './selected-team.service';
 
 @Component({
-  providers: [SelectedTeamService, MemberListService],
   templateUrl: 'team.component.html',
+  providers: [SelectedTeamService, MemberListService],
   animations: [slideIn()]
 })
 export class TeamComponent implements OnInit, OnDestroy {

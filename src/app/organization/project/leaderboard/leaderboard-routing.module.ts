@@ -9,7 +9,7 @@ import { UserListComponent } from './leaderboard-tabs/user-list/user-list.compon
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'teams',
+    redirectTo: 'members',
     pathMatch: 'full'
   },
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'users',
+        path: 'members',
         component: UserListComponent
       }
     ]

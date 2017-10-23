@@ -6,6 +6,8 @@ export interface TeamMember {
   joinedAt: string,
   leftAt?: string,
   isLeader: boolean;
+  value?: number;
+  enabled?: boolean;
   memberId: string;
   teamId: string;
   member?: Member;

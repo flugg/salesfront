@@ -4,17 +4,17 @@
       <md-icon>date_range</md-icon>
     </button>
     <nav md-tab-nav-bar toolbar-tabs>
+      <a md-tab-link routerLink="members"
+         routerLinkActive #usersLink="routerLinkActive"
+         [active]="usersLink.isActive"
+         [class.is-active]="usersLink.isActive">
+        Members
+      </a>
       <a md-tab-link routerLink="teams"
          routerLinkActive #teamsLink="routerLinkActive"
          [active]="teamsLink.isActive"
          [class.is-active]="teamsLink.isActive">
         Teams
-      </a>
-      <a md-tab-link routerLink="users"
-         routerLinkActive #usersLink="routerLinkActive"
-         [active]="usersLink.isActive"
-         [class.is-active]="usersLink.isActive">
-        Users
       </a>
     </nav>
   </vmo-toolbar>

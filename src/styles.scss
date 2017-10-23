@@ -184,10 +184,37 @@ snack-bar-container {
 
 .u-spacing-bottom {
   margin-bottom: 24px;
+
+  &.--without-last:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .u-nowrap {
   white-space: nowrap;
+}
+
+.fixed-bottom-on-mobile {
+  @media (max-width: 600px) {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background: white;
+    padding: 16px !important;
+    z-index: 9999;
+    @include mat-elevation(4);
+  }
+}
+
+.push-up-fixed-on-mobile {
+  @media (max-width: 600px) {
+    margin-bottom: 68px;
+  }
+}
+
+.force-button-height {
+  height: 36px;
 }
 
 .u-spacing-bottom-small {
@@ -234,6 +261,15 @@ snack-bar-container {
   padding-right: 8px;
 }
 
+.u-horizontal-spacing-tiny {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.u-left-spacing-tiny {
+  padding-right: 2px;
+}
+
 .u-vertical-spacing-big {
   padding: 24px 0;
 
@@ -255,12 +291,12 @@ snack-bar-container {
   height: 72px;
 }
 
-.wall-of-fame-name {
-  max-width: 120px;
-}
-
 .u-default-avatar {
   background: #e2e2e2;
+}
+
+.mat-fab.u-fab-pushed-down-to-earth {
+  @include mat-elevation(4);
 }
 
 .u-push-button {
@@ -280,6 +316,7 @@ snack-bar-container {
 }
 
 .u-ellipsis {
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -367,6 +404,10 @@ snack-bar-container {
   }
 }
 
+.u-height-auto {
+  height: auto !important;
+}
+
 .vmo-scrollable-area {
   position: relative;
   overflow-y: scroll;
@@ -375,6 +416,23 @@ snack-bar-container {
 
   &--withInput {
     height: calc(100% - 64px);
+  }
+
+  &.--fixedHeight {
+    @media (min-width: 960px) {
+      max-height: 400px;
+    }
+  }
+
+  &.--divided {
+    border-top: 1px solid rgba(black, 0.12);
+    border-bottom: 1px solid rgba(black, 0.12);
+    padding: 24px 0;
+
+    @media (max-width: 600px) {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
   }
 
   .mat-sidenav-opened  &:not(.inside-sidenav) {
@@ -608,12 +666,33 @@ snack-bar-container {
   padding-top: 16px;
 }
 
+.u-spacing-top-more {
+  padding-top: 24px;
+}
+
 .u-spacing-top-big {
   padding-top: 32px;
 }
 
+.u-push-right {
+  padding-right: 6px;
+}
+
 .u-push-down {
   margin-bottom: 84px;
+}
+
+.u-tad-down {
+  position: relative;
+  top: 4px;
+}
+
+.u-push-down-tiny {
+  padding-top: 6px;
+}
+
+.u-push-down-micro {
+  padding-top: 1px;
 }
 
 .no-padding-top {
@@ -671,6 +750,20 @@ snack-bar-container {
   }
 }
 
+.fullscreen-dialog .mat-dialog-container {
+  width: 600px;
+
+  @media (max-width: 960px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+    width: auto;
+  }
+}
+
 .contract-dialog .mat-dialog-container {
   width: 600px;
 
@@ -715,6 +808,20 @@ snack-bar-container {
 
   &.bronze {
     background: #b98578 !important;
+  }
+}
+
+.u-trophy-color {
+  &.--gold {
+    color: #FFC400 !important;
+  }
+
+  &.--silver {
+    color: #9E9E9E !important;
+  }
+
+  &.--bronze {
+    color: #b98578 !important;
   }
 }
 
@@ -790,7 +897,6 @@ snack-bar-container {
   &.--fillOnMobile {
     @media (max-width: 600px) {
       padding: 0;
-      margin-bottom: 12px;
     }
   }
 
@@ -821,7 +927,7 @@ snack-bar-container {
 }
 
 .u-spacing-between {
-  &:not(:last-child) {
+  &:not(:last-of-type) {
     margin-bottom: 12px;
 
     @media (min-width: 600px) {
@@ -835,8 +941,8 @@ snack-bar-container {
 }
 
 .wall-of-fame-item {
-  min-width: 120px;
-  width: (100% / 7);
+  min-width: 144px;
+  width: (100% / 5);
 
   &.--grid {
     margin-bottom: 48px;
@@ -904,4 +1010,52 @@ signature-pad canvas {
 
 .u-max-width-input {
   max-width: 300px;
+}
+
+.background-spinner /deep/ svg {
+  filter: drop-shadow(0 3px 1px rgba(0, 0, 0, .2));
+}
+
+.inactive-budget /deep/ path {
+  stroke: #666;
+}
+
+.background-spinner /deep/ path {
+  stroke: #f2f2f2;
+}
+
+.background-spinner-overload /deep/ path {
+  stroke: rgba(white, 0.25);
+  stroke-width: 3 !important;
+}
+
+.progress-container {
+  position: relative;
+  height: 108px;
+  width: 108px;
+}
+
+.budget-item {
+  min-width: 144px;
+  width: calc(20% - 20px);
+}
+
+.percent {
+  position: absolute;
+  line-height: 108px;
+  height: 108px;
+  width: 108px;
+  text-align: center;
+}
+
+.active-budget-text {
+  color: #2979ff;
+}
+
+.mat-progress-spinner.budget {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 108px;
+  height: 108px;
 }

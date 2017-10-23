@@ -17,17 +17,20 @@
                 <div fxLayout="column"
                      fxLayoutAlign="center center"
                      fxLayoutGap="12px">
-                  <div fxLayout="column" fxLayoutAlign="center center">
-                    <span class="mdc-typography--caption u-weak">{{ formatDay(award.day) }}</span>
-                  </div>
                   <div class="u-avatar u-default-avatar u-avatar--big u-center u-clickable u-elevated"
                        fxLayoutAlign="center center"
                        [routerLink]="'../../../teams/' + award.awardable.id">
-                    <md-icon class="medium-face">group</md-icon>
+                    <md-icon class="medium-face team-icon">group</md-icon>
                   </div>
-                  <div>
-                    <div class="mdc-typography--headline strong u-text-center">{{ award.value }}</div>
-                    <div class="mdc-typography--body1 u-ellipsis u-text-center">{{ award.awardable.name }}</div>
+                  <div class="u-ellipsis u-text-center" style="width: 100%">
+                    <div class="mdc-typography--caption u-weak u-text-center">{{ formatDay(award.day) }}</div>
+                    <span class="mdc-typography--title wall-of-fame-name strong">
+                      {{ award.awardable.name }}
+                    </span>
+                    <div class="mdc-typography--subheading strong u-text-center">
+                      <md-icon class="u-weak u-push-right u-tad-down u-trophy-color --bronze">star</md-icon>
+                      {{ award.value }}
+                    </div>
                   </div>
                 </div>
               </md-grid-tile>

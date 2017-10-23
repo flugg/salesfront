@@ -13,7 +13,7 @@
          [class.clickable-bar]="type === 'teams' && avatar"
          [class.u-faded]="type === 'users' && item.deletedAt"
          (click)="onClickBar(item)">
-      <div fxLayout="row" class="leaderboard-title">
+      <div fxLayout="row" class="leaderboard-title" *ngIf="! budget">
         <span class="mdc-typography--body1">
           <span class="strong">{{ item.position }}.</span> {{ type === 'users' ? item.user.name : item.name }}
         </span>
@@ -30,6 +30,25 @@
         <span *ngIf="countComplete[item.id]"
               class="mdc-typography--body1 strong">{{ item.value | value:project }}</span>
       </div>
+      <div fxLayout="row" class="leaderboard-title" *ngIf="budget">
+        <span class="mdc-typography--body1 u-ellipsis">
+          {{ type === 'users' ? item.user.name : item.name }}
+        </span>
+        <span class="u-fill"></span>
+        <span *ngIf="! countComplete[item.id]"
+              class="mdc-typography--body1 strong"
+              counto
+              [step]="100"
+              [duration]="0.6"
+              [countFrom]="0"
+              [countTo]="item.value"
+              (countoChange)="item.currentValue = $event"
+              (countoEnd)="countComplete[item.id] = true">{{ item.currentValue | value:project }}</span>
+        <span *ngIf="countComplete[item.id]"
+              class="mdc-typography--body1 strong">{{ item.value | value:project }}</span>
+        <span class="mdc-typography--body1 u-weak u-horizontal-spacing-tiny">/</span>
+        <span class="mdc-typography--body1 strong">{{ item.budget }}</span>
+      </div>
       <div class="leaderboard-bar" *ngIf="avatar">
         <div *ngIf="! loading" fxFill class="bar-wrapper">
           <div [@slideIn]
@@ -40,7 +59,7 @@
     </div>
   </md-list-item>
 </md-list>
-<div *ngIf="count < items.length" fxLayoutAlign="center" class="u-vertical-spacing">
+<div *ngIf="count < items.length" fxLayoutAlign="center" class="u-spacing-top">
   <button md-button color="accent" (click)="loadAll()">
     Load more
   </button>

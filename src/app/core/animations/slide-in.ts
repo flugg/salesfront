@@ -4,7 +4,7 @@ export function slideIn() {
   return trigger('slideIn', [
     transition(':enter', [
       style({ transform: 'scaleX(0)' }),
-      animate('800ms ease-in-out', style({ transform: 'scaleX(1)' }))
+      animate('600ms ease-in-out', style({ transform: 'scaleX(1)' }))
     ])
   ]);
 }

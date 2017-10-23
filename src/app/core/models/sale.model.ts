@@ -3,6 +3,7 @@ import { Member } from './member.model';
 import { Project } from './project.model';
 import { Team } from './team.model';
 import { User } from './user.model';
+import { TeamMember } from './team-member.model';
 
 export interface Sale {
   id: string;
@@ -10,11 +11,13 @@ export interface Sale {
   registeredAt: string;
   value: number;
   memberId: string;
+  teamMemberId: string;
   teamId: string;
   projectId: string;
   registererId: string;
   contract?: Contract;
   member?: Member;
+  teamMember?: TeamMember;
   team?: Team;
   project?: Project;
   registerer?: User;

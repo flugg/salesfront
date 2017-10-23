@@ -1,0 +1,127 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <form novalidate (submit)="submit(); $event.preventDefault()">
+      <div class="vmo-container --small">
+        <md-card>
+          <span class="mdc-typography--display1 strong">New Budget</span>
+          <p class="mdc-typography--body1 u-weak">Set a goal and track your progress towards it.</p>
+          <div class="u-spacing-top">
+            <div class="u-spacing-bottom">
+              <md-button-toggle-group name="type" [(ngModel)]="type">
+                <md-button-toggle value="day">Day</md-button-toggle>
+                <md-button-toggle value="month">Month</md-button-toggle>
+                <md-button-toggle value="custom">Custom</md-button-toggle>
+              </md-button-toggle-group>
+            </div>
+            <div *ngIf="type === 'daily'">
+              <md-input-container color="accent">
+                <input #dayInput="ngModel"
+                       mdInput
+                       name="day"
+                       [mdDatepicker]="dayPicker"
+                       placeholder="Day"
+                       [(ngModel)]="day"
+                       required>
+                <md-datepicker-toggle mdSuffix [for]="dayPicker"></md-datepicker-toggle>
+                <md-error *ngIf="dayInput.errors?.required && (dayInput.dirty || dayInput.touched)">
+                  This field is required
+                </md-error>
+              </md-input-container>
+              <md-datepicker #dayPicker [touchUi]="mobile"></md-datepicker>
+            </div>
+            <div fxLayout="row" fxLayoutGap="16px" *ngIf="type === 'monthly'">
+              <div fxFlex="50">
+                <md-select placeholder="Month" color="accent" [(ngModel)]="selectedMonth" name="month" required fxFlexFill>
+                  <md-option *ngFor="let month of months; let i = index" [value]="i + 1">
+                    {{ month }}
+                  </md-option>
+                </md-select>
+              </div>
+              <div fxFlex="50">
+                <md-input-container color="accent">
+                  <input #yearInput
+                         mdInput
+                         name="year"
+                         placeholder="Year"
+                         type="number"
+                         [(ngModel)]="year"
+                         required>
+                  <md-error *ngIf="yearInput.errors?.required && (yearInput.dirty || yearInput.touched)">
+                    This field is required
+                  </md-error>
+                </md-input-container>
+              </div>
+            </div>
+            <div *ngIf="type === 'custom'">
+              <md-input-container color="accent">
+                <input #nameInput
+                       mdInput
+                       name="name"
+                       placeholder="Name"
+                       [(ngModel)]="name"
+                       required>
+                <md-error *ngIf="nameInput.errors?.required && (nameInput.dirty || nameInput.touched)">
+                  This field is required
+                </md-error>
+              </md-input-container>
+              <div fxLayout="row" fxLayoutGap="16px">
+                <div fxFlex="50">
+                  <md-input-container color="accent">
+                    <input #afterDateInput
+                           mdInput
+                           name="from"
+                           placeholder="From"
+                           [mdDatepicker]="afterPicker"
+                           [(ngModel)]="from"
+                           required>
+                    <md-datepicker-toggle mdSuffix [for]="afterPicker"></md-datepicker-toggle>
+                    <md-error *ngIf="afterDateInput.errors?.required && (afterDateInput.dirty || afterDateInput.touched)">
+                      This field is required
+                    </md-error>
+                  </md-input-container>
+                  <md-datepicker #afterPicker [touchUi]="mobile"></md-datepicker>
+                </div>
+                <div fxFlex="50">
+                  <md-input-container color="accent">
+                    <input #beforeDateInput
+                           mdInput
+                           name="to"
+                           placeholder="To"
+                           [mdDatepicker]="beforePicker"
+                           [(ngModel)]="to"
+                           required>
+                    <md-datepicker-toggle mdSuffix [for]="beforePicker"></md-datepicker-toggle>
+                    <md-error *ngIf="beforeDateInput.errors?.required && (beforeDateInput.dirty || beforeDateInput.touched)">
+                      This field is required
+                    </md-error>
+                  </md-input-container>
+                  <md-datepicker #beforePicker [touchUi]="mobile"></md-datepicker>
+                </div>
+              </div>
+            </div>
+            <md-input-container color="accent">
+              <input #valueInput="ngModel"
+                     name="value"
+                     mdInput
+                     placeholder="Value"
+                     type="value"
+                     [(ngModel)]="value"
+                     required>
+              <md-error *ngIf="valueInput.errors?.required && (valueInput.dirty || valueInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" class="u-spacing-top">
+            <button md-raised-button
+                    color="accent"
+                    [disabled]="pending || valueInput.errors?.required">Distribute
+            </button>
+          </div>
+        </md-card>
+      </div>
+    </form>
+  </vmo-progress-spinner>
+</div>

@@ -1,0 +1,202 @@
+<router-outlet></router-outlet>
+
+<div class="vmo-component">
+  <vmo-toolbar title="Budgets" mode="menu">
+    <button md-icon-button routerLink="new" *ngIf="membership?.user.isAdmin">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading && budgets?.length">
+    <div class="vmo-scrollable-area">
+      <div class="vmo-container --fillOnMobile">
+        <md-card class="u-spacing-between">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <span class="mdc-typography--headline strong">
+              Daily
+            </span>
+            <div class="u-fill"></div>
+            <button *ngIf="! dailyBudgetListService.isComplete()"
+                    md-button
+                    color="accent"
+                    class="pushed-right"
+                    routerLink="daily">
+              View all
+            </button>
+          </div>
+          <md-divider></md-divider>
+          <span *ngIf="!dailyBudgets?.length"
+                class="mdc-typography--body1 u-weak">
+            No daily budgets found.
+          </span>
+          <div *ngIf="dailyBudgets?.length"
+               class="u-horizontal-scrolling budget-wrapper u-clickable"
+               fxLayout="row"
+               fxLayoutGap="24px">
+            <div *ngFor="let budget of dailyBudgets"
+                 fxLayout="column"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="12px"
+                 class="budget-item u-clickable"
+                 [routerLink]="['daily', budget.id, 'members']">
+              <div class="progress-container">
+                <md-progress-spinner mode="determinate" [value]="100" class="background-spinner"></md-progress-spinner>
+                <md-progress-spinner mode="determinate"
+                                     [value]="calculatePercent(budget)"
+                                     [color]="'accent'"
+                                     [class.inactive-budget]="! isDailyActive(budget)"></md-progress-spinner>
+                <md-progress-spinner *ngIf="calculatePercent(budget) > 100"
+                                     mode="determinate"
+                                     [value]="calculatePercent(budget) - 100"
+                                     class="background-spinner-overload"></md-progress-spinner>
+                <div class="mdc-typography--headline percent u-push-down-micro">
+                  <span class="strong">{{ calculatePercent(budget) }}</span><span
+                        class="u-weak">%</span></div>
+              </div>
+              <div class="u-ellipsis u-text-center" style="width: 100%">
+                <div class="mdc-typography--caption u-weak u-text-center"
+                     [class.active-budget-text]="isDailyActive(budget)">
+                  {{ formatDay(budget.day) }}
+                </div>
+                <span class="mdc-typography--headline strong">
+                  {{ calculateProgress(budget) }}
+                </span>
+                <div class="mdc-typography--subheading strong u-text-center">
+                  <md-icon class="u-weak u-faded u-push-right u-tad-down">adjust</md-icon>
+                  {{ budget.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </md-card>
+        <md-card class="u-spacing-between">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <span class="mdc-typography--headline strong">
+              Monthly
+            </span>
+            <div class="u-fill"></div>
+            <button *ngIf="! monthlyBudgetListService.isComplete()"
+                    md-button
+                    color="accent"
+                    class="pushed-right"
+                    routerLink="monthly">
+              View all
+            </button>
+          </div>
+          <md-divider></md-divider>
+          <span *ngIf="!monthlyBudgets?.length"
+                class="mdc-typography--body1 u-weak">
+             No monthly budgets found.
+          </span>
+          <div *ngIf="monthlyBudgets?.length"
+               class="u-horizontal-scrolling budget-wrapper u-clickable"
+               fxLayout="row"
+               fxLayoutGap="24px">
+            <div *ngFor="let budget of monthlyBudgets"
+                 fxLayout="column"
+                 fxLayoutAlign="center center"
+                 fxLayoutGap="12px"
+                 class="budget-item u-clickable"
+                 [routerLink]="['monthly', budget.id, 'members']">
+              <div class="progress-container">
+                <md-progress-spinner mode="determinate" [value]="100" class="background-spinner"></md-progress-spinner>
+                <md-progress-spinner mode="determinate"
+                                     [value]="calculatePercent(budget)"
+                                     [color]="'accent'"
+                                     [class.inactive-budget]="! isMonthlyActive(budget)"></md-progress-spinner>
+                <md-progress-spinner *ngIf="calculatePercent(budget) > 100"
+                                     mode="determinate"
+                                     [value]="calculatePercent(budget) - 100"
+                                     class="background-spinner-overload"></md-progress-spinner>
+                <div class="mdc-typography--headline percent u-push-down-micro">
+                  <span class="strong">{{ calculatePercent(budget) }}</span><span
+                        class="u-weak">%</span></div>
+              </div>
+              <div class="u-ellipsis u-text-center" style="width: 100%">
+                <div class="mdc-typography--caption u-weak u-text-center"
+                     [class.active-budget-text]="isMonthlyActive(budget)">
+                  {{ budget.month | amDateFormat: 'MMMM' }}
+                </div>
+                <span class="mdc-typography--headline strong">
+                  {{ calculateProgress(budget) }}
+                </span>
+                <div class="mdc-typography--subheading strong u-text-center">
+                  <md-icon class="u-weak u-faded u-push-right u-tad-down">adjust</md-icon>
+                  {{ budget.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </md-card>
+        <md-card class="u-spacing-between" *ngIf="customBudgets?.length">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <span class="mdc-typography--headline strong">
+              Custom
+            </span>
+            <div class="u-fill"></div>
+            <button *ngIf="! customBudgetListService.isComplete()"
+                    md-button
+                    color="accent"
+                    class="pushed-right"
+                    routerLink="custom">
+              View all
+            </button>
+          </div>
+          <md-divider></md-divider>
+          <span *ngIf="!customBudgets?.length"
+                class="mdc-typography--body1 u-weak">
+             No custom budgets found.
+          </span>
+          <div *ngIf="customBudgets?.length"
+               class="u-horizontal-scrolling budget-wrapper"
+               fxLayout="row"
+               fxLayoutGap="24px">
+            <div *ngFor="let budget of customBudgets"
+                 fxLayout="column"
+                 fxLayoutAlign="center center"
+                 fxLayoutGap="12px"
+                 class="budget-item u-clickable"
+                 [routerLink]="['custom', budget.id, 'members']">
+              <div class="progress-container">
+                <md-progress-spinner mode="determinate" [value]="100" class="background-spinner"></md-progress-spinner>
+                <md-progress-spinner mode="determinate"
+                                     [value]="calculatePercent(budget)"
+                                     [color]="'accent'"
+                                     [class.inactive-budget]="! isCustomActive(budget)"></md-progress-spinner>
+                <md-progress-spinner *ngIf="calculatePercent(budget) > 100"
+                                     mode="determinate"
+                                     [value]="calculatePercent(budget) - 100"
+                                     class="background-spinner-overload"></md-progress-spinner>
+                <div class="mdc-typography--headline percent u-push-down-micro">
+                  <span class="strong">{{ calculatePercent(budget) }}</span><span
+                        class="u-weak">%</span></div>
+              </div>
+              <div class="u-ellipsis u-text-center" style="width: 100%">
+                <div class="mdc-typography--caption u-weak u-text-center"
+                     *ngIf="! isSameDay(budget)"
+                     [class.active-budget-text]="isCustomActive(budget)">
+                  {{ budget.startsAt | amDateFormat:'Do MMM' }} - {{ budget.endsAt | amDateFormat:'Do MMM' }}
+                </div>
+                <div class="mdc-typography--caption u-weak u-text-center"
+                     *ngIf="isSameDay(budget)"
+                     [class.active-budget-text]="isCustomActive(budget)">
+                  {{ budget.startsAt | amDateFormat:'Do MMM' }}
+                </div>
+                <span class="mdc-typography--subheading2 strong u-text-center">
+                  {{ budget.name }}
+                </span>
+                <div class="mdc-typography--headline strong">
+                  {{ calculateProgress(budget) }}
+                </div>
+                <div class="mdc-typography--subheading strong u-text-center">
+                  <md-icon class="u-weak u-faded u-push-right u-tad-down">adjust</md-icon>
+                  {{ budget.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </md-card>
+      </div>
+    </div>
+  </vmo-progress-spinner>
+</div>

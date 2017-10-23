@@ -32,6 +32,11 @@ const routes: Routes = [
         loadChildren: 'app/organization/project/wall-of-fame/wall-of-fame.module#WallOfFameModule'
       },
       {
+        path: 'budgets',
+        resolve: { sidenavClosed: CloseSidenavResolver },
+        loadChildren: 'app/organization/project/budgets/budgets.module#BudgetsModule'
+      },
+      {
         path: 'sales',
         resolve: { sidenavClosed: CloseSidenavResolver },
         loadChildren: 'app/organization/project/sales/sales.module#SalesModule'

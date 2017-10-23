@@ -4,6 +4,7 @@
       <md-input-container color="accent">
         <input #afterDateInput
                mdInput
+               name="dateFrom"
                placeholder="From"
                [mdDatepicker]="afterPicker"
                [ngModel]="after"
@@ -16,6 +17,7 @@
       <md-input-container color="accent">
         <input #beforeDateInput
                mdInput
+               name="dateTo"
                placeholder="To"
                [mdDatepicker]="beforePicker"
                [ngModel]="before"

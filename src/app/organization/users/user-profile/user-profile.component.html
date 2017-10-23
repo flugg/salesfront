@@ -100,11 +100,12 @@
               <div *ngFor="let award of monthlyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px" class="award-item">
                 <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored gold"
                      fxLayoutAlign="center center">
-                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
+                  <md-icon>star</md-icon>
                 </div>
                 <div fxLayout="column" fxLayoutAlign="center center">
-                  <strong class="mdc-typography--body2 wall-of-fame-name u-ellipsis">Top Monthly</strong>
-                  <span class="mdc-typography--body1 u-weak">{{ award.month | amDateFormat: 'MMMM' }}</span>
+                  <span class="mdc-typography--caption u-weak">{{ award.month | amDateFormat: 'MMMM' }}</span>
+                  <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis strong">Top Monthly</div>
+                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
                 </div>
               </div>
             </div>
@@ -112,11 +113,12 @@
               <div *ngFor="let award of weeklyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px" class="award-item">
                 <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored silver"
                      fxLayoutAlign="center center">
-                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
+                  <md-icon>star</md-icon>
                 </div>
                 <div fxLayout="column" fxLayoutAlign="center center">
-                  <strong class="mdc-typography--body2 wall-of-fame-name u-ellipsis">Top Weekly</strong>
-                  <span class="mdc-typography--body1 u-weak">Week {{ award.week }}</span>
+                  <span class="mdc-typography--caption u-weak">Week {{ award.week }}</span>
+                  <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis strong">Top Weekly</div>
+                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
                 </div>
               </div>
             </div>
@@ -124,11 +126,12 @@
               <div *ngFor="let award of dailyAwards" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px" class="award-item">
                 <div class="u-avatar u-default-avatar u-avatar--big u-center u-avatar-colored bronze"
                      fxLayoutAlign="center center">
-                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
+                  <md-icon>star</md-icon>
                 </div>
                 <div fxLayout="column" fxLayoutAlign="center center">
-                  <strong class="mdc-typography--body2 wall-of-fame-name u-ellipsis">Top Daily</strong>
-                  <span class="mdc-typography--body1 u-weak">{{ award.day | amDateFormat: 'DD-MM-YYYY' }}</span>
+                  <span class="mdc-typography--caption u-weak">{{ award.day | amDateFormat: 'DD.MM.YYYY' }}</span>
+                  <div class="mdc-typography--body1 wall-of-fame-name u-ellipsis strong">Top Daily</div>
+                  <span class="mdc-typography--headline strong">{{ award.value }}</span>
                 </div>
               </div>
             </div>

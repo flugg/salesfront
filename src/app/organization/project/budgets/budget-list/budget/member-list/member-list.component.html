@@ -1,0 +1,63 @@
+<vmo-progress-spinner [hasLoaded]="! loading">
+  <div class="vmo-scrollable-area">
+    <div class="vmo-container --fillOnMobile" *ngIf="project && ! loading">
+      <md-card>
+        <div class="progress-container u-center">
+          <md-progress-spinner mode="determinate"
+                               [value]="100"
+                               class="budget background-spinner"></md-progress-spinner>
+          <md-progress-spinner mode="determinate"
+                               [value]="calculatePercent(budget)"
+                               [color]="'accent'"
+                               class="budget"></md-progress-spinner>
+          <md-progress-spinner *ngIf="calculatePercent(budget) > 100"
+                               mode="determinate"
+                               [value]="calculatePercent(budget) - 100"
+                               class="budget background-spinner-overload"></md-progress-spinner>
+          <div class="mdc-typography--headline percent u-push-down-micro">
+            <span class="strong">{{ calculatePercent(budget) }}</span><span
+                  class="u-weak">%</span></div>
+        </div>
+        <div class="mdc-typography--body1 u-weak u-text-center u-spacing-top-small"
+             *ngIf="type === 'daily'">
+          {{ formatDay(budget.day) }}
+        </div>
+        <div class="mdc-typography--body1 u-weak u-text-center u-spacing-top-small"
+             *ngIf="type === 'monthly'">
+          {{ budget.month | amDateFormat: 'MMMM' }}
+        </div>
+        <div class="mdc-typography--body1 u-weak u-text-center u-spacing-top-small"
+             *ngIf="type === 'custom' && ! isSameDay(budget)">
+          {{ budget.startsAt | amDateFormat:'Do MMM' }} - {{ budget.endsAt | amDateFormat:'Do MMM' }}
+        </div>
+        <div class="mdc-typography--body1 u-weak u-text-center u-spacing-top-small"
+             *ngIf="type === 'custom' && isSameDay(budget)">
+          {{ budget.startsAt | amDateFormat:'Do MMM' }}
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="u-spacing-top-more">
+          <span class="mdc-typography--headline strong" *ngIf="type === 'daily'">Daily</span>
+          <span class="mdc-typography--headline strong" *ngIf="type === 'monthly'">Monthly</span>
+          <span class="mdc-typography--headline strong" *ngIf="type === 'custom'">{{ budget.name }}</span>
+          <div class="u-fill"></div>
+          <span *ngIf="! countComplete"
+                class="mdc-typography--headline strong"
+                counto
+                [step]="50"
+                [duration]="0.6"
+                [countFrom]="0"
+                [countTo]="total"
+                (countoChange)="current = $event"
+                (countoEnd)="countComplete = true">{{ current | value:project }}</span>
+          <span *ngIf="countComplete" class="mdc-typography--headline strong">{{ total | value:project }}</span>
+          <span class="mdc-typography--headline u-weak u-horizontal-spacing-tiny">/</span>
+          <span class="mdc-typography--headline strong">{{ budget.value }}</span>
+        </div>
+        <md-divider></md-divider>
+        <vmo-leaderboard [project]="project" [items]="members" type="users" [budget]="budget" [budgetType]="type"></vmo-leaderboard>
+        <span *ngIf="! members?.length" class="mdc-typography--body1 u-weak">No goals set for budget.</span>
+      </md-card>
+    </div>
+  </div>
+</vmo-progress-spinner>
+
+<router-outlet></router-outlet>

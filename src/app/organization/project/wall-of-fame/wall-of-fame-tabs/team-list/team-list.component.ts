@@ -14,7 +14,7 @@ import { ActiveUserService } from '../../../../../organization-list/active-user.
 import { DailyTeamAwardListService } from './daily-team-award-list.service';
 import { MonthlyTeamAwardListService } from './monthly-team-award-list.service';
 import { WeeklyTeamAwardListService } from './weekly-team-award-list.service';
-import { YearlyTeamAwardListService } from './yearly-teamaward-list.service';
+import { YearlyTeamAwardListService } from './yearly-team-award-list.service';
 
 @Component({
   templateUrl: 'team-list.component.html'

@@ -10,6 +10,7 @@ export interface Member {
   organizationId: string;
   inviteId: string;
   value?: number;
+  budget?: number;
   position?: number;
   deletedAt?: string;
   user?: User;

@@ -1,0 +1,50 @@
+.background-spinner /deep/ svg {
+  filter: drop-shadow(0 3px 1px rgba(0, 0, 0, .2));
+}
+
+.inactive-budget /deep/ path {
+  stroke: #666;
+}
+
+.background-spinner /deep/ path {
+  stroke: #f2f2f2;
+}
+
+.background-spinner-overload /deep/ path {
+  stroke: rgba(white, 0.25);
+  stroke-width: 3 !important;
+}
+
+.progress-container {
+  position: relative;
+  height: 108px;
+  width: 108px;
+}
+
+.budget-item {
+  min-width: 144px;
+  width: calc(20% - 20px);
+}
+
+.mat-progress-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.percent {
+  position: absolute;
+  line-height: 108px;
+  height: 108px;
+  width: 108px;
+  text-align: center;
+}
+
+.mat-progress-spinner {
+  width: 108px;
+  height: 108px;
+}
+
+.active-budget-text {
+  color: #2979ff;
+}

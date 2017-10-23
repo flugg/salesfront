@@ -5,7 +5,7 @@
            mdInput
            placeholder="From"
            [mdDatepicker]="afterPicker"
-           [ngModel]="after">
+           [(ngModel)]="after">
     <md-datepicker-toggle mdSuffix [for]="afterPicker"></md-datepicker-toggle>
   </md-input-container>
   <md-datepicker #afterPicker [touchUi]="mobile"></md-datepicker>
@@ -14,7 +14,7 @@
            mdInput
            placeholder="To"
            [mdDatepicker]="beforePicker"
-           [ngModel]="before">
+           [(ngModel)]="before">
     <md-datepicker-toggle mdSuffix [for]="beforePicker"></md-datepicker-toggle>
   </md-input-container>
   <md-datepicker #beforePicker [touchUi]="mobile"></md-datepicker>
