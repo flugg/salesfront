@@ -55,7 +55,7 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
       } else if (this.calculatePercent(previous) < this.calculatePercent(current)) {
         return 1;
       } else {
-        return 0;
+        return previous.budget < current.budget ? 1 : -1;
       }
     });
   }
@@ -65,6 +65,6 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
       return team.value > 0 ? 100 : 0;
     }
 
-    return Math.round(team.value * 100 / team.budget);
+    return Math.floor(team.value * 100 / team.budget);
   }
 }

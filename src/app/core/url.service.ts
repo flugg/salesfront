@@ -12,14 +12,31 @@ export class UrlService {
 
   constructor(private router: Router) {
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
-      if (this.overwrite) {
-        this.previous = null;
-        this.overwrite = false;
-      } else if (this.current) {
-        this.previous = this.current;
-      }
+      if (this.shouldTrackPage(event)) {
+        if (this.overwrite) {
+          this.previous = null;
+          this.overwrite = false;
+        } else if (this.current) {
+          this.previous = this.current;
+        }
 
-      this.current = event;
+        this.current = event;
+      }
     });
+  }
+
+  private shouldTrackPage(event): boolean {
+    if (!this.current) {
+      return true;
+    }
+
+    return this.stripLastSegment(event.urlAfterRedirects) !== this.stripLastSegment(this.current.urlAfterRedirects);
+  }
+
+  private stripLastSegment(url: string): string {
+    const segments = url.split('/');
+    segments.pop();
+
+    return segments.join('/');
   }
 }

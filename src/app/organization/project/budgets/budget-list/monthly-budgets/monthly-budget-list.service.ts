@@ -1,4 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import * as moment from 'moment';
 
 import 'rxjs/add/operator/first';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -30,8 +31,8 @@ export class MonthlyBudgetListService extends ObservableResourceList implements 
       this.sockets.listenForProject(project.id, {
         'sale_registered': sale => this.addSale(sale),
         'sale_deleted': sale => this.removeSale(sale),
-        'budget_created': budget => this.addBudget(budget),
-        'budget_updated': budget => this.updateBudget(budget)
+        'monthly_budget_created': budget => this.addBudget(budget),
+        'monthly_budget_updated': budget => this.updateBudget(budget)
       }, this);
     });
   }
@@ -41,8 +42,27 @@ export class MonthlyBudgetListService extends ObservableResourceList implements 
     super.ngOnDestroy();
   }
 
+  protected updateFromSnapshot() {
+    this.snapshot = this.sort(this.snapshot);
+    super.updateFromSnapshot();
+  }
+
+  protected sort(budgets: MonthlyBudget[]): MonthlyBudget[] {
+    return budgets.sort((previous, budget) => {
+      if (moment(budget.month).isBefore(previous.month)) {
+        return -1;
+      } else if (moment(budget.month).isAfter(previous.month)) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
   private addSale(sale: Sale) {
-    this.snapshot.forEach(budget => {
+    this.snapshot.filter(budget => {
+      return moment(sale.soldAt).isSame(moment(budget.day), 'month');
+    }).forEach(budget => {
       const goal = budget.goals.find(innerGoal => innerGoal.teamMemberId === sale.teamMemberId);
 
       if (goal) {
@@ -58,7 +78,9 @@ export class MonthlyBudgetListService extends ObservableResourceList implements 
   }
 
   private removeSale(sale: Sale) {
-    this.snapshot.forEach(budget => {
+    this.snapshot.filter(budget => {
+      return moment(sale.soldAt).isSame(moment(budget.day), 'month');
+    }).forEach(budget => {
       const goal = budget.goals.find(innerGoal => innerGoal.teamMemberId === sale.teamMemberId);
 
       if (goal) {

@@ -4,12 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 
 import { Subscription } from 'rxjs/Subscription';
+import { Budget } from '../../../../core/models/budget.model';
+import { DailyBudget } from '../../../../core/models/daily-budget.model';
+import { MonthlyBudget } from '../../../../core/models/monthly-budget.model';
 import { Project } from '../../../../core/models/project.model';
 import { ScreenService } from '../../../../core/screen.service';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { TeamService } from '../../../../core/services/team.service';
 import { ActiveProjectService } from '../../../active-project.service';
 import { DistributeBudgetDialogComponent } from '../distribute-budget-dialog/distribute-budget-dialog.component';
+import { EditExistingBudgetDialogComponent } from '../edit-existing-budget-dialog/edit-existing-budget-dialog.component';
 
 @Component({
   templateUrl: 'add-budget.component.html',
@@ -44,7 +48,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.day = new Date();
     this.months = moment.months();
-    this.selectedMonth = new Date().getMonth();
+    this.selectedMonth = new Date().getMonth() + 1;
     this.year = new Date().getFullYear();
     this.activeProjectService.project.subscribe(project => {
       this.project = project;
@@ -81,15 +85,15 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
       if (this.type === 'daily') {
         this.budgetService.listDaily(this.project.id, moment(this.day).startOf('day'), moment(this.day).endOf('day')).subscribe(budgets => {
           if (budgets.length) {
-            this.router.navigate(['..', this.type, budgets[0].id, 'edit'], { relativeTo: this.route });
+            this.editExistingBudgetGoals(budgets[0]);
           } else {
             this.setBudgetGoals(teams);
           }
         });
       } else if (this.type === 'monthly') {
-        this.budgetService.listMonthly(this.project.id, moment(this.getMonthDate()).startOf('month'),moment(this.getMonthDate()).endOf('month')).subscribe(budgets => {
+        this.budgetService.listMonthly(this.project.id, moment(this.getMonthDate()).startOf('month'), moment(this.getMonthDate()).endOf('month')).subscribe(budgets => {
           if (budgets.length) {
-            this.router.navigate(['..', this.type, budgets[0].id, 'edit'], { relativeTo: this.route });
+            this.editExistingBudgetGoals(budgets[0]);
           } else {
             this.setBudgetGoals(teams);
           }
@@ -97,6 +101,22 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
       } else {
         this.setBudgetGoals(teams);
       }
+    });
+  }
+
+  private editExistingBudgetGoals(budget: Budget | DailyBudget | MonthlyBudget) {
+    const dialog = this.dialog.open(EditExistingBudgetDialogComponent, <MdDialogConfig>{
+      data: {
+        type: this.type,
+      }
+    });
+
+    this.pending = false;
+
+    dialog.componentInstance.onConfirmed.subscribe(() => {
+      dialog.afterClosed().subscribe(() => {
+        this.router.navigate(['..', this.type, budget.id, 'edit'], { relativeTo: this.route });
+      });
     });
   }
 
@@ -114,7 +134,11 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.pending = false;
+
     dialog.componentInstance.onDistribute.subscribe(data => {
+      this.loading = true;
+
       const teamMembers = data.filter(team => team.enabled).reduce((value, team) => {
         return [...value, ...team.members.filter(member => member.enabled).map(member => {
           return {

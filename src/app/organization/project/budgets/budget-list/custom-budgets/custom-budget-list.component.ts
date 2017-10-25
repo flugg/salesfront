@@ -60,7 +60,7 @@ export class CustomBudgetListComponent implements OnInit, OnDestroy {
       return 100;
     }
 
-    return Math.round(this.calculateProgress(budget) * 100 / budget.value);
+    return Math.floor(this.calculateProgress(budget) * 100 / budget.value);
   }
 
   isActive(budget: Budget): boolean {

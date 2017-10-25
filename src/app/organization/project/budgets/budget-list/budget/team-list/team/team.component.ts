@@ -94,7 +94,7 @@ export class TeamComponent implements OnInit, OnDestroy {
       return 100;
     }
 
-    return Math.round(this.calculateProgress() * 100 / this.totalBudget);
+    return Math.floor(this.calculateProgress() * 100 / this.totalBudget);
   }
 
   isSameDay(budget: Budget): boolean {

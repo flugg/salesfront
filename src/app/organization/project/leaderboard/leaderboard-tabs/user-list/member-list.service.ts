@@ -65,7 +65,7 @@ export class MemberListService extends ObservableResourceList implements OnDestr
       } else if (previous.value < current.value) {
         return 1;
       } else {
-        return 0;
+        return previous.user.name > current.user.name ? 1 : -1;
       }
     });
   }

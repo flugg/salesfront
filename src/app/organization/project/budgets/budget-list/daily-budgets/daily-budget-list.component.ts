@@ -55,6 +55,14 @@ export class DailyBudgetListComponent implements OnInit, OnDestroy {
     const day = moment(date);
     const today = moment();
 
+    if (day.isSame(today.clone().add(1, 'day'), 'day')) {
+      return 'Tomorrow';
+    }
+
+    if (day.isSame(today, 'day')) {
+      return 'Today';
+    }
+
     if (day.isSame(today.subtract(1, 'day'), 'd')) {
       return 'Yesterday';
     }
@@ -75,7 +83,7 @@ export class DailyBudgetListComponent implements OnInit, OnDestroy {
       return 100;
     }
 
-    return Math.round(this.calculateProgress(budget) * 100 / budget.value);
+    return Math.floor(this.calculateProgress(budget) * 100 / budget.value);
   }
 
   isActive(budget: DailyBudget): boolean {

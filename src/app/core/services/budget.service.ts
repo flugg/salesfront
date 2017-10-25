@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
+import * as moment from 'moment';
 
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 
 import { Budget } from '../models/budget.model';
 import { DailyBudget } from '../models/daily-budget.model';
+import { MonthlyBudget } from '../models/monthly-budget.model';
 import { PaginationResponse } from '../pagination-response';
 import { RestApiService } from '../rest-api.service';
-import { MonthlyBudget } from '../models/monthly-budget.model';
 
 @Injectable()
 export class BudgetService {
@@ -53,15 +54,23 @@ export class BudgetService {
   }
 
   create(projectId: string, name: string, startsAt: Moment, endsAt: Moment) {
-    return this.api.post(`projects/${projectId}/budgets`, { name, startsAt, endsAt }).then(response => response.data);
+    return this.api.post(`projects/${projectId}/budgets`, {
+      name: name,
+      startsAt: startsAt.toISOString(),
+      endsAt: endsAt.toISOString()
+    }).then(response => response.data);
   }
 
   createDaily(projectId: string, day: Moment) {
-    return this.api.post(`projects/${projectId}/daily-budgets`, { day }).then(response => response.data);
+    return this.api.post(`projects/${projectId}/daily-budgets`, {
+      day: moment.utc(day.format('YYYY-MM-DD'), 'YYYY-MM-DD').toISOString()
+    }).then(response => response.data);
   }
 
   createMonthly(projectId: string, month: Moment) {
-    return this.api.post(`projects/${projectId}/monthly-budgets`, { month }).then(response => response.data);
+    return this.api.post(`projects/${projectId}/monthly-budgets`, {
+      month: month.toISOString()
+    }).then(response => response.data);
   }
 
   createUserBudget(budgetId: string) {

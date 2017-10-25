@@ -67,4 +67,8 @@ export class LeaderboardComponent implements OnInit {
   loadAll(): void {
     this.count = this.items.length;
   }
+
+  trackById(index, item) {
+    return item.id;
+  }
 }

@@ -1,0 +1,8 @@
+<div class="mdc-typography--headline strong">Edit budget</div>
+<p class="mdc-typography--body1 u-spacing-bottom">
+  A budget for this {{ data.type === 'monthly' ? 'month' : 'date' }} already exists. Do you want to edit the budget?
+</p>
+<div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="end">
+  <button md-button md-dialog-close>Cancel</button>
+  <button md-raised-button (click)="submit()" color="accent">Edit</button>
+</div>

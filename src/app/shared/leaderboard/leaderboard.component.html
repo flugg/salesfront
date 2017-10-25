@@ -1,5 +1,5 @@
 <md-list class="vmo-leaderboard" [class.--no-avatar]="! avatar">
-  <md-list-item *ngFor="let item of items | slice:0:count">
+  <md-list-item *ngFor="let item of items | slice:0:count;trackBy: trackById">
     <vmo-avatar *ngIf="type === 'users'" md-list-avatar [membership]="item" class="u-elevated-small"></vmo-avatar>
     <div *ngIf="type === 'teams' && avatar" md-list-avatar
          fxLayoutAlign="center center"

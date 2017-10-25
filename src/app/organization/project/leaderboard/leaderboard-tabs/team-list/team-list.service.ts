@@ -58,7 +58,7 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
       } else if (previous.value < current.value) {
         return 1;
       } else {
-        return 0;
+        return previous.name > current.name ? 1 : -1;
       }
     });
   }

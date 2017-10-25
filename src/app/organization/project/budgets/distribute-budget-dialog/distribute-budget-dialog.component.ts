@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit, EventEmitter } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
 import * as moment from 'moment';
 
 import { Team } from '../../../../core/models/team.model';
 import { BudgetService } from '../../../../core/services/budget.service';
 import { AddBudgetComponent } from '../add-budget/add-budget.component';
+import { DistributeConfirmationDialogComponent } from '../distribute-confirmation-dialog/distribute-confirmation-dialog.component';
 
 @Component({
   templateUrl: 'distribute-budget-dialog.component.html'
@@ -15,10 +16,10 @@ export class DistributeBudgetDialogComponent implements OnInit {
   onDistribute = new EventEmitter();
 
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
-              public dialog: MdDialogRef<AddBudgetComponent>) {}
+              public dialog: MdDialogRef<AddBudgetComponent>,
+              private dialogService: MdDialog) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   calculatedTotal(): number {
     return this.data.teams.filter(team => team.enabled).reduce((total, team) => total + this.calculatedTotalForTeam(team), 0);
@@ -29,9 +30,20 @@ export class DistributeBudgetDialogComponent implements OnInit {
   }
 
   submit() {
-    this.pending = true;
+    const dialog = this.dialogService.open(DistributeConfirmationDialogComponent, <MdDialogConfig>{
+      data: {
+        budget: this.data.value,
+        distributed: this.calculatedTotal()
+      }
+    });
 
-    this.dialog.close();
-    this.onDistribute.emit(this.data.teams);
+    dialog.componentInstance.onConfirmed.subscribe(() => {
+      dialog.afterClosed().subscribe(() => {
+        this.pending = true;
+
+        this.dialog.close();
+        this.onDistribute.emit(this.data.teams);
+      });
+    });
   }
 }

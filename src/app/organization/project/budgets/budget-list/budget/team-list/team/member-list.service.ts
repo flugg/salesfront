@@ -61,7 +61,7 @@ export class MemberListService extends ObservableResourceList implements OnDestr
       } else if (this.calculatePercent(previous) < this.calculatePercent(current)) {
         return 1;
       } else {
-        return 0;
+        return previous.budget > current.budget ? 1 : -1;
       }
     });
   }
@@ -71,6 +71,6 @@ export class MemberListService extends ObservableResourceList implements OnDestr
       return member.value > 0 ? 100 : 0;
     }
 
-    return Math.round(member.value * 100 / member.budget);
+    return Math.floor(member.value * 100 / member.budget);
   }
 }

@@ -14,6 +14,8 @@ import { TeamListComponent } from './budget-list/budget/team-list/team-list.comp
 import { MemberListComponent } from './budget-list/budget/member-list/member-list.component';
 import { TeamComponent } from './budget-list/budget/team-list/team/team.component';
 import { EditBudgetComponent } from './budget-list/budget/edit-budget/edit-budget.component';
+import { DistributeConfirmationDialogComponent } from './distribute-confirmation-dialog/distribute-confirmation-dialog.component';
+import { EditExistingBudgetDialogComponent } from './edit-existing-budget-dialog/edit-existing-budget-dialog.component';
 
 @NgModule({
   imports: [
@@ -25,6 +27,7 @@ import { EditBudgetComponent } from './budget-list/budget/edit-budget/edit-budge
     BudgetListComponent,
     AddBudgetComponent,
     DistributeBudgetDialogComponent,
+    DistributeConfirmationDialogComponent,
     DailyBudgetListComponent,
     MonthlyBudgetListComponent,
     CustomBudgetListComponent,
@@ -32,10 +35,13 @@ import { EditBudgetComponent } from './budget-list/budget/edit-budget/edit-budge
     MemberListComponent,
     TeamListComponent,
     TeamComponent,
-    EditBudgetComponent
+    EditBudgetComponent,
+    EditExistingBudgetDialogComponent
   ],
   entryComponents: [
-    DistributeBudgetDialogComponent
+    DistributeBudgetDialogComponent,
+    DistributeConfirmationDialogComponent,
+    EditExistingBudgetDialogComponent
   ]
 })
 export class BudgetsModule {}

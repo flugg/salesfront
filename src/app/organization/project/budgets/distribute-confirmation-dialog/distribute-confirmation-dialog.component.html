@@ -1,0 +1,8 @@
+<div class="mdc-typography--headline strong">Adjust budget</div>
+<p class="mdc-typography--body1 u-spacing-bottom">
+  <span>Do you want to adjust the budget from <span class="strong">{{ data.budget }}</span> to <span class="strong">{{ data.distributed }}</span>?</span>
+</p>
+<div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="end">
+  <button md-button md-dialog-close>Cancel</button>
+  <button md-raised-button (click)="submit()" color="accent">Adjust</button>
+</div>

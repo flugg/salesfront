@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MdSnackBar, MdSnackBarConfig, MdDialog, MdDialogConfig } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 
@@ -17,6 +17,7 @@ import { BudgetService } from '../../../../../../core/services/budget.service';
 import { TeamService } from '../../../../../../core/services/team.service';
 import { ActiveProjectService } from '../../../../../active-project.service';
 import { SelectedBudgetService } from '../selected-budget.service';
+import { DistributeConfirmationDialogComponent } from '../../../distribute-confirmation-dialog/distribute-confirmation-dialog.component';
 
 @Component({
   templateUrl: 'edit-budget.component.html'
@@ -27,12 +28,14 @@ export class EditBudgetComponent implements OnInit, OnDestroy {
   budget: Budget | DailyBudget | MonthlyBudget;
   teams: Team[];
   type: 'daily' | 'monthly' | 'custom';
+  value: number;
 
   private subscriptions: Subscription[] = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private snackBar: MdSnackBar,
+              private dialogService: MdDialog,
               private activeProjectService: ActiveProjectService,
               private selectedBudgetService: SelectedBudgetService,
               private budgetService: BudgetService,
@@ -45,6 +48,7 @@ export class EditBudgetComponent implements OnInit, OnDestroy {
       this.selectedBudgetService.budget
     ).subscribe(data => {
       [this.project, this.budget] = data;
+      this.value = this.budget.value;
 
       this.teamService.getAll(this.project.id).subscribe(teams => {
         this.teams = teams.filter(team => team.members.length).map(team => {
@@ -99,19 +103,31 @@ export class EditBudgetComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    const teamMembers = this.teams.filter(team => team.enabled).reduce((value, team) => {
-      return [...value, ...team.members.filter(member => member.enabled).map(member => {
-        return {
-          id: member.id,
-          value: member.value
-        };
-      })];
-    }, []);
-
-    this.budgetService.setBudgetGoals(this.budget.id, teamMembers).then(() => {
-      this.snackBar.open('Budget updated', null, <MdSnackBarConfig>{ duration: 2000 });
-      this.router.navigate(['..'], { relativeTo: this.route });
+    const dialog = this.dialogService.open(DistributeConfirmationDialogComponent, <MdDialogConfig>{
+      data: {
+        budget: this.value,
+        distributed: this.calculatedTotal()
+      }
     });
+
+    dialog.componentInstance.onConfirmed.subscribe(() => {
+      const teamMembers = this.teams.filter(team => team.enabled).reduce((value, team) => {
+        return [...value, ...team.members.filter(member => member.enabled).map(member => {
+          return {
+            id: member.id,
+            value: member.value
+          };
+        })];
+      }, []);
+
+      dialog.afterClosed().subscribe(() => {
+        this.budgetService.setBudgetGoals(this.budget.id, teamMembers).then(() => {
+          this.snackBar.open('Budget updated', null, <MdSnackBarConfig>{ duration: 2000 });
+          this.router.navigate(['..'], { relativeTo: this.route });
+        });
+      });
+    });
+
   }
 
   teamChanged(enabled: boolean, team: Team): void {

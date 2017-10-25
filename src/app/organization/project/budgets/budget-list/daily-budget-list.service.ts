@@ -32,8 +32,8 @@ export class DailyBudgetListService extends ObservableResourceList implements On
       this.sockets.listenForProject(project.id, {
         'sale_registered': sale => this.addSale(sale),
         'sale_deleted': sale => this.removeSale(sale),
-        'budget_created': budget => this.addBudget(budget),
-        'budget_updated': budget => this.updateBudget(budget)
+        'daily_budget_created': budget => this.addBudget(budget),
+        'daily_budget_updated': budget => this.updateBudget(budget)
       }, this);
     });
   }
@@ -43,8 +43,27 @@ export class DailyBudgetListService extends ObservableResourceList implements On
     super.ngOnDestroy();
   }
 
+  protected updateFromSnapshot() {
+    this.snapshot = this.sort(this.snapshot);
+    super.updateFromSnapshot();
+  }
+
+  protected sort(budgets: DailyBudget[]): DailyBudget[] {
+    return budgets.sort((previous, budget) => {
+      if (moment(budget.day).isBefore(previous.day)) {
+        return -1;
+      } else if (moment(budget.day).isAfter(previous.day)) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
   private addSale(sale: Sale) {
-    this.snapshot.forEach(budget => {
+    this.snapshot.filter(budget => {
+      return moment(sale.soldAt).isSame(moment(budget.day), 'day');
+    }).forEach(budget => {
       const goal = budget.goals.find(innerGoal => innerGoal.teamMemberId === sale.teamMemberId);
 
       if (goal) {
@@ -60,7 +79,9 @@ export class DailyBudgetListService extends ObservableResourceList implements On
   }
 
   private removeSale(sale: Sale) {
-    this.snapshot.forEach(budget => {
+    this.snapshot.filter(budget => {
+      return moment(sale.soldAt).isSame(moment(budget.day), 'day');
+    }).forEach(budget => {
       const goal = budget.goals.find(innerGoal => innerGoal.teamMemberId === sale.teamMemberId);
 
       if (goal) {
