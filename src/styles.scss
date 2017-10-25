@@ -1059,3 +1059,20 @@ signature-pad canvas {
   width: 108px;
   height: 108px;
 }
+
+.background-spinner svg {
+  filter: drop-shadow(0 3px 1px rgba(0, 0, 0, .2));
+}
+
+.inactive-budget path {
+  stroke: #666;
+}
+
+.background-spinner path {
+  stroke: #f2f2f2;
+}
+
+.background-spinner-overload path {
+  stroke: rgba(white, 0.25);
+  stroke-width: 3 !important;
+}
