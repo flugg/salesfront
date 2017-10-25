@@ -30,20 +30,27 @@ export class DistributeBudgetDialogComponent implements OnInit {
   }
 
   submit() {
-    const dialog = this.dialogService.open(DistributeConfirmationDialogComponent, <MdDialogConfig>{
-      data: {
-        budget: this.data.value,
-        distributed: this.calculatedTotal()
-      }
-    });
+    if (this.data.value === this.calculatedTotal()) {
+      this.pending = true;
 
-    dialog.componentInstance.onConfirmed.subscribe(() => {
-      dialog.afterClosed().subscribe(() => {
-        this.pending = true;
-
-        this.dialog.close();
-        this.onDistribute.emit(this.data.teams);
+      this.dialog.close();
+      this.onDistribute.emit(this.data.teams);
+    } else {
+      const dialog = this.dialogService.open(DistributeConfirmationDialogComponent, <MdDialogConfig>{
+        data: {
+          budget: this.data.value,
+          distributed: this.calculatedTotal()
+        }
       });
-    });
+
+      dialog.componentInstance.onConfirmed.subscribe(() => {
+        dialog.afterClosed().subscribe(() => {
+          this.pending = true;
+
+          this.dialog.close();
+          this.onDistribute.emit(this.data.teams);
+        });
+      });
+    }
   }
 }

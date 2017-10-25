@@ -16,8 +16,8 @@ import { Team } from '../../../../../../core/models/team.model';
 import { BudgetService } from '../../../../../../core/services/budget.service';
 import { TeamService } from '../../../../../../core/services/team.service';
 import { ActiveProjectService } from '../../../../../active-project.service';
-import { SelectedBudgetService } from '../selected-budget.service';
 import { DistributeConfirmationDialogComponent } from '../../../distribute-confirmation-dialog/distribute-confirmation-dialog.component';
+import { SelectedBudgetService } from '../selected-budget.service';
 
 @Component({
   templateUrl: 'edit-budget.component.html'
@@ -103,31 +103,38 @@ export class EditBudgetComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    const dialog = this.dialogService.open(DistributeConfirmationDialogComponent, <MdDialogConfig>{
-      data: {
-        budget: this.value,
-        distributed: this.calculatedTotal()
-      }
-    });
+    if (this.value === this.calculatedTotal()) {
+      this.editBudgetGoals();
+    } else {
+      const dialog = this.dialogService.open(DistributeConfirmationDialogComponent, <MdDialogConfig>{
+        data: {
+          budget: this.value,
+          distributed: this.calculatedTotal()
+        }
+      });
 
-    dialog.componentInstance.onConfirmed.subscribe(() => {
-      const teamMembers = this.teams.filter(team => team.enabled).reduce((value, team) => {
-        return [...value, ...team.members.filter(member => member.enabled).map(member => {
-          return {
-            id: member.id,
-            value: member.value
-          };
-        })];
-      }, []);
-
-      dialog.afterClosed().subscribe(() => {
-        this.budgetService.setBudgetGoals(this.budget.id, teamMembers).then(() => {
-          this.snackBar.open('Budget updated', null, <MdSnackBarConfig>{ duration: 2000 });
-          this.router.navigate(['..'], { relativeTo: this.route });
+      dialog.componentInstance.onConfirmed.subscribe(() => {
+        dialog.afterClosed().subscribe(() => {
+          this.editBudgetGoals();
         });
       });
-    });
+    }
+  }
 
+  editBudgetGoals(): void {
+    const teamMembers = this.teams.filter(team => team.enabled).reduce((value, team) => {
+      return [...value, ...team.members.filter(member => member.enabled).map(member => {
+        return {
+          id: member.id,
+          value: member.value
+        };
+      })];
+    }, []);
+
+    this.budgetService.setBudgetGoals(this.budget.id, teamMembers).then(() => {
+      this.snackBar.open('Budget updated', null, <MdSnackBarConfig>{ duration: 2000 });
+      this.router.navigate(['..'], { relativeTo: this.route });
+    });
   }
 
   teamChanged(enabled: boolean, team: Team): void {
