@@ -30,6 +30,10 @@ export class UrlService {
       return true;
     }
 
+    if (event.urlAfterRedirects.split('/').length <= 5) {
+      return true;
+    }
+
     return this.stripLastSegment(event.urlAfterRedirects) !== this.stripLastSegment(this.current.urlAfterRedirects);
   }
 
