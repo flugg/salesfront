@@ -51,7 +51,7 @@ export class SelectedBudgetService extends ObservableResource implements OnDestr
   private addSale(sale: Sale) {
     const dateValid = this.isSaleWithinDate(sale);
 
-    if (dateValid) {
+    if (this.snapshot.goals && dateValid) {
       const goal = this.snapshot.goals.find(item => item.teamMemberId === sale.teamMemberId);
 
       if (goal) {
@@ -69,7 +69,7 @@ export class SelectedBudgetService extends ObservableResource implements OnDestr
   private removeSale(sale: Sale) {
     const dateValid = this.isSaleWithinDate(sale);
 
-    if (dateValid) {
+    if (this.snapshot.goals && dateValid) {
       const goal = this.snapshot.goals.find(item => item.teamMemberId === sale.teamMemberId);
 
       if (goal) {

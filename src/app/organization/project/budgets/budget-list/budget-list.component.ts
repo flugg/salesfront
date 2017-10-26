@@ -13,6 +13,8 @@ import { ActiveMembershipService } from '../../../active-membership.service';
 import { CustomBudgetListService } from './custom-budget-list.service';
 import { DailyBudgetListService } from './daily-budget-list.service';
 import { MonthlyBudgetListService } from './monthly-budget-list.service';
+import { ActiveProjectService } from '../../../active-project.service';
+import { Project } from '../../../../core/models/project.model';
 
 @Component({
   templateUrl: 'budget-list.component.html',
@@ -22,6 +24,7 @@ import { MonthlyBudgetListService } from './monthly-budget-list.service';
 export class BudgetListComponent implements OnInit, OnDestroy {
   loading = true;
   membership: Member;
+  project: Project;
   dailyBudgets: DailyBudget[];
   monthlyBudgets: MonthlyBudget[];
   customBudgets: Budget[];
@@ -41,6 +44,7 @@ export class BudgetListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(private activeMembershipService: ActiveMembershipService,
+              private activeProjectService: ActiveProjectService,
               public dailyBudgetListService: DailyBudgetListService,
               public monthlyBudgetListService: MonthlyBudgetListService,
               public customBudgetListService: CustomBudgetListService) {}
@@ -48,11 +52,12 @@ export class BudgetListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
       this.activeMembershipService.membership,
+      this.activeProjectService.project,
       this.dailyBudgetListService.budgets,
       this.monthlyBudgetListService.budgets,
       this.customBudgetListService.budgets,
     ).subscribe(data => {
-      [this.membership, this.dailyBudgets, this.monthlyBudgets, this.customBudgets] = data;
+      [this.membership, this.project, this.dailyBudgets, this.monthlyBudgets, this.customBudgets] = data;
       this.loading = false;
     }));
   }

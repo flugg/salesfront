@@ -47,7 +47,7 @@
         <span *ngIf="countComplete[item.id]"
               class="mdc-typography--body1 strong">{{ item.value | value:project }}</span>
         <span class="mdc-typography--body1 u-weak u-horizontal-spacing-tiny">/</span>
-        <span class="mdc-typography--body1 strong">{{ item.budget }}</span>
+        <span class="mdc-typography--body1 strong">{{ item.budget | value:project }}</span>
       </div>
       <div class="leaderboard-bar" *ngIf="avatar">
         <div *ngIf="! loading" fxFill class="bar-wrapper">

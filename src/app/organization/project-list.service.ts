@@ -96,10 +96,7 @@ export class ProjectListService extends ObservableResourceList implements OnDest
   }
 
   private updateProject(project: Project) {
-    console.log(project);
-    console.log(this.snapshot);
     this.snapshot = this.snapshot.map(item => item.id === project.id ? { ...item, ...project } : item);
-    console.log(this.snapshot);
     this.updateFromSnapshot();
   }
 

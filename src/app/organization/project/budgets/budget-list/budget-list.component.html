@@ -59,11 +59,11 @@
                   {{ formatDay(budget.day) }}
                 </div>
                 <span class="mdc-typography--headline strong">
-                  {{ calculateProgress(budget) }}
+                  {{ calculateProgress(budget) | value:project }}
                 </span>
                 <div class="mdc-typography--subheading strong u-text-center">
                   <md-icon class="u-weak u-faded u-push-right u-tad-down">adjust</md-icon>
-                  {{ budget.value }}
+                  {{ budget.value | value:project }}
                 </div>
               </div>
             </div>
@@ -118,11 +118,11 @@
                   {{ budget.month | amDateFormat: 'MMMM' }}
                 </div>
                 <span class="mdc-typography--headline strong">
-                  {{ calculateProgress(budget) }}
+                  {{ calculateProgress(budget) | value:project }}
                 </span>
                 <div class="mdc-typography--subheading strong u-text-center">
                   <md-icon class="u-weak u-faded u-push-right u-tad-down">adjust</md-icon>
-                  {{ budget.value }}
+                  {{ budget.value | value:project }}
                 </div>
               </div>
             </div>
@@ -186,11 +186,11 @@
                   {{ budget.name }}
                 </span>
                 <div class="mdc-typography--headline strong">
-                  {{ calculateProgress(budget) }}
+                  {{ calculateProgress(budget) | value:project }}
                 </div>
                 <div class="mdc-typography--subheading strong u-text-center">
                   <md-icon class="u-weak u-faded u-push-right u-tad-down">adjust</md-icon>
-                  {{ budget.value }}
+                  {{ budget.value | value:project }}
                 </div>
               </div>
             </div>

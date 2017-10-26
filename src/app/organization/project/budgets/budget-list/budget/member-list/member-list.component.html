@@ -50,7 +50,7 @@
                 (countoEnd)="countComplete = true">{{ current | value:project }}</span>
           <span *ngIf="countComplete" class="mdc-typography--headline strong">{{ total | value:project }}</span>
           <span class="mdc-typography--headline u-weak u-horizontal-spacing-tiny">/</span>
-          <span class="mdc-typography--headline strong">{{ budget.value }}</span>
+          <span class="mdc-typography--headline strong">{{ budget.value | value:project }}</span>
         </div>
         <md-divider></md-divider>
         <vmo-leaderboard [project]="project" [items]="members" type="users" [budget]="budget" [budgetType]="type"></vmo-leaderboard>

@@ -11,7 +11,7 @@
         <div class="mdc-typography--title strong">{{ team.name }}</div>
       </div>
       <div fxFlex="30">
-        <div class="mdc-typography--title strong" *ngIf="team.enabled">{{ calculatedTotalForTeam(team) }}</div>
+        <div class="mdc-typography--title strong" *ngIf="team.enabled">{{ calculatedTotalForTeam(team) | value:data.project }}</div>
       </div>
     </div>
     <div *ngIf="team.enabled">
@@ -29,6 +29,8 @@
           <div fxFlex="30">
             <md-input-container color="accent" *ngIf="member.enabled">
               <input name="value" mdInput placeholder="Value" type="number" [(ngModel)]="member.value">
+              <span mdPrefix *ngIf="data.project.notationBefore">{{ data.project.notation }}</span>
+              <span mdSuffix *ngIf="! data.project.notationBefore">{{ data.project.notation }}</span>
             </md-input-container>
           </div>
         </div>
@@ -41,9 +43,9 @@
 <div class="u-spacing-top-more fixed-bottom-on-mobile" fxLayout="row" fxLayoutAlign="center center">
   <div>
     <div class="mdc-typography--caption u-weak">Distributed</div>
-    <span class="mdc-typography--title strong">{{ calculatedTotal() }}</span>
-    <span class="mdc-typography--title u-weak" *ngIf="calculatedTotal() > data.value">(+{{ calculatedTotal() - data.value }})</span>
-    <span class="mdc-typography--title u-weak" *ngIf="calculatedTotal() < data.value">({{ calculatedTotal() - data.value }})</span>
+    <span class="mdc-typography--title strong">{{ calculatedTotal() | value:data.project }}</span>
+    <span class="mdc-typography--title u-weak" *ngIf="calculatedTotal() > data.value">(+{{ calculatedTotal() - data.value | value:data.project }})</span>
+    <span class="mdc-typography--title u-weak" *ngIf="calculatedTotal() < data.value">({{ calculatedTotal() - data.value | value:data.project }})</span>
   </div>
   <div class="u-fill"></div>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="12px">

@@ -105,10 +105,12 @@
               <input #valueInput="ngModel"
                      name="value"
                      mdInput
-                     placeholder="Value"
+                     placeholder="Budget Value"
                      type="value"
                      [(ngModel)]="value"
                      required>
+              <span mdPrefix *ngIf="project.notationBefore">{{ project.notation }}</span>
+              <span mdSuffix *ngIf="! project.notationBefore">{{ project.notation }}</span>
               <md-error *ngIf="valueInput.errors?.required && (valueInput.dirty || valueInput.touched)">
                 This field is required
               </md-error>
