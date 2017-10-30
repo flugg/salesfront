@@ -34,7 +34,7 @@
             <div class="mdc-typography--caption u-weak">Organization Image:</div>
             <div class="u-vertical-spacing">
               <div class="organization-logo-container">
-                <img *ngIf="membership?.organization" [src]="url || membership?.organization.logoPath ? 'https://s3.eu-central-1.amazonaws.com/vendumo/' + membership?.organization.logoPath : 'assets/vendumo-logo-light.svg'" alt="Organization Logo">
+                <img *ngIf="membership?.organization" [src]="url ? url : membership?.organization.logoPath ? 'https://s3.eu-central-1.amazonaws.com/vendumo/' + membership?.organization.logoPath : 'assets/vendumo-logo-light.svg'" alt="Organization Logo">
               </div>
             </div>
             <div fxLayout="row">
