@@ -410,7 +410,7 @@ snack-bar-container {
 
 .vmo-scrollable-area {
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   height: 100%;
 
@@ -1075,4 +1075,18 @@ signature-pad canvas {
 .background-spinner-overload path {
   stroke: rgba(white, 0.25);
   stroke-width: 3 !important;
+}
+
+.organization-logo-container {
+  background: #253238;
+  padding: 16px 0;
+
+  img {
+    display: block;
+    margin: 0 auto;
+    height: auto;
+    width: auto;
+    max-height: 64px;
+    max-width: 156px;
+  }
 }

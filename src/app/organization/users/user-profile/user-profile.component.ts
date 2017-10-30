@@ -9,12 +9,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { DailyAward } from '../../../core/models/daily-award.model';
 import { Member } from '../../../core/models/member.model';
 import { MonthlyAward } from '../../../core/models/monthly-award.model';
-import { Project } from '../../../core/models/project.model';
 import { Team } from '../../../core/models/team.model';
 import { WeeklyAward } from '../../../core/models/weekly-award.model';
 import { MemberService } from '../../../core/services/member.service';
 import { ActiveMembershipService } from '../../active-membership.service';
-import { ActiveProjectService } from '../../active-project.service';
 import { ProfilePictureComponent } from '../profile-picture/profile-picture.component';
 import { DailyAwardListService } from './daily-award-list.service';
 import { MonthlyAwardListService } from './monthly-award-list.service';
@@ -54,7 +52,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
       this.selectedMembershipService.membership,
-      this.activeMembershipService.membership,
+      this.activeMembershipService.membership
     ).subscribe(data => {
       [this.member, this.activeMember] = data;
 
@@ -99,7 +97,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       panelClass: 'profile-picture-dialog',
       data: {
         imagePath: this.member.user.avatarPath,
-        route: this.route
+        route: this.route,
+        canEdit: this.canEdit
       }
     });
   }

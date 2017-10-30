@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 
-import { RestApiService } from '../rest-api.service';
-import { PaginationResponse } from '../pagination-response';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+
 import { Conversation } from '../models/conversation.model';
-import { Participation } from '../models/participation.model';
 import { Member } from '../models/member.model';
+import { Participation } from '../models/participation.model';
+import { PaginationResponse } from '../pagination-response';
+import { RestApiService } from '../rest-api.service';
 
 @Injectable()
 export class ConversationService {

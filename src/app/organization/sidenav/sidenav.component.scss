@@ -138,12 +138,16 @@ button[md-fab] {
   }
 }
 
-.vmo-scrollable-area.--with-project {
+.vmo-scrollable-area.--with-sessionbar {
   height: calc(100% - 56px);
 }
 
 .mat-nav-list.--with-project {
-  margin-bottom: 42px;
+  margin-bottom: 24px;
+
+  &.--without-session {
+    margin-bottom: 42px;
+  }
 }
 
 .sidenav-logo-wrapper {
@@ -151,6 +155,7 @@ button[md-fab] {
 }
 
 .sidenav-logo {
+  height: auto;
   width: auto;
   max-height: 64px;
   max-width: 156px;

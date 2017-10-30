@@ -60,9 +60,11 @@ export class StartConversationComponent implements OnInit, OnDestroy {
   }
 
   start(message: string): void {
+    this.loading = true;
     this.conversationService.start(this.membership.organizationId, this.participants).then(conversation => {
       this.messageService.send(conversation.id, message).then(() => {
         this.router.navigate(['..', conversation.id], { relativeTo: this.route });
+        this.loading = false;
       });
     });
   }

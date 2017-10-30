@@ -1,7 +1,7 @@
 <div fxFill [@fadeInOut]="true" class="vmo-sidenav">
-  <div class="vmo-scrollable-area inside-sidenav" [class.--with-project]="project">
+  <div class="vmo-scrollable-area inside-sidenav" [class.--with-sessionbar]="project && this.isPartOfTeam()">
     <div fxLayoutAlign="center center" class="sidenav-logo-wrapper u-clickable" (click)="goToOrganization()">
-      <img [src]="membership?.organization.logoPath || 'assets/vendumo-logo-light.svg'" class="sidenav-logo">
+      <img [src]="membership?.organization.logoPath ? 'https://s3.eu-central-1.amazonaws.com/vendumo/' + membership?.organization.logoPath : 'assets/vendumo-logo-light.svg'" class="sidenav-logo">
     </div>
     <md-nav-list *ngIf="! project">
       <vmo-nav-item title="Projects" icon="business_center" [routerLink]="['/', membership?.organizationId]" routerLinkActive="active-link-parent" [routerLinkActiveOptions]="{ exact: true }"></vmo-nav-item>
@@ -28,7 +28,7 @@
         <span md-line class="mdc-typography--subheading2 strong">{{ membership?.user.name }}</span>
       </md-list-item>
     </md-list>
-    <md-nav-list [class.--with-project]="project">
+    <md-nav-list [class.--with-project]="project" [class.--without-session]="! membership?.activeSession">
       <vmo-nav-item title="Messages" icon="mail" [routerLink]="['/', membership?.organizationId, 'messages']" routerLinkActive="active-link-parent" [notifications]="unreadConversations?.length"></vmo-nav-item>
       <vmo-nav-item title="Notifications" icon="notifications" [routerLink]="['/', membership?.organizationId, 'notifications']" routerLinkActive="active-link-parent"></vmo-nav-item>
       <vmo-nav-item title="Log Out" icon="exit_to_app" (click)="logout()"></vmo-nav-item>

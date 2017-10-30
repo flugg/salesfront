@@ -7,6 +7,7 @@ import { Participation } from '../../../core/models/participation.model';
 
 import { ObservableResourceList } from '../../../core/observable-resource-list';
 import { ConversationService } from '../../../core/services/conversation.service';
+import { MessageService } from '../../../core/services/message.service';
 import { SocketApiService } from '../../../core/socket-api.service';
 import { ActiveMembershipService } from '../../active-membership.service';
 
@@ -16,7 +17,8 @@ export class ConversationListService extends ObservableResourceList implements O
 
   constructor(private sockets: SocketApiService,
               private activeMembershipService: ActiveMembershipService,
-              private conversationService: ConversationService) {
+              private conversationService: ConversationService,
+              private messageService: MessageService) {
     super();
 
     this.socketSubscription = this.sockets.connects.subscribe(() => {
@@ -47,8 +49,10 @@ export class ConversationListService extends ObservableResourceList implements O
   }
 
   private addConversation(conversation: Conversation) {
-    this.snapshot.unshift(conversation);
-    this.updateFromSnapshot();
+    this.conversationService.find(conversation.id).subscribe(item => {
+      this.snapshot.unshift(item);
+      this.updateFromSnapshot();
+    })
   }
 
   private setLastMessage(message: Message) {

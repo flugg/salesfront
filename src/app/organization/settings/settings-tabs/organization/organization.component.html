@@ -31,6 +31,17 @@
                 This field is required
               </md-error>
             </md-input-container>
+            <div class="mdc-typography--caption u-weak">Organization Image:</div>
+            <div class="u-vertical-spacing">
+              <div class="organization-logo-container">
+                <img *ngIf="membership?.organization" [src]="url || membership?.organization.logoPath ? 'https://s3.eu-central-1.amazonaws.com/vendumo/' + membership?.organization.logoPath : 'assets/vendumo-logo-light.svg'" alt="Organization Logo">
+              </div>
+            </div>
+            <div fxLayout="row">
+              <input #fileInput name="profilePicture" id="custom-input" type="file" accept="image/*" (change)="fileChangeListener($event)">
+              <div class="u-fill"></div>
+              <button md-button type="button" color="accent" (click)="reset()">Reset</button>
+            </div>
             <div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
               <button md-raised-button color="accent">Save</button>
             </div>

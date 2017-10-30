@@ -9,6 +9,8 @@ import { ObservableResourceList } from '../../core/observable-resource-list';
 import { UnreadConversationService } from '../../core/services/unread-conversation.service';
 import { SocketApiService } from '../../core/socket-api.service';
 import { ActiveMembershipService } from '../../organization/active-membership.service';
+import { Membership } from '../../core/models/membership.model';
+import { Member } from '../../core/models/member.model';
 
 @Injectable()
 export class UnreadConversationListService extends ObservableResourceList implements OnDestroy {
@@ -27,7 +29,7 @@ export class UnreadConversationListService extends ObservableResourceList implem
 
         this.sockets.listenForUser(membership.userId, {
           'last_message_read': participation => this.updateConversation(participation),
-          'message_sent': message => this.addConversation(message)
+          'message_sent': message => this.addConversation(message, membership)
         }, this);
       });
     });
@@ -44,12 +46,14 @@ export class UnreadConversationListService extends ObservableResourceList implem
     this.updateFromSnapshot();
   }
 
-  private addConversation(message: Message) {
-    const conversation = this.snapshot.find(item => item.id === message.conversationId);
+  private addConversation(message: Message, membership: Member) {
+    if (message.memberId !== membership.id) {
+      const conversation = this.snapshot.find(item => item.id === message.conversationId);
 
-    if (!conversation) {
-      this.snapshot.push(message.conversation);
-      this.updateFromSnapshot();
+      if (!conversation) {
+        this.snapshot.push(message.conversation);
+        this.updateFromSnapshot();
+      }
     }
   }
 }

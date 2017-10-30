@@ -45,6 +45,14 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
+  isPartOfTeam(): boolean {
+    const teamMembers = !this.project ? [] : this.membership.teamMembers.filter(teamMember => {
+      return teamMember.team.projectId === this.project.id;
+    });
+
+    return teamMembers.length > 0;
+  }
+
   logout() {
     this.auth.logout();
     this.router.navigate(['login']);

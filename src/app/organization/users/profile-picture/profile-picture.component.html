@@ -1,7 +1,6 @@
 <div class="hover-overlay">
   <img [src]="basePath + data.imagePath">
-  <button md-fab
-          (click)="updatePicture()">
+  <button md-fab (click)="updatePicture()" *ngIf="data.canEdit">
     <md-icon>add_a_photo</md-icon>
   </button>
 </div>
