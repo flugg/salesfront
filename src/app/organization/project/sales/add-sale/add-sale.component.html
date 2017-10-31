@@ -2,13 +2,21 @@
   <vmo-toolbar title="" mode="close"></vmo-toolbar>
 
   <vmo-progress-spinner [hasLoaded]="! loading">
-    <form novalidate (submit)="submit(quantity, date, time); $event.preventDefault()">
+    <form novalidate (submit)="submit(quantity, date, time); $event.preventDefault()" *ngIf="project">
       <div class="vmo-container --small">
         <md-card>
           <span class="mdc-typography--display1 strong">Add Sale</span>
           <p class="mdc-typography--body1 u-weak">Register sales for yourself or someone you manage.</p>
           <div class="u-spacing-top">
-            <md-input-container color="accent">
+            <md-input-container color="accent" *ngIf="project.type === 'value'">
+              <input #valueInput="ngModel" name="value" mdInput placeholder="Value" type="number" [(ngModel)]="value" required>
+              <span mdPrefix *ngIf="project.notationBefore">{{ project.notation }}</span>
+              <span mdSuffix *ngIf="! project.notationBefore">{{ project.notation }}</span>
+              <md-error *ngIf="valueInput.errors?.required && (valueInput.dirty || valueInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <md-input-container color="accent" *ngIf="project.type === 'count'">
               <input #quantityInput="ngModel" name="quantity" mdInput placeholder="Quantity" type="number" [(ngModel)]="quantity" required>
               <md-error *ngIf="quantityInput.errors?.required && (quantityInput.dirty || quantityInput.touched)">
                 This field is required
@@ -54,7 +62,7 @@
             </div>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-            <button md-raised-button color="accent" [disabled]="pending || quantityInput.errors?.required || dateInput.errors?.required || timeInput.errors?.required || ! selectedTeam || ! selectedTeamMember">Add</button>
+            <button md-raised-button color="accent" [disabled]="pending || quantityInput?.errors?.required || dateInput.errors?.required || timeInput.errors?.required || ! selectedTeam || ! selectedTeamMember">Add</button>
             <md-checkbox [(ngModel)]="addMore" name="addMore">Keep adding</md-checkbox>
           </div>
         </md-card>

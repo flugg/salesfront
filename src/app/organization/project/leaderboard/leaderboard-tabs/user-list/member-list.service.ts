@@ -32,7 +32,7 @@ export class MemberListService extends ObservableResourceList implements OnDestr
         this.leaderboardService.members(project.id, moment(after).startOf('day'), moment(before).endOf('day')).map(members => {
           return members.filter(member => member.value || !member.deletedAt);
         }).subscribe(members => {
-          this.set(members.map(member => {
+          this.set(this.sort(members).map(member => {
             member.position = this.calculatePosition(members, member);
             return member;
           }));
@@ -71,9 +71,12 @@ export class MemberListService extends ObservableResourceList implements OnDestr
   }
 
   private calculatePosition(members: Member[], member: Member): number {
+    let previous = 0;
     const index = members.indexOf(member);
     return members.reduce((value, current) => {
-      return members.indexOf(current) >= index || current.value === member.value ? value : value + 1;
+      const position = members.indexOf(current) >= index || current.value === member.value || current.value === previous ? value : value + 1;
+      previous = current.value;
+      return position;
     }, 1);
   }
 

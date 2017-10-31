@@ -27,7 +27,7 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
       this.datepicker.range.distinctUntilChanged().subscribe(range => {
         const [after, before] = range;
         this.leaderboardService.teams(project.id, moment(after).startOf('day'), moment(before).endOf('day')).subscribe(teams => {
-          this.set(teams.map(team => {
+          this.set(this.sort(teams).map(team => {
             team.position = this.calculatePosition(teams, team);
             return team;
           }));
@@ -64,9 +64,12 @@ export class TeamListService extends ObservableResourceList implements OnDestroy
   }
 
   private calculatePosition(teams: Team[], team: Team): number {
+    let previous = 0;
     const index = teams.indexOf(team);
     return teams.reduce((value, current) => {
-      return teams.indexOf(current) >= index || current.value === team.value ? value : value + 1;
+      const position = teams.indexOf(current) >= index || current.value === team.value || current.value === previous ? value : value + 1;
+      previous = current.value;
+      return position;
     }, 1);
   }
 

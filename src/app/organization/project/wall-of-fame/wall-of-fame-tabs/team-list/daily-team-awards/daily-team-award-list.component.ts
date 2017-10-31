@@ -10,6 +10,8 @@ import { User } from '../../../../../../core/models/user.model';
 import { ActiveUserService } from '../../../../../../organization-list/active-user.service';
 import { DailyTeamAwardListService } from './daily-team-award-list.service';
 import { ScreenService } from '../../../../../../core/screen.service';
+import { Project } from '../../../../../../core/models/project.model';
+import { ActiveProjectService } from '../../../../../active-project.service';
 
 @Component({
   templateUrl: 'daily-team-award-list.component.html',
@@ -18,6 +20,7 @@ import { ScreenService } from '../../../../../../core/screen.service';
 export class DailyTeamAwardListComponent implements OnInit, OnDestroy {
   loading = true;
   user: User;
+  project: Project;
   dailyAwards: DailyAward[];
   columns = 5;
   gutter = 24;
@@ -26,14 +29,16 @@ export class DailyTeamAwardListComponent implements OnInit, OnDestroy {
 
   constructor(public dailyTeamAwardListService: DailyTeamAwardListService,
               private screenService: ScreenService,
-              private activeUserService: ActiveUserService) {}
+              private activeUserService: ActiveUserService,
+              private activeProject: ActiveProjectService) {}
 
   ngOnInit(): void {
     this.subscriptions.push(Observable.combineLatest(
       this.activeUserService.user,
+      this.activeProject.project,
       this.dailyTeamAwardListService.awards
     ).subscribe(data => {
-      [this.user, this.dailyAwards] = data;
+      [this.user, this.project, this.dailyAwards] = data;
       this.loading = false;
     }));
 

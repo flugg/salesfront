@@ -15,6 +15,8 @@ import { DailyTeamAwardListService } from './daily-team-award-list.service';
 import { MonthlyTeamAwardListService } from './monthly-team-award-list.service';
 import { WeeklyTeamAwardListService } from './weekly-team-award-list.service';
 import { YearlyTeamAwardListService } from './yearly-team-award-list.service';
+import { Project } from '../../../../../core/models/project.model';
+import { ActiveProjectService } from '../../../../active-project.service';
 
 @Component({
   templateUrl: 'team-list.component.html'
@@ -22,6 +24,7 @@ import { YearlyTeamAwardListService } from './yearly-team-award-list.service';
 export class TeamListComponent implements OnInit, OnDestroy {
   loading = true;
   user: User;
+  project: Project;
   dailyAwards: DailyAward[];
   weeklyAwards: WeeklyAward[];
   monthlyAwards: MonthlyAward[];
@@ -33,17 +36,19 @@ export class TeamListComponent implements OnInit, OnDestroy {
               public weeklyTeamAwardListService: WeeklyTeamAwardListService,
               public monthlyTeamAwardListService: MonthlyTeamAwardListService,
               public yearlyTeamAwardListService: YearlyTeamAwardListService,
-              private activeUser: ActiveUserService) {}
+              private activeUser: ActiveUserService,
+              private activeProject: ActiveProjectService) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
       this.activeUser.user,
+      this.activeProject.project,
       this.dailyTeamAwardListService.awards,
       this.weeklyTeamAwardListService.awards,
       this.monthlyTeamAwardListService.awards,
       this.yearlyTeamAwardListService.awards
     ).subscribe(data => {
-      [this.user, this.dailyAwards, this.weeklyAwards, this.monthlyAwards, this.yearlyAwards] = data;
+      [this.user, this.project, this.dailyAwards, this.weeklyAwards, this.monthlyAwards, this.yearlyAwards] = data;
       this.loading = false;
     }));
   }

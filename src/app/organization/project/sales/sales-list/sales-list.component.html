@@ -31,6 +31,8 @@
           <div md-line [class.u-faded]="sale.member.deletedAt" class="mdc-typography--subheading1">
             <strong class="u-clickable"
                     [routerLink]="'../users/members/' + sale.memberId">{{ sale.member.user.name }}</strong>
+            <span *ngIf="project.type === 'value'">for</span>
+            <strong *ngIf="project.type === 'value'">{{ sale.value | value:project }}</strong>
             <span>in</span>
             <strong class="u-clickable"
                     [routerLink]="'../teams/' + sale.teamId">{{ sale.team.name }}</strong>
