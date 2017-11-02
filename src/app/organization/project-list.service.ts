@@ -1,5 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
+
 import 'rxjs/add/observable/combineLatest';
 import { Observable } from 'rxjs/Observable';
 import { Project } from '../core/models/project.model';

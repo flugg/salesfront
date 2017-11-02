@@ -57,7 +57,7 @@
     </div>
     <div class="u-vertical-spacing-big" fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.lt-md="start center" fxLayoutGap="16px">
       <button md-button type="button" (click)="dialog.close()">Cancel</button>
-      <button md-raised-button color="accent" [disabled]="nameInput.errors?.required" fxFlexOrder.lt-md="-1">Create</button>
+      <button md-raised-button color="accent" [disabled]="nameInput.errors?.required || pending" fxFlexOrder.lt-md="-1">Create</button>
     </div>
   </form>
 </div>

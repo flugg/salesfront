@@ -21,4 +21,5 @@ export interface Project {
   organization?: Organization;
   contractTemplate?: ContractTemplate;
   teams?: Team[];
+  enabled: boolean;
 }

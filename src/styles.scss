@@ -1090,3 +1090,11 @@ signature-pad canvas {
     max-width: 156px;
   }
 }
+
+.u-left-aligned-grid .mat-grid-tile {
+  overflow: visible;
+
+  .mat-figure {
+    justify-content: flex-start;
+  }
+}

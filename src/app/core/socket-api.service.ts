@@ -17,8 +17,7 @@ export class SocketApiService {
   disconnects = this.connected.filter(connection => connection === false);
 
   constructor(private tokenService: TokenService,
-              private snackBar: MdSnackBar,
-              private applicationRef: ApplicationRef) {
+              private snackBar: MdSnackBar) {
     this.connect();
   }
 
@@ -46,6 +45,21 @@ export class SocketApiService {
     this.getPusher().allChannels().forEach(channel => {
       channel.unbind(null, null, source);
     });
+  }
+
+  reconnectSilently() {
+    this.echo = new Echo({
+      auth: { headers: { 'Authorization': `Bearer ${this.tokenService.get()}` } },
+      authEndpoint: environment.apiUrl + '/broadcasting/auth',
+      broadcaster: 'pusher',
+      key: '22dde1271dab2d4b1da0',
+      secret: '4881a3a6d6bec748fa58',
+      cluster: 'eu',
+      encrypted: true,
+      namespace: ''
+    });
+
+    this.listenForDisconnects();
   }
 
   private connect() {
@@ -98,11 +112,9 @@ export class SocketApiService {
       this.connected.next(false);
 
       const snackBar = this.snackBar.open('Disconnected', 'Reconnect');
-      this.applicationRef.tick();
 
       this.connects.subscribe(() => {
         snackBar.dismiss();
-        this.applicationRef.tick();
       });
 
       snackBar.onAction().subscribe(() => {
@@ -111,7 +123,6 @@ export class SocketApiService {
         }
 
         snackBar.dismiss();
-        this.applicationRef.tick();
         this.echo.connector.connect();
       });
     }

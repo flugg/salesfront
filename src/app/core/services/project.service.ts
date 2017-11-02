@@ -11,6 +11,10 @@ import { RestApiService } from '../rest-api.service';
 export class ProjectService {
   constructor(private api: RestApiService) {}
 
+  listAll(organizationId: string): Observable<Project[]> {
+    return this.api.get(`organizations/${organizationId}/projects`);
+  }
+
   list(organizationId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
     return this.api.paginate(`organizations/${organizationId}/projects`, cursor, limit);
   }

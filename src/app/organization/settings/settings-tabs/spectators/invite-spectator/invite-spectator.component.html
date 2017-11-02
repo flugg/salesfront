@@ -1,0 +1,91 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading && projects?.length">
+    <div class="vmo-scrollable-area">
+      <form #form novalidate (submit)="submit(form); $event.preventDefault()">
+        <div class="vmo-container --small">
+          <md-card>
+            <span class="mdc-typography--display1 strong">Invite Spectator</span>
+            <p class="mdc-typography--body1 u-weak">Invite a free spectator to observe projects.</p>
+            <div class="u-vertical-spacing">
+              <div fxLayout="row" fxLayoutGap="16px">
+                <md-input-container color="accent">
+                  <input #firstNameInput="ngModel"
+                         mdInput
+                         placeholder="First Name"
+                         name="firstName"
+                         [(ngModel)]="firstName"
+                         required>
+                  <md-error *ngIf="firstNameInput.errors?.required && (firstNameInput.dirty || firstNameInput.touched)">
+                    This field is required
+                  </md-error>
+                </md-input-container>
+                <md-input-container color="accent">
+                  <input #lastNameInput="ngModel"
+                         mdInput
+                         placeholder="Last Name"
+                         name="lastName"
+                         [(ngModel)]="lastName"
+                         required>
+                  <md-error *ngIf="lastNameInput.errors?.required && (lastNameInput.dirty || lastNameInput.touched)">
+                    This field is required
+                  </md-error>
+                </md-input-container>
+              </div>
+              <md-input-container color="accent">
+                <input #emailInput="ngModel"
+                       mdInput
+                       placeholder="Email"
+                       type="email"
+                       name="email"
+                       [(ngModel)]="email"
+                       required>
+                <md-error *ngIf="emailInput.errors?.required && (emailInput.dirty || emailInput.touched)">
+                  This field is required
+                </md-error>
+                <md-error *ngIf="emailInput.errors?.email && (emailInput.dirty || emailInput.touched)">
+                  This field must be a valid email address
+                </md-error>
+              </md-input-container>
+              <md-input-container color="accent">
+                <input #passwordInput="ngModel"
+                       mdInput
+                       placeholder="Password"
+                       type="password"
+                       name="password"
+                       [(ngModel)]="password"
+                       minlength="8"
+                       required>
+                <md-error *ngIf="passwordInput.errors?.required && (passwordInput.dirty || passwordInput.touched)">
+                  This field is required
+                </md-error>
+                <md-error *ngIf="passwordInput.errors?.minlength && (passwordInput.dirty || passwordInput.touched)">
+                  This field must be minimum 8 characters
+                </md-error>
+              </md-input-container>
+              <div class="u-vertical-spacing">
+                <div class="mdc-typography--caption u-weak u-spacing-bottom-small">Visible projects:</div>
+                <md-grid-list [cols]="columns" [gutterSize]="gutter" rowHeight="24" class="u-left-aligned-grid">
+                  <md-grid-tile *ngFor="let project of projects">
+                    <md-checkbox [name]="project.id" [(ngModel)]="project.enabled">{{ project.name }}</md-checkbox>
+                  </md-grid-tile>
+                </md-grid-list>
+              </div>
+              <div class="u-vertical-spacing">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+                  <button md-raised-button
+                          color="accent"
+                          [disabled]="firstNameInput.errors?.required || lastNameInput.errors?.required || emailInput.errors?.required || passwordInput.errors?.required || passwordInput.errors?.minlength || pending">
+                    Invite
+                  </button>
+                  <md-checkbox name="keepInviting" [(ngModel)]="inviteMore">Keep inviting</md-checkbox>
+                </div>
+              </div>
+            </div>
+          </md-card>
+        </div>
+      </form>
+    </div>
+  </vmo-progress-spinner>
+</div>

@@ -10,6 +10,10 @@ import { OrganizationSettingsComponent } from './settings-tabs/organization-sett
 import { OrganizationComponent } from './settings-tabs/organization/organization.component';
 import { ProjectSettingsComponent } from './settings-tabs/project-settings/project-settings.component';
 import { SettingsTabsComponent } from './settings-tabs/settings-tabs.component';
+import { EditSpectatorComponent } from './settings-tabs/spectators/edit-spectator/edit-spectator.component';
+import { InviteSpectatorComponent } from './settings-tabs/spectators/invite-spectator/invite-spectator.component';
+import { SpectatorListComponent } from './settings-tabs/spectators/spectator-list.component';
+import { DeleteConfirmationComponent } from './settings-tabs/spectators/edit-spectator/delete-confirmation/delete-confirmation.component';
 
 @NgModule({
   imports: [
@@ -24,8 +28,14 @@ import { SettingsTabsComponent } from './settings-tabs/settings-tabs.component';
     ProjectSettingsComponent,
     SettingsTabsComponent,
     TemplateListComponent,
-    OrganizationComponent
+    OrganizationComponent,
+    SpectatorListComponent,
+    InviteSpectatorComponent,
+    EditSpectatorComponent,
+    DeleteConfirmationComponent
+  ],
+  entryComponents: [
+    DeleteConfirmationComponent
   ]
 })
-export class SettingsModule {
-}
+export class SettingsModule {}

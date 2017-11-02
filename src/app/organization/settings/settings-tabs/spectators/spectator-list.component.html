@@ -1,0 +1,34 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="Spectators" mode="back">
+    <button *ngIf="! loading" md-icon-button routerLink="new">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+
+      <md-list *ngIf="spectators?.length" class="vmo-list">
+        <md-list-item md-ripple class="u-clickable" *ngFor="let spectator of spectators" [routerLink]="spectator.id">
+          <md-icon md-list-icon class="u-weak">visibility</md-icon>
+          <h4 md-line class="mdc-typography--subheading1">{{ spectator.user.name }}</h4>
+          <span md-line class="mdc-typography--caption u-weak">
+            {{ spectator.spectatingProjects.length }} projects
+          </span>
+        </md-list-item>
+      </md-list>
+      <div *ngIf="! spectators?.length"
+           class="u-stretch u-spacing"
+           fxLayout="column"
+           fxLayoutAlign="center center"
+           fxLayoutGap="16px">
+        <span class="mdc-typography--headline strong">No spectators found.</span>
+        <span class="mdc-typography--body1 u-weak">Spectators are invisible users that can observe projects.</span>
+        <button md-raised-button color="accent" routerLink="new" class="u-push-button">Invite a spectator</button>
+      </div>
+
+    </div>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

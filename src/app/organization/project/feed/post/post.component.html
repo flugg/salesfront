@@ -29,7 +29,7 @@
       </md-list-item>
     </md-list>
   </md-card>
-  <md-card class="comment-input u-no-elevation">
+  <md-card class="comment-input u-no-elevation" *ngIf="! member.isSpectator">
     <form (submit)="onSubmit(input.value); input.value = ''; $event.preventDefault()" fxLayoutAlign="stretch center">
       <vmo-avatar md-list-avatar [membership]="member"></vmo-avatar>
       <md-input-container class="vmo-fixed-input">

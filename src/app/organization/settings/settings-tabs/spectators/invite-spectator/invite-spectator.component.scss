@@ -1,0 +1,11 @@
+.mat-input-container {
+  width: 100%;
+}
+
+.container {
+  padding: 24px;
+
+  @media (min-width: 960px) {
+    max-width: 740px;
+  }
+}

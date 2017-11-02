@@ -34,14 +34,14 @@
             <span class="mdc-typography--body1 u-weak" *ngIf="! member?.deletedAt">{{ role }}</span>
             <span class="mdc-typography--body1 u-weak" *ngIf="member?.deletedAt">Deactivated</span>
             <button md-raised-button
-                    *ngIf="activeMember?.id !== member?.id && ! member?.deletedAt"
+                    *ngIf="! activeMember?.isSpectator && activeMember?.id !== member?.id && ! member?.deletedAt"
                     color="accent"
                     (click)="sendMessage()"
                     class="u-push-button">
               Send message
             </button>
             <button md-raised-button
-                    *ngIf="member?.deletedAt"
+                    *ngIf="activeMember?.user.isAdmin && member?.deletedAt"
                     color="accent"
                     (click)="recoverMember()"
                     class="u-push-button">

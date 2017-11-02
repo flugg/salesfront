@@ -10,6 +10,7 @@ import { OrganizationComponent } from '../organization.component';
 })
 export class CreateProjectComponent implements OnInit {
   loading = true;
+  pending = false;
   name: string;
   color = 'pink';
   projectType = 'count';
@@ -29,6 +30,7 @@ export class CreateProjectComponent implements OnInit {
   }
 
   submit() {
+    this.pending = true;
     if (!this.name.length) {
       return false;
     }
@@ -54,6 +56,6 @@ export class CreateProjectComponent implements OnInit {
     this.projectService.create(this.data.organization.id, attributes).then(() => {
       this.dialog.close();
       this.snackBar.open('Project created', null, <MdSnackBarConfig>{ duration: 2000 });
-    });
+   });
   }
 }

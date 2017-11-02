@@ -6,6 +6,9 @@ import { TemplateListComponent } from './settings-tabs/contracts/template-list.c
 import { SettingsTabsComponent } from './settings-tabs/settings-tabs.component';
 import { EditTemplateComponent } from './settings-tabs/contracts/edit-template/edit-template.component';
 import { OrganizationComponent } from './settings-tabs/organization/organization.component';
+import { SpectatorListComponent } from './settings-tabs/spectators/spectator-list.component';
+import { InviteSpectatorComponent } from './settings-tabs/spectators/invite-spectator/invite-spectator.component';
+import { EditSpectatorComponent } from './settings-tabs/spectators/edit-spectator/edit-spectator.component';
 
 const routes: Routes = [
   {
@@ -27,6 +30,20 @@ const routes: Routes = [
           {
             path: ':template',
             component: EditTemplateComponent
+          }
+        ]
+      },
+      {
+        path: 'spectators',
+        component: SpectatorListComponent,
+        children: [
+          {
+            path: 'new',
+            component: InviteSpectatorComponent
+          },
+          {
+            path: ':spectator',
+            component: EditSpectatorComponent
           }
         ]
       }

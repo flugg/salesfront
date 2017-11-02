@@ -6,6 +6,7 @@ export interface Organization {
   name: string;
   slug: string;
   logoPath: string | null;
+  memberCount: number;
   createdAt: string;
   updatedAt: string;
   projects?: Project[];

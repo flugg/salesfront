@@ -3,7 +3,7 @@
     <button md-icon-button (click)="downloadContracts()">
       <md-icon>file_download</md-icon>
     </button>
-    <button md-icon-button routerLink="add">
+    <button md-icon-button routerLink="add" *ngIf="! membership?.isSpectator">
       <md-icon>add</md-icon>
     </button>
   </vmo-toolbar>

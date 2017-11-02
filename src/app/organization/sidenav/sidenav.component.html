@@ -26,11 +26,12 @@
       <md-list-item md-ripple (click)="goToProfile()" class="u-clickable">
         <vmo-avatar md-list-avatar [membership]="membership" [sessionIndicator]="false" class="push-sides"></vmo-avatar>
         <span md-line class="mdc-typography--subheading2 strong">{{ membership?.user.name }}</span>
+        <span *ngIf="membership.isSpectator" md-line class="mdc-typography--caption u-light-weak">Spectator</span>
       </md-list-item>
     </md-list>
     <md-nav-list [class.--with-project]="project" [class.--without-session]="! membership?.activeSession">
-      <vmo-nav-item title="Messages" icon="mail" [routerLink]="['/', membership?.organizationId, 'messages']" routerLinkActive="active-link-parent" [notifications]="unreadConversations?.length"></vmo-nav-item>
-      <vmo-nav-item title="Notifications" icon="notifications" [routerLink]="['/', membership?.organizationId, 'notifications']" routerLinkActive="active-link-parent"></vmo-nav-item>
+      <vmo-nav-item *ngIf="! membership.isSpectator" title="Messages" icon="mail" [routerLink]="['/', membership?.organizationId, 'messages']" routerLinkActive="active-link-parent" [notifications]="unreadConversations?.length"></vmo-nav-item>
+      <vmo-nav-item *ngIf="! membership.isSpectator" title="Notifications" icon="notifications" [routerLink]="['/', membership?.organizationId, 'notifications']" routerLinkActive="active-link-parent"></vmo-nav-item>
       <vmo-nav-item title="Log Out" icon="exit_to_app" (click)="logout()"></vmo-nav-item>
     </md-nav-list>
   </div>
