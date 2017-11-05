@@ -20,7 +20,7 @@ export class ProjectService {
   }
 
   find(id: string): Observable<Project> {
-    return this.api.get(`projects/${id}`, { include: 'contractTemplate.fields' }).map(response => response.data);
+    return this.api.get(`projects/${id}`, { include: 'contractTemplate.fields,organization' }).map(response => response.data);
   }
 
   create(organizationId: string, attributes: any): Promise<Project> {

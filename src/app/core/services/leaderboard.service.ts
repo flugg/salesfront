@@ -15,14 +15,16 @@ export class LeaderboardService {
   members(projectId: string, after: Moment, before: Moment): Observable<Member[]> {
     return this.api.get(`projects/${projectId}/leaderboard-users`, {
       after: after.toISOString(),
-      before: before.toISOString()
+      before: before.toISOString(),
+      include: 'organization'
     }).map(response => response.data);
   }
 
   membersInTeam(teamId: string, after: Moment, before: Moment): Observable<Member[]> {
     return this.api.get(`teams/${teamId}/leaderboard-users`, {
       after: after.toISOString(),
-      before: before.toISOString()
+      before: before.toISOString(),
+      include: 'organization'
     }).map(response => response.data);
   }
 

@@ -39,7 +39,7 @@ export class LeaderboardComponent implements OnInit {
       if (this.budget) {
         this.router.navigate([this.project.organization.slug, 'projects', this.project.id, 'budgets', this.budgetType, this.budget.id, 'teams', item.id]);
       } else if (this.avatar) {
-        this.router.navigate([this.project.organization.slug, 'projects', this.project.id, 'leaderboard', 'teams', item.id]);
+        this.router.navigate([this.project.organization, 'projects', this.project.id, 'leaderboard', 'teams', item.id]);
       }
     }
   }
