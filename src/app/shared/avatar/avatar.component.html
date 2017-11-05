@@ -1,5 +1,5 @@
 <div class="avatar-wrapper"
-     [routerLink]="['/', membership?.organizationId, 'users', membership?.id]">
+     [routerLink]="['/', membership?.organization?.slug, 'users', membership?.id]">
   <img *ngIf="membership?.user?.avatarPath"
        class="u-avatar u-clickable"
        [class.u-faded]="membership?.deletedAt"

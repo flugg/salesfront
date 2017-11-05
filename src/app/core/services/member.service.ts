@@ -24,7 +24,7 @@ export class MemberService {
   }
 
   find(id: string): Observable<Member> {
-    return this.api.get(`members/${id}`, { include: 'teamMembers.team.project' }).map(response => response.data);
+    return this.api.get(`members/${id}`, { include: 'organization,teamMembers.team.project' }).map(response => response.data);
   }
 
   findSpectator(id: string): Observable<Member> {

@@ -1,12 +1,15 @@
 import { Injectable, OnDestroy } from '@angular/core';
+
+import 'rxjs/add/operator/distinctUntilChanged';
 import { Observable } from 'rxjs/Observable';
+
+import { AuthService } from '../core/auth/auth.service';
 import { Member } from '../core/models/member.model';
 import { Session } from '../core/models/session.model';
 import { TeamMember } from '../core/models/team-member.model';
 import { User } from '../core/models/user.model';
 import { ObservableResource } from '../core/observable-resource';
 import { UserService } from '../core/services/user.service';
-
 import { SocketApiService } from '../core/socket-api.service';
 
 @Injectable()
@@ -14,29 +17,32 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
   readonly user: Observable<User> = this.subject.asObservable();
 
   constructor(private userService: UserService,
+              private authService: AuthService,
               private sockets: SocketApiService) {
     super();
 
     this.socketSubscription = this.sockets.connects.subscribe(() => {
-      this.sockets.stopListening(this);
+      this.authService.authenticated.filter(authenticated => authenticated === true).distinctUntilChanged().subscribe(() => {
+        this.sockets.stopListening(this);
 
-      this.userService.find('me', [
-        'memberships.organization.contractTemplates',
-        'memberships.teamMembers.team.project',
-        'memberships.activeSession',
-      ]).subscribe(activeUser => {
-        activeUser.memberships.forEach(membership => this.setTeamOnSession(membership));
-        this.set(activeUser);
+        this.userService.find('me', [
+          'memberships.organization.contractTemplates',
+          'memberships.teamMembers.team.project',
+          'memberships.activeSession'
+        ]).subscribe(activeUser => {
+          activeUser.memberships.forEach(membership => this.setTeamOnSession(membership));
+          this.set(activeUser);
 
-        this.sockets.listenForUser(activeUser.id, {
-          'user_updated': user => this.set(user),
-          'member_removed': membership => this.removeMembership(membership),
-          'member_updated': membership => this.updateMembership(membership),
-          'team_member_added': teamMember => this.addTeamMember(teamMember),
-          'team_member_removed': teamMember => this.removeTeamMember(teamMember),
-          'clocked_in': session => this.setActiveSession(session),
-          'clocked_out': session => this.removeActiveSession(session)
-        }, this);
+          this.sockets.listenForUser(activeUser.id, {
+            'user_updated': user => this.set(user),
+            'member_removed': membership => this.removeMembership(membership),
+            'member_updated': membership => this.updateMembership(membership),
+            'team_member_added': teamMember => this.addTeamMember(teamMember),
+            'team_member_removed': teamMember => this.removeTeamMember(teamMember),
+            'clocked_in': session => this.setActiveSession(session),
+            'clocked_out': session => this.removeActiveSession(session)
+          }, this);
+        });
       });
     });
   }

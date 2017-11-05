@@ -8,7 +8,7 @@
     <md-list class="vmo-list" *ngIf="members?.length">
       <md-list-item md-ripple
                     *ngFor="let member of members"
-                    [routerLink]="['/', member.member.organizationId, 'users', member.memberId]"
+                    [routerLink]="['/', member.member.organization.slug, 'users', member.memberId]"
                     class="u-clickable">
 
         <vmo-avatar md-list-avatar [membership]="member?.member"></vmo-avatar>

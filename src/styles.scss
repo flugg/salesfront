@@ -942,7 +942,7 @@ snack-bar-container {
 
 .wall-of-fame-item {
   min-width: 144px;
-  width: (100% / 5);
+  width: calc(20% - 24px);
 
   &.--grid {
     margin-bottom: 48px;

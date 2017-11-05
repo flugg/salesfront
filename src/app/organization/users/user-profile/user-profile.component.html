@@ -79,7 +79,7 @@
               </md-list-item>
               <md-list-item *ngFor="let teamMember of member?.teamMembers">
                 <md-icon md-list-icon class="list-icon">group</md-icon>
-                <span class="mdc-typography--subheading2 u-clickable" [routerLink]="['/', member?.organizationId, 'projects', teamMember.team.projectId, 'teams', teamMember.team.id]">
+                <span class="mdc-typography--subheading2 u-clickable" [routerLink]="['/', member?.organization.slug, 'projects', teamMember.team.projectId, 'teams', teamMember.team.id]">
                   {{ teamMember.team.name }}
                   <span>({{ teamMember.team.project.name }})</span>
                 </span>

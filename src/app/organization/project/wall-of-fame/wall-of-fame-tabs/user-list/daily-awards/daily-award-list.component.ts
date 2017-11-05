@@ -6,12 +6,12 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { DailyAward } from '../../../../../../core/models/daily-award.model';
-import { User } from '../../../../../../core/models/user.model';
-import { ActiveUserService } from '../../../../../../organization-list/active-user.service';
-import { DailyAwardListService } from './daily-award-list.service';
-import { ScreenService } from '../../../../../../core/screen.service';
-import { ActiveProjectService } from '../../../../../active-project.service';
+import { Member } from '../../../../../../core/models/member.model';
 import { Project } from '../../../../../../core/models/project.model';
+import { ScreenService } from '../../../../../../core/screen.service';
+import { ActiveMembershipService } from '../../../../../active-membership.service';
+import { ActiveProjectService } from '../../../../../active-project.service';
+import { DailyAwardListService } from './daily-award-list.service';
 
 @Component({
   templateUrl: 'daily-award-list.component.html',
@@ -19,7 +19,7 @@ import { Project } from '../../../../../../core/models/project.model';
 })
 export class DailyAwardListComponent implements OnInit, OnDestroy {
   loading = true;
-  user: User;
+  membership: Member;
   project: Project;
   dailyAwards: DailyAward[];
   columns = 5;
@@ -29,16 +29,16 @@ export class DailyAwardListComponent implements OnInit, OnDestroy {
 
   constructor(public dailyAwardListService: DailyAwardListService,
               private screenService: ScreenService,
-              private activeUserService: ActiveUserService,
+              private activeMemberService: ActiveMembershipService,
               private activeProject: ActiveProjectService) {}
 
   ngOnInit(): void {
     this.subscriptions.push(Observable.combineLatest(
-      this.activeUserService.user,
+      this.activeMemberService.membership,
       this.activeProject.project,
       this.dailyAwardListService.awards
     ).subscribe(data => {
-      [this.user, this.project, this.dailyAwards] = data;
+      [this.membership, this.project, this.dailyAwards] = data;
       this.loading = false;
     }));
 

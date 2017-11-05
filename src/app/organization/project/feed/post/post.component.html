@@ -2,7 +2,7 @@
   <md-card class="post-card u-no-elevation">
     <md-card-header>
       <vmo-avatar md-card-avatar [membership]="post.member"></vmo-avatar>
-      <md-card-title class="mdc-typography--subheading1 u-clickable" [routerLink]="['/', member.organizationId, 'users', post.memberId]">
+      <md-card-title class="mdc-typography--subheading1 u-clickable" [routerLink]="['/', member.organization.slug, 'users', post.memberId]">
         {{ post.member.user.name }}
       </md-card-title>
       <md-card-subtitle class="mdc-typography--caption">
@@ -18,7 +18,7 @@
       <md-list-item *ngFor="let comment of post.comments">
         <vmo-avatar md-list-avatar [membership]="comment.member" fxFlexAlign="start"></vmo-avatar>
         <div md-line fxLayoutGap="6px">
-          <span class="mdc-typography--body2 u-clickable" [routerLink]="['/', member.organizationId, 'users', comment.memberId]">
+          <span class="mdc-typography--body2 u-clickable" [routerLink]="['/', member.organization.slug, 'users', comment.memberId]">
             {{ comment.member.user.name }}
           </span>
           <span class="mdc-typography--caption u-weak">

@@ -4,23 +4,23 @@
       <img [src]="membership?.organization.logoPath ? 'https://s3.eu-central-1.amazonaws.com/vendumo/' + membership?.organization.logoPath : 'assets/vendumo-logo-light.svg'" class="sidenav-logo">
     </div>
     <md-nav-list *ngIf="! project">
-      <vmo-nav-item title="Projects" icon="business_center" [routerLink]="['/', membership?.organizationId]" routerLinkActive="active-link-parent" [routerLinkActiveOptions]="{ exact: true }"></vmo-nav-item>
-      <vmo-nav-item title="Users" icon="person" [routerLink]="['/', membership?.organizationId, 'users']" routerLinkActive="active-link-parent"></vmo-nav-item>
-      <vmo-nav-item *ngIf="membership?.user.isAdmin" title="Settings" icon="settings" [routerLink]="['/', membership?.organizationId, 'settings']" routerLinkActive="active-link-parent"></vmo-nav-item>
+      <vmo-nav-item title="Projects" icon="business_center" [routerLink]="['/', membership?.organization.slug]" routerLinkActive="active-link-parent" [routerLinkActiveOptions]="{ exact: true }"></vmo-nav-item>
+      <vmo-nav-item title="Users" icon="person" [routerLink]="['/', membership?.organization.slug, 'users']" routerLinkActive="active-link-parent"></vmo-nav-item>
+      <vmo-nav-item *ngIf="membership?.user.isAdmin" title="Settings" icon="settings" [routerLink]="['/', membership?.organization.slug, 'settings']" routerLinkActive="active-link-parent"></vmo-nav-item>
     </md-nav-list>
     <md-list *ngIf="project">
-      <md-list-item md-ripple [routerLink]="['/', membership?.organizationId, 'projects', project?.id, 'feed']" class="u-clickable">
+      <md-list-item md-ripple [routerLink]="['/', membership?.organization.slug, 'projects', project?.id, 'feed']" class="u-clickable">
         <vmo-project-icon md-list-avatar [project]="project" class="push-sides"></vmo-project-icon>
         <span md-line class="mdc-typography--subheading2 strong">{{ project?.name }}</span>
       </md-list-item>
     </md-list>
     <md-nav-list *ngIf="project">
-      <vmo-nav-item title="Feed" icon="inbox" link="feed" [project]="project"></vmo-nav-item>
-      <vmo-nav-item title="Leaderboard" icon="sort" link="leaderboard" [project]="project"></vmo-nav-item>
-      <vmo-nav-item title="Wall of Fame" icon="star" link="wall-of-fame" [project]="project"></vmo-nav-item>
-      <vmo-nav-item title="Budgets" icon="adjust" link="budgets" [project]="project"></vmo-nav-item>
-      <vmo-nav-item title="Sales" icon="attach_money" link="sales" [project]="project"></vmo-nav-item>
-      <vmo-nav-item title="Teams" icon="group" link="teams" [project]="project"></vmo-nav-item>
+      <vmo-nav-item title="Feed" icon="inbox" link="feed" [organization]="membership.organization" [project]="project"></vmo-nav-item>
+      <vmo-nav-item title="Leaderboard" icon="sort" link="leaderboard" [organization]="membership.organization" [project]="project"></vmo-nav-item>
+      <vmo-nav-item title="Wall of Fame" icon="star" link="wall-of-fame" [organization]="membership.organization" [project]="project"></vmo-nav-item>
+      <vmo-nav-item title="Budgets" icon="adjust" link="budgets" [organization]="membership.organization" [project]="project"></vmo-nav-item>
+      <vmo-nav-item title="Sales" icon="attach_money" link="sales" [organization]="membership.organization" [project]="project"></vmo-nav-item>
+      <vmo-nav-item title="Teams" icon="group" link="teams" [organization]="membership.organization" [project]="project"></vmo-nav-item>
     </md-nav-list>
     <md-list>
       <md-list-item md-ripple (click)="goToProfile()" class="u-clickable">
@@ -30,8 +30,8 @@
       </md-list-item>
     </md-list>
     <md-nav-list [class.--with-project]="project" [class.--without-session]="! membership?.activeSession">
-      <vmo-nav-item *ngIf="! membership.isSpectator" title="Messages" icon="mail" [routerLink]="['/', membership?.organizationId, 'messages']" routerLinkActive="active-link-parent" [notifications]="unreadConversations?.length"></vmo-nav-item>
-      <vmo-nav-item *ngIf="! membership.isSpectator" title="Notifications" icon="notifications" [routerLink]="['/', membership?.organizationId, 'notifications']" routerLinkActive="active-link-parent"></vmo-nav-item>
+      <vmo-nav-item *ngIf="! membership.isSpectator" title="Messages" icon="mail" [routerLink]="['/', membership?.organization.slug, 'messages']" routerLinkActive="active-link-parent" [notifications]="unreadConversations?.length"></vmo-nav-item>
+      <vmo-nav-item *ngIf="! membership.isSpectator" title="Notifications" icon="notifications" [routerLink]="['/', membership?.organization.slug, 'notifications']" routerLinkActive="active-link-parent"></vmo-nav-item>
       <vmo-nav-item title="Log Out" icon="exit_to_app" (click)="logout()"></vmo-nav-item>
     </md-nav-list>
   </div>

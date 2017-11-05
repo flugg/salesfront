@@ -23,7 +23,6 @@ import { ActiveProjectService } from '../../../../active-project.service';
 })
 export class TeamListComponent implements OnInit, OnDestroy {
   loading = true;
-  user: User;
   project: Project;
   dailyAwards: DailyAward[];
   weeklyAwards: WeeklyAward[];
@@ -36,19 +35,17 @@ export class TeamListComponent implements OnInit, OnDestroy {
               public weeklyTeamAwardListService: WeeklyTeamAwardListService,
               public monthlyTeamAwardListService: MonthlyTeamAwardListService,
               public yearlyTeamAwardListService: YearlyTeamAwardListService,
-              private activeUser: ActiveUserService,
               private activeProject: ActiveProjectService) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
-      this.activeUser.user,
       this.activeProject.project,
       this.dailyTeamAwardListService.awards,
       this.weeklyTeamAwardListService.awards,
       this.monthlyTeamAwardListService.awards,
       this.yearlyTeamAwardListService.awards
     ).subscribe(data => {
-      [this.user, this.project, this.dailyAwards, this.weeklyAwards, this.monthlyAwards, this.yearlyAwards] = data;
+      [this.project, this.dailyAwards, this.weeklyAwards, this.monthlyAwards, this.yearlyAwards] = data;
       this.loading = false;
     }));
   }

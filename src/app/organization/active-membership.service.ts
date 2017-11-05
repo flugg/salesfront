@@ -1,13 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { Member } from '../core/models/member.model';
+import { Organization } from '../core/models/organization.model';
 
 import { ObservableResource } from '../core/observable-resource';
-import { ActiveUserService } from '../organization-list/active-user.service';
-import { Member } from '../core/models/member.model';
 import { SocketApiService } from '../core/socket-api.service';
-import { Organization } from '../core/models/organization.model';
+import { ActiveUserService } from '../organization-list/active-user.service';
 
 @Injectable()
 export class ActiveMembershipService extends ObservableResource implements OnDestroy {
@@ -20,12 +20,14 @@ export class ActiveMembershipService extends ObservableResource implements OnDes
 
     this.activeUserService.user.map(user => user.memberships.find(membership => {
       membership.user = user;
-      return membership.organizationId === this.route.snapshot.params['organization'];
-    })).subscribe(membership => this.set(membership));
+      return membership.organization.slug === this.route.snapshot.params['organization'];
+    })).subscribe(membership => {
+      this.set(membership);
 
-    this.sockets.listenForOrganization(this.route.snapshot.params['organization'], {
-      'organiaztion_updated': organiaztion => this.updateOrganization(organiaztion),
-    }, this);
+      this.sockets.listenForOrganization(membership.organizationId, {
+        'organiaztion_updated': organiaztion => this.updateOrganization(organiaztion)
+      }, this);
+    });
   }
 
   ngOnDestroy(): void {

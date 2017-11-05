@@ -11,7 +11,7 @@ export class PostService {
   constructor(private api: RestApiService) {}
 
   get(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`projects/${projectId}/posts`, cursor, limit);
+    return this.api.paginate(`projects/${projectId}/posts`, cursor, limit, { include: 'member.organization' });
   }
 
   find(id: string): Observable<Post> {

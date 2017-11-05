@@ -24,8 +24,7 @@ export class OrganizationComponent implements OnInit {
               private route: ActivatedRoute,
               private snackBar: MdSnackBar,
               private activeMembershipService: ActiveMembershipService,
-              private organizationService: OrganizationService,
-              private changeDetectorRef: ChangeDetectorRef) {}
+              private organizationService: OrganizationService) {}
 
   ngOnInit() {
     this.activeMembershipService.membership.subscribe(membership => {
@@ -33,7 +32,6 @@ export class OrganizationComponent implements OnInit {
       this.membership = membership;
       this.name = this.organization.name;
       this.slug = this.organization.slug;
-      this.changeDetectorRef.detectChanges();
       this.loading = false;
     });
   }
@@ -42,14 +40,19 @@ export class OrganizationComponent implements OnInit {
     const attributes = {
       name: this.name,
       slug: this.slug
-    }
+    };
 
     if (this.base64) {
       attributes['logo'] = this.base64;
     }
 
-    this.organizationService.update(this.organization.id, attributes).then(() => {
-      this.router.navigate(['..'], { relativeTo: this.route });
+    this.organizationService.update(this.organization.id, attributes).then(organization => {
+      if (this.route.snapshot.parent.params['organization'] === organization.slug) {
+        this.router.navigate(['..'], { relativeTo: this.route });
+      } else {
+        this.router.navigate(['/', organization.slug, 'settings'], { relativeTo: this.route });
+      }
+
       this.snackBar.open('Organization updated', null, <MdSnackBarConfig>{ duration: 2000 });
     });
   }

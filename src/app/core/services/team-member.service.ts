@@ -11,7 +11,7 @@ export class TeamMemberService {
   constructor(private api: RestApiService) {}
 
   get(teamId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`teams/${teamId}/members`, cursor, limit, { include: 'member.user,member.activeSession' });
+    return this.api.paginate(`teams/${teamId}/members`, cursor, limit, { include: 'member.organization,member.user,member.activeSession' });
   }
 
   add(membership: Member, teamId: string): Promise<TeamMember> {

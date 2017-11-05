@@ -17,7 +17,8 @@ export class SocketApiService {
   disconnects = this.connected.filter(connection => connection === false);
 
   constructor(private tokenService: TokenService,
-              private snackBar: MdSnackBar) {
+              private snackBar: MdSnackBar,
+              private applicationRef: ApplicationRef) {
     this.connect();
   }
 
@@ -112,6 +113,7 @@ export class SocketApiService {
       this.connected.next(false);
 
       const snackBar = this.snackBar.open('Disconnected', 'Reconnect');
+      this.applicationRef.tick();
 
       this.connects.subscribe(() => {
         snackBar.dismiss();

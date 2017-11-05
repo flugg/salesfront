@@ -10,6 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OrganizationService } from './core/services/organization.service';
 import { OrganizationListComponent } from './organization-list/organization-list.component';
+import { OrganizationResolver } from './organization-list/organization-resolver.service';
+import { ActiveUserService } from './organization-list/active-user.service';
+import { OrganizationGuard } from './organization-list/organization-guard.service';
 
 @NgModule({
   imports: [
@@ -26,6 +29,8 @@ import { OrganizationListComponent } from './organization-list/organization-list
   ],
   providers: [
     OrganizationService,
+    OrganizationGuard,
+    ActiveUserService
   ],
   bootstrap: [
     AppComponent

@@ -1,7 +1,34 @@
 <router-outlet></router-outlet>
 
 <vmo-progress-spinner [hasLoaded]="! loading">
-  <div *ngIf="! user?.memberships.length" fxLayoutAlign="center center" fxFill>
-    Your account is not member of an organization.
+  <div class="vmo-scrollable-area" *ngIf="memberships?.length" >
+    <md-list>
+      <md-list-item>
+        <img md-list-avatar *ngIf="user?.avatarPath"
+             class="u-avatar"
+             src="{{ basePath + user?.avatarPath }}">
+        <div md-list-avatar *ngIf="! user?.avatarPath"
+             class="u-avatar u-default-avatar"
+             fxLayoutAlign="center center">
+          <md-icon>face</md-icon>
+        </div>
+        <span md-line class="mdc-typography--headline strong">{{ user?.name }}</span>
+        <div class="u-fill"></div>
+        <button md-button color="accent">Log out</button>
+      </md-list-item>
+    </md-list>
+    <md-list class="vmo-list">
+      <md-list-item md-ripple class="u-clickable" *ngFor="let membership of memberships" [routerLink]="membership.organization.slug">
+        <md-icon md-list-icon class="u-weak">domain</md-icon>
+        <h4 md-line class="mdc-typography--subheading1">{{ membership.organization.name }}</h4>
+        <span md-line class="mdc-typography--caption"><span class="u-weak">vendumo.com/</span>{{ membership.organization.slug }}</span>
+      </md-list-item>
+    </md-list>
+  </div>
+  <div fxLayout="column" fxLayoutGap="24px" fxLayoutAlign="center center" fxFill class="u-horizontal-spacing" *ngIf="! memberships?.length">
+    <div class="mdc-typography--subheading2 u-text-center">
+      This account is not associated with any organization.
+    </div>
+    <button md-raised-button color="accent">Log out</button>
   </div>
 </vmo-progress-spinner>

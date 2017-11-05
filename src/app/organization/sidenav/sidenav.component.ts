@@ -61,16 +61,16 @@ export class SidenavComponent implements OnInit, OnDestroy {
   goToOrganization() {
     if (this.sidenav.mode === 'over') {
       this.sidenav.onClose.first().subscribe(() => {
-        this.router.navigate([this.membership.organizationId]);
+        this.router.navigate([this.membership.organization.slug]);
       });
       this.sidenav.close();
     } else {
-      this.router.navigate([this.membership.organizationId]);
+      this.router.navigate([this.membership.organization.slug]);
     }
   }
 
   goToProfile() {
     this.urlService.overwrite = true;
-    this.router.navigate(['/', this.membership.organizationId, 'users', this.membership.id]);
+    this.router.navigate(['/', this.membership.organization.slug, 'users', this.membership.id]);
   }
 }

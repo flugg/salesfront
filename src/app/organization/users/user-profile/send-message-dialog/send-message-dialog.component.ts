@@ -27,7 +27,7 @@ export class SendMessageDialogComponent implements OnInit {
     this.conversationService.start(this.data.organizationId, this.data.participants).then(conversation => {
       this.messageService.send(conversation.id, this.message).then(() => {
         this.dialog.close();
-        this.router.navigate([this.data.organizationId, 'messages', conversation.id]);
+        this.router.navigate([this.data.organization.slug, 'messages', conversation.id]);
       });
     });
   }
