@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef, MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { ProductService } from '../../core/services/product.service';
 
 import { ProjectService } from '../../core/services/project.service';
 import { OrganizationComponent } from '../organization.component';
 
 @Component({
   templateUrl: 'create-project.component.html',
-  styleUrls: ['create-project.component.scss'],
+  styleUrls: ['create-project.component.scss']
 })
 export class CreateProjectComponent implements OnInit {
   loading = true;
@@ -19,10 +20,15 @@ export class CreateProjectComponent implements OnInit {
   withDecimals = true;
   withContract = false;
   selectedContract: string;
+  products = [
+    { name: '', value: 0 },
+    { name: '', value: 0 }
+  ];
 
   constructor(@Inject(MD_DIALOG_DATA) public data: any,
               public dialog: MdDialogRef<OrganizationComponent>,
               private snackBar: MdSnackBar,
+              private productService: ProductService,
               private projectService: ProjectService) {}
 
   ngOnInit() {
@@ -41,7 +47,7 @@ export class CreateProjectComponent implements OnInit {
       type: this.projectType
     };
 
-    if (this.projectType === 'value') {
+    if (this.projectType !== 'count') {
       attributes = Object.assign(attributes, {
         notation: this.notation,
         notationBefore: this.notationBefore,
@@ -50,12 +56,32 @@ export class CreateProjectComponent implements OnInit {
     }
 
     if (this.withContract) {
-      attributes = Object.assign(attributes, {contract: this.selectedContract});
+      attributes = Object.assign(attributes, { contract: this.selectedContract });
     }
 
-    this.projectService.create(this.data.organization.id, attributes).then(() => {
-      this.dialog.close();
-      this.snackBar.open('Project created', null, <MdSnackBarConfig>{ duration: 2000 });
-   });
+    this.projectService.create(this.data.organization.id, attributes).then(project => {
+      if (project.type === 'product') {
+        const promises = [];
+        this.products.forEach(product => {
+          promises.push(this.productService.create(project.id, { name: product.name, value: product.value }));
+        });
+        Promise.all(promises).then(() => this.closeAndNotify());
+      } else {
+        this.closeAndNotify();
+      }
+    });
+  }
+
+  private closeAndNotify() {
+    this.dialog.close();
+    this.snackBar.open('Project created', null, <MdSnackBarConfig>{ duration: 2000 });
+  }
+
+  addProduct() {
+    this.products = [...this.products, { name: '', value: 0 }];
+  }
+
+  removeProduct(index: number) {
+    this.products.splice(index, 1);
   }
 }

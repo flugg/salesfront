@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import 'rxjs/add/operator/filter';
+
 import { ActiveUserService } from './active-user.service';
 import { Organization } from '../core/models/organization.model';
 import { User } from '../core/models/user.model';
@@ -21,15 +23,15 @@ export class OrganizationListComponent implements OnInit {
               private activeUserService: ActiveUserService) {}
 
   ngOnInit() {
-    this.activeUserService.user.subscribe(user => {
+    this.activeUserService.user.filter(user => user !== null).subscribe(user => {
       this.user = user;
       this.memberships = this.user.memberships.filter(membership => ! membership.deletedAt);
 
       if (this.router.isActive('/', true) && this.memberships.length === 1) {
         this.router.navigate([this.memberships[0].organization.slug]);
+      } else {
+        this.loading = false;
       }
-
-      this.loading = false;
     });
   }
 }

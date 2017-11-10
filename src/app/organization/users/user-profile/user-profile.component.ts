@@ -89,7 +89,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
     }
 
-    return 'Seller';
+    return 'User';
   }
 
   openProfilePicture(): void {

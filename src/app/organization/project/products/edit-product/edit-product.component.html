@@ -1,0 +1,40 @@
+<div class="vmo-component vmo-component--important">
+  <vmo-toolbar title="" mode="close"></vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <div class="vmo-scrollable-area">
+      <form novalidate
+            (submit)="submit(); $event.preventDefault()">
+        <div class="vmo-container --small">
+          <md-card>
+            <div class="mdc-typography--display1 strong u-vertical-spacing">Update Product</div>
+            <p class="mdc-typography--body1 u-weak">Updating a product value will only affect future deals.</p>
+            <md-input-container color="accent">
+              <input #nameInput="ngModel"
+                     mdInput
+                     name="name"
+                     placeholder="Product Name"
+                     required
+                     [(ngModel)]="name">
+              <md-error *ngIf="nameInput.errors?.required && (nameInput.dirty || nameInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <md-input-container color="accent">
+              <input #valueInput="ngModel" mdInput name="value" placeholder="Value" required autofocus [(ngModel)]="value">
+              <span mdPrefix *ngIf="project.notationBefore">{{ project.notation }}</span>
+              <span mdSuffix *ngIf="! project.notationBefore">{{ project.notation }}</span>
+              <md-error *ngIf="valueInput.errors?.required && (valueInput.dirty || valueInput.touched)">
+                This field is required
+              </md-error>
+            </md-input-container>
+            <md-slide-toggle [(ngModel)]="active" labelPosition="before" name="active">Active</md-slide-toggle>
+            <div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+              <button md-raised-button color="accent" [disabled]="nameInput.errors?.required || valueInput.errors?.required || pending">Save</button>
+            </div>
+          </md-card>
+        </div>
+      </form>
+    </div>
+  </vmo-progress-spinner>
+</div>

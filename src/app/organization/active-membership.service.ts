@@ -1,10 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+
 import { Member } from '../core/models/member.model';
 import { Organization } from '../core/models/organization.model';
-
 import { ObservableResource } from '../core/observable-resource';
 import { SocketApiService } from '../core/socket-api.service';
 import { ActiveUserService } from '../organization-list/active-user.service';
@@ -18,15 +20,17 @@ export class ActiveMembershipService extends ObservableResource implements OnDes
               private activeUserService: ActiveUserService) {
     super();
 
-    this.activeUserService.user.map(user => user.memberships.find(membership => {
+    this.activeUserService.user.filter(user => user !== null).map(user => user.memberships.find(membership => {
       membership.user = user;
       return membership.organization.slug === this.route.snapshot.params['organization'];
     })).subscribe(membership => {
-      this.set(membership);
+      if (membership) {
+        this.set(membership);
 
-      this.sockets.listenForOrganization(membership.organizationId, {
-        'organiaztion_updated': organiaztion => this.updateOrganization(organiaztion)
-      }, this);
+        this.sockets.listenForOrganization(membership.organizationId, {
+          'organiaztion_updated': organiaztion => this.updateOrganization(organiaztion)
+        }, this);
+      }
     });
   }
 

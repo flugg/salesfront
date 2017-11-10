@@ -29,7 +29,6 @@ export class ConversationListComponent implements OnInit, OnDestroy {
       this.conversationListService.conversations
     ).subscribe(data => {
       [this.membership, this.conversations] = data;
-      console.log(this.conversations);
       this.changeDetectorRef.detectChanges();
       this.loading = false;
     }));

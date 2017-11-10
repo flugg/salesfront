@@ -92,7 +92,7 @@ export class SaleAddedDialogComponent implements OnInit {
     this.loading = true;
     this.saleService.delete(this.previousSale.id).then(() => {
       this.dialog.afterClosed().subscribe(() => {
-        this.snackbar.open('Sale undone', null, <MdSnackBarConfig>{ duration: 2000 });
+        this.snackbar.open('Deal undone', null, <MdSnackBarConfig>{ duration: 2000 });
       });
       this.dialog.close();
     });

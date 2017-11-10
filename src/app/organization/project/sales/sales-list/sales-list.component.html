@@ -1,5 +1,5 @@
 <div class="vmo-component">
-  <vmo-toolbar title="Sales" mode="menu">
+  <vmo-toolbar title="Deals" mode="menu">
     <button md-icon-button (click)="downloadContracts()">
       <md-icon>file_download</md-icon>
     </button>
@@ -20,9 +20,9 @@
        <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
      </md-table>-->
     <vmo-empty-state [when]="! sales?.length && ! loading"
-                     [title]="'No sales, yet.'"
-                     [description]="'Add a sale to get started.'">
-      <button md-raised-button color="accent" routerLink="add" class="u-push-button">Add a sale</button>
+                     [title]="'No deals, yet.'"
+                     [description]="'Add a deal to get started.'">
+      <button md-raised-button color="accent" routerLink="add" class="u-push-button">Add a deal</button>
     </vmo-empty-state>
     <div class="vmo-scrollable-area" *ngIf="sales?.length">
       <md-list class="vmo-list">
@@ -33,6 +33,12 @@
                     [routerLink]="'../users/members/' + sale.memberId">{{ sale.member.user.name }}</strong>
             <span *ngIf="project.type === 'value'">for</span>
             <strong *ngIf="project.type === 'value'">{{ sale.value | value:project }}</strong>
+            <span *ngIf="project.type === 'product'">
+              <span>added</span>
+              <strong>{{ sale.product.name }}</strong>
+              <span>for</span>
+              <strong>{{ sale.value | value:project }}</strong>
+              </span>
             <span>in</span>
             <strong class="u-clickable"
                     [routerLink]="'../teams/' + sale.teamId">{{ sale.team.name }}</strong>

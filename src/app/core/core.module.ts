@@ -38,6 +38,7 @@ import { ContractTemplateService } from './services/contract-template.service';
 import { ReportService } from './services/report.service';
 import { UrlService } from './url.service';
 import { BudgetService } from './services/budget.service';
+import { ProductService } from './services/product.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions, tokenService: TokenService) {
   return new AuthHttp(new AuthConfig({ tokenName: 'token', tokenGetter: () => tokenService.get() }), http, options);
@@ -73,6 +74,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions, toke
     MonthlyAwardService,
     OrganizationService,
     PostService,
+    ProductService,
     ProjectService,
     ReportService,
     SaleService,

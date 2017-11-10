@@ -14,7 +14,7 @@
             </md-error>
           </md-input-container>
           <div class="u-vertical-spacing">
-            <button md-raised-button color="accent" [disabled]="nameInput.errors?.required">Create</button>
+            <button md-raised-button color="accent" [disabled]="nameInput.errors?.required || pending">Create</button>
           </div>
         </md-card>
       </div>

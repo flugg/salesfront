@@ -22,7 +22,10 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     if (this.tokenService.isValid()) {
-      this.authenticated.next(true);
+      if (this.authenticated.value === false) {
+        this.authenticated.next(true);
+      }
+
       return true;
     }
 

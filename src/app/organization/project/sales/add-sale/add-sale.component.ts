@@ -16,6 +16,7 @@ import { ActiveProjectService } from '../../../active-project.service';
 import { MemberListService } from './member-list.service';
 import { TeamListService } from './team-list.service';
 import { Project } from '../../../../core/models/project.model';
+import { Product } from '../../../../core/models/product.model';
 
 @Component({
   providers: [MemberListService, TeamListService],
@@ -35,6 +36,8 @@ export class AddSaleComponent implements OnInit, OnDestroy {
   selectedTeam: string;
   selectedTeamMember: string;
   teams: Team[];
+  selectedProduct: string;
+  products: Product[];
 
   private subscriptions: Subscription[] = [];
 
@@ -54,6 +57,11 @@ export class AddSaleComponent implements OnInit, OnDestroy {
       this.teamList.teams
     ).subscribe(data => {
       [this.user, this.project, this.teams] = data;
+
+      this.products = this.project.products.filter(product => !product.deletedAt);
+      if (this.products && this.products.length) {
+        this.selectedProduct = this.products[0].id;
+      }
 
       this.teams = this.teams.filter(team => team.members.filter(member => !member.leftAt && !member.member.deletedAt).length > 0);
 
@@ -82,19 +90,26 @@ export class AddSaleComponent implements OnInit, OnDestroy {
       }
 
       Promise.all(promises).then(() => {
-        if (!this.addMore) {
-          this.router.navigate(['..'], { relativeTo: this.route });
-        }
-
-        this.pending = false;
-        this.snackBar.open(`${quantity > 1 ? quantity + ' sales' : 'Sale' } added`, null, <MdSnackBarConfig>{ duration: 2000 });
+        this.onSuccess();
       });
-    } else {
+    } else if (this.project.type === 'value') {
       this.saleService.registerWithValue(this.selectedTeamMember, this.value, datetime).then(() => {
-        this.pending = false;
-        this.snackBar.open(`${quantity > 1 ? quantity + ' sales' : 'Sale' } added`, null, <MdSnackBarConfig>{ duration: 2000 });
+        this.onSuccess();
+      });
+    } else if (this.project.type === 'product') {
+      this.saleService.registerWithProduct(this.selectedTeamMember, this.selectedProduct, datetime).then(() => {
+        this.onSuccess();
       });
     }
+  }
+
+  private onSuccess() {
+    if (!this.addMore) {
+      this.router.navigate(['..'], { relativeTo: this.route });
+    }
+
+    this.pending = false;
+    this.snackBar.open(`${this.quantity > 1 ? this.quantity + ' deals' : 'Deal' } added`, null, <MdSnackBarConfig>{ duration: 2000 });
   }
 
   getMembers() {

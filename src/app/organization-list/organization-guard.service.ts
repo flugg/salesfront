@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, CanActivate } from '@angular/router';
 
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { ActiveUserService } from './active-user.service';
 

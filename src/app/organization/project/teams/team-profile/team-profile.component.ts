@@ -26,8 +26,7 @@ export class TeamProfileComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private activeMembershipService: ActiveMembershipService,
-              private selectedTeamService: SelectedTeamService,
-              private changeDetectorRef: ChangeDetectorRef) {}
+              private selectedTeamService: SelectedTeamService) {}
 
   ngOnInit() {
     this.subscriptions.push(Observable.combineLatest(
@@ -41,7 +40,6 @@ export class TeamProfileComponent implements OnInit {
       }
 
       this.canEdit = this.checkIfCanEdit();
-      this.changeDetectorRef.detectChanges();
       this.loading = false;
     }));
   }

@@ -1,5 +1,6 @@
-import { Organization } from './organization.model';
 import { ContractTemplate } from './contract-template.model';
+import { Organization } from './organization.model';
+import { Product } from './product.model';
 import { Team } from './team.model';
 
 export interface Project {
@@ -21,5 +22,6 @@ export interface Project {
   organization?: Organization;
   contractTemplate?: ContractTemplate;
   teams?: Team[];
+  products?: Product[];
   enabled: boolean;
 }

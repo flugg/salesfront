@@ -11,7 +11,7 @@ export class TeamService {
   constructor(private api: RestApiService) {}
 
   getAll(projectId: string): Observable<Team[]> {
-    return this.api.get(`projects/${projectId}/teams`, {include: 'members.member.user'}).map(response => response.data);
+    return this.api.get(`projects/${projectId}/teams`, { include: 'members.member.user' }).map(response => response.data);
   }
 
   get(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {

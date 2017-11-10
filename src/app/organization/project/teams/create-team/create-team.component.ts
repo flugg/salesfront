@@ -12,6 +12,7 @@ import { ActiveProjectService } from '../../../active-project.service';
   styleUrls: ['create-team.component.scss']
 })
 export class CreateTeamComponent implements OnInit {
+  pending = false;
   loading = true;
   name: string;
 
@@ -26,10 +27,12 @@ export class CreateTeamComponent implements OnInit {
   }
 
   submit(name) {
+    this.pending = true;
     this.activeProject.project.first().subscribe(project => {
       this.teamService.create(project.id, name).then(() => {
         this.router.navigate(['..'], { relativeTo: this.route });
         this.snackBar.open('Team created', null, <MdSnackBarConfig>{ duration: 2000 });
+        this.pending = false;
       });
     });
   }

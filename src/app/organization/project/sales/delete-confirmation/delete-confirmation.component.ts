@@ -19,7 +19,7 @@ export class DeleteConfirmationComponent implements OnInit {
 
   removeSale() {
     this.saleService.delete(this.data.sale.id).then(() => {
-      this.snackBar.open('Sale deleted', null, <MdSnackBarConfig>{ duration: 4000 });
+      this.snackBar.open('Deal deleted', null, <MdSnackBarConfig>{ duration: 4000 });
 
       this.dialog.close();
     });

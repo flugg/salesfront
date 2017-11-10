@@ -1,0 +1,38 @@
+<div class="vmo-component">
+  <vmo-toolbar title="Products" mode="menu">
+    <button md-icon-button routerLink="new" *ngIf="user?.isAdmin">
+      <md-icon>add</md-icon>
+    </button>
+  </vmo-toolbar>
+
+  <vmo-progress-spinner [hasLoaded]="! loading">
+    <vmo-empty-state [when]="! products?.length && ! loading"
+                     [title]="'No products, yet.'"
+                     [description]="'Looks like you haven\'t created any products.'">
+      <button md-raised-button color="accent" routerLink="new" class="u-push-button">Create a product</button>
+    </vmo-empty-state>
+    <div class="vmo-scrollable-area">
+      <md-list *ngIf="products?.length" class="vmo-list">
+        <md-list-item *ngFor="let product of products" [class.u-faded]="product.deletedAt">
+          <div md-list-avatar
+               fxLayoutAlign="center center"
+               class="vmo-group-icon">
+            <md-icon md-list-icon>local_offer</md-icon>
+          </div>
+          <h4 md-line class="mdc-typography--subheading1">
+            {{ product.name }}
+          </h4>
+          <span md-line class="mdc-typography--caption u-weak">
+            {{ product.value | value:project }}
+          </span>
+          <div class="u-fill"></div>
+          <button md-icon-button [routerLink]="[product.id]" *ngIf="user?.isAdmin">
+            <md-icon>edit</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+    </div>
+  </vmo-progress-spinner>
+</div>
+
+<router-outlet></router-outlet>

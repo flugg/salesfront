@@ -19,7 +19,8 @@
       <vmo-nav-item title="Leaderboard" icon="sort" link="leaderboard" [organization]="membership.organization" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Wall of Fame" icon="star" link="wall-of-fame" [organization]="membership.organization" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Budgets" icon="adjust" link="budgets" [organization]="membership.organization" [project]="project"></vmo-nav-item>
-      <vmo-nav-item title="Sales" icon="attach_money" link="sales" [organization]="membership.organization" [project]="project"></vmo-nav-item>
+      <vmo-nav-item title="Deals" icon="attach_money" link="sales" [organization]="membership.organization" [project]="project"></vmo-nav-item>
+      <vmo-nav-item *ngIf="project.type === 'product'" title="Products" icon="local_offer" link="products" [organization]="membership.organization" [project]="project"></vmo-nav-item>
       <vmo-nav-item title="Teams" icon="group" link="teams" [organization]="membership.organization" [project]="project"></vmo-nav-item>
     </md-nav-list>
     <md-list>

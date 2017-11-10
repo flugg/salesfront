@@ -43,6 +43,10 @@ export class MemberListService extends ObservableResourceList implements OnDestr
     });
   }
 
+  protected add(resources: any[]): void {
+    super.add(resources);
+  }
+
   ngOnDestroy(): void {
     this.sockets.stopListening(this);
     super.ngOnDestroy();

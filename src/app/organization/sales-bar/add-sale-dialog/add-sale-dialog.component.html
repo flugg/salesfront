@@ -1,12 +1,21 @@
-<span class="mdc-typography--display1 strong">Add Sale</span>
-<p class="mdc-typography--body1 u-weak">Register a sale in the clocked in team.</p>
-<md-input-container color="accent">
-  <input mdInput #valueInput="ngModel" placeholder="Value" [(ngModel)]="value" name="value" type="number" required>
-  <span mdPrefix *ngIf="data.project.notationBefore">{{ data.project.notation }}</span>
-  <span mdSuffix *ngIf="! data.project.notationBefore">{{ data.project.notation }}</span>
-  <md-error *ngIf="valueInput.errors?.required && (valueInput.dirty || valueInput.touched)">This field is required</md-error>
-</md-input-container>
-<div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
-  <button md-button (click)="dialog.close()">Cancel</button>
-  <button md-raised-button (click)="register(value)" [disabled]="(pending || valueInput.errors?.required && (valueInput.dirty || valueInput.touched))" color="accent">Add Sale</button>
+<div *ngIf="! loading">
+  <span class="mdc-typography--display1 strong">Add Deal</span>
+  <p class="mdc-typography--body1 u-weak">Register a deal for the clocked in team.</p>
+  <md-input-container color="accent" [fxShow]="data.project.type === 'value'">
+    <input mdInput #valueInput="ngModel" placeholder="Value" [(ngModel)]="value" name="value" type="number" required>
+    <span mdPrefix *ngIf="data.project.notationBefore">{{ data.project.notation }}</span>
+    <span mdSuffix *ngIf="! data.project.notationBefore">{{ data.project.notation }}</span>
+    <md-error *ngIf="valueInput.errors?.required && (valueInput.dirty || valueInput.touched)">This field is required</md-error>
+  </md-input-container>
+  <div *ngIf="data.project.type === 'product'">
+    <md-select placeholder="Product" color="accent" [(ngModel)]="selectedProduct" name="productInput" required>
+      <md-option *ngFor="let product of products" [value]="product.id">
+        {{ product.name }}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="u-vertical-spacing" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+    <button md-button (click)="dialog.close()">Cancel</button>
+    <button md-raised-button (click)="register(value)" [disabled]="(pending || (data.project.type === 'value' && !value))" color="accent">Add Deal</button>
+  </div>
 </div>

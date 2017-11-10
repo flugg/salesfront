@@ -24,7 +24,7 @@ export class SaleService {
   }
 
   getAll(projectId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
-    return this.api.paginate(`projects/${projectId}/sales2`, cursor, limit, { include: 'member.user,team' });
+    return this.api.paginate(`projects/${projectId}/sales2`, cursor, limit, { include: 'member.user,team,product' });
   }
 
   getForTeam(teamId: string, limit: number, cursor?: string): Observable<PaginationResponse> {
@@ -51,6 +51,13 @@ export class SaleService {
     }).then(response => response.data);
   }
 
+  registerWithProduct(teamMemberId: string, productId: string, date?: Moment): Promise<Sale> {
+    return this.api.post(`team-members/${teamMemberId}/sales`, !date ? { product: productId } : {
+      product: productId,
+      soldAt: date.toISOString() || moment().toISOString()
+    }).then(response => response.data);
+  }
+
   registerWithContract(teamMemberId: string, contract: any, signature?: string, date?: Moment): Promise<Sale> {
     return this.api.post(`team-members/${teamMemberId}/sales`, !date ? {
       contract,
@@ -69,6 +76,19 @@ export class SaleService {
       signature: signature
     } : {
       value: value,
+      contract: contract,
+      signature: signature,
+      soldAt: date.toISOString() || moment().toISOString()
+    }).then(response => response.data);
+  }
+
+  registerWithProductAndContract(teamMemberId: string, contract: any, productId: string, signature?: string, date?: Moment): Promise<Sale> {
+    return this.api.post(`team-members/${teamMemberId}/sales`, !date ? {
+      product: productId,
+      contract: contract,
+      signature: signature
+    } : {
+      product: productId,
       contract: contract,
       signature: signature,
       soldAt: date.toISOString() || moment().toISOString()

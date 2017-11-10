@@ -14,7 +14,7 @@ import { SocketApiService } from '../core/socket-api.service';
 
 @Injectable()
 export class ActiveUserService extends ObservableResource implements OnDestroy {
-  readonly user: Observable<User> = this.subject.asObservable();
+  readonly user: Observable<User | null> = this.subject.asObservable();
 
   constructor(private userService: UserService,
               private authService: AuthService,
@@ -22,8 +22,13 @@ export class ActiveUserService extends ObservableResource implements OnDestroy {
     super();
 
     this.socketSubscription = this.sockets.connects.subscribe(() => {
-      this.authService.authenticated.filter(authenticated => authenticated === true).distinctUntilChanged().subscribe(() => {
+      this.authService.authenticated.subscribe(authenticated => {
         this.sockets.stopListening(this);
+
+        if (! authenticated) {
+          this.set(null);
+          return;
+        }
 
         this.userService.find('me', [
           'memberships.organization.contractTemplates',

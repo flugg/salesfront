@@ -13,6 +13,7 @@ import { AddSaleDialogComponent } from './add-sale-dialog/add-sale-dialog.compon
 import { ContractDialogComponent } from './contract-dialog/contract-dialog.component';
 import { SaleAddedDialogComponent } from './sale-added-dialog/sale-added-dialog.component';
 import { SalesTodayService } from './sales-today.service';
+import { Product } from '../../core/models/product.model';
 
 @Component({
   selector: 'vmo-sales-bar',
@@ -49,20 +50,29 @@ export class SalesBarComponent implements OnInit {
 
     this.activeProjectService.project.first().subscribe(project => {
       if (project.type === 'count' && !project.contractTemplate) {
-        this.saleService.register(this.membership.activeSession.teamMemberId).then(sale => {
-          this.openSaleAddedDialog(sale, project);
-          this.pending = false;
-        });
-      } else if (project.type === 'value') {
+        if (project.contractTemplate) {
+          this.openContractDialog(project);
+        } else {
+          this.saleService.register(this.membership.activeSession.teamMemberId).then(sale => {
+            this.openSaleAddedDialog(sale, project);
+            this.pending = false;
+          });
+        }
+      } else {
         this.openAddSaleDialog(project);
-      } else if (project.contractTemplate) {
-        this.openContractDialog(project);
       }
     });
   }
 
   private addSaleWithValue(project: Project, value: number): void {
     this.saleService.registerWithValue(this.membership.activeSession.teamMemberId, value).then(sale => {
+      this.openSaleAddedDialog(sale, project);
+      this.pending = false;
+    });
+  }
+
+  private addSaleWithProduct(project: Project, productId: string): void {
+    this.saleService.registerWithProduct(this.membership.activeSession.teamMemberId, productId).then(sale => {
       this.openSaleAddedDialog(sale, project);
       this.pending = false;
     });
@@ -82,6 +92,13 @@ export class SalesBarComponent implements OnInit {
     });
   }
 
+  private addSaleWithProductAndContract(project: Project, productId: string, fields: any, signature?: string): void {
+    this.saleService.registerWithProductAndContract(this.membership.activeSession.teamMemberId, fields, productId, signature).then(sale => {
+      this.openSaleAddedDialog(sale, project);
+      this.pending = false;
+    });
+  }
+
   private openAddSaleDialog(project: Project) {
     const dialog = this.dialog.open(AddSaleDialogComponent, <MdDialogConfig>{
       panelClass: 'add-sale-dialog',
@@ -96,8 +113,10 @@ export class SalesBarComponent implements OnInit {
       dialog.afterClosed().subscribe(() => {
         if (project.contractTemplate) {
           this.openContractDialog(project, data.value);
-        } else {
+        } else if (project.type === 'value') {
           this.addSaleWithValue(project, data.value);
+        } else if (project.type === 'product') {
+          this.addSaleWithProduct(project, data.product);
         }
       });
     });
@@ -118,8 +137,10 @@ export class SalesBarComponent implements OnInit {
 
     dialog.componentInstance.onRegister.subscribe(data => {
       dialog.afterClosed().subscribe(() => {
-        if (data.value) {
+        if (project.type === 'value') {
           this.addSaleWithValueAndContract(project, data.value, data.contract, data.signature);
+        } else if (project.type === 'product') {
+          this.addSaleWithProductAndContract(project, data.value, data.contract, data.signature);
         } else {
           this.addSaleWithContract(project, data.contract, data.signature);
         }

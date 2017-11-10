@@ -3,7 +3,7 @@
     <span class="mdc-typography--display1 strong">Create Project</span>
     <p class="mdc-typography--body1 u-weak">Create a project to organize your organization.</p>
   </div>
-  <form novalidate (submit)="submit(); $event.preventDefault()" class="u-spacing-top vmo-scrollable-area form">
+  <form novalidate (submit)="submit(); $event.preventDefault()" class="u-spacing-top form">
     <md-input-container color="accent">
       <input #nameInput="ngModel" mdInput name="projectName" placeholder="Project Name" required [(ngModel)]="name">
       <md-error *ngIf="nameInput.errors?.required && (nameInput.dirty || nameInput.touched)">
@@ -33,9 +33,12 @@
         <md-radio-button value="value">
           Value based
         </md-radio-button>
+        <md-radio-button value="product">
+          Product based
+        </md-radio-button>
       </md-radio-group>
     </div>
-    <div class="u-vertical-spacing" *ngIf="projectType === 'value'">
+    <div class="u-vertical-spacing" *ngIf="projectType !== 'count'">
       <div class="u-vertical-top">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
           <div class="equal-width mdc-typography--headline strong u-text-center">{{ 1234 | number: '1.' + (withDecimals ? 2 : 0) }}</div>
@@ -45,6 +48,37 @@
         </div>
         <md-checkbox [(ngModel)]="notationBefore" name="addMore">Before value</md-checkbox>
         <md-checkbox [(ngModel)]="withDecimals" name="addMore" class="u-horizontal-spacing">With decimals</md-checkbox>
+      </div>
+    </div>
+    <md-divider *ngIf="projectType === 'product'"></md-divider>
+    <div fxLayout="row" *ngIf="projectType === 'product'">
+      <span class="mdc-typography--headline strong">Products</span>
+      <div class="u-fill"></div>
+      <button md-button color="accent" (click)="addProduct()" type="button">Add Product</button>
+    </div>
+    <div class="u-spacing-top-small" *ngIf="projectType === 'product'">
+      <div *ngFor="let product of products; let i = index" fxLayout="row" fxLayoutGap="16px">
+        <div fxFlex="50">
+          <md-input-container color="accent">
+            <input mdInput
+                   [name]="'field-' + i"
+                   placeholder="Product {{ i + 1 }} Name"
+                   [(ngModel)]="products[i].name">
+          </md-input-container>
+        </div>
+        <div fxFlex="50">
+          <md-input-container color="accent">
+            <input mdInput
+                   [name]="'value-' + i"
+                   placeholder="Value"
+                   [(ngModel)]="products[i].value">
+          </md-input-container>
+        </div>
+        <div fxLayoutAlign="center center" *ngIf="products.length > 1">
+          <button md-icon-button (click)="removeProduct(i)" type="button">
+            <md-icon>remove_circle_outline</md-icon>
+          </button>
+        </div>
       </div>
     </div>
     <div class="u-spacing-top-big" *ngIf="data.templates.length" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">

@@ -5,8 +5,8 @@
     <form novalidate (submit)="submit(quantity, date, time); $event.preventDefault()" *ngIf="project">
       <div class="vmo-container --small">
         <md-card>
-          <span class="mdc-typography--display1 strong">Add Sale</span>
-          <p class="mdc-typography--body1 u-weak">Register sales for yourself or someone you manage.</p>
+          <span class="mdc-typography--display1 strong">Add Deal</span>
+          <p class="mdc-typography--body1 u-weak">Register deals for yourself or someone you manage.</p>
           <div class="u-spacing-top">
             <md-input-container color="accent" *ngIf="project.type === 'value'">
               <input #valueInput="ngModel" name="value" mdInput placeholder="Value" type="number" [(ngModel)]="value" required>
@@ -22,6 +22,13 @@
                 This field is required
               </md-error>
             </md-input-container>
+            <div *ngIf="project.type === 'product'">
+              <md-select placeholder="Product" color="accent" [(ngModel)]="selectedProduct" name="productInput" required>
+                <md-option *ngFor="let product of products" [value]="product.id">
+                  {{ product.name }}
+                </md-option>
+              </md-select>
+            </div>
           </div>
           <div class="u-vertical-spacing">
             <div fxLayout="row" fxLayoutGap="16px">

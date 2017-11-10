@@ -15,7 +15,6 @@ export class SpectatorListComponent implements OnInit {
 
   ngOnInit() {
     this.spectatorListService.spectators.subscribe(spectators => {
-      console.log(spectators);
       this.spectators = spectators;
       this.loading = false;
     });

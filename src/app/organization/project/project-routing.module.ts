@@ -42,6 +42,11 @@ const routes: Routes = [
         loadChildren: 'app/organization/project/sales/sales.module#SalesModule'
       },
       {
+        path: 'products',
+        resolve: { sidenavClosed: CloseSidenavResolver },
+        loadChildren: 'app/organization/project/products/products.module#ProductsModule'
+      },
+      {
         path: 'teams',
         resolve: { sidenavClosed: CloseSidenavResolver },
         loadChildren: 'app/organization/project/teams/teams.module#TeamsModule'

@@ -11,6 +11,7 @@ import { ObservableResource } from '../core/observable-resource';
 import { ProjectService } from '../core/services/project.service';
 import { SocketApiService } from '../core/socket-api.service';
 import { StorageService } from '../core/storage.service';
+import { ProductService } from '../core/services/product.service';
 
 @Injectable()
 export class ActiveProjectService extends ObservableResource implements OnDestroy {
@@ -20,6 +21,7 @@ export class ActiveProjectService extends ObservableResource implements OnDestro
   constructor(private route: ActivatedRoute,
               private sockets: SocketApiService,
               private storage: StorageService,
+              private productService: ProductService,
               private projectService: ProjectService) {
     super();
 
@@ -29,8 +31,17 @@ export class ActiveProjectService extends ObservableResource implements OnDestro
       this.projectId.distinctUntilChanged().subscribe(id => {
         if (id) {
           this.projectService.find(id).subscribe(project => {
-            if (this.getFromStorage() === project.id) {
-              this.set(project);
+            if (project.type === 'product') {
+              this.productService.list(project.id).subscribe(products => {
+                project.products = products;
+                if (this.getFromStorage() === project.id) {
+                  this.set(project);
+                }
+              });
+            } else {
+              if (this.getFromStorage() === project.id) {
+                this.set(project);
+              }
             }
           });
         } else {

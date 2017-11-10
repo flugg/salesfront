@@ -4,6 +4,7 @@ import { Project } from './project.model';
 import { Team } from './team.model';
 import { User } from './user.model';
 import { TeamMember } from './team-member.model';
+import { Product } from './product.model';
 
 export interface Sale {
   id: string;
@@ -15,10 +16,12 @@ export interface Sale {
   teamId: string;
   projectId: string;
   registererId: string;
+  productId?: string;
   contract?: Contract;
   member?: Member;
   teamMember?: TeamMember;
   team?: Team;
   project?: Project;
   registerer?: User;
+  product?: Product;
 }

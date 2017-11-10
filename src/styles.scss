@@ -440,6 +440,13 @@ snack-bar-container {
   }
 }
 
+.main-progress {
+  @media (max-width: 600px) {
+    height: 48px;
+    width: 48px;
+  }
+}
+
 .vmo-list {
   background: white;
   padding-bottom: 8px;
@@ -961,6 +968,7 @@ snack-bar-container {
 
 .create-project-dialog .mat-dialog-container {
   width: 480px;
+  max-height: 80vh;
   padding: 0;
 
   @media (max-width: 960px) {

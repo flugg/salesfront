@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/auth/auth-guard.service';
 import { NoAuthGuard } from './core/auth/no-auth-guard.service';
-import { OrganizationListComponent } from './organization-list/organization-list.component';
-import { OrganizationResolver } from './organization-list/organization-resolver.service';
+import { ActiveUserGuard } from './organization-list/active-user-guard.service';
 import { OrganizationGuard } from './organization-list/organization-guard.service';
+import { OrganizationListComponent } from './organization-list/organization-list.component';
 
 export const routes: Routes = [
   {
@@ -16,7 +16,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, ActiveUserGuard],
     canActivateChild: [AuthGuard],
     component: OrganizationListComponent,
     children: [
