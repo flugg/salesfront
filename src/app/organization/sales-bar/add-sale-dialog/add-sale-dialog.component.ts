@@ -22,10 +22,12 @@ export class AddSaleDialogComponent implements OnInit {
 
   ngOnInit() {
     if (this.data.project.products && this.data.project.products.length) {
-      this.selectedProduct = this.data.project.products[0].id;
+      this.products = this.data.project.products.filter(product => !product.deletedAt);
+      if (this.products.length) {
+        this.selectedProduct = this.products[0].id;
+      }
     }
 
-    this.products = this.data.project.products.filter(product => !product.deletedAt);
     this.loading = false;
   }
 

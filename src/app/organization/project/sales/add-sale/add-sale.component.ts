@@ -58,9 +58,12 @@ export class AddSaleComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
       [this.user, this.project, this.teams] = data;
 
-      this.products = this.project.products.filter(product => !product.deletedAt);
-      if (this.products && this.products.length) {
-        this.selectedProduct = this.products[0].id;
+
+      if (this.project.products && this.project.products.length) {
+        this.products = this.project.products.filter(product => !product.deletedAt);
+        if (this.products.length) {
+          this.selectedProduct = this.products[0].id;
+        }
       }
 
       this.teams = this.teams.filter(team => team.members.filter(member => !member.leftAt && !member.member.deletedAt).length > 0);
